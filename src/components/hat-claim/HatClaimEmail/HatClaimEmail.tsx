@@ -2,7 +2,14 @@ import React from 'react';
 import './HatClaimEmail.scss';
 import { hatClaimMessages } from "../messages-hat-claim";
 
-const HatClaimEmail: React.FC = () => {
+interface Props {
+    currentStep: number;
+}
+
+const HatClaimEmail: React.FC<Props> = props => {
+    if (props.currentStep !== 0) {
+        return null;
+    }
     return (
         <div className="hat-claim-email flex-column-wrapper flex-content-center flex-align-items-center">
             <h2>{hatClaimMessages.claimYourHat}</h2>
