@@ -12,12 +12,27 @@ const HatClaimActions: React.FC<Props> = props => {
             <button
                 className={'btn btn-accent'}
                 onClick={ () => props.setCurrentStep(props.currentStep + 1)}
-            >Next</button>
-            {props.currentStep > 0 &&
+            >
+                {props.currentStep === 3 ? 'Confirm' : props.currentStep === 4 ? 'login' : 'Next'}
+            </button>
+            {props.currentStep !== 0 && props.currentStep !== 3 && props.currentStep !== 4 &&
                 <button
                     className={'btn btn-transparent'}
                     onClick={ () => props.setCurrentStep(props.currentStep -1)}
                 >Previous</button>
+            }
+
+            {props.currentStep === 3 &&
+                <div className="text-small" style={{textAlign: 'center', marginTop: '1.8rem'}}>
+                    By selecting 'Confirm', I agree to the Dataswift&nbsp;
+                    <a href="https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf"
+                       rel="noopener noreferrer"
+                       target="_blank">Terms of Service</a>&nbsp;
+                    and <a
+                    href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf"
+                    rel="noopener noreferrer"
+                    target="_blank">Privacy Policy</a>.
+                </div>
             }
         </div>
     );

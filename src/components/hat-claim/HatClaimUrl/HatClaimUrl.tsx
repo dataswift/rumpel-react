@@ -17,7 +17,14 @@ const HatClaimUrl: React.FC<Props> = props => {
     return (
         <div className="hat-claim-url flex-column-wrapper flex-content-center flex-align-items-center">
             <h2>{hatClaimMessages.yourHatUrl}</h2>
-            <h3>testing.hubat.net</h3>
+            <div className="title-hat-domain-wrapper">
+                <div className="hat-name">
+                    <h3>{props.hatClaim.hatName}</h3>
+                </div>
+                <div className="hat-domain">
+                    <h3>.{props.hatClaim.hatCluster}</h3>
+                </div>
+            </div>
             <div className={'text-medium'}>{hatClaimMessages.hatUrlDescription}</div>
         </div>
     );

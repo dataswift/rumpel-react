@@ -1,7 +1,7 @@
 export interface HatClaimRequest {
     email: string;
     termsAgreed: boolean;
-    optins: boolean;
+    optins: string[];
     hatName: string;
     hatCluster: string;
     password: string;

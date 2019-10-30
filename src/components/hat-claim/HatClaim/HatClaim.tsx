@@ -5,33 +5,56 @@ import HatClaimEmail from "../HatClaimEmail";
 import HatClaimUrl from "../HatClaimUrl/HatClaimUrl";
 import HatClaimPassword from "../HatClaimPassword";
 import HatClaimUrlConfirmation from "../HatClaimConfirmation/HatClaimConfirmation";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { getParameterByName } from "../../../utils/query-params";
 import { isEmail } from "../../../utils/validations";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import { AppState } from "../../../redux/reducer/rootReducer";
-import { editHatClaim, setCurrentStep } from "../redux/actions/hatClaimActions";
+import { editHatClaim, editHatClaimPassword, setCurrentStep } from "../redux/actions/hatClaimActions";
 import { loadDynamicZxcvbn } from "../../../utils/load-dynamic-zxcvbn";
+import { NotificationBanner } from "../../shared/banners/NotificationBanner/NotificationBanner";
+import { buildClaimRequest, claimHat } from "../hat-claim.service";
+import HatClaimSuccess from "../HatClaimSuccess/HatClaimSuccess";
 
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
 
 const HatClaim: React.FC<Props> = props => {
-    const optins: string[] = ['MadHATTERS', 'HAT Monthly', 'HCF'];
+    let history = useHistory();
     const { claimToken } = useParams();
 
 
     useEffect(() => {
-        const email =  getParameterByName('email');
+        const email =  decodeURIComponent(getParameterByName('email') || '');
+        const host = window.location.hostname;
+        const hatName = host.substring(0, host.indexOf('.'));
+        const hatCluster = host.substring(host.indexOf('.') + 1);
 
         if (!!email) {
             props.editHatClaim('email', email);
+            props.editHatClaim('hatName', hatName);
+            props.editHatClaim('hatCluster', hatCluster);
+
             loadDynamicZxcvbn(() => {
                 console.log('ready')
             });
         }
     }, []);
+
+    async function claim(nextStep: number) {
+        try {
+            props.editHatClaimPassword('passwordError', '');
+
+            const res = await claimHat(claimToken || '', buildClaimRequest(props.hatClaim));
+            console.log('res', res);
+            changeStep(nextStep + 1);
+        } catch (e) {
+            console.log('claim error', e);
+            props.editHatClaimPassword('passwordError', 'Something went wrong, please try again');
+            changeStep(nextStep - 1);
+        }
+    }
 
     const changeStep = (newStep: number) => {
         if (newStep === 1) {
@@ -39,9 +62,13 @@ const HatClaim: React.FC<Props> = props => {
                 props.setCurrentStep(newStep);
             }
         } else if (newStep === 3) {
-            if (props.password.passwordStrength.score >= 2) {
+            if (props.password.passwordStrength.score >= 2 && (props.password.password === props.password.passwordConfirm)) {
                 props.setCurrentStep(newStep);
             }
+        }  else if (newStep === 4) {
+            claim(newStep);
+        } else if (newStep === 5) {
+            history.push("/user/login");
         } else {
             props.setCurrentStep(newStep);
         }
@@ -49,11 +76,15 @@ const HatClaim: React.FC<Props> = props => {
 
     return (
         <div className="hat-claim flex-column-wrapper">
+            {props.password.passwordError && (
+                <NotificationBanner type={"error"} message={props.password.passwordError} />
+            )}
             <span className={'flex-spacer-small'} />
             <HatClaimEmail />
             <HatClaimUrl />
             <HatClaimPassword />
             <HatClaimUrlConfirmation currentStep={props.currentStep} />
+            <HatClaimSuccess />
 
             <span className={'flex-spacer-large'} />
             <HatClaimActions currentStep={props.currentStep} setCurrentStep={(newStep) => changeStep(newStep)}/>
@@ -71,7 +102,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     bindActionCreators(
         {
             editHatClaim,
-            setCurrentStep
+            setCurrentStep,
+            editHatClaimPassword
         },
         dispatch,
     );

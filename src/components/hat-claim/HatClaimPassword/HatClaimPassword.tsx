@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './HatClaimPassword.scss';
 import { hatClaimMessages } from "../messages-hat-claim";
 import { PasswordStrengthMeter } from "../../shared/PasswordStrengthMeter";
@@ -22,13 +22,12 @@ const HatClaimPassword: React.FC<Props> = props => {
     );
 
 
-    // const passwordMatchDebounce = debounce(
-    //     (passwordConfirm: string) => this.checkIfPasswordsMatch(passwordConfirm),
-    //     300
-    // );
+    const passwordMatchDebounce = debounce(
+        () => passwordIsValid(props.password.password, props.password.passwordConfirm),
+        400
+    );
 
     function validatePassword(password: string) {
-        console.log(zxcvbn(password));
         const score = zxcvbn(password).score;
         props.editHatClaimPassword('passwordStrength', { score: score });
     }
@@ -43,6 +42,30 @@ const HatClaimPassword: React.FC<Props> = props => {
         }
     };
 
+
+    const passwordIsValid = (password: string, newPassword: string): boolean => {
+        if (password === newPassword) {
+            if (!(props.password.passwordStrength.score > 2)) {
+
+                return false;
+            }
+
+            props.editHatClaimPassword('passwordError', '');
+
+            return true;
+        } else {
+            if (newPassword.length > 5) {
+                props.editHatClaimPassword('passwordError', 'Your passwords don\'t match!');
+            }
+
+            return false;
+        }
+    };
+
+    useEffect(() => {
+        passwordMatchDebounce();
+    }, [props.password.password, props.password.passwordConfirm]);
+
     if (props.currentStep !== 2) {
         return null;
     }
@@ -50,7 +73,14 @@ const HatClaimPassword: React.FC<Props> = props => {
     return (
         <div className="hat-claim-password flex-column-wrapper flex-content-center flex-align-items-center">
             <h2>{hatClaimMessages.choosePassword}</h2>
-            <h3>testing.hubat.net</h3>
+            <div className="title-hat-domain-wrapper">
+                <div className="hat-name">
+                    <h3>{props.hatClaim.hatName}</h3>
+                </div>
+                <div className="hat-domain">
+                    <h3>.{props.hatClaim.hatCluster}</h3>
+                </div>
+            </div>
             <div className={'text-medium'}>{hatClaimMessages.dataPrecious}</div>
             <form>
                 <input
@@ -65,6 +95,7 @@ const HatClaimPassword: React.FC<Props> = props => {
                         type={hide1 ? 'password' : 'text'}
                         name="password"
                         autoComplete={'new-password'}
+                        value={props.hatClaim.password}
                         onChange={(e) => onChange(e)}
                         placeholder="Password" />
                         <button type="button" tabIndex={-1} onClick={() =>setHide1(!hide1)}>
@@ -76,6 +107,7 @@ const HatClaimPassword: React.FC<Props> = props => {
                         type={hide2 ? 'password' : 'text'}
                         name="passwordConfirm"
                         autoComplete={'new-password'}
+                        value={props.password.passwordConfirm}
                         onChange={(e) => onChange(e)}
                         placeholder="Confirm Password" />
                     <button type="button" tabIndex={-1} onClick={() =>setHide2(!hide2)}>
@@ -83,7 +115,9 @@ const HatClaimPassword: React.FC<Props> = props => {
                     </button>
                 </div>
             </form>
-            <PasswordStrengthMeter passwordStrength={props.password.passwordStrength}/>
+            {props.password.password.length > 0 &&
+                <PasswordStrengthMeter passwordStrength={props.password.passwordStrength}/>
+            }
         </div>
     );
 };
