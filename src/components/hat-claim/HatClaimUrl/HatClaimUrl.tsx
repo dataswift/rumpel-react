@@ -1,10 +1,13 @@
 import React from 'react';
 import './HatClaimUrl.scss';
 import { hatClaimMessages } from "../messages-hat-claim";
+import { AppState } from "../../../redux/reducer/rootReducer";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
+import { editHatClaim } from "../redux/actions/hatClaimActions";
+import { connect } from "react-redux";
 
-interface Props {
-    currentStep: number;
-}
+type Props = ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const HatClaimUrl: React.FC<Props> = props => {
     if (props.currentStep !== 1) {
@@ -20,4 +23,20 @@ const HatClaimUrl: React.FC<Props> = props => {
     );
 };
 
-export default HatClaimUrl;
+const mapStateToProps = (state: AppState) => ({
+    hatClaim: state.hatClaim.hatClaim,
+    currentStep: state.hatClaim.currentStep,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+    bindActionCreators(
+        {
+            editHatClaim,
+        },
+        dispatch,
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(HatClaimUrl);

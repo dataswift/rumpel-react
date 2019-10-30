@@ -1,10 +1,13 @@
 import React from 'react';
 import './HatClaimEmail.scss';
 import { hatClaimMessages } from "../messages-hat-claim";
+import { AppState } from "../../../redux/reducer/rootReducer";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
+import { editHatClaim } from "../redux/actions/hatClaimActions";
+import { connect } from "react-redux";
 
-interface Props {
-    currentStep: number;
-}
+type Props = ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const HatClaimEmail: React.FC<Props> = props => {
     if (props.currentStep !== 0) {
@@ -14,7 +17,7 @@ const HatClaimEmail: React.FC<Props> = props => {
         <div className="hat-claim-email flex-column-wrapper flex-content-center flex-align-items-center">
             <h2>{hatClaimMessages.claimYourHat}</h2>
             <div className={'text-medium'}>{hatClaimMessages.informationOnlyUsed}</div>
-            <input placeholder={'email'} type={'email'} disabled={true}/>
+            <input placeholder={'email'} type={'email'} disabled={true} value={props.hatClaim.email || 'Unspecified email address'}/>
             <div className={'checkbox-container'}>
                 <label
                     className={'text-medium'}
@@ -25,6 +28,8 @@ const HatClaimEmail: React.FC<Props> = props => {
                         id={'newsletterOptin'}
                         name={'newsletterOptin'}
                         type={'checkbox'}
+                        checked={props.hatClaim.optins}
+                        onChange={event => props.editHatClaim('optins', event.target.checked)}
                     />
                     <span className="checkbox-checkmark" />
                 </label>
@@ -48,4 +53,20 @@ const HatClaimEmail: React.FC<Props> = props => {
     );
 };
 
-export default HatClaimEmail;
+const mapStateToProps = (state: AppState) => ({
+    hatClaim: state.hatClaim.hatClaim,
+    currentStep: state.hatClaim.currentStep,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+    bindActionCreators(
+        {
+            editHatClaim,
+        },
+        dispatch,
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(HatClaimEmail);

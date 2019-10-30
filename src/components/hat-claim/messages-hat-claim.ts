@@ -6,6 +6,8 @@ export const hatClaimMessages: hatClaimMessages = {
     hatUrlDescription: 'This is your HAT Microserver URL. After clicking \'Next\' you will be able to choose your password.',
     choosePassword: 'Choose your password',
     dataPrecious: 'Your data is precious - keep it safe with a password that is Strong or Very Strong.',
+    yourHatMicroserver: 'Your HAT Microserver',
+    claiming100mbStorage: 'You are claiming a HAT Microserver with 100MB storage.'
 };
 
 interface hatClaimMessages {
@@ -16,4 +18,6 @@ interface hatClaimMessages {
     hatUrlDescription: string;
     choosePassword: string;
     dataPrecious: string;
+    yourHatMicroserver: string;
+    claiming100mbStorage: string;
 }

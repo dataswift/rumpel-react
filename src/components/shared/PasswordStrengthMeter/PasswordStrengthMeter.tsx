@@ -36,18 +36,18 @@ export class PasswordStrengthMeter extends Component<IPasswordStrengthProps> {
         {passwordStrength && (
           <>
             <progress
-              className={`password-strength-meter-progress strength-${passwordStrength.strength}`}
+              className={`password-strength-meter-progress strength-${passwordStrength.score}`}
               value={this.getPasswordStrengthProgress(
-                passwordStrength.strength
+                passwordStrength.score
               )}
               max="4"
             />
             <br />
 
             <div
-              className={`password-strength-meter-label text-strength-${passwordStrength.strength}`}
+              className={`password-strength-meter-label text-strength-${passwordStrength.score}`}
             >
-              {this.createPasswordLabel(passwordStrength.strength)}
+              {this.createPasswordLabel(passwordStrength.score)}
             </div>
           </>
         )}
@@ -61,8 +61,5 @@ interface IPasswordStrengthProps {
 }
 
 export interface IPasswordStrength {
-  isStrong: boolean;
-  guesses: number;
-  strength: number;
-  suggestions?: string[];
+  score: number;
 }

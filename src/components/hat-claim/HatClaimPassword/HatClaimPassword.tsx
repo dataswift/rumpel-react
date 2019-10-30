@@ -1,35 +1,47 @@
 import React, { useState } from 'react';
 import './HatClaimPassword.scss';
 import { hatClaimMessages } from "../messages-hat-claim";
-import { IPasswordStrength, PasswordStrengthMeter } from "../../shared/PasswordStrengthMeter/PasswordStrengthMeter";
-import { get } from "../../../services/BackendService";
+import { PasswordStrengthMeter } from "../../shared/PasswordStrengthMeter";
+import { AppState } from "../../../redux/reducer/rootReducer";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
+import { editHatClaim, editHatClaimPassword } from "../redux/actions/hatClaimActions";
+import { connect } from "react-redux";
+const debounce = require("lodash.debounce");
+declare const zxcvbn: any;
 
-interface Props {
-    currentStep: number;
-}
+type Props = ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps>;
 
 const HatClaimPassword: React.FC<Props> = props => {
-    const initPasswordStrength: IPasswordStrength = { guesses: 0, strength: 0, isStrong: false };
-
     const [hide1, setHide1] = useState(true);
     const [hide2, setHide2] = useState(true);
-    const [passwordStrength, setPasswordStrength] = useState<IPasswordStrength>(initPasswordStrength);
 
-    async function validatePassword(password: string) {
-        const mHeaders = new Headers();
-        mHeaders.append("password", password);
-        const args: RequestInit = { method: "get", headers: mHeaders };
+    const validatePasswordDebounce = debounce(
+        (p: string) => validatePassword(p),
+        400
+    );
 
-        try {
-            const res = await get<IPasswordStrength>("/api/validate-password", args);
-            if (res.parsedBody) {
-                setPasswordStrength(res.parsedBody);
-                // setHatClaim({...hatClaim, password: password});
-            }
-        } catch (err) {
-            console.log("handle error here", err);
-        }
+
+    // const passwordMatchDebounce = debounce(
+    //     (passwordConfirm: string) => this.checkIfPasswordsMatch(passwordConfirm),
+    //     300
+    // );
+
+    function validatePassword(password: string) {
+        console.log(zxcvbn(password));
+        const score = zxcvbn(password).score;
+        props.editHatClaimPassword('passwordStrength', { score: score });
     }
+
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        props.editHatClaimPassword(name, value);
+
+        if (name === 'password') {
+            validatePasswordDebounce(value);
+            props.editHatClaim(name, value);
+        }
+    };
 
     if (props.currentStep !== 2) {
         return null;
@@ -41,12 +53,19 @@ const HatClaimPassword: React.FC<Props> = props => {
             <h3>testing.hubat.net</h3>
             <div className={'text-medium'}>{hatClaimMessages.dataPrecious}</div>
             <form>
+                <input
+                    name={"username"}
+                    autoComplete={"username"}
+                    type={"text"}
+                    hidden={true}
+                />
+
                 <div className="input-password-container">
                     <input
                         type={hide1 ? 'password' : 'text'}
-                        className="hat-rumpel-input"
-                        name="hat-pass-input"
+                        name="password"
                         autoComplete={'new-password'}
+                        onChange={(e) => onChange(e)}
                         placeholder="Password" />
                         <button type="button" tabIndex={-1} onClick={() =>setHide1(!hide1)}>
                             <i className={'material-icons'}>{hide1 ? ' visibility_off' : ' visibility'}</i>
@@ -55,18 +74,36 @@ const HatClaimPassword: React.FC<Props> = props => {
                 <div className="input-password-container">
                     <input
                         type={hide2 ? 'password' : 'text'}
-                        className="hat-rumpel-input"
-                        name="hat-pass-input"
+                        name="passwordConfirm"
                         autoComplete={'new-password'}
+                        onChange={(e) => onChange(e)}
                         placeholder="Confirm Password" />
                     <button type="button" tabIndex={-1} onClick={() =>setHide2(!hide2)}>
                         <i className={'material-icons'}>{hide2 ? ' visibility_off' : ' visibility'}</i>
                     </button>
                 </div>
             </form>
-            <PasswordStrengthMeter passwordStrength={{isStrong: true, guesses: 2, strength: 2}}/>
+            <PasswordStrengthMeter passwordStrength={props.password.passwordStrength}/>
         </div>
     );
 };
 
-export default HatClaimPassword;
+const mapStateToProps = (state: AppState) => ({
+    hatClaim: state.hatClaim.hatClaim,
+    currentStep: state.hatClaim.currentStep,
+    password: state.hatClaim.password
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+    bindActionCreators(
+        {
+            editHatClaim,
+            editHatClaimPassword
+        },
+        dispatch,
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(HatClaimPassword);

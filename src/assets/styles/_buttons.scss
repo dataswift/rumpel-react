@@ -1,5 +1,10 @@
 @import "branding";
 
+button {
+  outline: none;
+  cursor: pointer;
+}
+
 .btn {
   display: block;
   font-weight: normal;

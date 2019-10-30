@@ -10,7 +10,7 @@ input[type=text], input[type=password], input[type=email] {
   padding: 1.5rem 2rem;
   border-radius: 0;
   -webkit-appearance: none;
-  max-width: 42.4rem;
+  max-width: 424px;
 
   &.rum-error-field {
     border: solid 1px #e45151;
@@ -40,5 +40,5 @@ input[type=text], input[type=password], input[type=email] {
 
 form {
   width: 100%;
-  max-width: 42.4rem;
+  max-width: 424px;
 }
