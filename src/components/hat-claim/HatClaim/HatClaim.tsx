@@ -11,7 +11,12 @@ import { isEmail } from "../../../utils/validations";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import { AppState } from "../../../redux/reducer/rootReducer";
-import { editHatClaim, editHatClaimPassword, setCurrentStep } from "../redux/actions/hatClaimActions";
+import {
+    editHatClaim,
+    editHatClaimErrorMessage,
+    editHatClaimPassword,
+    setCurrentStep
+} from "../redux/actions/hatClaimActions";
 import { loadDynamicZxcvbn } from "../../../utils/load-dynamic-zxcvbn";
 import { NotificationBanner } from "../../shared/banners/NotificationBanner/NotificationBanner";
 import { buildClaimRequest, claimHat } from "../hat-claim.service";
@@ -44,14 +49,15 @@ const HatClaim: React.FC<Props> = props => {
 
     async function claim(nextStep: number) {
         try {
-            props.editHatClaimPassword('passwordError', '');
-
+            props.editHatClaimErrorMessage('');
             const res = await claimHat(claimToken || '', buildClaimRequest(props.hatClaim));
-            console.log('res', res);
-            changeStep(nextStep + 1);
+
+            if (res.parsedBody) {
+                changeStep(nextStep + 1);
+            }
         } catch (e) {
             console.log('claim error', e);
-            props.editHatClaimPassword('passwordError', 'Something went wrong, please try again');
+            props.editHatClaimErrorMessage('Something went wrong, please try again');
             changeStep(nextStep - 1);
         }
     }
@@ -76,8 +82,8 @@ const HatClaim: React.FC<Props> = props => {
 
     return (
         <div className="hat-claim flex-column-wrapper">
-            {props.password.passwordError && (
-                <NotificationBanner type={"error"} message={props.password.passwordError} />
+            {props.errorMsg && (
+                <NotificationBanner type={"error"} message={props.errorMsg} />
             )}
             <span className={'flex-spacer-small'} />
             <HatClaimEmail />
@@ -96,6 +102,7 @@ const mapStateToProps = (state: AppState) => ({
     hatClaim: state.hatClaim.hatClaim,
     currentStep: state.hatClaim.currentStep,
     password: state.hatClaim.password,
+    errorMsg: state.hatClaim.errorMsg
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -103,7 +110,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
         {
             editHatClaim,
             setCurrentStep,
-            editHatClaimPassword
+            editHatClaimPassword,
+            editHatClaimErrorMessage
         },
         dispatch,
     );

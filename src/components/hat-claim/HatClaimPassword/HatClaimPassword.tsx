@@ -4,7 +4,7 @@ import { hatClaimMessages } from "../messages-hat-claim";
 import { PasswordStrengthMeter } from "../../shared/PasswordStrengthMeter";
 import { AppState } from "../../../redux/reducer/rootReducer";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
-import { editHatClaim, editHatClaimPassword } from "../redux/actions/hatClaimActions";
+import { editHatClaim, editHatClaimErrorMessage, editHatClaimPassword } from "../redux/actions/hatClaimActions";
 import { connect } from "react-redux";
 const debounce = require("lodash.debounce");
 declare const zxcvbn: any;
@@ -50,12 +50,12 @@ const HatClaimPassword: React.FC<Props> = props => {
                 return false;
             }
 
-            props.editHatClaimPassword('passwordError', '');
+            props.editHatClaimErrorMessage('');
 
             return true;
         } else {
             if (newPassword.length > 5) {
-                props.editHatClaimPassword('passwordError', 'Your passwords don\'t match!');
+                props.editHatClaimErrorMessage('Your passwords don\'t match!');
             }
 
             return false;
@@ -132,7 +132,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     bindActionCreators(
         {
             editHatClaim,
-            editHatClaimPassword
+            editHatClaimPassword,
+            editHatClaimErrorMessage
         },
         dispatch,
     );

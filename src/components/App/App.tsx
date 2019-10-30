@@ -1,9 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import thunk from "redux-thunk";
-import { applyMiddleware, createStore } from "redux";
-import rootReducer from "../../redux/reducer/rootReducer";
-import { Provider } from 'react-redux';
+import Root from "./Root";
 const HatClaim = React.lazy(() => import('../hat-claim/HatClaim'));
 
 const Home: React.FC = () => {
@@ -14,11 +11,8 @@ const Home: React.FC = () => {
   );
 };
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
-
 const App = () => (
-    <Provider store={store}>
+    <Root>
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
@@ -27,6 +21,6 @@ const App = () => (
                 </Switch>
             </Suspense>
         </Router>
-    </Provider>
+    </Root>
 );
 export default App;

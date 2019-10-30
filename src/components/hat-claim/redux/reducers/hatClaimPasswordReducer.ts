@@ -6,7 +6,6 @@ export interface ReduxHatClaimPasswordState {
     passwordConfirm: string;
     passwordStrength: { score: number };
     passwordMatch: boolean;
-    passwordError: string;
 }
 
 const initialState: ReduxHatClaimPasswordState = {
@@ -14,7 +13,6 @@ const initialState: ReduxHatClaimPasswordState = {
     passwordConfirm: '',
     passwordStrength: { score: 0 },
     passwordMatch: false,
-    passwordError: ''
 };
 
 type HatClaimPasswordReducerActionsType = ReduxEditPasswordHatClaimAction;

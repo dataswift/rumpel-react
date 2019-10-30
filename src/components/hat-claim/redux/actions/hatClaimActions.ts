@@ -12,6 +12,11 @@ export interface ReduxEditPasswordHatClaimAction extends ReduxBaseAction {
     value: string | boolean | object;
 }
 
+export interface ReduxEditErrorMsgHatClaimAction extends ReduxBaseAction {
+    type: ReduxActionTypes.EDIT_HAT_CLAIM_ERROR_MSG;
+    message: string;
+}
+
 export interface ReduxEdiCurrentStepHatClaimAction extends ReduxBaseAction {
     type: ReduxActionTypes.EDIT_CURRENT_STEP;
     step: number;
@@ -37,5 +42,12 @@ export function editHatClaimPassword(name: string, value: string | boolean | obj
         type: ReduxActionTypes.EDIT_HAT_PASSWORD,
         name,
         value
+    };
+}
+
+export function editHatClaimErrorMessage(message: string): ReduxEditErrorMsgHatClaimAction {
+    return {
+        type: ReduxActionTypes.EDIT_HAT_CLAIM_ERROR_MSG,
+        message
     };
 }
