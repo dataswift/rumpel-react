@@ -15,3 +15,7 @@ export interface HatClaim {
     hatCluster: string;
     password: string;
 }
+
+export interface HatClaimApiResponse {
+    message: string;
+}

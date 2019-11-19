@@ -2,7 +2,7 @@ import React from 'react';
 import './HatClaimActions.scss';
 
 interface Props {
-    currentStep: number
+    currentStep: number;
     setCurrentStep: (newStep: number) => void;
 }
 

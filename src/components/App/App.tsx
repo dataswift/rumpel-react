@@ -6,7 +6,7 @@ const HatClaim = React.lazy(() => import('../hat-claim/HatClaim'));
 const Home: React.FC = () => {
   return (
       <div>
-          <Link to={'/hat/claim/5325423423423423?email=paok@fdfsd.fsd'}>Claim a HAT</Link>
+          <Link to={'/hat/claim/5325423423423423?email=testing@test.co.uk'}>Claim a HAT</Link>
       </div>
   );
 };

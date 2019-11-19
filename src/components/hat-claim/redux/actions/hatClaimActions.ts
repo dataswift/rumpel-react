@@ -1,24 +1,20 @@
-import { ReduxActionTypes, ReduxBaseAction } from "../../../../redux/actions/rootActions";
+import { ReduxActionTypes, ReduxBaseAction, ReduxTestingActionTypes } from "../../../../redux/actions/rootActions";
 
 export interface ReduxEditHatClaimAction extends ReduxBaseAction {
-    type: ReduxActionTypes.EDIT_HAT_CLAIM;
     name: string;
     value: string | boolean;
 }
 
 export interface ReduxEditPasswordHatClaimAction extends ReduxBaseAction {
-    type: ReduxActionTypes.EDIT_HAT_PASSWORD;
     name: string;
     value: string | boolean | object;
 }
 
 export interface ReduxEditErrorMsgHatClaimAction extends ReduxBaseAction {
-    type: ReduxActionTypes.EDIT_HAT_CLAIM_ERROR_MSG;
     message: string;
 }
 
 export interface ReduxEdiCurrentStepHatClaimAction extends ReduxBaseAction {
-    type: ReduxActionTypes.EDIT_CURRENT_STEP;
     step: number;
 }
 

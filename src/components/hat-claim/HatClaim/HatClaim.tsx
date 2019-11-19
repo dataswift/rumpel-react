@@ -26,7 +26,7 @@ type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
 
 const HatClaim: React.FC<Props> = props => {
-    let history = useHistory();
+    const history = useHistory();
     const { claimToken } = useParams();
 
 
@@ -42,7 +42,7 @@ const HatClaim: React.FC<Props> = props => {
             props.editHatClaim('hatCluster', hatCluster);
 
             loadDynamicZxcvbn(() => {
-                console.log('ready')
+                console.log('zxcvbn ready')
             });
         }
     }, []);

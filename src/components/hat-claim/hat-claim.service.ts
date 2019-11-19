@@ -1,4 +1,4 @@
-import { HatClaim, HatClaimRequest } from "./hat-claim.interface";
+import { HatClaim, HatClaimApiResponse, HatClaimRequest } from "./hat-claim.interface";
 import { IHttpResponse, post } from "../../services/BackendService";
 
 const optins: string[] = ['MadHATTERS', 'HAT Monthly', 'HCF'];
@@ -20,10 +20,10 @@ export const buildClaimRequest = (claim: HatClaim): HatClaimRequest => {
 export const claimHat = async (
     claimToken: string,
     body: HatClaimRequest
-): Promise<IHttpResponse<HatClaimRequest>> => {
+): Promise<IHttpResponse<HatClaimApiResponse>> => {
     const args: RequestInit = { method: "post", body: JSON.stringify(body), headers: jsonContentHeader() };
 
-    return await post<HatClaimRequest>(`https://${body.hatName + '.' + body.hatCluster}/control/v2/auth/claim/complete/${claimToken}`, body, args);
+    return await post<HatClaimApiResponse>(`https://${body.hatName + '.' + body.hatCluster}/control/v2/auth/claim/complete/${claimToken}`, body, args);
 };
 
 function jsonContentHeader(): Headers {
