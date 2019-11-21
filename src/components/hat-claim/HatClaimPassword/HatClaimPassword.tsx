@@ -21,7 +21,6 @@ const HatClaimPassword: React.FC<Props> = props => {
         400
     );
 
-
     const passwordMatchDebounce = debounce(
         () => passwordIsValid(props.password.password, props.password.passwordConfirm),
         400
@@ -64,6 +63,7 @@ const HatClaimPassword: React.FC<Props> = props => {
 
     useEffect(() => {
         passwordMatchDebounce();
+        // eslint-disable-next-line
     }, [props.password.password, props.password.passwordConfirm]);
 
     if (props.currentStep !== 2) {

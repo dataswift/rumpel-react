@@ -46,6 +46,7 @@ const HatClaim: React.FC<Props> = props => {
                 // zxcvbn ready
             });
         }
+        // eslint-disable-next-line
     }, []);
 
     async function claim(nextStep: number) {

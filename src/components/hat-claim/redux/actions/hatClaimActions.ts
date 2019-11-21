@@ -1,4 +1,4 @@
-import { ReduxActionTypes, ReduxBaseAction, ReduxTestingActionTypes } from "../../../../redux/actions/rootActions";
+import { ReduxActionTypes, ReduxBaseAction } from "../../../../redux/actions/rootActions";
 
 export interface ReduxEditHatClaimAction extends ReduxBaseAction {
     name: string;
