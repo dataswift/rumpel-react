@@ -33,6 +33,7 @@ const HatClaim: React.FC<Props> = props => {
     useEffect(() => {
         const email =  decodeURIComponent(getParameterByName('email') || '');
         const host = window.location.hostname;
+
         const hatName = host.substring(0, host.indexOf('.'));
         const hatCluster = host.substring(host.indexOf('.') + 1);
 
@@ -42,7 +43,7 @@ const HatClaim: React.FC<Props> = props => {
             props.editHatClaim('hatCluster', hatCluster);
 
             loadDynamicZxcvbn(() => {
-                console.log('zxcvbn ready')
+                // zxcvbn ready
             });
         }
     }, []);
