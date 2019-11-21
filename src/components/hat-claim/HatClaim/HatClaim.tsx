@@ -6,7 +6,7 @@ import HatClaimUrl from "../HatClaimUrl/HatClaimUrl";
 import HatClaimPassword from "../HatClaimPassword";
 import HatClaimUrlConfirmation from "../HatClaimConfirmation/HatClaimConfirmation";
 import { useHistory, useParams } from "react-router";
-import { getParameterByName } from "../../../utils/query-params";
+import {getHashParameterByName} from "../../../utils/query-params";
 import { isEmail } from "../../../utils/validations";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
@@ -31,7 +31,7 @@ const HatClaim: React.FC<Props> = props => {
 
 
     useEffect(() => {
-        const email =  decodeURIComponent(getParameterByName('email') || '');
+        const email =  decodeURIComponent(getHashParameterByName('email') || '');
         const host = window.location.hostname;
 
         const hatName = host.substring(0, host.indexOf('.'));
