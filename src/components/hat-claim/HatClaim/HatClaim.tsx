@@ -31,7 +31,7 @@ const HatClaim: React.FC<Props> = props => {
 
 
     useEffect(() => {
-        const email =  decodeURIComponent(getHashParameterByName('email') || '');
+        const email =  getHashParameterByName('email');
         const host = window.location.hostname;
 
         const hatName = host.substring(0, host.indexOf('.'));
