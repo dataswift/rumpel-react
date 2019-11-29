@@ -13,13 +13,15 @@ const HatClaimActions: React.FC<Props> = props => {
                 className={'btn btn-accent'}
                 onClick={ () => props.setCurrentStep(props.currentStep + 1)}
             >
-                {props.currentStep === 3 ? 'Confirm' : props.currentStep === 4 ? 'login' : 'Next'}
+                {props.currentStep === 3 ? 'Confirm' : props.currentStep === 5 ? 'login' : 'Next'}
             </button>
-            {props.currentStep !== 0 && props.currentStep !== 3 && props.currentStep !== 4 &&
+            {props.currentStep !== 0 && props.currentStep !== 3 && props.currentStep !== 5 &&
                 <button
                     className={'btn btn-transparent'}
-                    onClick={ () => props.setCurrentStep(props.currentStep -1)}
-                >Previous</button>
+                    onClick={ () => props.setCurrentStep(props.currentStep - 1)}
+                >
+                    Previous
+                </button>
             }
 
             {props.currentStep === 3 &&
