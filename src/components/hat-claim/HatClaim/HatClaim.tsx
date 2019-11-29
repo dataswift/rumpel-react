@@ -5,7 +5,7 @@ import HatClaimEmail from "../HatClaimEmail";
 import HatClaimUrl from "../HatClaimUrl/HatClaimUrl";
 import HatClaimPassword from "../HatClaimPassword";
 import HatClaimUrlConfirmation from "../HatClaimConfirmation/HatClaimConfirmation";
-import {useHistory, useParams} from "react-router";
+import { useParams } from "react-router";
 import { getParameterByName } from "../../../utils/query-params";
 import { isEmail } from "../../../utils/validations";
 import { connect } from "react-redux";
@@ -26,12 +26,10 @@ type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
 
 const HatClaim: React.FC<Props> = props => {
-    const history = useHistory();
     const { claimToken } = useParams();
 
-
     useEffect(() => {
-        const email =  getParameterByName('email');
+        const email = getParameterByName('email');
         const host = window.location.hostname;
 
         const hatName = host.substring(0, host.indexOf('.'));
@@ -63,6 +61,12 @@ const HatClaim: React.FC<Props> = props => {
         }
     }
 
+    const goToLogin = () => {
+        const host = window.location.hostname;
+
+        window.location.href = `https://${host}/#/user/login`;
+    };
+
     const changeStep = (newStep: number) => {
         if (newStep === 1) {
             if (isEmail(props.hatClaim.email)) {
@@ -77,7 +81,7 @@ const HatClaim: React.FC<Props> = props => {
         } else if (newStep === 5) {
             props.setCurrentStep(newStep);
         } else if (newStep === 6) {
-            history.push("/#/user/login");
+            goToLogin();
         } else {
             props.setCurrentStep(newStep);
         }
