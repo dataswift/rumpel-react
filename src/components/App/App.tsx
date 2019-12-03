@@ -1,13 +1,17 @@
-import React from 'react';
-import HatClaim from "../hat-claim/HatClaim";
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Root from "./Root";
+const HatClaim = React.lazy(() => import('../hat-claim/HatClaim'));
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-        <HatClaim />
-        Rumpel
-    </div>
-  );
-};
-
+const App = () => (
+    <Root>
+        <Router>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                    <Route path="/hat/claim/:claimToken" component={HatClaim}/>
+                </Switch>
+            </Suspense>
+        </Router>
+    </Root>
+);
 export default App;
