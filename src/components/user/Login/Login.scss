@@ -1,0 +1,100 @@
+.login {
+  padding-top: 6rem;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  //height: calc(100vh - 6rem);
+
+  &-dataswift-logo {
+    height: 7.5rem;
+    width: 17rem;
+  }
+
+  &-remember-me-container {
+    margin-top: 8px;
+
+    label {
+      color: #4a556b;
+      letter-spacing: .25px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+
+  .issuer-logo {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 186px;
+    }
+  }
+
+  @media (max-height: 619px) {
+    .issuer-logo {
+
+      img {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .drp-image {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      width: 25%;
+    }
+  }
+
+  .data-rights-description {
+      opacity: 0.87;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: #9a9a9a;
+      margin: 16px auto 0;
+      max-width: 500px;
+      width: 90%;
+  }
+}
+
+.user-actions {
+  //background-color: $hat-background-color;
+
+  * {
+    display: block;
+    margin: 20px auto;
+    width: 250px;
+    text-align: center;
+  }
+
+  a {
+    font-size: 14px;
+    color: #9a9a9a;
+    text-decoration: none;
+    letter-spacing: 0.15px;
+  }
+}
+
+.title-hat-domain-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.hat-name {
+  display: inline-block;
+}
+
+.hat-domain {
+  display: inline-block;
+}

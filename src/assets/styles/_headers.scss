@@ -1,0 +1,55 @@
+@import "branding";
+
+header {
+  position: inherit;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6.0rem;
+  background-color: $app-dark-tone;
+  color: #fff;
+
+  &-content {
+    padding: 0 4.0rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &-logo {
+    height: 4rem;
+  }
+
+  .text-medium {
+    color: white;
+  }
+
+  &-learn-more {
+    text-transform: uppercase;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 1.0rem 4.0rem;
+    margin: 1.0rem 0 1.0rem 3.0rem;
+    font-size: 1.4rem;
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+

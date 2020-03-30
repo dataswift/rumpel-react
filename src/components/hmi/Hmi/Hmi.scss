@@ -1,0 +1,55 @@
+.hmi-page {
+  overflow: auto;
+
+  .hmi-page-wrapper {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100%;
+  }
+}
+
+.hmi-section-title {
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #4a556b;
+  margin: 46px 15px 24px;
+}
+
+.hmi-text-grey {
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #9a9a9a;
+  padding: 0 24px;
+
+  a {
+    color: #6297b1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.hmi-separator {
+  width: 185px;
+  height: 1px;
+  margin: 24px auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.hmi-data-rights-img {
+  margin: 40px auto;
+  height: 64px;
+  width: 64px;
+  display: block;
+}

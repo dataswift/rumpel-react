@@ -1,0 +1,60 @@
+.app-card-container {
+  width: 90%;
+  height: 86px;
+  padding: 16px 19px;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  align-items: center;
+  margin: 16px auto;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  .app-card-img-wrapper {
+    height: 48px;
+    width: 48px;
+    background: #9a9a9a;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 26px;
+      height: 20px;
+    }
+  }
+
+  .app-card-img {
+    &-facebook, &-facebook-sandbox {
+      background: #4267B2;
+    }
+    &-twitter {
+      background: #4AA0EB;
+    }
+    &-instagram {
+      background: #E1306C;
+    }
+    &-spotify {
+      background: #00D95F;
+    }
+    &-google-calendar {
+      background: #4F83E9;
+    }
+    &-fitbit {
+      background: #66AAB5;
+    }
+  }
+
+  .app-card-name {
+    margin-left: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    text-transform: capitalize;
+    line-height: 1.43;
+    letter-spacing: 0.25px;
+    color: #4a556b;
+  }
+}
