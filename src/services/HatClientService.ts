@@ -1,5 +1,6 @@
 import { HatClient } from '@dataswift/hat-js';
-import { get } from './BackendService';
+import { get, post } from './BackendService';
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -36,6 +37,37 @@ export class HatClientService {
 
   public async setupApplication(appId: string) {
     return await this.hat.applications().setupApplication(appId);
+  }
+
+  public async getApplicationHmi(applicationId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/applications/hmi?applicationId=${applicationId}`;
+
+    return get<HatApplication[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async sendReport(actionCode: string, message?: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/report-frontend-action`;
+    const body = { actionCode: actionCode, message: message };
+
+    return post<HatApplication[]>(
+      path,
+      {},
+      {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: { 'x-auth-token': token, 'content-type': 'application/json' },
+      },
+    );
   }
 
   public async appLogin(applicationId: string) {

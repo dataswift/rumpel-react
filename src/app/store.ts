@@ -5,6 +5,7 @@ import authenticationSlice from '../features/authentication/authenticationSlice'
 import languageSlice from '../features/language/languageSlice';
 import messagesSlice from '../features/messages/messagesSlice';
 import hatLoginSlice from '../features/hat-login/hatLoginSlice';
+import hatClaimCombinedReducer from '../components/hat-claim/redux/reducers/hatClaimCombinedReducer';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,7 @@ export const store = configureStore({
     language: languageSlice,
     messages: messagesSlice,
     hatLogin: hatLoginSlice,
-    rootReducer,
+    hatClaim: hatClaimCombinedReducer,
   },
 });
 

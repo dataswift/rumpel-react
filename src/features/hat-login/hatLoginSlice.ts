@@ -58,9 +58,9 @@ export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMess
 
 export const getApplications = (parentAppId: string, dependencies?: string[]): AppThunk => async (dispatch) => {
   try {
-    const apps = await HatClientService.getInstance().getApplications();
+    const apps = await HatClientService.getInstance().getApplicationHmi(parentAppId);
 
-    if (apps.parsedBody) {
+    if (apps?.parsedBody) {
       const parentApp = apps.parsedBody.find((app) => app.application.id === parentAppId);
 
       if (parentApp) {
@@ -70,7 +70,9 @@ export const getApplications = (parentAppId: string, dependencies?: string[]): A
       }
 
       if (dependencies) {
-        const dependencyApps = apps.parsedBody.filter((app) => dependencies?.indexOf(app.application.id) !== -1);
+        const parentDependencies = parentApp?.application.setup.dependencies || [];
+
+        const dependencyApps = apps.parsedBody.filter((app) => parentDependencies?.indexOf(app.application.id) !== -1);
 
         dispatch(setDependencyApps(dependencyApps));
       }
