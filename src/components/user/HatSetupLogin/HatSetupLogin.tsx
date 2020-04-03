@@ -10,7 +10,6 @@ import {
   setupApplication,
 } from '../../../features/hat-login/hatLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdateNotes } from '../../shared/UpdateNotes/UpdateNotes';
 import { HmiActions } from '../../hmi/hmi-shared/HmiActions/HmiActions';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from '../../../services/HatClientService';
@@ -21,7 +20,6 @@ const HatSetupLogin: React.FC = () => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const query = useQuery();
-  const fallback = query.get('fallback')?.toLowerCase();
 
   useEffect(() => {
     const name = query.get('name')?.toLowerCase();
@@ -177,7 +175,7 @@ const HatSetupLogin: React.FC = () => {
       if (internal) {
         window.location.href = fallback || '';
       } else {
-        callBackUrlWithError('access_denied', 'user_cancelled');
+        window.location.href = callBackUrlWithError('access_denied', 'user_cancelled');
       }
     });
   };

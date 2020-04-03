@@ -16,6 +16,7 @@ const Login: React.FC = () => {
   const [hatName, setHatName] = useState('');
   const [hatDomain, setHatDomain] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
   let history = useHistory();
   let location = useLocation();
   const query = useQuery();
@@ -47,6 +48,10 @@ const Login: React.FC = () => {
     }
   };
 
+  const navigateToPasswordRecovery = () => {
+    window.location.href = window.location.host + '/#/user/password/recovery';
+  };
+
   return (
     <div className={'login flex-column-wrapper'}>
       <InfoHeader />
@@ -62,13 +67,20 @@ const Login: React.FC = () => {
           <h3>{hatDomain}</h3>
         </div>
       </div>
-      <input
-        type={'password'}
-        placeholder={'Password'}
-        onFocus={() => setErrorMsg('')}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <div className="input-password-container login-password-container">
+            <input
+                type={hidePassword ? 'password' : 'text'}
+                name="password"
+                autoComplete={'password'}
+                onFocus={() => setErrorMsg('')}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+            />
+            <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
+                <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
+            </button>
+        </div>
 
       <div className={'checkbox-container login-remember-me-container'}>
         <label htmlFor={'rememberMe'}>
@@ -99,7 +111,14 @@ const Login: React.FC = () => {
         <button role="button" type="submit" className="btn btn-accent" onClick={() => login()}>
           Log in
         </button>
-        <Link to={'user/password/recovery'}>Forgotten password?</Link>
+        <button
+          className={'btn btn-transparent-grey'}
+          role={'button'}
+          type={'button'}
+          onClick={() => navigateToPasswordRecovery()}
+        >
+          Forgotten password?
+        </button>
       </div>
 
       <span className={'flex-spacer-large'} />

@@ -24,7 +24,6 @@ export const slice = createSlice({
   initialState,
   reducers: {
     parentApp: (state, action: PayloadAction<HatApplication>) => {
-      console.log(action.payload);
       state.parentApp = action.payload;
     },
     dependencyApps: (state, action: PayloadAction<Array<HatApplication>>) => {
@@ -39,8 +38,6 @@ export const slice = createSlice({
 export const { parentApp, dependencyApps, errorMessage } = slice.actions;
 
 export const setParentApp = (app: HatApplication): AppThunk => (dispatch) => {
-  console.log(app);
-
   dispatch(parentApp(app));
 };
 
