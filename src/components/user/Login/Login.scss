@@ -1,9 +1,12 @@
 .login {
-  padding-top: 6rem;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   //height: calc(100vh - 6rem);
+
+  @media (min-width: 851px) {
+    padding-top: 6rem;
+  }
 
   &-dataswift-logo {
     height: 7.5rem;

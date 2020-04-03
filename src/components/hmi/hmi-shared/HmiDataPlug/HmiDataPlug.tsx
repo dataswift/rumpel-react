@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './HmiDataPlug.scss';
 import { useSelector } from 'react-redux';
-import {selectDependencyApps, selectParentApp} from "../../../../features/hat-login/hatLoginSlice";
-import {FormatMessage} from "../../../shared/FormatMessage/FormatMessage";
-import {AppCard} from "../../../shared/AppCard/AppCard";
-import PermissionDialog from "../../../shared/PermissionDialog/PermissionDialog";
+import { selectDependencyApps, selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
+import { FormatMessage } from '../../../shared/FormatMessage/FormatMessage';
+import { AppCard } from '../../../shared/AppCard/AppCard';
+import PermissionDialog from '../../../shared/PermissionDialog/PermissionDialog';
 
 export const HmiDataPlug: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -24,7 +24,7 @@ export const HmiDataPlug: React.FC = () => {
         <FormatMessage id={'hatters.hmi.plug.description'} />
       </div>
 
-      {dependencyApps.map(app => {
+      {dependencyApps.map((app) => {
         return <AppCard key={app.application.id} appId={app.application.id} appName={app.application.info.name} />;
       })}
 

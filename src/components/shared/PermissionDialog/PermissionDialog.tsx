@@ -7,8 +7,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import { FormatMessage } from '../FormatMessage/FormatMessage';
-import {HatApplication} from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
-import { Permissions} from "../../hmi/hmi-shared/Permissions/Permissions";
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import { Permissions } from '../../hmi/hmi-shared/Permissions/Permissions';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -77,8 +77,14 @@ class PermissionDialog extends Component<IPermissionDialog> {
           </DialogTitle>
           <DialogContent dividers>
             {dependencyApps &&
-              dependencyApps.map(depApp => {
-                return <Permissions key={depApp.application.id} appName={depApp.application.info.name} permissions={depApp.application.permissions} />;
+              dependencyApps.map((depApp) => {
+                return (
+                  <Permissions
+                    key={depApp.application.id}
+                    appName={depApp.application.info.name}
+                    permissions={depApp.application.permissions}
+                  />
+                );
               })}
             <Permissions permissions={app.application.permissions} appName={app.application.info.name} />
           </DialogContent>

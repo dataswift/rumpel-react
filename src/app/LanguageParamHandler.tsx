@@ -7,13 +7,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const LanguageParamHandler: React.FC<Props> = props => {
+export const LanguageParamHandler: React.FC<Props> = (props) => {
   const language = useSelector(selectLanguage);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setLanguage("en"));
-    dispatch(fetchMessages("en"));
+    dispatch(setLanguage('en'));
+    dispatch(fetchMessages('en'));
   }, []);
 
   return <>{props.children}</>;

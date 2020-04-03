@@ -1,5 +1,5 @@
 import { flatten, uniqBy, values } from 'lodash';
-import {EndpointQuery, PropertyQuery} from "@dataswift/hat-js/lib/interfaces/bundle.interface";
+import { EndpointQuery, PropertyQuery } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
 
 export const unbundle = (bundle: {
   [bundleVersion: string]: PropertyQuery;
@@ -12,7 +12,9 @@ export const unbundle = (bundle: {
     return {
       title: endpointQuery.endpoint.replace('/', ' '),
       fields: endpointQuery.mapping
-        ? uniqBy(Object.keys(endpointQuery.mapping), path => path.split('.')[0]).map(name => name.replace(/_/g, ' '))
+        ? uniqBy(Object.keys(endpointQuery.mapping), (path) => path.split('.')[0]).map((name) =>
+            name.replace(/_/g, ' '),
+          )
         : ['NONE'],
     };
   });

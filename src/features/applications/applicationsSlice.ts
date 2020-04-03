@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { get } from '../../services/BackendService';
-import {HatApplication} from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 
 type ApplicationsState = {
   applications: HatApplication[];
@@ -11,7 +11,7 @@ type ApplicationsState = {
 
 const initialState: ApplicationsState = {
   applications: [],
-  expirationTime: 20
+  expirationTime: 20,
 };
 
 export const slice = createSlice({
@@ -26,7 +26,7 @@ export const slice = createSlice({
 
 export const { apps } = slice.actions;
 
-export const setApps = (app: Array<HatApplication>): AppThunk => dispatch => {
+export const setApps = (app: Array<HatApplication>): AppThunk => (dispatch) => {
   dispatch(apps(app));
 };
 
@@ -55,7 +55,7 @@ export const selectApplications = (state: RootState) => state.applications.appli
 //   }
 // };
 
-export const getApplications = (id: string): AppThunk => async dispatch => {
+export const getApplications = (id: string): AppThunk => async (dispatch) => {
   let url = `/api/applications`;
 
   const app = await get<Array<HatApplication>>(url);

@@ -3,12 +3,12 @@ import './HmiDataDebit.scss';
 import { useSelector } from 'react-redux';
 import appLogoPlaceholder from '../../../../assets/icons/app-logo-placeholder.svg';
 import dataShareLogo from '../../../../assets/icons/data-share.svg';
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import { unbundle } from './unbundle';
-import {FormatMessage} from "../../../shared/FormatMessage/FormatMessage";
-import {selectParentApp} from "../../../../features/hat-login/hatLoginSlice";
+import { FormatMessage } from '../../../shared/FormatMessage/FormatMessage';
+import { selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
 
 export const HmiDataDebit: React.FC = () => {
   const parentApp = useSelector(selectParentApp);
@@ -17,7 +17,7 @@ export const HmiDataDebit: React.FC = () => {
     return null;
   }
 
-  const {permissions, info} = parentApp.application;
+  const { permissions, info } = parentApp.application;
 
   if (permissions.dataRequired && permissions.dataRequired.bundle) {
     const bundle = unbundle(permissions.dataRequired.bundle.bundle);
@@ -57,12 +57,12 @@ export const HmiDataDebit: React.FC = () => {
               <br />
               <br />
 
-              {bundle.map(value => {
+              {bundle.map((value) => {
                 return (
-                  <div key={value.title}>
+                  <div className={'hmi-data-debit-list-wrapper'} key={value.title}>
                     <div>{value.title} data</div>
-                    <ul>
-                      {value.fields.map(field => {
+                    <ul className={'hmi-data-debit-list'}>
+                      {value.fields.map((field) => {
                         return <li key={field}>{field}</li>;
                       })}
                     </ul>

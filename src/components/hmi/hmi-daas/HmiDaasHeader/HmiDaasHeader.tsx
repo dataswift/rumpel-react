@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../../../assets/icons/hat-data-rights-icon.svg';
-import {selectParentApp} from "../../../../features/hat-login/hatLoginSlice";
+import { selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
 
 export const HmiDaasHeader: React.FC = () => {
   const hatName = window.location.host;

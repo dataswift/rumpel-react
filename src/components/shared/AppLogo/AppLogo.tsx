@@ -3,7 +3,7 @@ import './AppLogo.scss';
 import placeholder from '../../../assets/icons/app-logo-placeholder.svg';
 import { FormatMessage } from '../FormatMessage/FormatMessage';
 
-const AppLogoRating: React.FC<OwnProps> = props => {
+const AppLogoRating: React.FC<OwnProps> = (props) => {
   return (
     <>
       {props.rating && (
@@ -36,7 +36,7 @@ const AppLogoRating: React.FC<OwnProps> = props => {
   );
 };
 
-export const AppLogo: React.FC<OwnProps> = props => {
+export const AppLogo: React.FC<OwnProps> = (props) => {
   return (
     <div className={'app-logo-container'}>
       <div className="app-logo-wrapper">

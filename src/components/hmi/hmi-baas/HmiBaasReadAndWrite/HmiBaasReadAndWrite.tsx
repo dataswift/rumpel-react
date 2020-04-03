@@ -4,7 +4,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import { Permissions } from '../../hmi-shared/Permissions/Permissions';
-import {selectDependencyApps, selectParentApp} from "../../../../features/hat-login/hatLoginSlice";
+import { selectDependencyApps, selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
 
 export const HmiBaasReadAndWrite: React.FC = () => {
   const parentApp = useSelector(selectParentApp);
@@ -18,7 +18,9 @@ export const HmiBaasReadAndWrite: React.FC = () => {
     return (
       <div>
         <div className={'hmi-section-title'}>{parentApp.application.info.name} wants to access your HAT PDA.</div>
-        <div className={'hmi-text-grey'}>You are giving {parentApp.application.info.name} the following permissions:</div>
+        <div className={'hmi-text-grey'}>
+          You are giving {parentApp.application.info.name} the following permissions:
+        </div>
 
         <ExpansionPanel className={'expansion-panel'} square={false}>
           <ExpansionPanelSummary
@@ -31,8 +33,14 @@ export const HmiBaasReadAndWrite: React.FC = () => {
           <ExpansionPanelDetails>
             <div className={'hmi-card-subtitle'}>
               {dependencyApps &&
-                dependencyApps.map(depApp => {
-                  return <Permissions appName={depApp.application.info.name} key={depApp.application.id} permissions={depApp.application.permissions} />;
+                dependencyApps.map((depApp) => {
+                  return (
+                    <Permissions
+                      appName={depApp.application.info.name}
+                      key={depApp.application.id}
+                      permissions={depApp.application.permissions}
+                    />
+                  );
                 })}
               <Permissions appName={parentApp.application.info.name} permissions={parentApp.application.permissions} />
             </div>

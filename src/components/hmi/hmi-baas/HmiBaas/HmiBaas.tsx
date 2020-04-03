@@ -8,7 +8,7 @@ import { HmiDataDebit } from '../../hmi-shared/HmiDataDebit/HmiDataDebit';
 import { HmiRating } from '../../hmi-shared/HmiRating/HmiRating';
 import { HmiBaasHeader } from '../HmiBaasHeader/HmiBaasHeader';
 import { HmiBaasReadAndWrite } from '../HmiBaasReadAndWrite/HmiBaasReadAndWrite';
-import {HmiType} from "../../../../features/hmi/hmi.interface";
+import { HmiType } from '../../../../features/hmi/hmi.interface';
 
 export const HmiBaas: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,13 +18,6 @@ export const HmiBaas: React.FC = () => {
       <HmiBaasReadAndWrite />
       <HmiDataDebit />
       <HmiRating />
-      <HmiActions
-        registrationType={HmiType.baas}
-        cancelStep={() =>
-          {}
-        }
-        nextStep={() => {}}
-      />
     </div>
   );
 };

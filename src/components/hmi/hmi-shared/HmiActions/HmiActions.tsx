@@ -1,9 +1,9 @@
 import React from 'react';
 import './HmiActions.scss';
 import { useSelector } from 'react-redux';
-import {HmiType} from "../../../../features/hmi/hmi.interface";
-import {FormatMessage} from "../../../shared/FormatMessage/FormatMessage";
-import {selectParentApp} from "../../../../features/hat-login/hatLoginSlice";
+import { HmiType } from '../../../../features/hmi/hmi.interface';
+import { FormatMessage } from '../../../shared/FormatMessage/FormatMessage';
+import { selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
 
 type Props = {
   registrationType: HmiType;
@@ -11,7 +11,7 @@ type Props = {
   cancelStep: () => void;
 };
 
-export const HmiActions: React.FC<Props> = props => {
+export const HmiActions: React.FC<Props> = (props) => {
   const parentApp = useSelector(selectParentApp);
 
   if (!parentApp) {
