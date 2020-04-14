@@ -1,13 +1,13 @@
 import { useQuery } from '../hooks/useQuery';
-import { Redirect, Route } from 'react-router';
+import {Redirect, RedirectProps, Route} from 'react-router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  AuthState,
   loginWithToken,
-  selectAuthState,
   selectIsAuthenticated,
 } from '../features/authentication/authenticationSlice';
+import Cookies from "js-cookie";
+import {HatClientService} from "../services/HatClientService";
 
 interface OwnProps {
   children: React.ReactNode;
@@ -17,23 +17,22 @@ interface OwnProps {
 
 export function PrivateRoute({ children, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const query = useQuery();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // const token = query.get("token");
-    //
-    // if (token) {
-    //     dispatch(loginWithToken(token));
-    // }
-  }, []);
+      const token = Cookies.get("token");
+      const tokenParam = query.get("token");
+      const hatSvc = HatClientService.getInstance();
 
-  // if (authState === AuthState.LOGIN_FAILED) {
-  //     return <Redirect
-  //         to={{
-  //             pathname: "/user/login",
-  //             state: { from: location }
-  //         }}
-  //     />
-  // }
+      if (tokenParam && !hatSvc.isTokenExpired(tokenParam)) {
+          dispatch(loginWithToken(tokenParam));
+          HatClientService.getInstance(tokenParam);
+      } else if (token && !hatSvc.isTokenExpired(token)) {
+          dispatch(loginWithToken(token));
+          HatClientService.getInstance(token);
+      }
+  }, []);
 
   return (
     <Route
@@ -42,14 +41,57 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
         isAuthenticated ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: '/user/login',
-              state: { from: location },
-            }}
-          />
+            <DelayedRedirect
+        to={{
+          pathname: '/user/login',
+          state: { from: location },
+        }}
+        delay={100}
+      />
         )
       }
     />
   );
+}
+
+interface DelayedProps {
+    delay: number
+}
+
+interface DelayedState {
+    timeToRedirect: boolean
+}
+
+class DelayedRedirect extends React.Component<
+    RedirectProps & DelayedProps,
+    DelayedState
+    > {
+    timeout: any = null;
+
+    state: DelayedState = {
+        timeToRedirect: false,
+    };
+
+    componentDidMount() {
+        this.timeout = setTimeout(() => {
+            this.setState({
+                timeToRedirect: true,
+            })
+        }, this.props.delay)
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+
+    render() {
+        const { delay, ...props } = this.props;
+        const { timeToRedirect } = this.state;
+
+        if (timeToRedirect) {
+            return <Redirect {...props} />
+        }
+
+        return null
+    }
 }

@@ -9,6 +9,8 @@ import { loginWithToken } from '../../../features/authentication/authenticationS
 import { useDispatch } from 'react-redux';
 import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
+import Cookies from "js-cookie";
+import {Jwt} from "@dataswift/hat-js/lib/auth/jwt";
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -21,16 +23,25 @@ const Login: React.FC = () => {
   let location = useLocation();
   const query = useQuery();
   const dispatch = useDispatch();
-  // @ts-ignore
-  // const target =  query.get("target") || location.state.from || { from: { pathname: "/feed" } };
+  const target =  query.get("target");
 
-  let { from } = location.state || { from: { pathname: '/feed' } };
+  // @ts-ignore
+    const { from } = location.state || { from: { pathname: '/#/feed' } };
 
   useEffect(() => {
     const host = window.location.hostname;
+    const hatSvc = HatClientService.getInstance();
 
     setHatName(host.substring(0, host.indexOf('.')));
     setHatDomain(host.substring(host.indexOf('.')));
+
+      const token = Cookies.get("token");
+      if (token && !hatSvc.isTokenExpired(token)) {
+          dispatch(loginWithToken(token));
+          HatClientService.getInstance(token);
+
+          history.replace(target || from);
+      }
   }, []);
 
   const login = async () => {
@@ -41,7 +52,12 @@ const Login: React.FC = () => {
         dispatch(loginWithToken(res.parsedBody.accessToken));
         HatClientService.getInstance(res.parsedBody.accessToken);
 
-        history.replace(from);
+        if (remember) {
+            Cookies.set("token", res.parsedBody.accessToken, {expires: 3, secure: false, sameSite: 'strict'});
+            console.log(Cookies.getJSON());
+        }
+
+        history.replace(target || from);
       }
     } catch (e) {
       setErrorMsg('Sorry, that password is incorrect!');

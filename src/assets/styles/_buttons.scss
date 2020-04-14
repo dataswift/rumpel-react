@@ -46,3 +46,12 @@ button {
   text-decoration: none;
   letter-spacing: 0.15px;
 }
+
+.link-button {
+  border: none;
+  background: transparent;
+  color: $app-accent-color;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}

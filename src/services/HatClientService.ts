@@ -8,7 +8,11 @@ export class HatClientService {
   private hat: HatClient;
 
   private constructor(token?: string) {
-    this.hat = new HatClient({ token: token || '', secure: false, apiVersion: 'v2.6' });
+    if (token) {
+      this.hat = new HatClient({ token: token || '', secure: true, apiVersion: 'v2.6' });
+    } else {
+      this.hat = new HatClient({apiVersion: 'v2.6'});
+    }
   }
 
   public static getInstance(token?: string): HatClientService {
@@ -37,6 +41,10 @@ export class HatClientService {
 
   public async setupApplication(appId: string) {
     return await this.hat.applications().setupApplication(appId);
+  }
+
+  public isTokenExpired(token: string) {
+    return this.hat.auth().isTokenExpired(token);
   }
 
   public async getApplicationHmi(applicationId: string) {

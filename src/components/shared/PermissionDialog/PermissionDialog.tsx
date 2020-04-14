@@ -89,7 +89,7 @@ class PermissionDialog extends Component<IPermissionDialog> {
             <Permissions permissions={app.application.permissions} appName={app.application.info.name} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} style={{fontSize: '1.4rem'}} color="primary">
               OK
             </Button>
           </DialogActions>

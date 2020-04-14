@@ -26,22 +26,34 @@ const HatSetupLogin: React.FC = () => {
     const redirect = query.get('redirect');
 
     if (name && redirect) {
+      dispatch(getApplications(name));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!parentApp) return;
+
+    const name = query.get('name')?.toLowerCase();
+    const redirect = query.get('redirect');
+
+    if (name && redirect) {
       const dependencies = query.get('dependencies');
 
       const dependencyAppsArray = dependencies?.split(',');
-      dispatch(getApplications(name, dependencyAppsArray));
+      // dispatch(getApplications(name, dependencyAppsArray));
       if (dependencies) {
         if (dependencyAppsArray && dependencyAppsArray.length > 0) {
           setupAppDependencies(dependencyApps);
         }
       } else {
         const dependenciesAreSetup = dependencyApps.every((app) => app.enabled);
-        const parentAppIsReady = parentApp && parentApp.enabled && !parentApp.needsUpdating;
+        const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
+
+        console.log({ parentAppIsReady, dependenciesAreSetup});
 
         if (parentAppIsReady && dependenciesAreSetup) {
-          if (parentApp) {
-            buildRedirect(parentApp);
-          }
+          buildRedirect(parentApp);
+
           // this.hatCacheSvc.clearCache();
         } else if (parentAppIsReady) {
           setupAppDependencies(dependencyApps);
@@ -49,10 +61,13 @@ const HatSetupLogin: React.FC = () => {
           setDisplayHmi(true);
         }
       }
+    } else {
+
     }
-  }, []);
+  }, [parentApp]);
 
   const setupAppDependencies = async (dependencies: HatApplication[]) => {
+    console.log(dependencies);
     const app = dependencies.filter((d) => !d.enabled)[0];
     const callback = intermediateCallBackUrl(app.application.id);
 
@@ -111,7 +126,7 @@ const HatSetupLogin: React.FC = () => {
     const redirect = query.get('redirect');
 
     if (internal) {
-      // this.router.navigate([redirect]);
+      window.location.href = redirect || '';
     } else {
       const hatSvc = HatClientService.getInstance();
 
@@ -133,10 +148,6 @@ const HatSetupLogin: React.FC = () => {
             hatSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).then((res) => {
               window.location.href = `${redirect}${redirect?.includes('?') ? '&' : '?'}token=${accessToken}`;
             });
-
-            // this.hatApiSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).subscribe(() => {
-            //   window.location.href = `${redirect}${redirect?.includes('?') ? '&' : '?'}token=${accessToken}`;
-            // });
           } else {
             window.location.href = `${redirect}${redirect?.includes('?') ? '&' : '?'}token=${accessToken}`;
           }

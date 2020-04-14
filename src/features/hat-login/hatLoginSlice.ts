@@ -53,7 +53,7 @@ export const selectParentApp = (state: RootState) => state.hatLogin.parentApp;
 export const selectDependencyApps = (state: RootState) => state.hatLogin.dependencyApps;
 export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMessage;
 
-export const getApplications = (parentAppId: string, dependencies?: string[]): AppThunk => async (dispatch) => {
+export const getApplications = (parentAppId: string): AppThunk => async (dispatch) => {
   try {
     const apps = await HatClientService.getInstance().getApplicationHmi(parentAppId);
 
@@ -66,13 +66,12 @@ export const getApplications = (parentAppId: string, dependencies?: string[]): A
         dispatch(setErrorMessage('ERROR: App details incorrect. Please contact the app developer and let them know.'));
       }
 
-      if (dependencies) {
-        const parentDependencies = parentApp?.application.setup.dependencies || [];
+      // const parentDependencies = parentApp?.application.setup.dependencies || [];
+      const parentDependencies = ["facebook", "twitter"];
 
-        const dependencyApps = apps.parsedBody.filter((app) => parentDependencies?.indexOf(app.application.id) !== -1);
+      const dependencyApps = apps.parsedBody.filter((app) => parentDependencies?.indexOf(app.application.id) !== -1);
 
-        dispatch(setDependencyApps(dependencyApps));
-      }
+      dispatch(setDependencyApps(dependencyApps));
     }
   } catch (e) {
     dispatch(setErrorMessage('ERROR: Something went wrong. Please contact the app developer and let them know.'));
