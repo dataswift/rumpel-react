@@ -2,9 +2,11 @@ import React from 'react';
 import AppRouter from './AppRouter';
 import Root from './Root';
 import { LanguageParamHandler } from './LanguageParamHandler';
+import {environment} from "../environment";
 
 const App = () => (
-  <Root>
+    <Root>
+        {    console.log(environment)}
     <LanguageParamHandler>
       <AppRouter />
     </LanguageParamHandler>

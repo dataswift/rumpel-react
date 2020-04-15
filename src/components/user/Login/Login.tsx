@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
 import Cookies from "js-cookie";
-import {Jwt} from "@dataswift/hat-js/lib/auth/jwt";
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');

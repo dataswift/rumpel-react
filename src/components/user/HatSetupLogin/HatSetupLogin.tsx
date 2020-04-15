@@ -75,7 +75,7 @@ const HatSetupLogin: React.FC = () => {
       const hatSvc = HatClientService.getInstance();
       const res = await hatSvc.setupApplication(app.application.id);
 
-      if (res.parsedBody) {
+      if (res?.parsedBody) {
         const resAppLogin = await hatSvc.appLogin(app.application.id);
         if (resAppLogin?.parsedBody?.accessToken) {
           window.location.href = `${app.application.setup.url}?token=${resAppLogin.parsedBody.accessToken}&redirect=${callback}`;
@@ -161,7 +161,7 @@ const HatSetupLogin: React.FC = () => {
       const hatSvc = HatClientService.getInstance();
       try {
         const res = await hatSvc.setupApplication(parentApp.application.id);
-        if (res.parsedBody) {
+        if (res?.parsedBody) {
           dispatch(setParentApp(res.parsedBody));
           if (dependencyApps.every((app) => app.enabled === true)) {
             buildRedirect(res.parsedBody);

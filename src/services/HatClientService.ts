@@ -39,8 +39,15 @@ export class HatClientService {
     return await this.hat.applications().getById(appId);
   }
 
-  public async setupApplication(appId: string) {
-    return await this.hat.applications().setupApplication(appId);
+  public async setupApplication(applicationId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/setup`;
+
+    return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
   public isTokenExpired(token: string) {
