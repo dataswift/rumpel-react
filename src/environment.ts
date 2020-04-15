@@ -5,6 +5,7 @@
 
 export const environment = {
   production: process.env.REACT_APP_PRODUCTION === 'true',
+  sandbox: process.env.REACT_APP_SANDBOX === 'true',
   native: true,
   protocol: 'https:',
   appName: process.env.REACT_APP_APP_NAME,
