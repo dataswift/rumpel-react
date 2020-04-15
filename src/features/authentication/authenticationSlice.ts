@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import {HatTokenValidation, JWTDecoded} from "@dataswift/hat-js/lib/utils/HatTokenValidation";
-import {config} from "../../app.config";
-import {isFuture, toDate, addDays} from 'date-fns';
-
+import { HatTokenValidation, JWTDecoded } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
+import { config } from '../../app.config';
+import { isFuture, toDate, addDays } from 'date-fns';
 
 export enum AuthState {
   LOGIN_IDLE = 'login_idle',
@@ -60,7 +59,7 @@ const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
   const scopeIsValid = decodedToken['application'] === config.tokenApp || decodedToken['accessScope'] === 'owner';
   const tokenDomain = decodedToken['iss']?.slice(decodedToken['iss'].indexOf('.')) || '';
   const domainIsValid = config.supportedDomains.indexOf(tokenDomain) > -1;
-  const portIsValid = new RegExp('^[\w.]+:'+config.supportedDomains.join('|')+'$', 'gi').test(tokenDomain);
+  const portIsValid = new RegExp('^[w.]+:' + config.supportedPorts.join('|') + '$', 'gi').test(tokenDomain);
   const notExpired = isFuture(expiryDate) && isFuture(addDays(issuedDate, config.tokenExpiryTime));
 
   return scopeIsValid && (domainIsValid || portIsValid) && notExpired;

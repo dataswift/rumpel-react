@@ -9,7 +9,7 @@ import { loginWithToken } from '../../../features/authentication/authenticationS
 import { useDispatch } from 'react-redux';
 import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -22,10 +22,10 @@ const Login: React.FC = () => {
   let location = useLocation();
   const query = useQuery();
   const dispatch = useDispatch();
-  const target =  query.get("target");
+  const target = query.get('target');
 
   // @ts-ignore
-    const { from } = location.state || { from: { pathname: '/#/feed' } };
+  const { from } = location.state || { from: { pathname: '/#/feed' } };
 
   useEffect(() => {
     const host = window.location.hostname;
@@ -34,13 +34,13 @@ const Login: React.FC = () => {
     setHatName(host.substring(0, host.indexOf('.')));
     setHatDomain(host.substring(host.indexOf('.')));
 
-      const token = Cookies.get("token");
-      if (token && !hatSvc.isTokenExpired(token)) {
-          dispatch(loginWithToken(token));
-          HatClientService.getInstance(token);
+    const token = Cookies.get('token');
+    if (token && !hatSvc.isTokenExpired(token)) {
+      dispatch(loginWithToken(token));
+      HatClientService.getInstance(token);
 
-          history.replace(target || from);
-      }
+      history.replace(target || from);
+    }
   }, []);
 
   const login = async () => {
@@ -52,8 +52,7 @@ const Login: React.FC = () => {
         HatClientService.getInstance(res.parsedBody.accessToken);
 
         if (remember) {
-            Cookies.set("token", res.parsedBody.accessToken, {expires: 3, secure: false, sameSite: 'strict'});
-            console.log(Cookies.getJSON());
+          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: false, sameSite: 'strict' });
         }
 
         history.replace(target || from);
@@ -64,7 +63,7 @@ const Login: React.FC = () => {
   };
 
   const navigateToPasswordRecovery = () => {
-    window.location.href = window.location.host + '/#/user/password/recovery';
+      history.push('/user/password/recover');
   };
 
   return (
@@ -82,20 +81,20 @@ const Login: React.FC = () => {
           <h3>{hatDomain}</h3>
         </div>
       </div>
-        <div className="input-password-container login-password-container">
-            <input
-                type={hidePassword ? 'password' : 'text'}
-                name="password"
-                autoComplete={'password'}
-                onFocus={() => setErrorMsg('')}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
-            <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
-                <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
-            </button>
-        </div>
+      <div className="input-password-container login-password-container">
+        <input
+          type={hidePassword ? 'password' : 'text'}
+          name="password"
+          autoComplete={'password'}
+          onFocus={() => setErrorMsg('')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
+          <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
+        </button>
+      </div>
 
       <div className={'checkbox-container login-remember-me-container'}>
         <label htmlFor={'rememberMe'}>

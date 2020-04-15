@@ -49,7 +49,7 @@ const HatSetupLogin: React.FC = () => {
         const dependenciesAreSetup = dependencyApps.every((app) => app.enabled);
         const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
 
-        console.log({ parentAppIsReady, dependenciesAreSetup});
+        console.log({ parentAppIsReady, dependenciesAreSetup });
 
         if (parentAppIsReady && dependenciesAreSetup) {
           buildRedirect(parentApp);
@@ -62,7 +62,6 @@ const HatSetupLogin: React.FC = () => {
         }
       }
     } else {
-
     }
   }, [parentApp]);
 

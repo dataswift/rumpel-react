@@ -67,7 +67,7 @@ export const getApplications = (parentAppId: string): AppThunk => async (dispatc
       }
 
       // const parentDependencies = parentApp?.application.setup.dependencies || [];
-      const parentDependencies = ["facebook", "twitter"];
+      const parentDependencies = ['facebook', 'twitter'];
 
       const dependencyApps = apps.parsedBody.filter((app) => parentDependencies?.indexOf(app.application.id) !== -1);
 

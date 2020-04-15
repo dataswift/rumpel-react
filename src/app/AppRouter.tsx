@@ -28,6 +28,12 @@ const HatSetupLogin = React.lazy(() =>
     '../components/user/HatSetupLogin'
   ),
 );
+const PasswordRecover = React.lazy(() =>
+  import(
+    /* webpackChunkName: "password_recover" */
+    '../components/user/PasswordRecover'
+  ),
+);
 
 const AppRouter = () => (
   <Router>
@@ -35,6 +41,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
+        <Route path="/user/password/recover" component={PasswordRecover} />
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />

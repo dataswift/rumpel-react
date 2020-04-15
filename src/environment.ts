@@ -8,5 +8,5 @@ export const environment = {
   native: true,
   protocol: 'https:',
   appName: process.env.REACT_APP_APP_NAME,
-  tokenName: process.env.REACT_APP_TOKEN_NAME
+  tokenName: process.env.REACT_APP_TOKEN_NAME,
 };

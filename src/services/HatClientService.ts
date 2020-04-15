@@ -11,7 +11,7 @@ export class HatClientService {
     if (token) {
       this.hat = new HatClient({ token: token || '', secure: true, apiVersion: 'v2.6' });
     } else {
-      this.hat = new HatClient({apiVersion: 'v2.6'});
+      this.hat = new HatClient({ apiVersion: 'v2.6' });
     }
   }
 
