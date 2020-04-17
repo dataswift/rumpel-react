@@ -1,7 +1,7 @@
 import {get, post} from '../services/BackendService';
 
 export const userAccessToken = (username: string, password: string) => {
-  const path = `http://bobtheplumber.hat.org:9000/users/access_token`;
+  const path = `/users/access_token`;
   const headers = {
     username: encodeURIComponent(username),
     password: encodeURIComponent(password),
@@ -12,7 +12,8 @@ export const userAccessToken = (username: string, password: string) => {
 
 export const recoverPassword = (body: { email: string; }) => {
   const path = `/control/v2/auth/passwordReset`;
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {'Content-Type': 'application/json'};
 
-return post(path, body, { headers: headers });
+  //todo create new post function to accept headers, body
+  return post(path, {}, {headers: headers, body: JSON.stringify(body)});
 };

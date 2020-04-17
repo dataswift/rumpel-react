@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import { InfoHeader } from '../../shared/headers/InfoHeader/InfoHeader';
 import dataRightsLogo from '../../../assets/images/hat-data-rights.png';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { userAccessToken } from '../../../api/hatAPI';
 import { NotificationBanner } from '../../shared/banners/NotificationBanner/NotificationBanner';
 import { loginWithToken } from '../../../features/authentication/authenticationSlice';
@@ -22,10 +22,20 @@ const Login: React.FC = () => {
   let location = useLocation();
   const query = useQuery();
   const dispatch = useDispatch();
-  const target = query.get('target');
+  const target = query.get('target') || '/#/feed';
 
   // @ts-ignore
-  const { from } = location.state || { from: { pathname: '/#/feed' } };
+  const from = location.state?.from;
+
+  const loginSuccessful = () => {
+      if (from) {
+          console.log("from", from);
+          history.replace(from);
+      } else {
+          console.log("target", window.location.origin + target);
+          window.location.href = window.location.origin + target;
+      }
+  };
 
   useEffect(() => {
     const host = window.location.hostname;
@@ -35,11 +45,12 @@ const Login: React.FC = () => {
     setHatDomain(host.substring(host.indexOf('.')));
 
     const token = Cookies.get('token');
+
     if (token && !hatSvc.isTokenExpired(token)) {
       dispatch(loginWithToken(token));
       HatClientService.getInstance(token);
 
-      history.replace(target || from);
+        loginSuccessful();
     }
   }, []);
 
@@ -55,7 +66,8 @@ const Login: React.FC = () => {
           Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: false, sameSite: 'strict' });
         }
 
-        history.replace(target || from);
+          loginSuccessful();
+        // history.replace(target || from);
       }
     } catch (e) {
       setErrorMsg('Sorry, that password is incorrect!');
