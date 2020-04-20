@@ -9,7 +9,7 @@ type ApplicationsState = {
   expirationTime: number;
 };
 
-const initialState: ApplicationsState = {
+export const initialState: ApplicationsState = {
   applications: [],
   expirationTime: 20,
 };
@@ -30,30 +30,7 @@ export const setApps = (app: Array<HatApplication>): AppThunk => (dispatch) => {
   dispatch(apps(app));
 };
 
-// export const selectParentApp = (state: RootState) => state.applications.parentApp;
 export const selectApplications = (state: RootState) => state.applications.applications;
-//
-// export const getApplication = (id: string, lang: string): AppThunk => async dispatch => {
-//   try {
-//     let url = `/api/applications/${id}`;
-//
-//     if (lang && lang !== 'en') {
-//       url += `?lang=${lang}`;
-//     }
-//
-//     const app = await get<HatApplication>(url);
-//     if (app.parsedBody) {
-//       return dispatch(initParentApp(app.parsedBody));
-//     }
-//   } catch (error) {
-//     // const err: RegistrationRedirectError = {
-//     //   error: 'application_misconfigured',
-//     //   reason: 'application_id_not_found',
-//     // };
-//
-//     // return dispatch(setApps(err));
-//   }
-// };
 
 export const getApplications = (id: string): AppThunk => async (dispatch) => {
   let url = `/api/applications`;

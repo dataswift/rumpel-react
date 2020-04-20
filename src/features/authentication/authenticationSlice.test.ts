@@ -4,9 +4,7 @@ import reducer, {
     selectAuthToken,
     selectAuthState,
     selectIsAuthenticated,
-    loginWithToken
 } from './authenticationSlice';
-import {RootState} from "../../app/store";
 
 describe('auth slice', () => {
     describe('reducer, actions and selectors', () => {
