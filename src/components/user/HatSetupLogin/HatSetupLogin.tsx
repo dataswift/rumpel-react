@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HmiActions } from '../../hmi/hmi-shared/HmiActions/HmiActions';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from '../../../services/HatClientService';
-import {environment} from "../../../environment";
+import { environment } from '../../../environment';
 
 const HatSetupLogin: React.FC = () => {
   const dispatch = useDispatch();
@@ -143,7 +143,6 @@ const HatSetupLogin: React.FC = () => {
 
           if (isRedirectUrlValid) {
             window.location.href = `${redirect}${redirect?.includes('?') ? '&' : '?'}token=${accessToken}`;
-
           } else {
             console.warn('Provided URL is not registered');
 
@@ -153,7 +152,9 @@ const HatSetupLogin: React.FC = () => {
               });
             } else {
               hatSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).then((res) => {
-                window.location.href = `${redirect}${redirect?.includes('?') ? '&' : '?'}error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                window.location.href = `${redirect}${
+                  redirect?.includes('?') ? '&' : '?'
+                }error=access_denied&error_reason=hmi_invalid_redirect_url`;
               });
             }
           }

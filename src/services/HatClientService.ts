@@ -6,10 +6,12 @@ export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
   private static instance: HatClientService;
   private hat: HatClient;
+  private secure = location.protocol === 'https:';
 
   private constructor(token?: string) {
     if (token) {
-      this.hat = new HatClient({ token: token || '', secure: true, apiVersion: 'v2.6' });
+      // todo handle the secure flag properly
+      this.hat = new HatClient({ token: token || '', secure: this.secure, apiVersion: 'v2.6' });
     } else {
       this.hat = new HatClient({ apiVersion: 'v2.6' });
     }

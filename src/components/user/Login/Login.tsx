@@ -28,13 +28,11 @@ const Login: React.FC = () => {
   const from = location.state?.from;
 
   const loginSuccessful = () => {
-      if (from) {
-          console.log("from", from);
-          history.replace(from);
-      } else {
-          console.log("target", window.location.origin + target);
-          window.location.href = window.location.origin + target;
-      }
+    if (from) {
+      history.replace(from);
+    } else {
+      window.location.href = window.location.origin + target;
+    }
   };
 
   useEffect(() => {
@@ -50,7 +48,7 @@ const Login: React.FC = () => {
       dispatch(loginWithToken(token));
       HatClientService.getInstance(token);
 
-        loginSuccessful();
+      loginSuccessful();
     }
   }, []);
 
@@ -66,7 +64,7 @@ const Login: React.FC = () => {
           Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: false, sameSite: 'strict' });
         }
 
-          loginSuccessful();
+        loginSuccessful();
         // history.replace(target || from);
       }
     } catch (e) {
@@ -75,7 +73,7 @@ const Login: React.FC = () => {
   };
 
   const navigateToPasswordRecovery = () => {
-      history.push('/user/password/recover');
+    history.push('/user/password/recover');
   };
 
   return (

@@ -18,7 +18,7 @@ type AuthenticationState = {
   token?: string | null;
 };
 
-const initialState: AuthenticationState = {
+export const initialState: AuthenticationState = {
   isAuthenticated: false,
   authState: AuthState.LOGIN_REQUEST,
   rememberMe: false,

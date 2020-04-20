@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './PasswordRecover.scss';
 import { InfoHeader } from '../../shared/headers/InfoHeader/InfoHeader';
-import {recoverPassword} from "../../../api/hatAPI";
+import { recoverPassword } from '../../../api/hatAPI';
 
 const PasswordRecover: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [hatName, setHatName] = useState('');
+  const [email, setEmail] = useState('');
+  const [hatName, setHatName] = useState('');
   const [hatDomain, setHatDomain] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
   const resetPassword = async () => {
-      try {
-          const res = await recoverPassword({email: email});
-          if (res) {
-              setSuccessMsg('If the email address you have entered is correct, you will shortly receive an email'
-                  + ' with your password reset instructions.')
-          }
-      } catch (error) {
-          console.warn('Failed to recover password. Reason: ', error);
-          setErrorMsg("ERROR: Failed to submit password recovery request.")
+    try {
+      const res = await recoverPassword({ email: email });
+      if (res) {
+        setSuccessMsg(
+          'If the email address you have entered is correct, you will shortly receive an email' +
+            ' with your password reset instructions.',
+        );
       }
+    } catch (error) {
+      console.warn('Failed to recover password. Reason: ', error);
+      setErrorMsg('ERROR: Failed to submit password recovery request.');
+    }
   };
 
   useEffect(() => {
@@ -49,12 +51,12 @@ const PasswordRecover: React.FC = () => {
         className="hat-rumpel-input"
         name="hat-pass-input"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter HAT-registered email address"
         onFocus={() => setErrorMsg('')}
       />
-        {successMsg && <div className={'notification notification-success'}>{successMsg}</div>}
-        {errorMsg && <div className={'notification notification-error'}>{errorMsg}</div>}
+      {successMsg && <div className={'notification notification-success'}>{successMsg}</div>}
+      {errorMsg && <div className={'notification notification-error'}>{errorMsg}</div>}
 
       <div className="password-recover-description">
         If you are the owner of this HAT, please enter your registered email address
