@@ -5,7 +5,7 @@ export interface Messages {
   [index: string]: string;
 }
 
-const initialState: Messages = {};
+export const initialState: Messages = {};
 
 export const slice = createSlice({
   name: 'messages',

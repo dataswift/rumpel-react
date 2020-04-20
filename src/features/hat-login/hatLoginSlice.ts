@@ -12,7 +12,7 @@ type ApplicationsState = {
   expirationTime: number;
 };
 
-const initialState: ApplicationsState = {
+export const initialState: ApplicationsState = {
   parentApp: null,
   dependencyApps: [],
   expirationTime: 5,

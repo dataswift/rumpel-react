@@ -5,7 +5,7 @@ type LanguageState = {
   language: string;
 };
 
-const initialState: LanguageState = {
+export const initialState: LanguageState = {
   language: 'en',
 };
 
