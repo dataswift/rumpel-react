@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { PrivateRoute } from './PrivateRoute';
 import { AuthWithToken } from './AuthWithToken';
 import { LanguageParamHandler } from './LanguageParamHandler';
+import {LoadingSpinner} from "../components/shared/LoadingSpinner/LoadingSpinner";
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -37,7 +38,7 @@ const PasswordRecover = React.lazy(() =>
 
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
       <Switch>
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />

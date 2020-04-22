@@ -14,6 +14,7 @@ import { HmiActions } from '../../hmi/hmi-shared/HmiActions/HmiActions';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from '../../../services/HatClientService';
 import { environment } from '../../../environment';
+import {LoadingSpinner} from "../../shared/LoadingSpinner/LoadingSpinner";
 
 const HatSetupLogin: React.FC = () => {
   const dispatch = useDispatch();
@@ -210,7 +211,7 @@ const HatSetupLogin: React.FC = () => {
       </div>
     );
   } else {
-    return <div>Spinner</div>;
+    return <LoadingSpinner loadingText={'Loading permissions'}/>;
   }
 };
 
