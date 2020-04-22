@@ -1,16 +1,18 @@
 import { HatClient } from '@dataswift/hat-js';
 import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import {HatTokenValidation} from "@dataswift/hat-js/lib/utils/HatTokenValidation";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
   private static instance: HatClientService;
   private hat: HatClient;
-  private secure = location.protocol === 'https:';
+  private secure = false;
 
   private constructor(token?: string) {
     if (token) {
-      // todo handle the secure flag properly
+      const decodedToken = HatTokenValidation.decodeToken(token);
+      this.secure = window.location.protocol === 'https:' || decodedToken['iss']?.indexOf(':') === -1;
       this.hat = new HatClient({ token: token || '', secure: this.secure, apiVersion: 'v2.6' });
     } else {
       this.hat = new HatClient({ apiVersion: 'v2.6' });
