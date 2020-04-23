@@ -1,10 +1,6 @@
 name: Lint and Test Rumpel React
 
-on: [push]
-#  pull_request:
-#    branches:
-#      - master
-#      - dev
+on: [pull_request]
 
 jobs:
   build:
@@ -18,8 +14,8 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Test
-        run: yarn run test
+        run: yarn test
       - name: Lint
-        run: yarn run lint
+        run: yarn lint
       - name: Build deployment package
         run: PUBLIC_URL=/assets yarn build
