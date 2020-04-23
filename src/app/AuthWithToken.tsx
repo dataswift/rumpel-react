@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const AuthWithToken: React.FC<Props> = (props) => {
+export const AuthWithToken: React.FC<Props> = props => {
   const query = useQuery();
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export const AuthWithToken: React.FC<Props> = (props) => {
     if (token) {
       dispatch(loginWithToken(token));
     }
-  }, []);
+  }, [query, dispatch]);
 
   return <>{props.children}</>;
 };

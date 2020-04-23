@@ -1,12 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import logo from '../../../../assets/icons/hat-data-rights-icon.svg';
 import { selectParentApp } from '../../../../features/hat-login/hatLoginSlice';
 
 export const HmiDaasHeader: React.FC = () => {
   const hatName = window.location.host;
   const parentApp = useSelector(selectParentApp);
-  const dispatch = useDispatch();
 
   if (!parentApp) {
     return null;
@@ -19,7 +18,9 @@ export const HmiDaasHeader: React.FC = () => {
 
       <div className={'hmi-text-grey'}>
         {hmiDescription ||
-          `Our friends at ${parentApp.application.info.name} have requested for a Personal Data Account to be created with the above URL. Check your email for more details.`}
+          `Our friends at ${ parentApp.application.info.name } have requested for a Personal Data Account to be 
+          created with the above URL. Check your email for more details.`
+        }
       </div>
 
       <div className={'hmi-separator'} />

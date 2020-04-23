@@ -5,7 +5,7 @@ import { BundleStructure } from '@dataswift/hat-js/lib/interfaces/bundle.interfa
 
 export class Permissions extends Component<IPermissionsProps> {
   static processPermissionRoles2(roles: Array<{ role: string; detail?: string }>): Array<JSX.Element> {
-    return roles.map((role) => {
+    return roles.map(role => {
       switch (role.role) {
         case 'namespaceread':
           return <FormatMessage id={`hatters.hmi.permissions.write`} values={{ name: role.detail }} />;

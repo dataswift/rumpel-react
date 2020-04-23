@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectLanguage, setLanguage } from '../features/language/languageSlice';
+import { useDispatch } from 'react-redux';
+import { setLanguage } from '../features/language/languageSlice';
 import { fetchMessages } from '../features/messages/messagesSlice';
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const LanguageParamHandler: React.FC<Props> = (props) => {
-  const language = useSelector(selectLanguage);
+export const LanguageParamHandler: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setLanguage('en'));
-    dispatch(fetchMessages('en'));
-  }, []);
+    dispatch(fetchMessages());
+  }, [dispatch]);
 
   return <>{props.children}</>;
 };

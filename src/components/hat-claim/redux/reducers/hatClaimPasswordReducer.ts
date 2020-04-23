@@ -17,7 +17,7 @@ const initialState: ReduxHatClaimPasswordState = {
 
 type HatClaimPasswordReducerActionsType = ReduxEditPasswordHatClaimAction;
 
-export default function (state: ReduxHatClaimPasswordState = initialState, action: HatClaimPasswordReducerActionsType) {
+export default function(state: ReduxHatClaimPasswordState = initialState, action: HatClaimPasswordReducerActionsType) {
   if (action.type === ReduxActionTypes.EDIT_HAT_PASSWORD) {
     return {
       ...state,

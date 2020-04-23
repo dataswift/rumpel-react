@@ -8,7 +8,7 @@ import hatDRLogo from '../../../assets/images/hat-data-rights.png';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaimSuccess: React.FC<Props> = (props) => {
+const HatClaimSuccess: React.FC<Props> = props => {
   if (props.currentStep !== 5) {
     return null;
   }
@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     {
       editHatClaim,
     },
-    dispatch,
+    dispatch
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaimSuccess);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './HatLogin.scss';
 import { useQuery } from '../../../hooks/useQuery';
 import { Hmi } from '../../hmi/Hmi/Hmi';
@@ -8,7 +8,7 @@ import {
   selectErrorMessage,
   selectParentApp,
   setErrorMessage,
-  setupApplication,
+  setupApplication
 } from '../../../features/hat-login/hatLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdateNotes } from '../../shared/UpdateNotes/UpdateNotes';
@@ -29,27 +29,8 @@ const HatLogin: React.FC = () => {
     } else {
       dispatch(setErrorMessage('ERROR: App details incorrect. Please contact the app developer and let them know.'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const buildRedirect = (appName: string): void => {
-    // Use internal login option when forcing HAT-native version through terms approval process
-    const internal = query.get('redirect') === 'true';
-
-    if (internal) {
-      if (redirect) {
-        window.location.href = redirect;
-      }
-    } else {
-      const hatSvc = HatClientService.getInstance();
-      hatSvc.appLogin(appName).then((res) => {
-        if (res && res.parsedBody) {
-          const accessToken = res.parsedBody.accessToken;
-          const finalRedirect = `${redirect}${redirect?.includes('?') ? '&' : '?'}token=${accessToken}`;
-          window.location.href = finalRedirect.replace(/#/gi, '%23');
-        }
-      });
-    }
-  };
 
   const agreeTerms = () => {
     if (name) {
@@ -58,7 +39,7 @@ const HatLogin: React.FC = () => {
   };
 
   const declineTerms = () => {
-    const internal = query.get('redirect') === 'true';
+    // const internal = query.get('redirect') === 'true';
     const fallback = query.get('fallback');
 
     const hatSvc = HatClientService.getInstance();
@@ -72,9 +53,30 @@ const HatLogin: React.FC = () => {
   };
 
   useEffect(() => {
+    const buildRedirect = (appName: string): void => {
+      // Use internal login option when forcing HAT-native version through terms approval process
+      const internal = query.get('redirect') === 'true';
+
+      if (internal) {
+        if (redirect) {
+          window.location.href = redirect;
+        }
+      } else {
+        const hatSvc = HatClientService.getInstance();
+        hatSvc.appLogin(appName).then(res => {
+          if (res && res.parsedBody) {
+            const accessToken = res.parsedBody.accessToken;
+            const finalRedirect = `${ redirect }${ redirect?.includes('?') ? '&' : '?' }token=${ accessToken }`;
+            window.location.href = finalRedirect.replace(/#/gi, '%23');
+          }
+        });
+      }
+    };
+
     if (parentApp && parentApp.enabled && !parentApp.needsUpdating) {
       buildRedirect(parentApp.application.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentApp]);
 
   if (errorMessage) {

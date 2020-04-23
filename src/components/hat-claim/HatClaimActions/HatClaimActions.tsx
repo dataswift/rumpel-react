@@ -6,7 +6,7 @@ interface Props {
   setCurrentStep: (newStep: number) => void;
 }
 
-const HatClaimActions: React.FC<Props> = (props) => {
+const HatClaimActions: React.FC<Props> = props => {
   return (
     <div className="hat-claim-actions flex-column-wrapper flex-align-items-center">
       <button className={'btn btn-accent'} onClick={() => props.setCurrentStep(props.currentStep + 1)}>

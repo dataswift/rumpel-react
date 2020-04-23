@@ -11,7 +11,7 @@ type Props = {
   cancelStep: () => void;
 };
 
-export const HmiActions: React.FC<Props> = (props) => {
+export const HmiActions: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
 
   if (!parentApp) {

@@ -5,7 +5,7 @@ interface Props {
   currentStep: number;
 }
 
-const HatClaimUrlConfirmation: React.FC<Props> = (props) => {
+const HatClaimUrlConfirmation: React.FC<Props> = props => {
   if (props.currentStep !== 3) {
     return null;
   }

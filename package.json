@@ -31,9 +31,11 @@
     "start": "env-cmd -e development react-scripts start",
     "build": "env-cmd -e production react-scripts build",
     "build:staging": "env-cmd -e staging react-scripts build",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"src/**/*.js\"",
     "test": "jest -u --watchAll",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "fix": "eslint --fix \"src/**/*.{ts,tsx}\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,11 +59,15 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/markdown-to-jsx": "^6.11.0",
     "@types/node-sass": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
     "env-cmd": "^10.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
-    "eslint-plugin-react-hooks": "^2.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-standard": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "lodash.debounce": "^4.0.8",
     "node-sass": "^4.13.0",

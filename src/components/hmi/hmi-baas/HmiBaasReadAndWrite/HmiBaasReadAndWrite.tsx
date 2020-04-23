@@ -33,7 +33,7 @@ export const HmiBaasReadAndWrite: React.FC = () => {
           <ExpansionPanelDetails>
             <div className={'hmi-card-subtitle'}>
               {dependencyApps &&
-                dependencyApps.map((depApp) => {
+                dependencyApps.map(depApp => {
                   return (
                     <Permissions
                       appName={depApp.application.info.name}

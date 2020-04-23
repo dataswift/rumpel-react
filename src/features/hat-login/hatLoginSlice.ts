@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import { get } from '../../services/BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from '../../services/HatClientService';
 
@@ -37,15 +36,15 @@ export const slice = createSlice({
 
 export const { parentApp, dependencyApps, errorMessage } = slice.actions;
 
-export const setParentApp = (app: HatApplication): AppThunk => (dispatch) => {
+export const setParentApp = (app: HatApplication): AppThunk => dispatch => {
   dispatch(parentApp(app));
 };
 
-export const setDependencyApps = (app: Array<HatApplication>): AppThunk => (dispatch) => {
+export const setDependencyApps = (app: Array<HatApplication>): AppThunk => dispatch => {
   dispatch(dependencyApps(app));
 };
 
-export const setErrorMessage = (msg: string): AppThunk => (dispatch) => {
+export const setErrorMessage = (msg: string): AppThunk => dispatch => {
   dispatch(errorMessage(msg));
 };
 
@@ -53,12 +52,12 @@ export const selectParentApp = (state: RootState) => state.hatLogin.parentApp;
 export const selectDependencyApps = (state: RootState) => state.hatLogin.dependencyApps;
 export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMessage;
 
-export const getApplications = (parentAppId: string): AppThunk => async (dispatch) => {
+export const getApplications = (parentAppId: string): AppThunk => async dispatch => {
   try {
     const apps = await HatClientService.getInstance().getApplicationHmi(parentAppId);
 
     if (apps?.parsedBody) {
-      const parentApp = apps.parsedBody.find((app) => app.application.id === parentAppId);
+      const parentApp = apps.parsedBody.find(app => app.application.id === parentAppId);
 
       if (parentApp) {
         dispatch(setParentApp(parentApp));
@@ -69,7 +68,7 @@ export const getApplications = (parentAppId: string): AppThunk => async (dispatc
       // const parentDependencies = parentApp?.application.setup.dependencies || [];
       const parentDependencies = ['facebook', 'twitter'];
 
-      const dependencyApps = apps.parsedBody.filter((app) => parentDependencies?.indexOf(app.application.id) !== -1);
+      const dependencyApps = apps.parsedBody.filter(app => parentDependencies?.indexOf(app.application.id) !== -1);
 
       dispatch(setDependencyApps(dependencyApps));
     }
@@ -78,7 +77,7 @@ export const getApplications = (parentAppId: string): AppThunk => async (dispatc
   }
 };
 
-export const setupApplication = (parentAppId: string): AppThunk => async (dispatch) => {
+export const setupApplication = (parentAppId: string): AppThunk => async dispatch => {
   try {
     const app = await HatClientService.getInstance().setupApplication(parentAppId);
 

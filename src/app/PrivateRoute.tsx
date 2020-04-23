@@ -29,7 +29,7 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
       dispatch(loginWithToken(token));
       HatClientService.getInstance(token);
     }
-  }, []);
+  }, [query, dispatch]);
 
   return (
     <Route
@@ -79,7 +79,7 @@ class DelayedRedirect extends React.Component<RedirectProps & DelayedProps, Dela
   }
 
   render() {
-    const { delay, ...props } = this.props;
+    const { ...props } = this.props;
     const { timeToRedirect } = this.state;
 
     if (timeToRedirect) {

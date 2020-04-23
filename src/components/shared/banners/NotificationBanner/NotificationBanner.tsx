@@ -9,7 +9,7 @@ export class NotificationBanner extends Component<INotificationBanner> {
       <div>
         {notification && (
           <>
-            <div className={`notification-banner-container notification-banner-container-${notification.type}`}>
+            <div className={`notification-banner-container notification-banner-container-${ notification.type }`}>
               {notification.type === 'error' && (
                 <i className="material-icons notification-banner-container-icon">warning</i>
               )}

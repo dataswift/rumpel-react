@@ -13,7 +13,12 @@ export const UpdateNotes: React.FC<Props> = ({ app }: Props) => {
     <div className="content-wrapper flex-column-wrapper">
       <section className="title-section">
         <div className="app-logo-wrapper">
-          <img src={app.info.graphics.logo.normal} className="app-logo" height="100" width="100" />
+          <img src={app.info.graphics.logo.normal}
+            className="app-logo" 
+            height="100"
+            width="100"
+            alt={`${ app.info.name } logo`}
+          />
         </div>
         {app.kind.kind === 'App' && (
           <div className="app-rating-wrapper">

@@ -6,6 +6,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Root: React.FC<Props> = (props) => <Provider store={store}>{props.children}</Provider>;
+const Root: React.FC<Props> = props => <Provider store={store}>{props.children}</Provider>;
 
 export default Root;

@@ -11,7 +11,7 @@ type Props = {
   hmiType: HmiType;
 };
 
-export const Hmi: React.FC<Props> = (props) => {
+export const Hmi: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
 
   return (

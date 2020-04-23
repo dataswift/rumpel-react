@@ -1,5 +1,5 @@
 import hatClaimCombinedReducer, {
-  HatClaimState,
+  HatClaimState
 } from '../../components/hat-claim/redux/reducers/hatClaimCombinedReducer';
 import { combineReducers } from 'redux';
 

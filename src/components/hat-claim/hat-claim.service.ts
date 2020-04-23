@@ -19,14 +19,14 @@ export const buildClaimRequest = (claim: HatClaim): HatClaimRequest => {
  */
 export const claimHat = async (
   claimToken: string,
-  body: HatClaimRequest,
+  body: HatClaimRequest
 ): Promise<IHttpResponse<HatClaimApiResponse>> => {
   const args: RequestInit = { method: 'post', body: JSON.stringify(body), headers: jsonContentHeader() };
 
   return await post<HatClaimApiResponse>(
-    `https://${body.hatName + '.' + body.hatCluster}/control/v2/auth/claim/complete/${claimToken}`,
+    `https://${ body.hatName + '.' + body.hatCluster }/control/v2/auth/claim/complete/${ claimToken }`,
     body,
-    args,
+    args
   );
 };
 

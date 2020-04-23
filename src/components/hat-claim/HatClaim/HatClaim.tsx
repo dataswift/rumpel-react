@@ -15,7 +15,7 @@ import {
   editHatClaim,
   editHatClaimErrorMessage,
   editHatClaimPassword,
-  setCurrentStep,
+  setCurrentStep
 } from '../redux/actions/hatClaimActions';
 import { loadDynamicZxcvbn } from '../../../utils/load-dynamic-zxcvbn';
 import { NotificationBanner } from '../../shared/banners/NotificationBanner/NotificationBanner';
@@ -24,7 +24,7 @@ import HatClaimSuccess from '../HatClaimSuccess/HatClaimSuccess';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaim: React.FC<Props> = (props) => {
+const HatClaim: React.FC<Props> = props => {
   const { claimToken } = useParams();
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const HatClaim: React.FC<Props> = (props) => {
   const goToLogin = () => {
     const host = window.location.hostname;
 
-    window.location.href = `https://${host}/#/user/login`;
+    window.location.href = `https://${ host }/#/user/login`;
   };
 
   const changeStep = (newStep: number) => {
@@ -97,7 +97,7 @@ const HatClaim: React.FC<Props> = (props) => {
       <HatClaimSuccess />
 
       <span className={'flex-spacer-large'} />
-      <HatClaimActions currentStep={props.currentStep} setCurrentStep={(newStep) => changeStep(newStep)} />
+      <HatClaimActions currentStep={props.currentStep} setCurrentStep={newStep => changeStep(newStep)} />
     </div>
   );
 };
@@ -117,7 +117,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
       editHatClaimPassword,
       editHatClaimErrorMessage,
     },
-    dispatch,
+    dispatch
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaim);

@@ -57,12 +57,12 @@ export const HmiDataDebit: React.FC = () => {
               <br />
               <br />
 
-              {bundle.map((value) => {
+              {bundle.map(value => {
                 return (
                   <div className={'hmi-data-debit-list-wrapper'} key={value.title}>
                     <div>{value.title} data</div>
                     <ul className={'hmi-data-debit-list'}>
-                      {value.fields.map((field) => {
+                      {value.fields.map(field => {
                         return <li key={field}>{field}</li>;
                       })}
                     </ul>

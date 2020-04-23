@@ -26,13 +26,13 @@ export const slice = createSlice({
 
 export const { apps } = slice.actions;
 
-export const setApps = (app: Array<HatApplication>): AppThunk => (dispatch) => {
+export const setApps = (app: Array<HatApplication>): AppThunk => dispatch => {
   dispatch(apps(app));
 };
 
 export const selectApplications = (state: RootState) => state.applications.applications;
 
-export const getApplications = (id: string): AppThunk => async (dispatch) => {
+export const getApplications = (): AppThunk => async dispatch => {
   let url = `/api/applications`;
 
   const app = await get<Array<HatApplication>>(url);

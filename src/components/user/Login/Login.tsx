@@ -50,6 +50,7 @@ const Login: React.FC = () => {
 
       loginSuccessful();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const login = async () => {
@@ -81,7 +82,11 @@ const Login: React.FC = () => {
       <InfoHeader />
       {errorMsg && <NotificationBanner type={'error'} message={errorMsg} />}
       <span className={'flex-spacer-small'} />
-      <img className={'login-dataswift-logo'} src={'https://cdn.dataswift.io/dataswift/logo/ds-full-dark.svg'} />
+      <img
+        className={'login-dataswift-logo'}
+        src={'https://cdn.dataswift.io/dataswift/logo/ds-full-dark.svg'}
+        alt={'Dataswift logo'}
+      />
       <hr />
       <div className="title-hat-domain-wrapper">
         <div className="hat-name">
@@ -98,7 +103,7 @@ const Login: React.FC = () => {
           autoComplete={'password'}
           onFocus={() => setErrorMsg('')}
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           placeholder="Password"
         />
         <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
@@ -114,7 +119,7 @@ const Login: React.FC = () => {
             name={'rememberMe'}
             type={'checkbox'}
             checked={remember}
-            onChange={(e) => setRemember(e.target.checked)}
+            onChange={e => setRemember(e.target.checked)}
           />
           <span className="checkbox-checkmark" />
         </label>
@@ -132,12 +137,11 @@ const Login: React.FC = () => {
       </div>
 
       <div className="user-actions">
-        <button role="button" type="submit" className="btn btn-accent" onClick={() => login()}>
+        <button type="submit" className="btn btn-accent" onClick={() => login()}>
           Log in
         </button>
         <button
           className={'btn btn-transparent-grey'}
-          role={'button'}
           type={'button'}
           onClick={() => navigateToPasswordRecovery()}
         >

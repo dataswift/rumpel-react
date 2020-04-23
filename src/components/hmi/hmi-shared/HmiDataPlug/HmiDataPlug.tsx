@@ -24,7 +24,7 @@ export const HmiDataPlug: React.FC = () => {
         <FormatMessage id={'hatters.hmi.plug.description'} />
       </div>
 
-      {dependencyApps.map((app) => {
+      {dependencyApps.map(app => {
         return <AppCard key={app.application.id} appId={app.application.id} appName={app.application.info.name} />;
       })}
 

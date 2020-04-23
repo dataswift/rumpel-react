@@ -77,7 +77,7 @@ class PermissionDialog extends Component<IPermissionDialog> {
           </DialogTitle>
           <DialogContent dividers>
             {dependencyApps &&
-              dependencyApps.map((depApp) => {
+              dependencyApps.map(depApp => {
                 return (
                   <Permissions
                     key={depApp.application.id}

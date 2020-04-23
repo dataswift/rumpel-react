@@ -49,7 +49,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/setup`;
+    const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/setup`;
 
     return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -64,7 +64,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${hatdomain}${this.pathPrefix}/applications/hmi?applicationId=${applicationId}`;
+    const path = `${ hatdomain }${ this.pathPrefix }/applications/hmi?applicationId=${ applicationId }`;
 
     return get<HatApplication[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -75,7 +75,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${hatdomain}${this.pathPrefix}/report-frontend-action`;
+    const path = `${ hatdomain }${ this.pathPrefix }/report-frontend-action`;
     const body = { actionCode: actionCode, message: message };
 
     return post<HatApplication[]>(
@@ -85,7 +85,7 @@ export class HatClientService {
         method: 'post',
         body: JSON.stringify(body),
         headers: { 'x-auth-token': token, 'content-type': 'application/json' },
-      },
+      }
     );
   }
 
@@ -95,7 +95,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/access-token`;
+    const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/access-token`;
 
     return get<{ accessToken: string }>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }

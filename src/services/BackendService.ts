@@ -5,7 +5,7 @@ export const get = async <T>(path: string, args: RequestInit = { method: 'get' }
 export const post = async <T>(
   path: string,
   body: any,
-  args: RequestInit = { method: 'post', body: JSON.stringify(body) },
+  args: RequestInit = { method: 'post', body: JSON.stringify(body) }
 ): Promise<IHttpResponse<T>> => {
   return await http<T>(new Request(path, args));
 };
@@ -13,7 +13,7 @@ export const post = async <T>(
 export const put = async <T>(
   path: string,
   body: any,
-  args: RequestInit = { method: 'put', body: JSON.stringify(body) },
+  args: RequestInit = { method: 'put', body: JSON.stringify(body) }
 ): Promise<IHttpResponse<T>> => {
   return await http<T>(new Request(path, args));
 };
@@ -23,11 +23,11 @@ export const http = <T>(request: RequestInfo): Promise<IHttpResponse<T>> => {
     let response: IHttpResponse<T>;
 
     fetch(request)
-      .then((res) => {
+      .then(res => {
         response = res;
         return res.json();
       })
-      .then((body) => {
+      .then(body => {
         if (response.ok) {
           response.parsedBody = body;
           resolve(response);
@@ -35,7 +35,7 @@ export const http = <T>(request: RequestInfo): Promise<IHttpResponse<T>> => {
           reject(body);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         reject(err);
       });
   });

@@ -21,7 +21,7 @@ export const slice = createSlice({
 
 export const { language } = slice.actions;
 
-export const setLanguage = (lang: string): AppThunk => (dispatch) => {
+export const setLanguage = (lang: string): AppThunk => dispatch => {
   dispatch(language(lang));
 };
 

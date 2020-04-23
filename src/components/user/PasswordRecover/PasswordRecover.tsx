@@ -16,7 +16,7 @@ const PasswordRecover: React.FC = () => {
       if (res) {
         setSuccessMsg(
           'If the email address you have entered is correct, you will shortly receive an email' +
-            ' with your password reset instructions.',
+            ' with your password reset instructions.'
         );
       }
     } catch (error) {
@@ -51,7 +51,7 @@ const PasswordRecover: React.FC = () => {
         className="hat-rumpel-input"
         name="hat-pass-input"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={e => setEmail(e.target.value)}
         placeholder="Enter HAT-registered email address"
         onFocus={() => setErrorMsg('')}
       />
@@ -65,7 +65,7 @@ const PasswordRecover: React.FC = () => {
       <span className={'flex-spacer-small'} />
 
       <div className="user-actions">
-        <button role="button" type="submit" className="btn btn-accent" onClick={() => resetPassword()}>
+        <button type="submit" className="btn btn-accent" onClick={() => resetPassword()}>
           Reset Password
         </button>
       </div>

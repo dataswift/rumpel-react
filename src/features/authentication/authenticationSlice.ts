@@ -5,9 +5,7 @@ import { config } from '../../app.config';
 import { isFuture, toDate, addDays } from 'date-fns';
 
 export enum AuthState {
-  LOGIN_IDLE = 'login_idle',
   LOGIN_REQUEST = 'login_request',
-  LOGIN_SUCCESS = 'login_success',
   LOGIN_FAILED = 'login_failed',
 }
 
@@ -40,7 +38,7 @@ export const slice = createSlice({
 
 export const { authenticateWithToken, loginAuthState } = slice.actions;
 
-export const loginWithToken = (token: string): AppThunk => (dispatch) => {
+export const loginWithToken = (token: string): AppThunk => dispatch => {
   try {
     if (tokenIsValid(HatTokenValidation.decodeToken(token))) {
       dispatch(authenticateWithToken(token));
@@ -56,6 +54,8 @@ const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
   const expiryDate = toDate(decodedToken['exp'] * 1000);
   const issuedDate = toDate(decodedToken['iat'] * 1000);
 
+  // TODO remove the ts-ignore when hat-js will be updated
+  // @ts-ignore
   const scopeIsValid = decodedToken['application'] === config.tokenApp || decodedToken['accessScope'] === 'owner';
   const tokenDomain = decodedToken['iss']?.slice(decodedToken['iss'].indexOf('.')) || '';
   const domainIsValid = config.supportedDomains.indexOf(tokenDomain) > -1;
@@ -67,6 +67,5 @@ const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
 
 export const selectIsAuthenticated = (state: RootState) => state.authentication.isAuthenticated;
 export const selectAuthToken = (state: RootState) => state.authentication.token;
-export const selectAuthState = (state: RootState) => state.authentication.authState;
 
 export default slice.reducer;

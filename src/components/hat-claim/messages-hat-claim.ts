@@ -1,6 +1,7 @@
 export const hatClaimMessages: hatClaimMessages = {
   claimYourHat: 'Claim your HAT',
   informationOnlyUsed:
+  // eslint-disable-next-line max-len
     'This information is only used to create your HAT Microserver. Your personal information will never be shared with anyone unless you authorise it.',
   subscribeMadHatters: 'Subscribe to MadHATTERs (Tech news, HAT slanted)',
   yourHatUrl: 'Your HAT URL',
