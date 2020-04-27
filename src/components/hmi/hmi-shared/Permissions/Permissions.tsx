@@ -8,9 +8,9 @@ export class Permissions extends Component<IPermissionsProps> {
     return roles.map(role => {
       switch (role.role) {
         case 'namespaceread':
-          return <FormatMessage id={`hatters.hmi.permissions.write`} values={{ name: role.detail }} />;
-        case 'namespacewrite':
           return <FormatMessage id={`hatters.hmi.permissions.read`} values={{ name: role.detail }} />;
+        case 'namespacewrite':
+          return <FormatMessage id={`hatters.hmi.permissions.write`} values={{ name: role.detail }} />;
         case 'managefiles':
           return <FormatMessage id={`hatters.hmi.permissions.manageFiles`} values={{ name: role.detail }} />;
         case 'applicationmanage':
@@ -20,7 +20,7 @@ export class Permissions extends Component<IPermissionsProps> {
         case 'datadebit':
           return <FormatMessage id={`hatters.hmi.permissions.dataDebit`} values={{ 'data-debit': role.detail }} />;
         default:
-          return <FormatMessage id={`hatters.hmi.permissions.dataDebit`} />;
+          return <FormatMessage id={`hatters.hmi.permissions.unknown`} />;
       }
     });
   }
