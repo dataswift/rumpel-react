@@ -18,7 +18,7 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token') || sessionStorage.getItem('token');
     const tokenParam = query.get('token');
     const hatSvc = HatClientService.getInstance();
 

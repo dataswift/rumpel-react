@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './PasswordRecover.scss';
-import { InfoHeader } from '../../shared/headers/InfoHeader/InfoHeader';
 import { recoverPassword } from '../../../api/hatAPI';
+import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
 
 const PasswordRecover: React.FC = () => {
   const [email, setEmail] = useState('');

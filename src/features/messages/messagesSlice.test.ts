@@ -10,7 +10,7 @@ describe('messages slice', () => {
       const nextState = initialState;
 
       // Act
-      const result = reducer(undefined, {type: {}});
+      const result = reducer(undefined, { type: {} });
 
       // Assert
       expect(result).toEqual(nextState);
@@ -18,7 +18,7 @@ describe('messages slice', () => {
 
     it('should properly set the state when initialise the messages', () => {
       // Arrange
-      const messageInit = {"message.id": "test message"};
+      const messageInit = { "message.id": "test message" };
 
       // Act
       const nextState = reducer(initialState, messages(messageInit));

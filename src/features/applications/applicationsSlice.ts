@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { get } from '../../services/BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import { HatClientService } from "../../services/HatClientService";
 
 type ApplicationsState = {
   applications: HatApplication[];
@@ -38,6 +39,18 @@ export const getApplications = (): AppThunk => async dispatch => {
   const app = await get<Array<HatApplication>>(url);
   if (app.parsedBody) {
     return dispatch(setApps(app.parsedBody));
+  }
+};
+
+export const getApplicationsHmi = (parentAppId: string): AppThunk => async dispatch => {
+  try {
+    const apps = await HatClientService.getInstance().getApplicationHmi(parentAppId);
+
+    if (apps?.parsedBody) {
+      dispatch(setApps(apps.parsedBody));
+    }
+  } catch (e) {
+    // dispatch(setErrorMessage('ERROR: Something went wrong. Please contact the app developer and let them know.'));
   }
 };
 

@@ -28,6 +28,7 @@ module.exports = {
         // options to emulate prettier setup
         semi: ["error", "always"],
         "max-len": ["warn", {"code": 120, "tabWidth": 2, "ignoreUrls": true}],
+        "object-curly-spacing": [2, "always"],
         "template-curly-spacing": ["error", "always"],
         "arrow-parens": ["error", "as-needed"],
 

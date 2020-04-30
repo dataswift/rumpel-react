@@ -42,6 +42,7 @@ export const loginWithToken = (token: string): AppThunk => dispatch => {
   try {
     if (tokenIsValid(HatTokenValidation.decodeToken(token))) {
       dispatch(authenticateWithToken(token));
+      window.sessionStorage.setItem('token', token);
     } else {
       dispatch(loginAuthState(AuthState.LOGIN_FAILED));
     }

@@ -1,7 +1,7 @@
 import { HatClient } from '@dataswift/hat-js';
 import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import {HatTokenValidation} from "@dataswift/hat-js/lib/utils/HatTokenValidation";
+import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';

@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import {LoadingSpinner} from "../components/shared/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
-    '../components/hat-claim/HatClaim'
+    '../features/hat-claim/HatClaim'
   )
 );
 const Login = React.lazy(() =>
@@ -17,14 +17,14 @@ const Login = React.lazy(() =>
 const HatLogin = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_login" */
-    '../components/user/HatLogin'
+    '../features/hat-login/HatLogin'
   )
 );
 
 const HatSetupLogin = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_setup_login" */
-    '../components/user/HatSetupLogin'
+    '../features/hat-setup-login/HatSetupLogin'
   )
 );
 const PasswordRecover = React.lazy(() =>

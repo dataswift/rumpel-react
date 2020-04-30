@@ -4,7 +4,9 @@ import authenticationSlice from '../features/authentication/authenticationSlice'
 import languageSlice from '../features/language/languageSlice';
 import messagesSlice from '../features/messages/messagesSlice';
 import hatLoginSlice from '../features/hat-login/hatLoginSlice';
-import hatClaimCombinedReducer from '../components/hat-claim/redux/reducers/hatClaimCombinedReducer';
+import hatSetupLoginSlice from "../features/hat-setup-login/hatSetupLoginSlice";
+import hmiSlice from "../features/hmi/hmiSlice";
+import hatClaimCombinedReducer from "../features/hat-claim/redux/reducers/hatClaimCombinedReducer";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +14,9 @@ export const store = configureStore({
     authentication: authenticationSlice,
     language: languageSlice,
     messages: messagesSlice,
+    hmi: hmiSlice,
     hatLogin: hatLoginSlice,
+    hatSetupLogin: hatSetupLoginSlice,
     hatClaim: hatClaimCombinedReducer,
   },
 });

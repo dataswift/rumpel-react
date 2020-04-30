@@ -11,6 +11,7 @@
   "hatters.hmi.permissions.manageFiles": "Manage files in {name} folder.",
   "hatters.hmi.permissions.listApplications": "List other applications' statuses.",
   "hatters.hmi.permissions.manageApplications": "Manage {name} application.",
+  "hatters.hmi.permissions.owner": "This is a Z class app that enables the HAT owner to view, search, browse and organise their HAT data.",
   "hatters.hmi.permissions.unknown": "Unidentified permission request. Please let us know about this issue.",
   "hatters.hmi.dataDebit.title": "Your data will be shared with {name}",
   "hatters.hmi.dataDebit.givingPermissions": "You are giving the app permission to:",

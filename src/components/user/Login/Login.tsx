@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Login.scss';
-import { InfoHeader } from '../../shared/headers/InfoHeader/InfoHeader';
 import dataRightsLogo from '../../../assets/images/hat-data-rights.png';
 import { useHistory, useLocation } from 'react-router-dom';
 import { userAccessToken } from '../../../api/hatAPI';
-import { NotificationBanner } from '../../shared/banners/NotificationBanner/NotificationBanner';
 import { loginWithToken } from '../../../features/authentication/authenticationSlice';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
 import Cookies from 'js-cookie';
+import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
+import { NotificationBanner } from "../../banners/NotificationBanner/NotificationBanner";
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
