@@ -11,7 +11,7 @@ export const HatSetupLoginRedirectError: React.FC<Props> = props => {
 
   useEffect(() => {
     const callBackUrlWithError = (error: string, errorReason: string): string => {
-      const redirect = getParameterByName('redirect');
+      const redirect = getParameterByName('redirect') || getParameterByName('fallback');
 
       const url = `${ redirect }?error=${ error }%26error_reason=${ errorReason }`;
 

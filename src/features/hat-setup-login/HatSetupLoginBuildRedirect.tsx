@@ -37,17 +37,18 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
             );
 
             if (isRedirectUrlValid) {
-              window.location.href = `${ redirect }${ redirect?.includes('?') ? '&' : '?' }token=${ accessToken }`;
+              // eslint-disable-next-line max-len
+              window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
             } else {
               console.warn('Provided URL is not registered');
 
               hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirect }`).finally(() => {
                 if (environment.sandbox) {
-                  window.location.href = `${ redirect }${ redirect?.includes('?') ? '&' : '?' }token=${ accessToken }`;
+                  // eslint-disable-next-line max-len
+                  window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
                 } else {
-                  window.location.href = `${ redirect }${
-                            redirect?.includes('?') ? '&' : '?'
-                  }error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                  // eslint-disable-next-line max-len
+                  window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
                 }
               });
             }

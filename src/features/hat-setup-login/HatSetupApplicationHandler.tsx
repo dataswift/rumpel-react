@@ -22,7 +22,7 @@ export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
         return;
       }
 
-      const parentDependencies = parentApp.application.setup.dependencies || ["facebook", "twitter"];
+      const parentDependencies = parentApp.application.setup.dependencies || [];
 
       dispatch(setParentApp(parentApp));
       dispatch(setDependencyApps(applications.filter(app => parentDependencies.indexOf(app.application.id) > -1)));
