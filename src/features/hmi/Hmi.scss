@@ -1,6 +1,7 @@
 .hmi-page {
   overflow: auto;
-  margin-bottom: 200px;
+  background-color: #f6f6f6;
+  //margin-bottom: 200px;
 
   .hmi-page-wrapper {
     max-width: 500px;
@@ -13,14 +14,14 @@
 
 .hmi-section-title {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.56;
-  letter-spacing: 0.4px;
+  line-height: 21px;
+  letter-spacing: 0.5px;
   text-align: center;
-  color: #4a556b;
-  margin: 46px 15px 24px;
+  color: #1f1f1f;
+  margin: 35px 19px 24px;
 }
 
 .hmi-text-grey {
@@ -28,10 +29,10 @@
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
+  line-height: 21px;
+  letter-spacing: 0.4px;
   text-align: center;
-  color: #9a9a9a;
+  color: #505050;
   padding: 0 24px;
 
   a {
@@ -49,17 +50,17 @@
 }
 
 .hmi-data-rights-img {
-  margin: 40px auto;
+  margin: 0 auto;
   height: 64px;
   width: 64px;
   display: block;
 }
 
 .hmi-actions-footer {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: fixed;
+  //bottom: 0;
+  //left: 0;
+  //right: 0;
+  //position: fixed;
   background-color: #f6f6f6;
   padding-left: 15px;
   padding-right: 15px;

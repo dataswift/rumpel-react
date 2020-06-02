@@ -18,8 +18,8 @@ export const HmiDataDebit: React.FC = () => {
 
   const { permissions, info } = parentApp.application;
 
-  if (permissions.dataRequired && permissions.dataRequired.bundle) {
-    const bundle = unbundle(permissions.dataRequired.bundle.bundle);
+  if (permissions.dataRetrieved && permissions.dataRetrieved.bundle) {
+    const bundle = unbundle(permissions.dataRetrieved.bundle);
     const logo = info.graphics.logo.normal;
 
     return (

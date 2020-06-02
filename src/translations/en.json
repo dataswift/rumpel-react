@@ -1,6 +1,6 @@
 {
   "hatters.hmi.plug.title": "Setting up the data plug",
-  "hatters.hmi.plug.description": "The data plug enables you to copy data from different places on internet into your HAT PDA.",
+  "hatters.hmi.plug.description": "The data plug enables you to copy data from different places on internet into your PDA.",
   "hatters.hmi.plug.takeActions": "The data plug will have permission to take actions in your HAT.",
   "hatters.hmi.plug.showPermissions": "Show permissions",
   "hatters.hmi.permissions.dialog.title": "HAT Microserver Instructions",

@@ -14,8 +14,9 @@ export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
 
   useEffect(() => {
     if (applications && applications.length > 0) {
-      const parentAppId = getParameterByName("name");
-      const parentApp = applications.find(app => app.application.id === parentAppId);
+      const applicationId = getParameterByName("name") || getParameterByName("application_id");
+      const applicationIdSafe = applicationId?.toLowerCase();
+      const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 
       if (!parentApp || parentApp.application.kind.kind !== 'App') {
         dispatch(setRedirectError('application_misconfigured', 'application_id_not_found '));
