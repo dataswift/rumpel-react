@@ -57,10 +57,6 @@
 }
 
 .hmi-actions-footer {
-  //bottom: 0;
-  //left: 0;
-  //right: 0;
-  //position: fixed;
   background-color: #f6f6f6;
   padding-left: 15px;
   padding-right: 15px;
@@ -79,12 +75,12 @@
 
     button {
       border: 1px solid;
-      border-radius: 4px;
+      border-radius: 11px;
       cursor: pointer;
-      font-size: 14px;
-      letter-spacing: 1.3px;
-      max-width: 180px;
-      padding: 15px 0;
+      font-size: 16px;
+      letter-spacing: 0.32px;
+      max-width: 140px;
+      padding: 16px 32px;
       text-transform: uppercase;
       width: 48%;
     }
@@ -98,8 +94,8 @@
 
     .secondary-action {
       background-color: transparent;
-      border-color: #ACACAC;
-      color: #ACACAC;
+      border-color: #767676;
+      color: #767676;
     }
   }
 
@@ -122,21 +118,27 @@
   }
 
   .tos-text {
-    margin-bottom: 2%;
+    font-size: 12px;
+    letter-spacing: 0.22px;
+    line-height: 16px;
+    text-align: center;
+    width: 440px;
+    max-width: 90%;
+    color: #505050;
+    margin: 23px auto 35px;
   }
 
   .hmi-id-text {
     margin-bottom: 16px;
-    margin-top: 24px;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 400;
     text-transform: uppercase;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.22px;
     text-align: center;
-    color: #9a9a9a;
+    color: #505050;
   }
 }
 
@@ -162,18 +164,19 @@
 }
 
 .hmi-card {
-  background-color: white;
-  border-radius: 4px;
   display: flex;
   flex-direction: row;
-  margin: 16px 20px;
-  padding: 16px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+  width: 90%;
+  background-color: #e5e5e5;
+  align-items: center;
+  margin: 16px auto;
+  border-radius: 27px;
+  padding: 21px 22px;
+  min-height: 90px;
+  box-sizing: border-box;
 
   .hmi-card-img-wrapper {
-    margin: auto;
-    margin-right: 20px;
-
+    margin: auto 20px auto auto;
 
     .hmi-card-img {
       border-radius: 50%;
@@ -191,20 +194,22 @@
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.43;
-  letter-spacing: 0.25px;
-  color: #4a556b;
+  text-align: left;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: #1f1f1f;
 }
 
 .hmi-card-subtitle {
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: 20px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #9a9a9a;
+  text-align: left;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: #1f1f1f;
 }
 
 .hmi-data-debit-list-wrapper {

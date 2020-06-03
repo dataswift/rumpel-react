@@ -18,7 +18,7 @@ export const HmiRating: React.FC = () => {
       <div className={'hmi-section-title'}>
         <FormatMessage id={'hatters.hmi.rating.title'} values={{ name: info.name }} />
       </div>
-      <div className={'rating-privacy-text'}>
+      <div className={'hmi-text-grey'}>
         <FormatMessage id={'hatters.hmi.rating.description.withDataDebit'} values={{ name: info.name }} />
       </div>
       <AppLogo src={info.graphics.logo.normal} rating={info.rating.score} ratingPoints={info.rating.points} />

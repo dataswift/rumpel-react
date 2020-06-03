@@ -1,7 +1,7 @@
 {
   "hatters.hmi.plug.title": "Setting up the data plug",
   "hatters.hmi.plug.description": "The data plug enables you to copy data from different places on internet into your PDA.",
-  "hatters.hmi.plug.takeActions": "The data plug will have permission to take actions in your HAT.",
+  "hatters.hmi.plug.takeActions": "The {name} and {plug} above will have permissions to take actions in your PDA.",
   "hatters.hmi.plug.showPermissions": "Show permissions",
   "hatters.hmi.permissions.dialog.title": "HAT Microserver Instructions",
   "hatters.hmi.permissions.appAbleTo": "{name} will be able to:",
@@ -26,5 +26,6 @@
   "hatters.hmi.actions.confirm": "Confirm",
   "hatters.hmi.actions.agreeWithTermsAndPrivacy.part1": "By pressing ‘Confirm’ I agree to Dataswift Ltd ",
   "hatters.hmi.actions.agreeWithTermsAndPrivacy.termsOfService": "Terms of Service",
+  "hatters.hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy": "Privacy Policy",
   "hatters.hmi.actions.agreeWithTermsAndPrivacy.part2": " and the permissions laid out above."
 }

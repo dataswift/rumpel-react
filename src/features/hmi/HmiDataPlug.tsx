@@ -28,8 +28,12 @@ export const HmiDataPlug: React.FC = () => {
       })}
 
       <div className={'hmi-text-grey'}>
-        <FormatMessage id={'hatters.hmi.plug.takeActions'} />
-        &nbsp;
+        <FormatMessage id={'hatters.hmi.plug.takeActions'}
+          values={{ name: parentApp.application.info.name, plug: dependencyApps[0].application.info.name }}
+        />
+      </div>
+
+      <div className={'hmi-text-grey'}>
         <button className="link-button" type={'button'} onClick={() => setOpenDialog(true)}>
           <FormatMessage id={'hatters.hmi.plug.showPermissions'} />
         </button>

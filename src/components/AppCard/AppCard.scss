@@ -1,13 +1,13 @@
 .app-card-container {
   width: 90%;
-  height: 86px;
-  padding: 16px 19px;
+  min-height: 90px;
+  padding: 21px 22px;
   display: flex;
   flex-direction: row;
-  background-color: white;
+  background-color: #e5e5e5;
   align-items: center;
   margin: 16px auto;
-  border-radius: 4px;
+  border-radius: 27px;
   box-sizing: border-box;
 
   .app-card-img-wrapper {
@@ -47,14 +47,14 @@
   }
 
   .app-card-name {
-    margin-left: 16px;
+    margin-left: 13px;
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
+    line-height: 16px;
     text-transform: capitalize;
-    line-height: 1.43;
-    letter-spacing: 0.25px;
-    color: #4a556b;
+    letter-spacing: 0.4px;
+    color: #1f1f1f;
   }
 }

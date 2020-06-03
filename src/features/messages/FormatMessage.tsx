@@ -15,7 +15,7 @@ export const FormatMessage: React.FC<Props> = props => {
       let formattedMsg = message;
 
       for (const [key, value] of Object.entries(values)) {
-        formattedMsg = message.replace(`{${ key }}`, value);
+        formattedMsg = formattedMsg.replace(`{${ key }}`, value);
       }
 
       return formattedMsg;

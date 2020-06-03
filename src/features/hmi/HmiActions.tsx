@@ -29,9 +29,6 @@ export const HmiActions: React.FC<Props> = props => {
           </button>
         </div>
 
-        <p className="hmi-id-text">
-          HMI ID: {parentApp.application.id}-{parentApp.application.info.version}
-        </p>
         <p className="tos-text">
           <FormatMessage id={'hatters.hmi.actions.agreeWithTermsAndPrivacy.part1'} />
           <a
@@ -41,7 +38,19 @@ export const HmiActions: React.FC<Props> = props => {
           >
             <FormatMessage id={'hatters.hmi.actions.agreeWithTermsAndPrivacy.termsOfService'} />
           </a>
+          ,{' '}
+          <a
+            href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FormatMessage id={'hatters.hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy'} />
+          </a>
           <FormatMessage id={'hatters.hmi.actions.agreeWithTermsAndPrivacy.part2'} />
+        </p>
+
+        <p className="hmi-id-text">
+          HMI ID: {parentApp.application.id}-{parentApp.application.info.version}
         </p>
       </div>
     </div>

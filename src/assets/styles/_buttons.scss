@@ -51,7 +51,9 @@ button {
   border: none;
   background: transparent;
   color: $app-accent-color;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
+  letter-spacing: 0.4px;
+  line-height: 16px;
   font-size: 14px;
 }
