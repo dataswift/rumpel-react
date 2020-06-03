@@ -14,7 +14,7 @@ html {
   font-size: 62.5%; // 1rem = 10px, 10px/16px = 62.5%
 
   @media only screen and (max-width: $bp-large) {
-    font-size: 55%;
+    font-size: 62.5%;
   }
 }
 
@@ -22,7 +22,6 @@ body {
   font-family: $font-standard;
   font-weight: 400;
   line-height: 1.6;
-  //min-height: 100vh;
   background-color: $app-background-color;
 }
 

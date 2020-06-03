@@ -2,12 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import appLogoPlaceholder from '../../assets/icons/app-logo-placeholder.svg';
 import dataShareLogo from '../../assets/icons/data-share.svg';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import { selectParentApp } from "./hmiSlice";
 import { unbundle } from "../../utils/unbundle";
 import { FormatMessage } from "../messages/FormatMessage";
+import ExpansionPanel from "../../components/ExpansionPanel/ExpansionPanel";
 
 export const HmiDataDebit: React.FC = () => {
   const parentApp = useSelector(selectParentApp);
@@ -40,36 +38,26 @@ export const HmiDataDebit: React.FC = () => {
           <FormatMessage id={'hatters.hmi.dataDebit.givingPermissions'} />
         </div>
 
-        <ExpansionPanel className={'expansion-panel'} square={false}>
-          <ExpansionPanelSummary
-            aria-controls="panel1a-content"
-            expandIcon={<i className="material-icons">keyboard_arrow_down</i>}
-            id="panel1a-header"
-          >
-            <div className={'hmi-card-title'}>
-              <FormatMessage id={'hatters.hmi.dataDebit.useYourData'} />
-            </div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <div className={'hmi-card-subtitle'}>
-              <FormatMessage id={'hatters.hmi.dataDebit.appAbleToUse'} />
-              <br />
-              <br />
+        <ExpansionPanel title={'hatters.hmi.dataDebit.useYourData'}>
+          <div className={'hmi-card-subtitle hmi-card-content'}>
+            <FormatMessage id={'hatters.hmi.dataDebit.appAbleToUse'}
+              values={{ name: parentApp.application.info.name }} />
+            <br />
+            <br />
 
-              {bundle.map(value => {
-                return (
-                  <div className={'hmi-data-debit-list-wrapper'} key={value.title}>
-                    <div>{value.title} data</div>
-                    <ul className={'hmi-data-debit-list'}>
-                      {value.fields.map(field => {
-                        return <li key={field}>{field}</li>;
-                      })}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-          </ExpansionPanelDetails>
+            {bundle.map(value => {
+              return (
+                <div className={'hmi-data-debit-list-wrapper'} key={value.title}>
+                  <div>{value.title} data</div>
+                  <ul className={'hmi-data-debit-list'}>
+                    {value.fields.map(field => {
+                      return <li key={field}>{field}</li>;
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </ExpansionPanel>
 
         <div className={'hmi-card'}>

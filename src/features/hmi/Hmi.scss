@@ -1,7 +1,6 @@
 .hmi-page {
   overflow: auto;
   background-color: #f6f6f6;
-  //margin-bottom: 200px;
 
   .hmi-page-wrapper {
     max-width: 500px;
@@ -13,11 +12,10 @@
 }
 
 .hmi-section-title {
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 21px;
   letter-spacing: 0.5px;
   text-align: center;
   color: #1f1f1f;
@@ -25,11 +23,10 @@
 }
 
 .hmi-text-grey {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 21px;
   letter-spacing: 0.4px;
   text-align: center;
   color: #505050;
@@ -51,8 +48,8 @@
 
 .hmi-data-rights-img {
   margin: 0 auto;
-  height: 64px;
-  width: 64px;
+  height: 6.4rem;
+  width: 6.4rem;
   display: block;
 }
 
@@ -64,7 +61,7 @@
   &-content {
     margin: auto;
     max-width: 500px;
-    padding: 10px;
+    padding: 1.0rem;
     text-align: center;
   }
 
@@ -77,9 +74,9 @@
       border: 1px solid;
       border-radius: 11px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 1.6rem;
       letter-spacing: 0.32px;
-      max-width: 140px;
+      max-width: 14rem;
       padding: 16px 32px;
       text-transform: uppercase;
       width: 48%;
@@ -100,7 +97,7 @@
   }
 
   p {
-    font-size: 11px;
+    font-size: 1.1rem;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -118,11 +115,10 @@
   }
 
   .tos-text {
-    font-size: 12px;
+    font-size: 1.2rem;
     letter-spacing: 0.22px;
-    line-height: 16px;
     text-align: center;
-    width: 440px;
+    width: 380px;
     max-width: 90%;
     color: #505050;
     margin: 23px auto 35px;
@@ -130,7 +126,7 @@
 
   .hmi-id-text {
     margin-bottom: 16px;
-    font-size: 11px;
+    font-size: 1.1rem;
     font-weight: 400;
     text-transform: uppercase;
     font-stretch: normal;
@@ -152,26 +148,25 @@
   justify-content: center;
 
   .data-share-logo {
-    height: 48px;
-    width: 48px;
+    height: 4.8rem;
+    width: 4.8rem;
     border-radius: 50px;
   }
 
   .data-share-icon {
     margin-right: 2px;
-    height: 48px;
+    height: 4.8rem;
   }
 }
 
 .hmi-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 90%;
   background-color: #e5e5e5;
   align-items: center;
   margin: 16px auto;
   border-radius: 27px;
-  padding: 21px 22px;
   min-height: 90px;
   box-sizing: border-box;
 
@@ -190,61 +185,47 @@
 }
 
 .hmi-card-title {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   text-align: left;
-  line-height: 16px;
   letter-spacing: 0.4px;
   color: #1f1f1f;
+  margin-bottom: 2.0rem;
+}
+
+.hmi-card-content {
+  padding: 2.1rem 2.2rem;
 }
 
 .hmi-card-subtitle {
-  font-size: 14px;
-  margin-top: 20px;
+  font-size: 1.4rem;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   text-align: left;
-  line-height: 16px;
   letter-spacing: 0.4px;
   color: #1f1f1f;
 }
 
 .hmi-data-debit-list-wrapper {
-  margin-bottom: 8px;
+  margin-bottom: 1.4rem;
+  text-transform: capitalize;
 }
 
 .hmi-data-debit-list {
-  padding-left: 40px;
+  padding-left: 15px;
+  margin-top: 1.0rem;
 
-}
-
-.MuiExpansionPanel-root {
-  margin: 16px 20px !important;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12) !important;
-  border-radius: 4px !important;
-
-  &:before {
-    top: 0 !important;
-    background-color: white !important;
-    height: 0 !important;
+  li {
+    letter-spacing: 0.3px;
+    margin-bottom: 0.7rem;
   }
 }
 
-.MuiButtonBase-root.MuiExpansionPanelSummary-root.Mui-expanded {
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-.MuiExpansionPanelDetails-root {
-  padding: 16px 20px !important;
-}
-
 .rating-privacy-text {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;

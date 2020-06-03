@@ -1,18 +1,18 @@
 .app-card-container {
   width: 90%;
   min-height: 90px;
-  padding: 21px 22px;
+  padding: 2.1rem 2.2rem;
   display: flex;
   flex-direction: row;
   background-color: #e5e5e5;
   align-items: center;
-  margin: 16px auto;
+  margin: 1.6rem auto;
   border-radius: 27px;
   box-sizing: border-box;
 
   .app-card-img-wrapper {
-    height: 48px;
-    width: 48px;
+    height: 4.8rem;
+    width: 4.8rem;
     background: #9a9a9a;
     border-radius: 50px;
     display: flex;
@@ -20,8 +20,8 @@
     align-items: center;
 
     img {
-      width: 26px;
-      height: 20px;
+      width: 2.6rem;
+      height: 2.6rem;
     }
   }
 
@@ -48,11 +48,10 @@
 
   .app-card-name {
     margin-left: 13px;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 16px;
     text-transform: capitalize;
     letter-spacing: 0.4px;
     color: #1f1f1f;
