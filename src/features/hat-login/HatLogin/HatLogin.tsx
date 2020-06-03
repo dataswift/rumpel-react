@@ -7,8 +7,8 @@ import {
 } from '../hatLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { HatClientService } from '../../../services/HatClientService';
-import { selectParentApp } from "../../hmi/hmiSlice";
-import { getApplications } from "../../applications/applicationsSlice";
+import {selectParentApp, setParentApp} from "../../hmi/hmiSlice";
+import {getApplications, selectApplications} from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
 import { HmiType } from "../../hmi/hmi.interface";
@@ -18,13 +18,15 @@ import { getParameterByName } from "../../../utils/query-params";
 
 const HatLogin: React.FC = () => {
   const dispatch = useDispatch();
+  const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const errorMessage = useSelector(selectErrorMessage);
-  const name = getParameterByName('name')?.toLowerCase();
+  const applicationId = getParameterByName('name') || getParameterByName('application_id');
+  const safeApplicationId = applicationId?.toLowerCase();
   const redirect = getParameterByName('redirect');
 
   useEffect(() => {
-    if (name && redirect) {
+    if (safeApplicationId && redirect) {
       dispatch(getApplications());
     } else {
       dispatch(setErrorMessage('ERROR: App details incorrect. Please contact the app developer and let them know.'));
@@ -33,8 +35,8 @@ const HatLogin: React.FC = () => {
   }, []);
 
   const agreeTerms = () => {
-    if (name) {
-      dispatch(setupApplication(name));
+    if (safeApplicationId) {
+      dispatch(setupApplication(safeApplicationId));
     }
   };
 
@@ -47,9 +49,6 @@ const HatLogin: React.FC = () => {
 
     if (fallback) {
       window.location.href = fallback;
-    } else {
-
-      // dispatch(setErrorMessage('ERROR: Something went wrong. Please contact the app developer and let them know.'));
     }
   };
 
@@ -79,6 +78,20 @@ const HatLogin: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentApp]);
+
+  useEffect(() => {
+    if (applications && applications.length > 0) {
+      const applicationId = getParameterByName("name") || getParameterByName("application_id");
+      const applicationIdSafe = applicationId?.toLowerCase();
+      const parentApp = applications.find(app => app.application.id === applicationIdSafe);
+
+      if (!parentApp) {
+        return;
+      }
+
+      dispatch(setParentApp(parentApp));
+    }
+  }, [applications, dispatch]);
 
   if (errorMessage) {
     return (

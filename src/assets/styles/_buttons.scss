@@ -7,6 +7,10 @@ button {
   cursor: pointer;
 }
 
+*:focus {
+  text-decoration: underline;
+}
+
 button::-moz-focus-inner {
   border: 0;
 }
@@ -57,7 +61,7 @@ button::-moz-focus-inner {
   border: none;
   background: transparent;
   color: $app-accent-color;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   letter-spacing: 0.4px;
   font-size: 1.4rem;
@@ -65,4 +69,10 @@ button::-moz-focus-inner {
 
 a {
   outline: none;
+  text-decoration: none;
 }
+
+a:focus {
+  text-decoration: underline;
+}
+
