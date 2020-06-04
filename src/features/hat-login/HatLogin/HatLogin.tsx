@@ -7,8 +7,8 @@ import {
 } from '../hatLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { HatClientService } from '../../../services/HatClientService';
-import {selectParentApp, setParentApp} from "../../hmi/hmiSlice";
-import {getApplications, selectApplications} from "../../applications/applicationsSlice";
+import { selectParentApp, setParentApp } from "../../hmi/hmiSlice";
+import { getApplications, selectApplications } from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
 import { HmiType } from "../../hmi/hmi.interface";
@@ -86,6 +86,14 @@ const HatLogin: React.FC = () => {
       const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 
       if (!parentApp) {
+        const fallback = getParameterByName('fallback');
+
+        const hatSvc = HatClientService.getInstance();
+        hatSvc.logout();
+
+        if (fallback) {
+          window.location.href = fallback;
+        }
         return;
       }
 

@@ -20,7 +20,9 @@ export const HmiBaasReadAndWrite: React.FC = () => {
           You are giving {parentApp.application.info.name} the following permissions:
         </div>
 
-        <ExpansionPanel title={parentApp.application.kind.kind === 'App' ? 'hatters.hmi.readAndWrite' : 'hatters.hmi.writeAccess'}>
+        <ExpansionPanel title={
+          parentApp.application.kind.kind === 'App' ? 'hatters.hmi.readAndWrite' : 'hatters.hmi.writeAccess'
+        }>
           <div className={'hmi-card-subtitle hmi-card-content'}>
             {dependencyApps &&
             dependencyApps.map(depApp => {

@@ -124,7 +124,7 @@
   }
 
   .hmi-id-text {
-    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
     font-size: 1.1rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -250,6 +250,9 @@
   }
 }
 
+.hmi-baas-header-wrapper {
+  margin-top: 1.6rem;
+}
 .list-item {
   color: #151515;
   margin-bottom: 3px;

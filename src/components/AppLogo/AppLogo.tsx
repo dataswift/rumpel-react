@@ -2,11 +2,11 @@ import React from 'react';
 import './AppLogo.scss';
 import placeholder from '../../assets/icons/app-logo-placeholder.svg';
 import { FormatMessage } from "../../features/messages/FormatMessage";
-import {useSelector} from "react-redux";
-import {selectParentApp} from "../../features/hmi/hmiSlice";
+import { useSelector } from "react-redux";
+import { selectParentApp } from "../../features/hmi/hmiSlice";
 
 const AppLogoRating: React.FC<OwnProps> = props => {
-    const parentApp = useSelector(selectParentApp);
+  const parentApp = useSelector(selectParentApp);
   return (
     <>
       {props.rating && (

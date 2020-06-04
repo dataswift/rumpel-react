@@ -82,11 +82,6 @@
     font-size: 14px;
     line-height: 1.57;
     margin: auto;
-
-    //::ng-deep a {
-    //  color: $app-dark-tone;
-    //  text-decoration: underline;
-    //}
   }
 }
 
@@ -109,6 +104,13 @@
     &-item {
       display: flex;
       margin: 15px 0;
+      font-size: 1.4rem;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: 0.4px;
+      text-align: center;
+      color: #505050;
 
       &-icon {
         font-size: 20px;
