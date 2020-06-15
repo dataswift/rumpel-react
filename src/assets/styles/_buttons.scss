@@ -37,3 +37,21 @@ button {
   background-color: $button-transparent-color;
   color: $button-accent-color;
 }
+
+.btn-transparent-grey {
+  background-color: $button-transparent-color;
+  color: #acacac;
+  font-size: 1.6rem;
+  text-transform: initial;
+  text-decoration: none;
+  letter-spacing: 0.15px;
+}
+
+.link-button {
+  border: none;
+  background: transparent;
+  color: $app-accent-color;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}

@@ -5,16 +5,16 @@
  * @returns {String}
  */
 export const getParameterByName = (variable: string): string | null => {
-    const query = window.location.search.substring(1);
-    const vars = query.split("&");
+  const query = window.location.search.substring(1);
+  const vars = query.split('&');
 
-    for (let i = 0; i < vars.length; i++) {
-        const pair = vars[i].split("=");
-        if (pair[0] === variable) {
-            return decodeURIComponent(pair[1]);
-        }
+  for (let i = 0; i < vars.length; i++) {
+    const pair = vars[i].split('=');
+    if (pair[0] === variable) {
+      return decodeURIComponent(pair[1]);
     }
-    return null;
+  }
+  return null;
 };
 
 /**
@@ -24,18 +24,17 @@ export const getParameterByName = (variable: string): string | null => {
  * @returns {String}
  */
 export const getHashParameterByName = (variable: string): string | null => {
-    const query = window.location.hash.split('?');
-    if (query && query.length === 2) {
-        const vars = query[1].split("&");
+  const query = window.location.hash.split('?');
+  if (query && query.length === 2) {
+    const vars = query[1].split('&');
 
-        for (let i = 0; i < vars.length; i++) {
-            const pair = vars[i].split("=");
-            if (pair[0] === variable) {
-                return decodeURIComponent(pair[1]);
-            }
-        }
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split('=');
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1]);
+      }
     }
+  }
 
-
-    return null;
+  return null;
 };
