@@ -1,6 +1,6 @@
 {
   "name": "rumpel-react",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "private": true,
   "dependencies": {
     "@dataswift/hat-js": "^0.3.0",
