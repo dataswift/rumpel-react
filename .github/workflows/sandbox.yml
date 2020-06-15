@@ -1,9 +1,9 @@
-name: Build live package
+name: Build sandbox package
 
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   build:
@@ -28,5 +28,5 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        aws s3 sync build/ s3://frontend-build-artifacts/live-react/ \
+        aws s3 sync build/ s3://frontend-build-artifacts/sandbox-react/ \
         --region eu-west-1
