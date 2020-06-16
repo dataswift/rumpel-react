@@ -11,10 +11,9 @@ import { selectParentApp, setParentApp } from "../../hmi/hmiSlice";
 import { getApplications, selectApplications } from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
-import { HmiType } from "../../hmi/hmi.interface";
-import { Hmi } from "../../hmi/Hmi";
-import { HmiActions } from "../../hmi/HmiActions";
 import { getParameterByName } from "../../../utils/query-params";
+import Hmi, { HmiType } from "hmi";
+import 'hmi/dist/hmi.cjs.development.css';
 
 const HatLogin: React.FC = () => {
   const dispatch = useDispatch();
@@ -117,11 +116,15 @@ const HatLogin: React.FC = () => {
     return (
       <div>
         {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
+        /* TODO UPDATE NOTES ACTION BUTTONS */
           <UpdateNotes app={parentApp.application} />
         ) : (
-          <Hmi hmiType={HmiType.baas}/>
+          <Hmi hmiType={HmiType.login.baas}
+            parentApp={parentApp.application}
+            onApproved={() => agreeTerms()}
+            onRejected={() => declineTerms()}
+          />
         )}
-        <HmiActions registrationType={HmiType.baas} nextStep={() => agreeTerms()} cancelStep={() => declineTerms()} />
       </div>
     );
   }

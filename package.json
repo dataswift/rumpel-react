@@ -25,7 +25,8 @@
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git"
   },
   "scripts": {
     "start": "env-cmd -e development react-scripts start",
