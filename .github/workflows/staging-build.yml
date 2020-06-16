@@ -1,0 +1,37 @@
+name: staging build
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup NodeJs environment
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build deployment package
+      run: PUBLIC_URL=/assets yarn build
+      env:
+        CI: true
+    - name: Upload the build
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
+      run: |
+        aws s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/${{ steps.package-version.outputs.current-version }}/ \
+        --region eu-west-1
+        aws s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/latest/ \
+        --region eu-west-1

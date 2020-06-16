@@ -1,4 +1,4 @@
-name: Build live package
+name: production build
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     - name: Setup NodeJs environment
       uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: '12.x'
     - name: Install dependencies
       run: yarn
 
