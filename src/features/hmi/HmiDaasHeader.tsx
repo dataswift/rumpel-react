@@ -18,8 +18,8 @@ export const HmiDaasHeader: React.FC = () => {
 
       <div className={'hmi-text-grey'}>
         {hmiDescription ||
-          `Our friends at ${ parentApp.application.info.name } have requested for a Personal Data Account to be 
-          created with the above URL. Check your email for more details.`
+          `${ parentApp.application.info.name } have requested for a Personal Data Account 
+          to be created with the above URL. Check your email for further details.`
         }
       </div>
 

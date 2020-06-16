@@ -31,7 +31,7 @@ export class HmiPermissions extends Component<IPermissionsProps> {
     const elements = HmiPermissions.processPermissionRoles(permissionProps.rolesGranted);
 
     return (
-      <div>
+      <div className={'hmi-permissions-dialog'}>
         {elements && (
           <>
             <div className={'hmi-card-title'}>

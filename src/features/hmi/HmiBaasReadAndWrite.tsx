@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import { selectDependencyApps, selectParentApp } from "./hmiSlice";
 import { HmiPermissions } from "./HmiPermissions";
+import ExpansionPanel from "../../components/ExpansionPanel/ExpansionPanel";
 
 export const HmiBaasReadAndWrite: React.FC = () => {
   const parentApp = useSelector(selectParentApp);
@@ -22,32 +20,25 @@ export const HmiBaasReadAndWrite: React.FC = () => {
           You are giving {parentApp.application.info.name} the following permissions:
         </div>
 
-        <ExpansionPanel className={'expansion-panel'} square={false}>
-          <ExpansionPanelSummary
-            aria-controls="panel1a-content"
-            expandIcon={<i className="material-icons">keyboard_arrow_down</i>}
-            id="panel1a-header"
-          >
-            <div className={'hmi-card-title'}>Read and write access to folders.</div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <div className={'hmi-card-subtitle'}>
-              {dependencyApps &&
-                dependencyApps.map(depApp => {
-                  return (
-                    <HmiPermissions
-                      appName={depApp.application.info.name}
-                      key={depApp.application.id}
-                      permissions={depApp.application.permissions}
-                    />
-                  );
-                })}
-              <HmiPermissions
-                appName={parentApp.application.info.name}
-                permissions={parentApp.application.permissions}
-              />
-            </div>
-          </ExpansionPanelDetails>
+        <ExpansionPanel title={
+          parentApp.application.kind.kind === 'App' ? 'hatters.hmi.readAndWrite' : 'hatters.hmi.writeAccess'
+        }>
+          <div className={'hmi-card-subtitle hmi-card-content'}>
+            {dependencyApps &&
+            dependencyApps.map(depApp => {
+              return (
+                <HmiPermissions
+                  appName={depApp.application.info.name}
+                  key={depApp.application.id}
+                  permissions={depApp.application.permissions}
+                />
+              );
+            })}
+            <HmiPermissions
+              appName={parentApp.application.info.name}
+              permissions={parentApp.application.permissions}
+            />
+          </div>
         </ExpansionPanel>
       </div>
     );

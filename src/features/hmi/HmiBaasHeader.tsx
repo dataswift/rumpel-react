@@ -3,7 +3,7 @@ import logo from '../../assets/icons/hat-data-rights-icon.svg';
 
 export const HmiBaasHeader: React.FC = () => {
   return (
-    <div className={'hmi-daas-header-wrapper'}>
+    <div className={'hmi-baas-header-wrapper'}>
       <img
         className={'hmi-data-rights-img'}
         style={{ marginBottom: '0' }}
