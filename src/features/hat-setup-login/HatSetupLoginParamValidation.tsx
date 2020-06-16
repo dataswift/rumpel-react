@@ -11,12 +11,12 @@ export const HatSetupLoginParamValidation: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const applicationId = getParameterByName("name") || getParameterByName("application_id");
+    const applicationId = getParameterByName("application_id") || getParameterByName("name");
     const applicationIdSafe = applicationId?.toLowerCase();
     const redirect = getParameterByName('redirect');
 
     if (!applicationIdSafe) {
-      dispatch(setRedirectError('application_misconfigured', 'application_is_required '));
+      dispatch(setRedirectError('application_misconfigured', 'application_id_is_required '));
       return;
     }
 

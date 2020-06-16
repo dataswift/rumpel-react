@@ -14,7 +14,7 @@ export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
 
   useEffect(() => {
     if (applications && applications.length > 0) {
-      const applicationId = getParameterByName("name") || getParameterByName("application_id");
+      const applicationId = getParameterByName("application_id") || getParameterByName("name");
       const applicationIdSafe = applicationId?.toLowerCase();
       const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 
