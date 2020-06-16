@@ -5,6 +5,7 @@ import { HatSetupLoginRedirectError } from "./HatSetupLoginRedirectError";
 import { HatSetupLoginApplicationHandler } from "./HatSetupApplicationHandler";
 import { HatSetupLoginBuildRedirect } from "./HatSetupLoginBuildRedirect";
 import { HatSetupLoginSetupDependency } from "./HatSetupLoginSetupDependency";
+import './HatSetupLogin.scss';
 
 const HatSetupLogin: React.FC = () => {
   return (

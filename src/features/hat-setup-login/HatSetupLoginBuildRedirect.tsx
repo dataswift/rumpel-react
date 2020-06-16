@@ -18,7 +18,7 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
     const buildRedirect = async (app: HatApplication) => {
       // Use internal login option when forcing HAT-native version through terms approval process
       const internal = getParameterByName('internal') === 'true';
-      const redirect = getParameterByName('redirect');
+      const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
 
       if (internal) {
         window.location.href = redirect || '';

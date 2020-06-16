@@ -23,7 +23,7 @@ jobs:
       run: yarn
 
     - name: Build deployment package
-      run: PUBLIC_URL=/assets yarn build
+      run: PUBLIC_URL=/assets yarn build:staging
       env:
         CI: true
     - name: Upload the build

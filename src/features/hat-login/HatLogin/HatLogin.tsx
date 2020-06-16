@@ -21,9 +21,9 @@ const HatLogin: React.FC = () => {
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const errorMessage = useSelector(selectErrorMessage);
-  const applicationId = getParameterByName('name') || getParameterByName('application_id');
+  const applicationId = getParameterByName('application_id') || getParameterByName('name');
   const safeApplicationId = applicationId?.toLowerCase();
-  const redirect = getParameterByName('redirect');
+  const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
 
   useEffect(() => {
     if (safeApplicationId && redirect) {
@@ -41,7 +41,6 @@ const HatLogin: React.FC = () => {
   };
 
   const declineTerms = () => {
-    // const internal = query.get('redirect') === 'true';
     const fallback = getParameterByName('fallback');
 
     const hatSvc = HatClientService.getInstance();
@@ -55,7 +54,7 @@ const HatLogin: React.FC = () => {
   useEffect(() => {
     const buildRedirect = (appName: string): void => {
       // Use internal login option when forcing HAT-native version through terms approval process
-      const internal = getParameterByName('redirect') === 'true';
+      const internal = getParameterByName('internal') === 'true';
 
       if (internal) {
         if (redirect) {
@@ -81,7 +80,7 @@ const HatLogin: React.FC = () => {
 
   useEffect(() => {
     if (applications && applications.length > 0) {
-      const applicationId = getParameterByName("name") || getParameterByName("application_id");
+      const applicationId = getParameterByName("application_id") || getParameterByName("name");
       const applicationIdSafe = applicationId?.toLowerCase();
       const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 
