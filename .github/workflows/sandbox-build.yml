@@ -7,9 +7,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - uses: webfactory/ssh-agent@v0.3.0
@@ -23,8 +21,9 @@ jobs:
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
     - name: Install dependencies
-      run: yarn
-
+      # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
+      # This is because of an issue with yarn and how it treats the "prepare" script of the package.
+      run: yarn install --network-concurrency 1
     - name: Build deployment package
       run: PUBLIC_URL=/assets yarn build:staging
       env:

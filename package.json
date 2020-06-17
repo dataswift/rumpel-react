@@ -17,6 +17,7 @@
     "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
     "markdown-to-jsx": "^6.11.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

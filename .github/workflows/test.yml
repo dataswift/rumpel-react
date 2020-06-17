@@ -1,8 +1,6 @@
 name: Lint and Test Rumpel React
 
-on:
-  - push
-  - pull_request
+on: [push, pull_request]
 
 jobs:
   build:
@@ -17,7 +15,9 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install dependencies
-        run: yarn
+        # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
+        # This is because of an issue with yarn and how it treats the "prepare" script of the package.
+        run: yarn install --network-concurrency 1
       - name: Lint
         run: yarn lint
       - name: Test

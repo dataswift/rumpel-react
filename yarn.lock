@@ -5538,7 +5538,11 @@ hmac-drbg@^1.0.0:
 
 "hmi@git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git":
   version "0.1.4"
+<<<<<<< HEAD
   resolved "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#e90f9af56da3d03fcd2989fd3bf991b5e6aaba7d"
+=======
+  resolved "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#4d697cd7ffc77426505846ca0f8c71afcb5a7eb0"
+>>>>>>> github-action-fix
   dependencies:
     components "^0.1.0"
     context "^0.0.1"
