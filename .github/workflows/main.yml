@@ -17,9 +17,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
+    # https://github.com/yarnpkg/yarn/issues/6312
     - name: Install dependencies
-      # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
-      # This is because of an issue with yarn and how it treats the "prepare" script of the package.
       run: yarn install --network-concurrency 1
     - name: Build deployment package
       run: PUBLIC_URL=/assets yarn build
