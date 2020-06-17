@@ -10,7 +10,7 @@ export const UpdateNotes: React.FC<Props> = ({ app }: Props) => {
   if (!app.info.updateNotes) return null;
 
   return (
-    <div className="content-wrapper flex-column-wrapper">
+    <div className="content-wrapper flex-column-wrapper flex-align-items-center">
       <section className="title-section">
         <div className="app-logo-wrapper">
           <img src={app.info.graphics.logo.normal}

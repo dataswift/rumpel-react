@@ -1,9 +1,9 @@
-name: production build
+name: sandbox build
 
 on:
   push:
     branches:
-      - master
+      - staging
 
 jobs:
   build:
@@ -17,18 +17,23 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
     # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
     # https://github.com/yarnpkg/yarn/issues/6312
     - name: Install dependencies
       run: yarn install --network-concurrency 1
     - name: Build deployment package
-      run: PUBLIC_URL=/assets yarn build
+      run: PUBLIC_URL=/assets yarn build:staging
       env:
         CI: true
     - name: Upload the build
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_SANDBOX }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
       run: |
-        aws s3 sync build/ s3://frontend-build-artifacts/live-react/ \
+        aws s3 sync build/ s3://dswift-hat-sandbox-frontend-build-artifacts/${{ steps.package-version.outputs.current-version }}/ \
+        --region eu-west-1
+        aws s3 sync build/ s3://dswift-hat-sandbox-frontend-build-artifacts/latest/ \
         --region eu-west-1

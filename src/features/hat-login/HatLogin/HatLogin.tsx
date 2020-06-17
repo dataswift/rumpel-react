@@ -7,24 +7,25 @@ import {
 } from '../hatLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { HatClientService } from '../../../services/HatClientService';
-import { selectParentApp } from "../../hmi/hmiSlice";
-import { getApplications } from "../../applications/applicationsSlice";
+import { selectParentApp, setParentApp } from "../../hmi/hmiSlice";
+import { getApplications, selectApplications } from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
-import { HmiType } from "../../hmi/hmi.interface";
-import { Hmi } from "../../hmi/Hmi";
-import { HmiActions } from "../../hmi/HmiActions";
 import { getParameterByName } from "../../../utils/query-params";
+import Hmi, { HmiType } from "hmi";
+import 'hmi/dist/hmi.cjs.development.css';
 
 const HatLogin: React.FC = () => {
   const dispatch = useDispatch();
+  const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const errorMessage = useSelector(selectErrorMessage);
-  const name = getParameterByName('name')?.toLowerCase();
-  const redirect = getParameterByName('redirect');
+  const applicationId = getParameterByName('application_id') || getParameterByName('name');
+  const safeApplicationId = applicationId?.toLowerCase();
+  const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
 
   useEffect(() => {
-    if (name && redirect) {
+    if (safeApplicationId && redirect) {
       dispatch(getApplications());
     } else {
       dispatch(setErrorMessage('ERROR: App details incorrect. Please contact the app developer and let them know.'));
@@ -33,13 +34,12 @@ const HatLogin: React.FC = () => {
   }, []);
 
   const agreeTerms = () => {
-    if (name) {
-      dispatch(setupApplication(name));
+    if (safeApplicationId) {
+      dispatch(setupApplication(safeApplicationId));
     }
   };
 
   const declineTerms = () => {
-    // const internal = query.get('redirect') === 'true';
     const fallback = getParameterByName('fallback');
 
     const hatSvc = HatClientService.getInstance();
@@ -47,16 +47,13 @@ const HatLogin: React.FC = () => {
 
     if (fallback) {
       window.location.href = fallback;
-    } else {
-
-      // dispatch(setErrorMessage('ERROR: Something went wrong. Please contact the app developer and let them know.'));
     }
   };
 
   useEffect(() => {
     const buildRedirect = (appName: string): void => {
       // Use internal login option when forcing HAT-native version through terms approval process
-      const internal = getParameterByName('redirect') === 'true';
+      const internal = getParameterByName('internal') === 'true';
 
       if (internal) {
         if (redirect) {
@@ -80,6 +77,28 @@ const HatLogin: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentApp]);
 
+  useEffect(() => {
+    if (applications && applications.length > 0) {
+      const applicationId = getParameterByName("application_id") || getParameterByName("name");
+      const applicationIdSafe = applicationId?.toLowerCase();
+      const parentApp = applications.find(app => app.application.id === applicationIdSafe);
+
+      if (!parentApp) {
+        const fallback = getParameterByName('fallback');
+
+        const hatSvc = HatClientService.getInstance();
+        hatSvc.logout();
+
+        if (fallback) {
+          window.location.href = fallback;
+        }
+        return;
+      }
+
+      dispatch(setParentApp(parentApp));
+    }
+  }, [applications, dispatch]);
+
   if (errorMessage) {
     return (
       <div>
@@ -97,11 +116,15 @@ const HatLogin: React.FC = () => {
     return (
       <div>
         {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
+        /* TODO UPDATE NOTES ACTION BUTTONS */
           <UpdateNotes app={parentApp.application} />
         ) : (
-          <Hmi hmiType={HmiType.baas}/>
+          <Hmi hmiType={HmiType.login.baas}
+            parentApp={parentApp.application}
+            onApproved={() => agreeTerms()}
+            onRejected={() => declineTerms()}
+          />
         )}
-        <HmiActions registrationType={HmiType.baas} nextStep={() => agreeTerms()} cancelStep={() => declineTerms()} />
       </div>
     );
   }

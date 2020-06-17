@@ -4,7 +4,12 @@ import { getParameterByName } from "../../utils/query-params";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
 import { environment } from "../../environment";
-import { selectDependencyApps, selectParentApp } from "../hmi/hmiSlice";
+import {
+  selectDependencyApps,
+  selectDependencyPlugsEnabled,
+  selectDependencyToolsEnabled,
+  selectParentApp
+} from "../hmi/hmiSlice";
 
 type Props = {
     children: React.ReactNode;
@@ -13,12 +18,14 @@ type Props = {
 export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
+  const dependencyAppsEnabled = useSelector(selectDependencyPlugsEnabled);
+  const dependencyToolsEnabled = useSelector(selectDependencyToolsEnabled);
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
       // Use internal login option when forcing HAT-native version through terms approval process
       const internal = getParameterByName('internal') === 'true';
-      const redirect = getParameterByName('redirect');
+      const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
 
       if (internal) {
         window.location.href = redirect || '';
@@ -57,10 +64,10 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.setup && dependencyApps.every(app => app.enabled === true)) {
+    if (parentApp && parentApp.setup && dependencyAppsEnabled && dependencyToolsEnabled) {
       buildRedirect(parentApp);
     }
-  }, [parentApp, dependencyApps]);
+  }, [parentApp, dependencyApps, dependencyAppsEnabled, dependencyToolsEnabled]);
 
   return <>{props.children}</>;
 };

@@ -11,21 +11,21 @@ export const HatSetupLoginParamValidation: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const name = getParameterByName('name')?.toLowerCase();
-    const redirect = getParameterByName('redirect');
-
-    if (!name) {
-      dispatch(setRedirectError('application_misconfigured', 'name_is_required '));
-      return;
-    }
+    const applicationId = getParameterByName("application_id") || getParameterByName("name");
+    const applicationIdSafe = applicationId?.toLowerCase();
+    const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
 
     if (!redirect) {
       dispatch(setRedirectError('application_misconfigured', 'redirect_is_required '));
       return;
     }
 
-    dispatch(getApplicationsHmi(name));
+    if (!applicationIdSafe) {
+      dispatch(setRedirectError('application_misconfigured', 'application_id_is_required '));
+      return;
+    }
 
+    dispatch(getApplicationsHmi(applicationIdSafe));
   }, [dispatch]);
 
   return <>{props.children}</>;

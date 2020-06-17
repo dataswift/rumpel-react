@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import { get } from '../../services/BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from "../../services/HatClientService";
 
@@ -34,11 +33,10 @@ export const setApps = (app: Array<HatApplication>): AppThunk => dispatch => {
 export const selectApplications = (state: RootState) => state.applications.applications;
 
 export const getApplications = (): AppThunk => async dispatch => {
-  let url = `/api/applications`;
+  const apps = await HatClientService.getInstance().getApplications();
 
-  const app = await get<Array<HatApplication>>(url);
-  if (app.parsedBody) {
-    return dispatch(setApps(app.parsedBody));
+  if (apps?.parsedBody) {
+    dispatch(setApps(apps.parsedBody));
   }
 };
 

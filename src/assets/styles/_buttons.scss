@@ -1,8 +1,18 @@
 @import "branding";
 
 button {
+  font-family: $font-standard;
+  font-weight: 500;
   outline: none;
   cursor: pointer;
+}
+
+button:focus {
+  text-decoration: underline;
+}
+
+button::-moz-focus-inner {
+  border: 0;
 }
 
 .btn {
@@ -10,7 +20,6 @@ button {
   font-weight: normal;
   width: 25rem;
   height: 4.8rem;
-  //margin: 1.6rem auto;
   text-align: center;
   vertical-align: middle;
   text-transform: uppercase;
@@ -51,7 +60,18 @@ button {
   border: none;
   background: transparent;
   color: $app-accent-color;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 14px;
+  letter-spacing: 0.4px;
+  font-size: 1.4rem;
 }
+
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+a:focus {
+  text-decoration: underline;
+}
+
