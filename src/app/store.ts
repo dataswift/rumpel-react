@@ -7,6 +7,7 @@ import hatLoginSlice from '../features/hat-login/hatLoginSlice';
 import hatSetupLoginSlice from "../features/hat-setup-login/hatSetupLoginSlice";
 import hmiSlice from "../features/hmi/hmiSlice";
 import hatClaimCombinedReducer from "../features/hat-claim/redux/reducers/hatClaimCombinedReducer";
+import toolsSlice from "../features/tools/toolsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     hmi: hmiSlice,
     hatLogin: hatLoginSlice,
     hatSetupLogin: hatSetupLoginSlice,
+    tools: toolsSlice,
     hatClaim: hatClaimCombinedReducer,
   },
 });

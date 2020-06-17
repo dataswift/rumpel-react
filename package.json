@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "dependencies": {
-    "@dataswift/hat-js": "^0.3.0",
+    "@dataswift/hat-js": "^0.3.2",
     "@material-ui/core": "^4.9.8",
     "@reduxjs/toolkit": "^1.3.5",
     "@types/jest": "24.0.20",
@@ -14,6 +14,7 @@
     "@types/react-router": "^5.1.2",
     "@types/react-router-dom": "^5.1.0",
     "date-fns": "^2.12.0",
+    "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
     "markdown-to-jsx": "^6.11.0",
@@ -25,8 +26,7 @@
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.8.3",
-    "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "env-cmd -e development react-scripts start",

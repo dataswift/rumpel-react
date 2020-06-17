@@ -26,7 +26,6 @@ export const HatSetupLoginParamValidation: React.FC<Props> = props => {
     }
 
     dispatch(getApplicationsHmi(applicationIdSafe));
-
   }, [dispatch]);
 
   return <>{props.children}</>;

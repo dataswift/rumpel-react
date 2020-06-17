@@ -2,6 +2,7 @@ import { HatClient } from '@dataswift/hat-js';
 import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
+import { HatTool } from "../features/tools/hat-tool.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -98,5 +99,42 @@ export class HatClientService {
     const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/access-token`;
 
     return get<{ accessToken: string }>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async getTools(toolId?: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    let path = `${ hatdomain }${ this.pathPrefix }/she/function`;
+    
+    if (toolId) {
+      path += `/${ toolId }`;
+    }
+
+    return get<HatTool[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async enableTool(toolId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/enable`;
+
+    return get<HatTool>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async triggerToolUpdate(toolId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/trigger`;
+
+    return get(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }
