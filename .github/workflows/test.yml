@@ -1,4 +1,4 @@
-name: Lint and Test Rumpel React
+name: verify code style and run tests
 
 on:
   - push
@@ -9,12 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: webfactory/ssh-agent@v0.3.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Setup NodeJs environment
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
+      # https://github.com/yarnpkg/yarn/issues/6312
       - name: Install dependencies
-        run: yarn
+        run: yarn install --network-concurrency 1
       - name: Lint
         run: yarn lint
       - name: Test

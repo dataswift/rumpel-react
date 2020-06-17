@@ -7,11 +7,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
+    - uses: webfactory/ssh-agent@v0.3.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
     - name: Setup NodeJs environment
       uses: actions/setup-node@v1
       with:
@@ -19,9 +20,10 @@ jobs:
     - name: get-npm-version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
+    # Network concurrency reduced to 1 to solve an issue when remote git repository is used as a dependency.
+    # https://github.com/yarnpkg/yarn/issues/6312
     - name: Install dependencies
-      run: yarn
-
+      run: yarn install --network-concurrency 1
     - name: Build deployment package
       run: PUBLIC_URL=/assets yarn build:staging
       env:
