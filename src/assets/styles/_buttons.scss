@@ -3,12 +3,14 @@
 button {
   font-family: $font-standard;
   font-weight: 500;
-  outline: none;
+  //outline: none;
   cursor: pointer;
 }
 
 button:focus {
-  text-decoration: underline;
+  //text-decoration: underline;
+  outline: 1px solid #afafaf;
+  outline-offset: 2px;
 }
 
 button::-moz-focus-inner {
@@ -67,11 +69,11 @@ button::-moz-focus-inner {
 }
 
 a {
-  outline: none;
   text-decoration: none;
 }
 
 a:focus {
-  text-decoration: underline;
+  outline: 1px solid #afafaf;
+  outline-offset: 2px;
 }
 

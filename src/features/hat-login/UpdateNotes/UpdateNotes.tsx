@@ -2,12 +2,66 @@ import { HatApplicationContent } from '@dataswift/hat-js/lib/interfaces/hat-appl
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import './UpdateNotes.scss';
+import { FormatMessage } from "../../messages/FormatMessage";
+import {hmiConfig} from "../../hmi/hmi.config";
 
 type Props = {
   app: HatApplicationContent;
+  onApproved: () => void;
+  onRejected: () => void;
 };
-export const UpdateNotes: React.FC<Props> = ({ app }: Props) => {
+export const UpdateNotes: React.FC<Props> = ({ app, onApproved, onRejected }) => {
   if (!app.info.updateNotes) return null;
+
+  const HmiActions: React.FC = () => {
+
+    if (!app) {
+      return null;
+    }
+
+    return (
+      <div className="hmi-actions-footer">
+        <div className="sticky-action-panel-content">
+          <div className="action-buttons">
+            <button className="secondary-action" onClick={() => onRejected()}>
+              <FormatMessage id={'hmi.actions.cancel'} />
+            </button>
+            <button className="primary-action" onClick={() => onApproved()}>
+              <FormatMessage id={'hmi.actions.confirm'} />
+            </button>
+          </div>
+
+          <p className="tos-text">
+            <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.part1'} />
+            <a
+              href={hmiConfig.links.termsOfService}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FormatMessage
+                id={'hmi.actions.agreeWithTermsAndPrivacy.termsOfService'}
+              />
+            </a>
+                        ,{' '}
+            <a
+              href={hmiConfig.links.privacyPolicy}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FormatMessage
+                id={'hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy'}
+              />
+            </a>
+            <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.part2'} />
+          </p>
+
+          <p className="hmi-id-text">
+                        HMI ID: {app.id}-{app.info.version}
+          </p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="content-wrapper flex-column-wrapper flex-align-items-center">
@@ -50,6 +104,7 @@ export const UpdateNotes: React.FC<Props> = ({ app }: Props) => {
           </ul>
         )}
       </section>
+      <HmiActions />
     </div>
   );
 };

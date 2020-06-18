@@ -115,9 +115,11 @@ const HatLogin: React.FC = () => {
   } else {
     return (
       <div>
-        {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
-        /* TODO UPDATE NOTES ACTION BUTTONS */
-          <UpdateNotes app={parentApp.application} />
+        {parentApp && !parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
+          <UpdateNotes app={parentApp.application}
+            onApproved={() => agreeTerms()}
+            onRejected={() => declineTerms()}
+          />
         ) : (
           <Hmi hmiType={HmiType.login.baas}
             parentApp={parentApp.application}
