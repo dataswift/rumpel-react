@@ -3,7 +3,7 @@ import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import './UpdateNotes.scss';
 import { FormatMessage } from "../../messages/FormatMessage";
-import {hmiConfig} from "../../hmi/hmi.config";
+import { hmiConfig } from "../../hmi/hmi.config";
 
 type Props = {
   app: HatApplicationContent;

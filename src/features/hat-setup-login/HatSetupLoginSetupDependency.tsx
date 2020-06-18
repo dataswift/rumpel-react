@@ -52,7 +52,6 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
         if (!toolsEnabled) {
           if (toolsPending.length > 0) {
             const tool = await hatSvc.enableTool(toolsPending[0].id);
-            await hatSvc.triggerToolUpdate(toolsPending[0].id);
 
             if (tool && tool.parsedBody) {
               dispatch(setDependencyTools([tool.parsedBody]));
