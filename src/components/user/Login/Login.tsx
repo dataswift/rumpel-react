@@ -96,58 +96,66 @@ const Login: React.FC = () => {
           <h3>{hatDomain}</h3>
         </div>
       </div>
-      <div className="input-password-container login-password-container">
-        <input
-          type={hidePassword ? 'password' : 'text'}
-          name="password"
-          autoComplete={'password'}
-          onFocus={() => setErrorMsg('')}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
-          <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
-        </button>
-      </div>
 
-      <div className={'checkbox-container login-remember-me-container'}>
-        <label htmlFor={'rememberMe'}>
-          Remember me
+      <form onSubmit={e => {
+        e.preventDefault();
+        login();
+      }}
+      className={'flex-column-wrapper'}
+      >
+        <div className="input-password-container login-password-container">
           <input
-            id={'rememberMe'}
-            name={'rememberMe'}
-            type={'checkbox'}
-            checked={remember}
-            onChange={e => setRemember(e.target.checked)}
+            type={hidePassword ? 'password' : 'text'}
+            name="password"
+            autoComplete={'password'}
+            onFocus={() => setErrorMsg('')}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
           />
-          <span className="checkbox-checkmark" />
-        </label>
-      </div>
+          <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
+            <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
+          </button>
+        </div>
 
-      <span className={'flex-spacer-small'} />
+        <div className={'checkbox-container login-remember-me-container'}>
+          <label htmlFor={'rememberMe'}>
+          Remember me
+            <input
+              id={'rememberMe'}
+              name={'rememberMe'}
+              type={'checkbox'}
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+            />
+            <span className="checkbox-checkmark" />
+          </label>
+        </div>
 
-      <div className="logo-wrapper">
-        <img src={dataRightsLogo} height="48" width="48" alt="HAT Data rights logo" />
-      </div>
+        <span className={'flex-spacer-small'} />
 
-      <div className="data-rights-description">
+        <div className="logo-wrapper">
+          <img src={dataRightsLogo} height="48" width="48" alt="HAT Data rights logo" />
+        </div>
+
+        <div className="data-rights-description">
         Data rights protection ensures your HAT is always secure and that the rights to your data are preserved. Your
         password will not be shared with the application.
-      </div>
+        </div>
 
-      <div className="user-actions">
-        <button type="submit" className="btn btn-accent" onClick={() => login()}>
+        <div className="user-actions">
+          <button type="submit" className="btn btn-accent" onClick={() => login()}>
           Log in
-        </button>
-        <button
-          className={'btn btn-transparent-grey'}
-          type={'button'}
-          onClick={() => navigateToPasswordRecovery()}
-        >
+          </button>
+          <button
+            className={'btn btn-transparent-grey'}
+            type={'button'}
+            onClick={() => navigateToPasswordRecovery()}
+          >
           Forgotten password?
-        </button>
-      </div>
+          </button>
+        </div>
+      </form>
 
       <span className={'flex-spacer-large'} />
     </div>

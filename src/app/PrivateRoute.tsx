@@ -1,10 +1,10 @@
-import { useQuery } from '../hooks/useQuery';
 import { Redirect, RedirectProps, Route } from 'react-router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';
 import { HatClientService } from '../services/HatClientService';
+import { getParameterByName } from "../utils/query-params";
 
 interface OwnProps {
   children: React.ReactNode;
@@ -14,12 +14,11 @@ interface OwnProps {
 
 export function PrivateRoute({ children, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const query = useQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = Cookies.get('token') || sessionStorage.getItem('token');
-    const tokenParam = query.get('token');
+    const tokenParam = getParameterByName('token');
     const hatSvc = HatClientService.getInstance();
 
     if (tokenParam && !hatSvc.isTokenExpired(tokenParam)) {
@@ -29,7 +28,7 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
       dispatch(loginWithToken(token));
       HatClientService.getInstance(token);
     }
-  }, [query, dispatch]);
+  }, [dispatch]);
 
   return (
     <Route
