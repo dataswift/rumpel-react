@@ -3,12 +3,10 @@
 button {
   font-family: $font-standard;
   font-weight: 500;
-  //outline: none;
   cursor: pointer;
 }
 
 button:focus {
-  //text-decoration: underline;
   outline: 1px solid #afafaf;
   outline-offset: 2px;
 }
