@@ -5,7 +5,7 @@ import HatClaimEmail from '../HatClaimEmail';
 import HatClaimUrl from '../HatClaimUrl/HatClaimUrl';
 import HatClaimPassword from '../HatClaimPassword';
 import HatClaimUrlConfirmation from '../HatClaimConfirmation/HatClaimConfirmation';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getParameterByName } from '../../../utils/query-params';
 import { isEmail } from '../../../utils/validations';
 import { connect } from 'react-redux';
@@ -26,6 +26,7 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 
 const HatClaim: React.FC<Props> = props => {
   const { claimToken } = useParams();
+  let history = useHistory();
 
   useEffect(() => {
     const email = getParameterByName('email');
@@ -61,9 +62,7 @@ const HatClaim: React.FC<Props> = props => {
   }
 
   const goToLogin = () => {
-    const host = window.location.hostname;
-
-    window.location.href = `https://${ host }/#/user/login`;
+    history.replace('/user/login');
   };
 
   const changeStep = (newStep: number) => {
