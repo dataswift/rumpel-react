@@ -103,7 +103,7 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       return url.replace('#', '%23');
     };
 
-    if (parentApp && parentApp.setup && (!plugsEnabled || !toolsEnabled)) {
+    if (parentApp && parentApp.enabled && (!plugsEnabled || !toolsEnabled)) {
       if (!toolsEnabled) {
         setupToolDependencies();
       } else {

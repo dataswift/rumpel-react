@@ -75,7 +75,7 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.setup && dependencyAppsEnabled && dependencyToolsEnabled) {
+    if (parentApp && parentApp.enabled && dependencyAppsEnabled && dependencyToolsEnabled) {
       buildRedirect(parentApp);
     }
   }, [parentApp, dependencyApps, dependencyAppsEnabled, dependencyToolsEnabled]);
