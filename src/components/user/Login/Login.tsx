@@ -27,7 +27,6 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
   const targetParam = target || '/feed';
-
   // @ts-ignore
   const from = location.state?.from;
 
@@ -58,19 +57,21 @@ const Login: React.FC = () => {
   }, []);
 
   const login = async () => {
+    setErrorMsg('');
+
     try {
-      setErrorMsg('');
       const res = await userAccessToken(hatName, password);
+
       if (res.parsedBody) {
         dispatch(loginWithToken(res.parsedBody.accessToken));
         HatClientService.getInstance(res.parsedBody.accessToken);
 
         if (remember) {
-          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: false, sameSite: 'strict' });
+          const secure = window.location.protocol === 'https:';
+          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
         }
 
         loginSuccessful();
-        // history.replace(target || from);
       }
     } catch (e) {
       setErrorMsg('Sorry, that password is incorrect!');
