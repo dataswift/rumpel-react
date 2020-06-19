@@ -11,21 +11,32 @@ import { selectParentApp, setParentApp } from "../../hmi/hmiSlice";
 import { getApplications, selectApplications } from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
-import { getParameterByName } from "../../../utils/query-params";
 import Hmi, { HmiType } from "hmi";
 import 'hmi/dist/hmi.cjs.development.css';
+import * as queryString from "query-string";
+
+type Query = {
+  application_id?: string;
+  name?: string;
+  redirect_uri?: string;
+  redirect?: string;
+  fallback?: string;
+  internal?: string;
+}
 
 const HatLogin: React.FC = () => {
   const dispatch = useDispatch();
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const errorMessage = useSelector(selectErrorMessage);
-  const applicationId = getParameterByName('application_id') || getParameterByName('name');
+  const { application_id, name, redirect_uri, redirect, fallback, internal } =
+      queryString.parse(window.location.search) as Query;
+  const applicationId = application_id || name;
   const safeApplicationId = applicationId?.toLowerCase();
-  const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
+  const redirectParam = redirect_uri || redirect;
 
   useEffect(() => {
-    if (safeApplicationId && redirect) {
+    if (safeApplicationId && redirectParam) {
       dispatch(getApplications());
     } else {
       dispatch(setErrorMessage('ERROR: App details incorrect. Please contact the app developer and let them know.'));
@@ -40,8 +51,6 @@ const HatLogin: React.FC = () => {
   };
 
   const declineTerms = () => {
-    const fallback = getParameterByName('fallback');
-
     const hatSvc = HatClientService.getInstance();
     hatSvc.logout();
 
@@ -53,18 +62,19 @@ const HatLogin: React.FC = () => {
   useEffect(() => {
     const buildRedirect = (appName: string): void => {
       // Use internal login option when forcing HAT-native version through terms approval process
-      const internal = getParameterByName('internal') === 'true';
+      const isInternal = internal === 'true';
 
-      if (internal) {
-        if (redirect) {
-          window.location.href = redirect;
+      if (isInternal) {
+        if (redirectParam) {
+          window.location.href = redirectParam;
         }
       } else {
         const hatSvc = HatClientService.getInstance();
         hatSvc.appLogin(appName).then(res => {
           if (res && res.parsedBody) {
             const accessToken = res.parsedBody.accessToken;
-            const finalRedirect = `${ redirect }${ redirect?.includes('?') ? '&' : '?' }token=${ accessToken }`;
+            const finalRedirect =
+                `${ redirectParam }${ redirectParam?.includes('?') ? '&' : '?' }token=${ accessToken }`;
             window.location.href = finalRedirect.replace(/#/gi, '%23');
           }
         });
@@ -79,13 +89,9 @@ const HatLogin: React.FC = () => {
 
   useEffect(() => {
     if (applications && applications.length > 0) {
-      const applicationId = getParameterByName("application_id") || getParameterByName("name");
-      const applicationIdSafe = applicationId?.toLowerCase();
-      const parentApp = applications.find(app => app.application.id === applicationIdSafe);
+      const parentApp = applications.find(app => app.application.id === safeApplicationId);
 
       if (!parentApp) {
-        const fallback = getParameterByName('fallback');
-
         const hatSvc = HatClientService.getInstance();
         hatSvc.logout();
 
@@ -97,7 +103,7 @@ const HatLogin: React.FC = () => {
 
       dispatch(setParentApp(parentApp));
     }
-  }, [applications, dispatch]);
+  }, [applications, dispatch, redirectParam, safeApplicationId, fallback]);
 
   if (errorMessage) {
     return (

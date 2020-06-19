@@ -6,7 +6,6 @@ import HatClaimUrl from '../HatClaimUrl/HatClaimUrl';
 import HatClaimPassword from '../HatClaimPassword';
 import HatClaimUrlConfirmation from '../HatClaimConfirmation/HatClaimConfirmation';
 import { useHistory, useParams } from 'react-router';
-import { getParameterByName } from '../../../utils/query-params';
 import { isEmail } from '../../../utils/validations';
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
@@ -21,6 +20,11 @@ import { loadDynamicZxcvbn } from '../../../utils/load-dynamic-zxcvbn';
 import { buildClaimRequest, claimHat } from '../hat-claim.service';
 import HatClaimSuccess from '../HatClaimSuccess/HatClaimSuccess';
 import { NotificationBanner } from "../../../components/banners/NotificationBanner/NotificationBanner";
+import * as queryString from "query-string";
+
+type Query = {
+  email?: string;
+}
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
@@ -29,7 +33,7 @@ const HatClaim: React.FC<Props> = props => {
   let history = useHistory();
 
   useEffect(() => {
-    const email = getParameterByName('email');
+    const { email } = queryString.parse(window.location.search) as Query;
     const host = window.location.hostname;
 
     const hatName = host.substring(0, host.indexOf('.'));

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';
 import { HatClientService } from '../services/HatClientService';
-import { getParameterByName } from "../utils/query-params";
+import * as queryString from "query-string";
 
 interface OwnProps {
   children: React.ReactNode;
@@ -12,21 +12,26 @@ interface OwnProps {
   exact?: boolean;
 }
 
+type Query = {
+  token?: string;
+}
+
 export function PrivateRoute({ children, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = Cookies.get('token') || sessionStorage.getItem('token');
-    const tokenParam = getParameterByName('token');
+    const tokenStored = Cookies.get('token') || sessionStorage.getItem('token');
+    const { token } = queryString.parse(window.location.search) as Query;
+
     const hatSvc = HatClientService.getInstance();
 
-    if (tokenParam && !hatSvc.isTokenExpired(tokenParam)) {
-      dispatch(loginWithToken(tokenParam));
-      HatClientService.getInstance(tokenParam);
-    } else if (token && !hatSvc.isTokenExpired(token)) {
+    if (token && !hatSvc.isTokenExpired(token)) {
       dispatch(loginWithToken(token));
       HatClientService.getInstance(token);
+    } else if (tokenStored && !hatSvc.isTokenExpired(tokenStored)) {
+      dispatch(loginWithToken(tokenStored));
+      HatClientService.getInstance(tokenStored);
     }
   }, [dispatch]);
 

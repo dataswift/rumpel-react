@@ -5,11 +5,15 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { userAccessToken } from '../../../api/hatAPI';
 import { loginWithToken } from '../../../features/authentication/authenticationSlice';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
 import Cookies from 'js-cookie';
 import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
 import { NotificationBanner } from "../../banners/NotificationBanner/NotificationBanner";
+import * as queryString from "query-string";
+
+type Query = {
+  target?: string;
+}
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -20,9 +24,9 @@ const Login: React.FC = () => {
   const [hidePassword, setHidePassword] = useState(true);
   let history = useHistory();
   let location = useLocation();
-  const query = useQuery();
   const dispatch = useDispatch();
-  const target = query.get('target') || '/#/feed';
+  const { target } = queryString.parse(window.location.search) as Query;
+  const targetParam = target || '/feed';
 
   // @ts-ignore
   const from = location.state?.from;
@@ -31,7 +35,7 @@ const Login: React.FC = () => {
     if (from) {
       history.replace(from);
     } else {
-      window.location.href = window.location.origin + target;
+      window.location.href = window.location.origin + '/#' + targetParam;
     }
   };
 
