@@ -48,8 +48,6 @@ export class HatClientService {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
 
-    console.log("setup");
-
     if (!token) return;
 
     const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/setup`;
