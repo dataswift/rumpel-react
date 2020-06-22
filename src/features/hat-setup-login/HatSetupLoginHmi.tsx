@@ -13,7 +13,7 @@ export const HatSetupLoginHmi: React.FC = () => {
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyTools = useSelector(selectDependencyTools);
 
-  if ((!parentApp || parentApp.setup) || (parentApp.application.dependencies &&
+  if ((!parentApp || parentApp.enabled) || (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
       (parentApp.application.dependencies &&
           parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {

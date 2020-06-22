@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getParameterByName } from "../../utils/query-params";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
 import {
@@ -9,9 +8,18 @@ import {
   selectDependencyToolsPending,
   selectParentApp, setDependencyTools
 } from "../hmi/hmiSlice";
+import * as queryString from "query-string";
 
 type Props = {
     children: React.ReactNode;
+}
+
+type Query = {
+  application_id?: string;
+  name?: string;
+  redirect_uri?: string;
+  redirect?: string;
+  dependencies?: string;
 }
 
 export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
@@ -23,6 +31,9 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
   const toolsPending = useSelector(selectDependencyToolsPending);
 
   useEffect(() => {
+    const { application_id, name, redirect_uri, redirect, dependencies } =
+        queryString.parse(window.location.search) as Query;
+
     const setupAppDependencies = async (dependencies: HatApplication[]) => {
       const app = dependencies.filter(d => !d.enabled)[0];
       const callback = intermediateCallBackUrl(app.application.id);
@@ -52,7 +63,6 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
         if (!toolsEnabled) {
           if (toolsPending.length > 0) {
             const tool = await hatSvc.enableTool(toolsPending[0].id);
-            await hatSvc.triggerToolUpdate(toolsPending[0].id);
 
             if (tool && tool.parsedBody) {
               dispatch(setDependencyTools([tool.parsedBody]));
@@ -66,16 +76,16 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
 
     const intermediateCallBackUrl = (appId?: string): string => {
       let url = window.location.href.split('?')[0];
-      const applicationId = getParameterByName('application_id') || getParameterByName('name');
+      const applicationId = application_id || name;
       const applicationIdSafe = applicationId?.toLowerCase();
-      const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
-      const dependencies = getParameterByName('dependencies');
+      const redirectParam = redirect_uri || redirect;
+      const dependenciesParam = dependencies;
 
-      url += `?application_id=${ applicationIdSafe }%26redirect_uri=${ redirect }`;
+      url += `?application_id=${ applicationIdSafe }%26redirect_uri=${ redirectParam }`;
 
-      if (dependencies) {
+      if (dependenciesParam) {
         // removes the application id from the dependency parameter
-        const dependencyArray = dependencies.split(',').filter(item => item !== appId);
+        const dependencyArray = dependenciesParam.split(',').filter(item => item !== appId);
         if (dependencyArray && dependencyArray.length > 0) {
           url += `%26dependencies=${ dependencyArray.join() }`;
         }
@@ -93,7 +103,7 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       return url.replace('#', '%23');
     };
 
-    if (parentApp && parentApp.setup && (!plugsEnabled || !toolsEnabled)) {
+    if (parentApp && parentApp.enabled && (!plugsEnabled || !toolsEnabled)) {
       if (!toolsEnabled) {
         setupToolDependencies();
       } else {

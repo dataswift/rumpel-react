@@ -1,14 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectApplications } from "../applications/applicationsSlice";
-import { getParameterByName } from "../../utils/query-params";
 import { setRedirectError } from "./hatSetupLoginSlice";
 import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from "../hmi/hmiSlice";
 import { getTools, selectTools } from "../tools/toolsSlice";
+import * as queryString from "query-string";
 
 type Props = {
     children: React.ReactNode;
 }
+
+type Query = {
+  application_id?: string;
+  name?: string;
+  redirect_uri?: string;
+  redirect?: string;
+  fallback?: string;
+  internal?: string;
+}
+
 export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
@@ -17,7 +27,9 @@ export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
 
   useEffect(() => {
     if (applications && applications.length > 0) {
-      const applicationId = getParameterByName("application_id") || getParameterByName("name");
+      const { application_id, name } = queryString.parse(window.location.search) as Query;
+
+      const applicationId = application_id || name;
       const applicationIdSafe = applicationId?.toLowerCase();
       const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 

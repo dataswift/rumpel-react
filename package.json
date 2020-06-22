@@ -1,6 +1,6 @@
 {
   "name": "rumpel-react",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "private": true,
   "dependencies": {
     "@dataswift/hat-js": "^0.3.2",
@@ -19,6 +19,7 @@
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "markdown-to-jsx": "^6.11.0",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.1.1",

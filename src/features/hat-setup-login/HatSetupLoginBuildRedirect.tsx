@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getParameterByName } from "../../utils/query-params";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
 import { environment } from "../../environment";
@@ -10,9 +9,19 @@ import {
   selectDependencyToolsEnabled,
   selectParentApp
 } from "../hmi/hmiSlice";
+import * as queryString from "query-string";
 
 type Props = {
     children: React.ReactNode;
+}
+
+type Query = {
+  application_id?: string;
+  name?: string;
+  redirect_uri?: string;
+  redirect?: string;
+  fallback?: string;
+  internal?: string;
 }
 
 export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
@@ -23,12 +32,14 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
-      // Use internal login option when forcing HAT-native version through terms approval process
-      const internal = getParameterByName('internal') === 'true';
-      const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
+      const { redirect_uri, redirect, internal } =
+          queryString.parse(window.location.search) as Query;
 
-      if (internal) {
-        window.location.href = redirect || '';
+      const isInternal = internal === 'true';
+      const redirectParam = redirect_uri || redirect;
+
+      if (isInternal) {
+        window.location.href = redirectParam || '';
       } else {
         const hatSvc = HatClientService.getInstance();
 
@@ -40,22 +51,22 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
             const setup = app.application.setup;
 
             const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(
-              decodeURI(redirect || '')
+              decodeURI(redirectParam || '')
             );
 
             if (isRedirectUrlValid) {
               // eslint-disable-next-line max-len
-              window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+              window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
             } else {
               console.warn('Provided URL is not registered');
 
               hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirect }`).finally(() => {
                 if (environment.sandbox) {
                   // eslint-disable-next-line max-len
-                  window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
                 } else {
                   // eslint-disable-next-line max-len
-                  window.location.href = `${ redirect }${ (redirect?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
                 }
               });
             }
@@ -64,7 +75,7 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.setup && dependencyAppsEnabled && dependencyToolsEnabled) {
+    if (parentApp && parentApp.enabled && dependencyAppsEnabled && dependencyToolsEnabled) {
       buildRedirect(parentApp);
     }
   }, [parentApp, dependencyApps, dependencyAppsEnabled, dependencyToolsEnabled]);
