@@ -5,11 +5,15 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { userAccessToken } from '../../../api/hatAPI';
 import { loginWithToken } from '../../../features/authentication/authenticationSlice';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '../../../hooks/useQuery';
 import { HatClientService } from '../../../services/HatClientService';
 import Cookies from 'js-cookie';
 import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
 import { NotificationBanner } from "../../banners/NotificationBanner/NotificationBanner";
+import * as queryString from "query-string";
+
+type Query = {
+  target?: string;
+}
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -20,10 +24,9 @@ const Login: React.FC = () => {
   const [hidePassword, setHidePassword] = useState(true);
   let history = useHistory();
   let location = useLocation();
-  const query = useQuery();
   const dispatch = useDispatch();
-  const target = query.get('target') || '/#/feed';
-
+  const { target } = queryString.parse(window.location.search) as Query;
+  const targetParam = target || '/feed';
   // @ts-ignore
   const from = location.state?.from;
 
@@ -31,7 +34,7 @@ const Login: React.FC = () => {
     if (from) {
       history.replace(from);
     } else {
-      window.location.href = window.location.origin + target;
+      window.location.href = window.location.origin + '/#' + targetParam;
     }
   };
 
@@ -54,19 +57,21 @@ const Login: React.FC = () => {
   }, []);
 
   const login = async () => {
+    setErrorMsg('');
+
     try {
-      setErrorMsg('');
       const res = await userAccessToken(hatName, password);
+
       if (res.parsedBody) {
         dispatch(loginWithToken(res.parsedBody.accessToken));
         HatClientService.getInstance(res.parsedBody.accessToken);
 
         if (remember) {
-          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: false, sameSite: 'strict' });
+          const secure = window.location.protocol === 'https:';
+          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
         }
 
         loginSuccessful();
-        // history.replace(target || from);
       }
     } catch (e) {
       setErrorMsg('Sorry, that password is incorrect!');
@@ -96,58 +101,66 @@ const Login: React.FC = () => {
           <h3>{hatDomain}</h3>
         </div>
       </div>
-      <div className="input-password-container login-password-container">
-        <input
-          type={hidePassword ? 'password' : 'text'}
-          name="password"
-          autoComplete={'password'}
-          onFocus={() => setErrorMsg('')}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
-          <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
-        </button>
-      </div>
 
-      <div className={'checkbox-container login-remember-me-container'}>
-        <label htmlFor={'rememberMe'}>
-          Remember me
+      <form onSubmit={e => {
+        e.preventDefault();
+        login();
+      }}
+      className={'flex-column-wrapper'}
+      >
+        <div className="input-password-container login-password-container">
           <input
-            id={'rememberMe'}
-            name={'rememberMe'}
-            type={'checkbox'}
-            checked={remember}
-            onChange={e => setRemember(e.target.checked)}
+            type={hidePassword ? 'password' : 'text'}
+            name="password"
+            autoComplete={'password'}
+            onFocus={() => setErrorMsg('')}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
           />
-          <span className="checkbox-checkmark" />
-        </label>
-      </div>
+          <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
+            <i className={'material-icons'}>{hidePassword ? ' visibility_off' : ' visibility'}</i>
+          </button>
+        </div>
 
-      <span className={'flex-spacer-small'} />
+        <div className={'checkbox-container login-remember-me-container'}>
+          <label htmlFor={'rememberMe'}>
+          Remember me
+            <input
+              id={'rememberMe'}
+              name={'rememberMe'}
+              type={'checkbox'}
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+            />
+            <span className="checkbox-checkmark" />
+          </label>
+        </div>
 
-      <div className="logo-wrapper">
-        <img src={dataRightsLogo} height="48" width="48" alt="HAT Data rights logo" />
-      </div>
+        <span className={'flex-spacer-small'} />
 
-      <div className="data-rights-description">
+        <div className="logo-wrapper">
+          <img src={dataRightsLogo} height="48" width="48" alt="HAT Data rights logo" />
+        </div>
+
+        <div className="data-rights-description">
         Data rights protection ensures your HAT is always secure and that the rights to your data are preserved. Your
         password will not be shared with the application.
-      </div>
+        </div>
 
-      <div className="user-actions">
-        <button type="submit" className="btn btn-accent" onClick={() => login()}>
+        <div className="user-actions">
+          <button type="submit" className="btn btn-accent" onClick={() => login()}>
           Log in
-        </button>
-        <button
-          className={'btn btn-transparent-grey'}
-          type={'button'}
-          onClick={() => navigateToPasswordRecovery()}
-        >
+          </button>
+          <button
+            className={'btn btn-transparent-grey'}
+            type={'button'}
+            onClick={() => navigateToPasswordRecovery()}
+          >
           Forgotten password?
-        </button>
-      </div>
+          </button>
+        </div>
+      </form>
 
       <span className={'flex-spacer-large'} />
     </div>

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import { HatClientService } from '../../services/HatClientService';
 import { HatTool } from "../tools/hat-tool.interface";
 
 type ApplicationsState = {
@@ -58,31 +57,5 @@ export const selectDependencyToolsEnabled = (state: RootState) =>
 
 export const selectDependencyPlugsEnabled = (state: RootState) =>
   state.hmi.dependencyApps.every(app => app.enabled === true);
-
-export const setupApplication = (parentAppId: string): AppThunk => async dispatch => {
-  try {
-    const app = await HatClientService.getInstance().setupApplication(parentAppId);
-
-    if (app?.parsedBody) {
-      return dispatch(setParentApp(app.parsedBody));
-    }
-  } catch (e) {
-    // todo error handling
-    console.log(e);
-  }
-};
-
-export const enableTool = (toolId: string): AppThunk => async dispatch => {
-  try {
-    const tool = await HatClientService.getInstance().enableTool(toolId);
-
-    if (tool?.parsedBody) {
-      return dispatch(setDependencyTools([tool.parsedBody]));
-    }
-  } catch (e) {
-    // todo error handling
-    console.log(e);
-  }
-};
 
 export default slice.reducer;

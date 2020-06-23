@@ -2,20 +2,30 @@ import React, { useEffect } from "react";
 import { getApplicationsHmi } from "../applications/applicationsSlice";
 import { useDispatch } from "react-redux";
 import { setRedirectError } from "./hatSetupLoginSlice";
-import { getParameterByName } from "../../utils/query-params";
+import * as queryString from "query-string";
 
 type Props = {
     children: React.ReactNode;
 }
+
+type Query = {
+  application_id?: string;
+  name?: string;
+  redirect_uri?: string;
+  redirect?: string;
+}
+
 export const HatSetupLoginParamValidation: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const applicationId = getParameterByName("application_id") || getParameterByName("name");
+    const { application_id, name, redirect_uri, redirect } =
+        queryString.parse(window.location.search) as Query;
+    const applicationId = application_id || name;
     const applicationIdSafe = applicationId?.toLowerCase();
-    const redirect = getParameterByName('redirect_uri') || getParameterByName('redirect');
+    const redirectParam = redirect_uri || redirect;
 
-    if (!redirect) {
+    if (!redirectParam) {
       dispatch(setRedirectError('application_misconfigured', 'redirect_is_required '));
       return;
     }

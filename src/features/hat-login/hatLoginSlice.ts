@@ -37,7 +37,7 @@ export const setupApplication = (parentAppId: string): AppThunk => async dispatc
       return dispatch(setParentApp(app.parsedBody));
     }
   } catch (e) {
-    // todo error handling
+    // TODO Error Handling
     console.log(e);
   }
 };
