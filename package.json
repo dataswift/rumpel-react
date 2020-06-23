@@ -14,7 +14,7 @@
     "@types/react-router": "^5.1.2",
     "@types/react-router-dom": "^5.1.0",
     "date-fns": "^2.12.0",
-    "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git",
+    "hmi": "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#v0.1.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
