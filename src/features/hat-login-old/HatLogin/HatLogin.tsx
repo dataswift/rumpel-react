@@ -10,10 +10,10 @@ import { HatClientService } from '../../../services/HatClientService';
 import { selectParentApp, setParentApp } from "../../hmi/hmiSlice";
 import { getApplications, selectApplications } from "../../applications/applicationsSlice";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
-import { UpdateNotes } from "../UpdateNotes/UpdateNotes";
 import Hmi, { HmiType } from "hmi";
 import 'hmi/dist/hmi.cjs.development.css';
 import * as queryString from "query-string";
+import { UpdateNotes } from "../../hat-login/UpdateNotes/UpdateNotes";
 
 type Query = {
   application_id?: string;
@@ -121,7 +121,7 @@ const HatLogin: React.FC = () => {
   } else {
     return (
       <div>
-        {parentApp && !parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
+        {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
           <UpdateNotes app={parentApp.application}
             onApproved={() => agreeTerms()}
             onRejected={() => declineTerms()}

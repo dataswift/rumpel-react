@@ -22,7 +22,7 @@ type Query = {
   dependencies?: string;
 }
 
-export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
+const HatLoginSetupDependency: React.FC<Props> = props => {
   const dispatch = useDispatch();
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
@@ -115,3 +115,5 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
 
   return <>{props.children}</>;
 };
+
+export default HatLoginSetupDependency;

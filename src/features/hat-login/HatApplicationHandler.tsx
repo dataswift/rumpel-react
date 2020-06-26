@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectApplications } from "../applications/applicationsSlice";
-import { setRedirectError } from "./hatSetupLoginSlice";
+import { setRedirectError } from "./hatLoginSlice";
 import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from "../hmi/hmiSlice";
 import { getTools, selectTools } from "../tools/toolsSlice";
 import * as queryString from "query-string";
@@ -19,7 +19,7 @@ type Query = {
   internal?: string;
 }
 
-export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
+const HatLoginApplicationHandler: React.FC<Props> = props => {
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const tools = useSelector(selectTools);
@@ -62,3 +62,5 @@ export const HatSetupLoginApplicationHandler: React.FC<Props> = props => {
 
   return <>{props.children}</>;
 };
+
+export default HatLoginApplicationHandler;

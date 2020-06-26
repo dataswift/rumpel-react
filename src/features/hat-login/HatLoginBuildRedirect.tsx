@@ -24,7 +24,7 @@ type Query = {
   internal?: string;
 }
 
-export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
+const HatLoginBuildRedirect: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyAppsEnabled = useSelector(selectDependencyPlugsEnabled);
@@ -82,3 +82,5 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
 
   return <>{props.children}</>;
 };
+
+export default HatLoginBuildRedirect;
