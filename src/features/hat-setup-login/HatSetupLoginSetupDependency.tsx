@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
 import {
-  selectDependencyApps, selectDependencyPlugsEnabled,
+  selectDependencyApps, selectDependencyPlugsAreActive,
   selectDependencyToolsEnabled,
   selectDependencyToolsPending,
   selectParentApp, setDependencyTools
@@ -26,8 +26,8 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
   const dispatch = useDispatch();
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
-  const plugsEnabled = useSelector(selectDependencyPlugsEnabled);
-  const toolsEnabled = useSelector(selectDependencyToolsEnabled);
+  const plugsAreActive = useSelector(selectDependencyPlugsAreActive);
+  const toolsAreEnabled = useSelector(selectDependencyToolsEnabled);
   const toolsPending = useSelector(selectDependencyToolsPending);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
         queryString.parse(window.location.search) as Query;
 
     const setupAppDependencies = async (dependencies: HatApplication[]) => {
-      const app = dependencies.filter(d => !d.enabled)[0];
+      const app = dependencies.filter(d => !d.active)[0];
       const callback = intermediateCallBackUrl(app.application.id);
 
       try {
@@ -60,7 +60,7 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       try {
         const hatSvc = HatClientService.getInstance();
 
-        if (!toolsEnabled) {
+        if (!toolsAreEnabled) {
           if (toolsPending.length > 0) {
             const tool = await hatSvc.enableTool(toolsPending[0].id);
 
@@ -103,15 +103,15 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       return url.replace('#', '%23');
     };
 
-    if (parentApp && parentApp.enabled && (!plugsEnabled || !toolsEnabled)) {
-      if (!toolsEnabled) {
+    if (parentApp && parentApp.enabled && (!plugsAreActive || !toolsAreEnabled)) {
+      if (!toolsAreEnabled) {
         setupToolDependencies();
       } else {
         setupAppDependencies(dependencyApps);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentApp, dependencyApps, plugsEnabled, toolsEnabled]);
+  }, [parentApp, dependencyApps, plugsAreActive, toolsAreEnabled]);
 
   return <>{props.children}</>;
 };
