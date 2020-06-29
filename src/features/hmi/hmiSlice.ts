@@ -55,7 +55,7 @@ export const selectDependencyToolsPending = (state: RootState) =>
 export const selectDependencyToolsEnabled = (state: RootState) =>
   state.hmi.dependencyTools.every(tool => tool.status.enabled);
 
-export const selectDependencyPlugsEnabled = (state: RootState) =>
-  state.hmi.dependencyApps.every(app => app.enabled === true);
+export const selectDependencyPlugsAreActive = (state: RootState) =>
+  state.hmi.dependencyApps.every(app => app.active === true);
 
 export default slice.reducer;

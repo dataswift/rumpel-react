@@ -5,7 +5,7 @@ import { HatClientService } from "../../services/HatClientService";
 import { environment } from "../../environment";
 import {
   selectDependencyApps,
-  selectDependencyPlugsEnabled,
+  selectDependencyPlugsAreActive,
   selectDependencyToolsEnabled,
   selectParentApp
 } from "../hmi/hmiSlice";
@@ -27,8 +27,8 @@ type Query = {
 const HatLoginBuildRedirect: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
-  const dependencyAppsEnabled = useSelector(selectDependencyPlugsEnabled);
-  const dependencyToolsEnabled = useSelector(selectDependencyToolsEnabled);
+  const dependencyPlugsAreActive = useSelector(selectDependencyPlugsAreActive);
+  const dependencyToolsAreEnabled = useSelector(selectDependencyToolsEnabled);
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
@@ -75,10 +75,10 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.enabled && dependencyAppsEnabled && dependencyToolsEnabled) {
+    if (parentApp && parentApp.enabled && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
       buildRedirect(parentApp);
     }
-  }, [parentApp, dependencyApps, dependencyAppsEnabled, dependencyToolsEnabled]);
+  }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
 
   return <>{props.children}</>;
 };
