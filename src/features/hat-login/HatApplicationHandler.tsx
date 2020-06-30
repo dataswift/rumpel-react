@@ -33,7 +33,7 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
       const applicationIdSafe = applicationId?.toLowerCase();
       const parentApp = applications.find(app => app.application.id === applicationIdSafe);
 
-      if (!parentApp || parentApp.application.kind.kind !== 'App') {
+      if (!parentApp || (['App', 'DataPlug'].indexOf(parentApp.application.kind.kind) === -1)) {
         dispatch(setRedirectError('application_misconfigured', 'application_id_not_found '));
         return;
       }

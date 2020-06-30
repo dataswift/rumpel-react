@@ -50,6 +50,8 @@ export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMess
 export const selectRedirectError = (state: RootState) => state.hatLogin.redirectError;
 
 export const onTermsAgreed = (parentAppId: string): AppThunk => async dispatch => {
+  dispatch(setErrorMessage(''));
+
   return dispatch(setupApplication(parentAppId));
 };
 
@@ -74,8 +76,7 @@ export const setupApplication = (parentAppId: string): AppThunk => async dispatc
       return dispatch(setParentApp(app.parsedBody));
     }
   } catch (e) {
-    // todo error handling
-    console.log(e);
+    dispatch(setErrorMessage('Oops something went wrong.'));
   }
 };
 

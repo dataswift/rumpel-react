@@ -4,13 +4,15 @@ import { selectDependencyApps, selectDependencyTools, selectParentApp } from "..
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import Hmi, { HmiType } from "hmi";
 import 'hmi/dist/hmi.cjs.development.css';
-import { onTermsAgreed, onTermsDeclined } from "./hatLoginSlice";
+import {onTermsAgreed, onTermsDeclined, selectErrorMessage} from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
+import {NotificationBanner} from "../../components/banners/NotificationBanner/NotificationBanner";
 
 const HatLoginHmi: React.FC = () => {
   const hatName = window.location.host;
   const dispatch = useDispatch();
   const parentApp = useSelector(selectParentApp);
+  const errorMessage = useSelector(selectErrorMessage);
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyTools = useSelector(selectDependencyTools);
 
@@ -23,6 +25,11 @@ const HatLoginHmi: React.FC = () => {
 
   return (
     <div>
+      <NotificationBanner type={'error'} display={!!errorMessage}>
+        {errorMessage}
+      </NotificationBanner>
+
+      <span className={'flex-spacer-small'} />
       {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
         <UpdateNotes app={parentApp.application}
           onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
