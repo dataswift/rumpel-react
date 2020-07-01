@@ -76,7 +76,8 @@ export const setupApplication = (parentAppId: string): AppThunk => async dispatc
       return dispatch(setParentApp(app.parsedBody));
     }
   } catch (e) {
-    dispatch(setErrorMessage('Oops something went wrong.'));
+    dispatch(setErrorMessage('An error has occurred, please use the button below to return to the previous page, ' +
+        'and try confirming again. If this error persists please contact:'));
   }
 };
 

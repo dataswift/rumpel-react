@@ -4,9 +4,9 @@ import { selectDependencyApps, selectDependencyTools, selectParentApp } from "..
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import Hmi, { HmiType } from "hmi";
 import 'hmi/dist/hmi.cjs.development.css';
-import {onTermsAgreed, onTermsDeclined, selectErrorMessage} from "./hatLoginSlice";
+import { onTermsAgreed, onTermsDeclined, selectErrorMessage } from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
-import {NotificationBanner} from "../../components/banners/NotificationBanner/NotificationBanner";
+import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 
 const HatLoginHmi: React.FC = () => {
   const hatName = window.location.host;
@@ -16,7 +16,7 @@ const HatLoginHmi: React.FC = () => {
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyTools = useSelector(selectDependencyTools);
 
-  if ((!parentApp || parentApp.enabled) || (parentApp.application.dependencies &&
+  if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
       (parentApp.application.dependencies &&
           parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {
@@ -27,6 +27,7 @@ const HatLoginHmi: React.FC = () => {
     <div>
       <NotificationBanner type={'error'} display={!!errorMessage}>
         {errorMessage}
+        <a href={'https://docs.dataswift.io'}>Click</a>
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />

@@ -75,7 +75,7 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.enabled && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
+    if (parentApp && parentApp.active && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
       buildRedirect(parentApp);
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
