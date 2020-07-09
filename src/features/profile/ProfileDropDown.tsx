@@ -56,7 +56,7 @@ export const ProfileDropDown: React.FC = () => {
           aria-haspopup="true" aria-expanded="false">
 
           <span className="user-photo">
-            <img src={getProfileImage() ? getProfileImage() : userLogo} alt={'Profile photo'} />
+            <img src={getProfileImage() ? getProfileImage() : userLogo} alt={'Profile'} />
           </span>
 
           <span className="welcome">Welcome {userHatName}<br />
@@ -71,7 +71,7 @@ export const ProfileDropDown: React.FC = () => {
       {menuOpen &&
           <div className={'profile-dropdown-overlay'}>
             <div className="accountDetails user-photo">
-              <img src={getProfileImage() ? getProfileImage() : userLogoBlue} alt={'Profile photo'} />
+              <img src={getProfileImage() ? getProfileImage() : userLogoBlue} alt={'Profile'} />
               <h6 className="welcome">
                 {userHatName}<br />
                 <span>{userHatDomain}</span>
