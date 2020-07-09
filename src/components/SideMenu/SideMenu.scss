@@ -32,6 +32,7 @@
   align-items: center;
   color: #939393;
   font-weight: 700;
+  height: 65px;
 
   &-selected, &:active {
     color: #6297b1;
@@ -47,7 +48,7 @@
     //align-items: center;
     padding: 13px 15px 13px 45px;
     font-size: 17px;
-    height: 65px;
+    //height: 65px;
     width: 390px;
     letter-spacing: 1.2px;
     color: #939393;
