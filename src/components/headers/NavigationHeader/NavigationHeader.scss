@@ -14,3 +14,19 @@
     background-color: rgba(135, 135, 135, 0.1);
   }
 }
+
+.header-help {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 16px;
+  font-size: 18px;
+  font-weight: 400;
+
+  i {
+    margin-right: 0.25em;
+  }
+}

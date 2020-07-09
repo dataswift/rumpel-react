@@ -37,11 +37,11 @@ export const getProfile = (): AppThunk => async dispatch => {
   try {
     const res = await HatClientService.getInstance().getProfileData();
 
-    console.log(res.parsedBody);
     if (res?.parsedBody && res.parsedBody.length > 0) {
       dispatch(setProfile(res.parsedBody));
     }
   } catch (e) {
+    // TODO Error Handling
     console.log(e);
   }
 };

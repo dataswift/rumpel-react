@@ -48,6 +48,7 @@ export const getSystemStatus = (): AppThunk => async dispatch => {
       dispatch(setSystemStatus(res.parsedBody));
     }
   } catch (e) {
+    // TODO Error Handling
     console.log(e);
   }
 };
