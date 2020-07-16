@@ -1,11 +1,13 @@
 import React, { useCallback, useRef } from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
+import {FeedItem} from "../../features/feed/FeedItem";
 
 export default function InfiniteScrolling() {
   // const [pageNumber, setPageNumber] = useState(1);
 
   const {
     items,
+    displayItems,
     hasMore,
     loading,
     error,
@@ -23,7 +25,7 @@ export default function InfiniteScrolling() {
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasMore) {
         // setPageNumber(prevPageNumber => prevPageNumber + 1);
-        setNotEnoughData(true);
+        // setNotEnoughData(true);
       }
     });
     if (node) observer.current.observe(node);
@@ -38,10 +40,7 @@ export default function InfiniteScrolling() {
             style={{ height: '180px', padding: '16px' }}
             key={`${ item } key ${ index }`}>{item.source + index}</div>;
         } else {
-          return <div style={{ height: '180px', padding: '16px' }}
-            key={`${ item } key ${ index }`}>
-            {item.source + index}
-          </div>;
+          return <FeedItem key={`${ item } key ${ index }`} feedItem={item}/>;
         }
       })}
       <div>{loading && 'Loading...'}</div>

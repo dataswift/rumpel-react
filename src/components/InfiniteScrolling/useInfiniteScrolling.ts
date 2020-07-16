@@ -7,9 +7,10 @@ export default function useBookSearch(endpoint: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [items, setItems] = useState<SheFeed[]>([]);
+  const [displayItems, setDisplayItems] = useState<SheFeed[]>([]);
   const [hasMore, setHasMore] = useState(false);
-  const [since, setSince] = useState(Math.round(startOfDay(Date.now()).getTime() / 1000));
-  const [until, setUntil] = useState(Math.round(subDays(Date.now(), 30).getTime() / 1000));
+  const [since, setSince] = useState(Math.round(subDays(Date.now(), 20).getTime() / 1000));
+  const [until, setUntil] = useState(Math.round(startOfDay(Date.now()).getTime() / 1000));
   const [step, setStep] = useState(1);
   const [repeats, setRepeats] = useState(0);
   const [notEnoughData, setNotEnoughData] = useState(true);
@@ -38,15 +39,18 @@ export default function useBookSearch(endpoint: string) {
         setUntil(since - 1);
         setSince(newSince);
 
+        setNotEnoughData(false);
+
         if(items.length > 5) {
           setRepeats(0);
           setLoading(false);
-          setNotEnoughData(false);
           setHasMore(true);
         } else {
           setRepeats(repeats => repeats + 1);
           setStep(2);
         }
+
+        setDisplayItems(items.slice(0, 50));
       } catch (e) {
         // TODO Error Handling
         setError(true);
@@ -56,11 +60,11 @@ export default function useBookSearch(endpoint: string) {
       }
     };
 
-    if (repeats < 6 && notEnoughData) {
+    if (repeats < 2 && notEnoughData) {
       fetchFeed();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endpoint, notEnoughData, repeats]);
 
-  return { loading, error, items, hasMore, setNotEnoughData };
+  return { loading, error, items, displayItems, hasMore, setNotEnoughData };
 }
