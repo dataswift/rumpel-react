@@ -1,7 +1,7 @@
 import React  from "react";
 import { SheFeed } from "./she-feed.interface";
 import { FeedDefaultItem } from "../../components/Feed/FeedDefaultItem/FeedDefaultItem";
-import {WeeklySummary} from "../../components/Feed/WeeklySummary/WeeklySummary";
+import { WeeklySummary } from "../../components/Feed/WeeklySummary/WeeklySummary";
 
 type Props = {
     feedItem: SheFeed;

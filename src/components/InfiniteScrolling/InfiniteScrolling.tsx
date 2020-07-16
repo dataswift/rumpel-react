@@ -1,17 +1,15 @@
 import React, { useCallback, useRef } from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
-import {FeedItem} from "../../features/feed/FeedItem";
+import { FeedItem } from "../../features/feed/FeedItem";
 
 export default function InfiniteScrolling() {
   // const [pageNumber, setPageNumber] = useState(1);
 
   const {
     items,
-    displayItems,
     hasMore,
     loading,
     error,
-    setNotEnoughData
   } = useInfiniteScrolling("");
 
   const observer = useRef<IntersectionObserver>();

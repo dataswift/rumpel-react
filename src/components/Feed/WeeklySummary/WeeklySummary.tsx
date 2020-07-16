@@ -3,6 +3,7 @@ import './WeeklySummary.scss';
 import toolsIcon from "../../../assets/icons/tools_icon.png";
 import { SheFeed, SheNestedStructure } from "../../../features/feed/she-feed.interface";
 import { WeeklySummaryList } from "./WeeklySummaryList";
+import weeklySummaryHeaderImage from '../../../assets/images/weekly_summary_header_image.png';
 
 type Props = {
     feedItem: SheFeed;
@@ -10,7 +11,8 @@ type Props = {
 
 export const WeeklySummary: React.FC<Props> = ({ feedItem }) => {
 
-  const transform = (structure?: { [key: string]: SheNestedStructure[] } ): { source: string; content: string; badge: string; }[] | null => {
+  const transform = (structure?: { [key: string]: SheNestedStructure[] } )
+      : { source: string; content: string; badge: string; }[] | null => {
     const weeklySummaryArray = [];
     let hasSentiment = false;
     let hasFitbit = false;
@@ -49,18 +51,18 @@ export const WeeklySummary: React.FC<Props> = ({ feedItem }) => {
   return (
     <div className={'feed-item'}>
       <div className="weekly-summary-row">
-        <div className="weekly-summary-header-container">
+        <div className="weekly-summary-header-container"
+          style={{ backgroundImage: `url(${ weeklySummaryHeaderImage })` }}>
           <div className="title-container">
             <div className="weekly-summary-title">{feedItem.title?.text}</div>
             <div className="weekly-summary-subtitle">{feedItem.title?.subtitle}</div>
           </div>
 
           <div className="weekly-summary-icon-container">
-            <img src={toolsIcon} alt="" width="26" height="26" />
+            <img src={toolsIcon} alt="icon" width="26" height="26" />
           </div>
-
-          <WeeklySummaryList nestedStructure={transform(feedItem.content?.nestedStructure)}/>
         </div>
+        <WeeklySummaryList nestedStructure={transform(feedItem.content?.nestedStructure)}/>
       </div>
     </div>
   );
