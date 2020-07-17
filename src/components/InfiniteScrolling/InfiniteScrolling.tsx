@@ -1,46 +1,45 @@
-import React, { useCallback, useRef } from "react";
+import React from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
-import { FeedItem } from "../../features/feed/FeedItem";
+import { FeedList } from "../../features/feed/FeedList";
 
 export default function InfiniteScrolling() {
-  // const [pageNumber, setPageNumber] = useState(1);
-
   const {
-    items,
-    hasMore,
+    feed,
     loading,
     error,
   } = useInfiniteScrolling("");
 
-  const observer = useRef<IntersectionObserver>();
+  // const observer = useRef<IntersectionObserver>();
 
-  const lastBookElementRef = useCallback(node => {
-    if (loading) return;
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        // setPageNumber(prevPageNumber => prevPageNumber + 1);
-        // setNotEnoughData(true);
-      }
-    });
-    if (node) observer.current.observe(node);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, hasMore]);
+  // const lastBookElementRef = useCallback(node => {
+  //   if (loading) return;
+  //   if (observer.current) {
+  //     observer.current.disconnect();
+  //   }
+  //
+  //   observer.current = new IntersectionObserver(entries => {
+  //     if (entries[0].isIntersecting && hasMore) {
+  //       // setPageNumber(prevPageNumber => prevPageNumber + 1);
+  //       // setNotEnoughData(true);
+  //     }
+  //   });
+  //   if (node) observer.current.observe(node);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loading, hasMore]);
 
   return (
     <>
-      {items.map((item, index) => {
-        if (items.length === index + 1) {
-          return <div ref={lastBookElementRef}
-            style={{ height: '180px', padding: '16px' }}
-            key={`${ item } key ${ index }`}>{item.source + index}</div>;
-        } else {
-          return <FeedItem key={`${ item } key ${ index }`} feedItem={item}/>;
-        }
-      })}
+      {/*{feed.map((item, index) => {*/}
+      {/*  if (feed.length === index + 1) {*/}
+      {/*    return <div ref={lastBookElementRef}*/}
+      {/*      style={{ height: '180px', padding: '16px' }}*/}
+      {/*      key={`${ item } key ${ index }`}>{item.day + index}</div>;*/}
+      {/*  } else {*/}
+      {/*    return <FeedList key={`${ item } key ${ index }`} dayGroupedFeed={feed}/>;*/}
+      {/*  }*/}
+      {/*})}*/}
+      <FeedList dayGroupedFeed={feed}/>
+
       <div>{loading && 'Loading...'}</div>
       <div>{error && 'Error'}</div>
     </>

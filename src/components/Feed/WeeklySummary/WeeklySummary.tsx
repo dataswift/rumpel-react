@@ -36,6 +36,7 @@ export const WeeklySummary: React.FC<Props> = ({ feedItem }) => {
         weeklySummaryArray.push({ source: key, content: structure[key][0].content, badge: structure[key][0].badge });
       }
 
+      return key;
     });
 
     if (hasSentiment) {

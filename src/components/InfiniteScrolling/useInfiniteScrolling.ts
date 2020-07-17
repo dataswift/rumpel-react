@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { HatClientService } from "../../services/HatClientService";
-import { SheFeed } from "../../features/feed/she-feed.interface";
-import { startOfDay, subDays } from "date-fns";
+import { DayGroupedSheFeed, SheFeed } from "../../features/feed/she-feed.interface";
+import { groupBy } from 'lodash';
+import { startOfDay, subDays, format } from "date-fns";
 
-export default function useBookSearch(endpoint: string) {
+export default function useInfiniteScrolling(endpoint: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [feed, setFeed] = useState<DayGroupedSheFeed[]>([]);
   const [items, setItems] = useState<SheFeed[]>([]);
   const [displayItems, setDisplayItems] = useState<SheFeed[]>([]);
   const [hasMore, setHasMore] = useState(false);
@@ -14,6 +16,19 @@ export default function useBookSearch(endpoint: string) {
   const [step, setStep] = useState(1);
   const [repeats, setRepeats] = useState(0);
   const [notEnoughData, setNotEnoughData] = useState(true);
+
+  useEffect(() => {
+    setFeed(groupSheFeedByDay(items));
+  }, [items]);
+
+  const groupSheFeedByDay = (feedItems: SheFeed[]): { day: string; data: SheFeed[] }[] => {
+    const groupedByDay = groupBy(feedItems, item => format(item.date.unix * 1000, 'EEE dd MMM yyyy') as string);
+
+    return Object.keys(groupedByDay)
+      .map((day: string) => {
+        return { day: day, data: groupedByDay[day] };
+      });
+  };
 
   useEffect(() => {
     setItems([]);
@@ -66,5 +81,5 @@ export default function useBookSearch(endpoint: string) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endpoint, notEnoughData, repeats]);
 
-  return { loading, error, items, displayItems, hasMore, setNotEnoughData };
+  return { loading, error, feed, items, displayItems, hasMore, setNotEnoughData };
 }
