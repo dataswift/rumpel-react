@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectApplications } from "../applications/applicationsSlice";
-import { setRedirectError } from "./hatLoginSlice";
+import { selectErrorMessage, setRedirectError } from "./hatLoginSlice";
 import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from "../hmi/hmiSlice";
 import { getTools, selectTools } from "../tools/toolsSlice";
 import * as queryString from "query-string";
@@ -20,6 +20,7 @@ type Query = {
 }
 
 const HatLoginApplicationHandler: React.FC<Props> = props => {
+  const errorMessage = useSelector(selectErrorMessage);
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
   const tools = useSelector(selectTools);
@@ -59,6 +60,25 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
       dispatch(setDependencyTools(tools.filter(tool => parentToolDependencies.indexOf(tool.id) !== -1)));
     }
   }, [parentApp, tools, dispatch]);
+
+  const redirectBack = () => {
+    dispatch(setRedirectError('hat_exception', 'internal_server_error'));
+  };
+
+  if (errorMessage && applications.length === 0) {
+    return (
+      <div>
+        <div className="app-error">
+          <h3 className="app-error-header">Looks like something went wrong</h3>
+          <p className="app-error-text">{errorMessage}</p>
+          <button className={'btn btn-accent'}
+            onClick={() => redirectBack()}>
+            Back
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return <>{props.children}</>;
 };

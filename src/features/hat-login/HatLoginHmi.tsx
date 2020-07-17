@@ -4,7 +4,7 @@ import { selectDependencyApps, selectDependencyTools, selectParentApp } from "..
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import Hmi, { HmiType } from "hmi";
 import 'hmi/dist/hmi.cjs.development.css';
-import { onTermsAgreed, onTermsDeclined, selectErrorMessage } from "./hatLoginSlice";
+import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 
@@ -16,6 +16,10 @@ const HatLoginHmi: React.FC = () => {
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyTools = useSelector(selectDependencyTools);
 
+  const redirectBack = () => {
+    dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
+  };
+
   if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
       (parentApp.application.dependencies &&
@@ -25,9 +29,15 @@ const HatLoginHmi: React.FC = () => {
 
   return (
     <div>
-      <NotificationBanner type={'error'} display={!!errorMessage}>
-        {errorMessage}
-        <a href={'https://docs.dataswift.io'}>Click</a>
+      <NotificationBanner type={'error'} display={!!errorMessage} fixed={true}>
+        <div className={'hat-login-notification'}>
+          <p>
+            An error has occurred, please use the back button to return to the previous page <br />
+            and try confirming again. If this error persists please{' '}
+            <a href={'mailto:contact@dataswift.io'} className={'link-button'}>contact us</a>
+          </p>
+          <button className={'btn btn-accent'} onClick={() => redirectBack()}>Back</button>
+        </div>
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
