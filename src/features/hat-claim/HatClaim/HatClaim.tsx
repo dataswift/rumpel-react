@@ -91,7 +91,8 @@ const HatClaim: React.FC<Props> = props => {
 
   return (
     <div className="hat-claim flex-column-wrapper">
-      {props.errorMsg && <NotificationBanner type={'error'} message={props.errorMsg} />}
+      <NotificationBanner type={'error'} display={!!props.errorMsg}>{props.errorMsg}</NotificationBanner>
+
       <span className={'flex-spacer-small'} />
       <HatClaimEmail />
       <HatClaimUrl />

@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
 import {
-  selectDependencyApps, selectDependencyPlugsAreActive,
-  selectDependencyToolsEnabled,
-  selectDependencyToolsPending,
-  selectParentApp, setDependencyTools
+  selectDependencyApps,
+  selectDependencyPlugsAreActive,
+  selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
 
@@ -22,13 +21,10 @@ type Query = {
   dependencies?: string;
 }
 
-export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
-  const dispatch = useDispatch();
+const HatLoginSetupDependency: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const plugsAreActive = useSelector(selectDependencyPlugsAreActive);
-  const toolsAreEnabled = useSelector(selectDependencyToolsEnabled);
-  const toolsPending = useSelector(selectDependencyToolsPending);
 
   useEffect(() => {
     const { application_id, name, redirect_uri, redirect, dependencies } =
@@ -41,32 +37,12 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       try {
         const hatSvc = HatClientService.getInstance();
 
-        const res = await hatSvc.setupApplication(app.application.id);
-
-        if (res?.parsedBody) {
+        if (app?.application.id) {
           const resAppLogin = await hatSvc.appLogin(app.application.id);
 
           if (resAppLogin?.parsedBody?.accessToken) {
             // eslint-disable-next-line max-len
             window.location.href = `${ app.application.setup.url }?token=${ resAppLogin.parsedBody.accessToken }&redirect=${ callback }`;
-          }
-        }
-      } catch (e) {
-        console.log('Setup dependencies errored', e);
-      }
-    };
-
-    const setupToolDependencies = async () => {
-      try {
-        const hatSvc = HatClientService.getInstance();
-
-        if (!toolsAreEnabled) {
-          if (toolsPending.length > 0) {
-            const tool = await hatSvc.enableTool(toolsPending[0].id);
-
-            if (tool && tool.parsedBody) {
-              dispatch(setDependencyTools([tool.parsedBody]));
-            }
           }
         }
       } catch (e) {
@@ -103,15 +79,13 @@ export const HatSetupLoginSetupDependency: React.FC<Props> = props => {
       return url.replace('#', '%23');
     };
 
-    if (parentApp && parentApp.enabled && (!plugsAreActive || !toolsAreEnabled)) {
-      if (!toolsAreEnabled) {
-        setupToolDependencies();
-      } else {
-        setupAppDependencies(dependencyApps);
-      }
+    if (parentApp && parentApp.enabled && !plugsAreActive) {
+      setupAppDependencies(dependencyApps);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentApp, dependencyApps, plugsAreActive, toolsAreEnabled]);
+  }, [parentApp, dependencyApps, plugsAreActive]);
 
   return <>{props.children}</>;
 };
+
+export default HatLoginSetupDependency;
