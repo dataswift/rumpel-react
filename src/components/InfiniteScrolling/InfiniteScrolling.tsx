@@ -1,6 +1,7 @@
 import React from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 import { FeedList } from "../../features/feed/FeedList";
+import {FeedLoading} from "../Feed/FeedLoading/FeedLoading";
 
 export default function InfiniteScrolling() {
   const {
@@ -39,9 +40,9 @@ export default function InfiniteScrolling() {
       {/*  }*/}
       {/*})}*/}
       <FeedList dayGroupedFeed={feed}/>
-
-      <div>{loading && 'Loading...'}</div>
-      <div>{error && 'Error'}</div>
+      <FeedLoading dataFetched={!loading} filteredData={false}/>
+      {/*<div>{loading && 'Loading...'}</div>*/}
+      {/*<div>{error && 'Error'}</div>*/}
     </>
   );
 }
