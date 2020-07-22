@@ -15,7 +15,25 @@
     font-size: 14px;
   }
 
+  button {
+    margin-top: 1.1rem;
+  }
+
   @media (max-width: 500px) {
     margin: 30px 20px;
+  }
+}
+
+.hat-login-notification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    font-size: 1.6rem;
+  }
+
+  button {
+    margin-top: 1.1rem;
   }
 }

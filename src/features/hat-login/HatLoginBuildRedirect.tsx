@@ -24,7 +24,7 @@ type Query = {
   internal?: string;
 }
 
-export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
+const HatLoginBuildRedirect: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyPlugsAreActive = useSelector(selectDependencyPlugsAreActive);
@@ -75,10 +75,12 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.enabled && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
+    if (parentApp && parentApp.active && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
       buildRedirect(parentApp);
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
 
   return <>{props.children}</>;
 };
+
+export default HatLoginBuildRedirect;

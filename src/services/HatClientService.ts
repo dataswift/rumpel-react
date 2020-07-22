@@ -59,7 +59,11 @@ export class HatClientService {
   }
 
   public isTokenExpired(token: string) {
-    return this.hat.auth().isTokenExpired(token);
+    try {
+      return this.hat.auth().isTokenExpired(token);
+    } catch (e) {
+      return true;
+    }
   }
 
   public async getApplicationHmi(applicationId: string) {

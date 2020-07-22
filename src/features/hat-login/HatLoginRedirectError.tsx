@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectRedirectError } from "./hatSetupLoginSlice";
+import { selectRedirectError } from "./hatLoginSlice";
 import { environment } from "../../environment";
 import * as queryString from "query-string";
 
@@ -15,7 +15,7 @@ type Query = {
   internal?: string;
 }
 
-export const HatSetupLoginRedirectError: React.FC<Props> = props => {
+const HatLoginRedirectError: React.FC<Props> = props => {
   const [redirectNotProvided, setRedirectNotProvided] = useState(false);
   const redirectError = useSelector(selectRedirectError);
 
@@ -85,3 +85,5 @@ export const HatSetupLoginRedirectError: React.FC<Props> = props => {
 
   return <>{redirectNotProvided ? <RedirectError /> : props.children}</>;
 };
+
+export default HatLoginRedirectError;

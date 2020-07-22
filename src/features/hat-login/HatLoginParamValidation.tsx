@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getApplicationsHmi } from "../applications/applicationsSlice";
 import { useDispatch } from "react-redux";
-import { setRedirectError } from "./hatSetupLoginSlice";
+import { setRedirectError } from "./hatLoginSlice";
 import * as queryString from "query-string";
 
 type Props = {
@@ -15,7 +15,7 @@ type Query = {
   redirect?: string;
 }
 
-export const HatSetupLoginParamValidation: React.FC<Props> = props => {
+const HatLoginParamValidation: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,3 +40,5 @@ export const HatSetupLoginParamValidation: React.FC<Props> = props => {
 
   return <>{props.children}</>;
 };
+
+export default HatLoginParamValidation;
