@@ -1,13 +1,12 @@
 import React from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 import { FeedList } from "../../features/feed/FeedList";
-import {FeedLoading} from "../Feed/FeedLoading/FeedLoading";
+import { FeedLoading } from "../Feed/FeedLoading/FeedLoading";
 
 export default function InfiniteScrolling() {
   const {
     feed,
     loading,
-    error,
   } = useInfiniteScrolling("");
 
   // const observer = useRef<IntersectionObserver>();
