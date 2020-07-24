@@ -19,6 +19,14 @@ export const Feed: React.FC = () => {
     setFeedState("infinite-scrolling");
   }, [refreshDate]);
 
+  const scrollToTheTop = () => {
+    const privateSpaceContent = document.getElementById('private-space-content');
+
+    if (privateSpaceContent) {
+      privateSpaceContent.scrollTop = 0;
+    }
+  };
+
   return (
     <div className={'feed-wrapper'}>
       {feedState === 'filtering' && (
@@ -31,7 +39,7 @@ export const Feed: React.FC = () => {
       <FeedUserActions
         onSelectedDates={(since, until) => {setSelectedDates({ since: since, until: until });}}
         onRefresh={date => setRefreshDate(date)}
-        onGoToToday={() => {}}
+        onGoToToday={() => scrollToTheTop()}
       />
     </div>
   );

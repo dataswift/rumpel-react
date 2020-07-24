@@ -7,7 +7,7 @@ type Props = {
 }
 export const FeedList: React.FC<Props> = ({ dayGroupedFeed }) => {
   return (
-    <div className={'she-feed'}>
+    <div className={'she-feed'} id={'she-feed'}>
       {dayGroupedFeed.map(day => {
         return <>
           <h5 className="day-separator">{day.day}</h5>
