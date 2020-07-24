@@ -6,7 +6,7 @@ import { DateRangePicker, Range } from 'react-date-range';
 import { endOfDay, getUnixTime, startOfDay } from "date-fns";
 
 type Props = {
-    selectedDates: (startDay: number, endDay: number) => void;
+    selectedDates: (since: number, until: number) => void;
 }
 
 export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
@@ -24,10 +24,10 @@ export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
   };
 
   const onDone = () => {
-    const startDay = getUnixTime(startOfDay(state[0].startDate));
-    const endDay = getUnixTime(endOfDay(state[0].endDate));
+    const since = getUnixTime(startOfDay(state[0].startDate));
+    const until = getUnixTime(endOfDay(state[0].endDate));
 
-    selectedDates(startDay, endDay);
+    selectedDates(since, until);
   };
 
   return (

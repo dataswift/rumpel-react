@@ -3,11 +3,15 @@ import useInfiniteScrolling from "./useInfiniteScrolling";
 import { FeedList } from "../../features/feed/FeedList";
 import { FeedLoading } from "../Feed/FeedLoading/FeedLoading";
 
-export default function InfiniteScrolling() {
+type Props = {
+    refreshDate: Date
+}
+
+export const InfiniteScrolling: React.FC<Props> = ({ refreshDate }) => {
   const {
     feed,
     loading,
-  } = useInfiniteScrolling("");
+  } = useInfiniteScrolling(refreshDate);
 
   // const observer = useRef<IntersectionObserver>();
 
@@ -44,4 +48,4 @@ export default function InfiniteScrolling() {
       {/*<div>{error && 'Error'}</div>*/}
     </>
   );
-}
+};

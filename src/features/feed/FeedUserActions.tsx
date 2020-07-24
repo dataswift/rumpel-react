@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { DateRangePickerRumpel } from "../../components/DateRangePickerRumpel/DateRangePickerRumpel";
 
-export const FeedUserActions: React.FC = () => {
+type Props = {
+  onSelectedDates: (since: number, until: number) => void;
+  onRefresh: (date: Date) => void;
+  onGoToToday: () => void;
+}
+
+export const FeedUserActions: React.FC<Props> = ({ onSelectedDates, onRefresh, onGoToToday }) => {
   const [hideDateRangePicker, setHideDateRangePicker] = useState(true);
 
-  const selectedDates = (startDay: number, endDay: number) => {
-    console.log(startDay, endDay);
+  const selectedDates = (since: number, until: number) => {
+    onSelectedDates(since, until);
     setHideDateRangePicker(true);
   };
 
@@ -13,7 +19,7 @@ export const FeedUserActions: React.FC = () => {
     <div className="user-actions">
       {!hideDateRangePicker &&
         <div style={{ margin: 'auto' }}>
-          <DateRangePickerRumpel selectedDates={(startDay, endDay) => {selectedDates(startDay, endDay);}}/>
+          <DateRangePickerRumpel selectedDates={(since, until) => selectedDates(since, until)}/>
         </div>
       }
       <div className="user-actions-content">
@@ -21,11 +27,11 @@ export const FeedUserActions: React.FC = () => {
           <i className={'material-icons'}>filter_list</i>
             Filter
         </button>
-        <button className="today-button">
+        <button className="today-button" onClick={() => onGoToToday()}>
           <i className={'material-icons'}>fullscreen_exit</i>
         Today
         </button>
-        <button className="today-button">
+        <button className="today-button" onClick={() => onRefresh(new Date())}>
           <i className={'material-icons'}>refresh</i>
         Refresh
         </button>
