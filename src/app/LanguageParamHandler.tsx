@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setLanguage } from '../features/language/languageSlice';
 import { fetchMessages } from '../features/messages/messagesSlice';
 import * as queryString from "query-string";
-import {config} from "../app.config";
+import { config } from "../app.config";
 
 type Props = {
   children: React.ReactNode;
