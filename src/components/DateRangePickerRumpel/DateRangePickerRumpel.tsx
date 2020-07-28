@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import './DateRangePickerRumpel.scss';
-import { DateRangePicker, Range } from 'react-date-range';
+import { DateRange, Range } from 'react-date-range';
 import { endOfDay, getUnixTime, startOfDay } from "date-fns";
 
 type Props = {
@@ -32,9 +32,9 @@ export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
 
   return (
     <div className={'date-range-picker-rumpel'}>
-      <DateRangePicker
+      <DateRange
         onChange={onChange}
-        showSelectionPreview={true}
+        showSelectionPreview={false}
         moveRangeOnFirstSelection={false}
         ranges={state}
         showMonthArrow={true}
