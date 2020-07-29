@@ -7,10 +7,12 @@ import 'hmi/dist/hmi.cjs.development.css';
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
+import { selectLanguage } from "../language/languageSlice";
 
 const HatLoginHmi: React.FC = () => {
   const hatName = window.location.host;
   const dispatch = useDispatch();
+  const language = useSelector(selectLanguage);
   const parentApp = useSelector(selectParentApp);
   const errorMessage = useSelector(selectErrorMessage);
   const dependencyApps = useSelector(selectDependencyApps);
@@ -50,6 +52,7 @@ const HatLoginHmi: React.FC = () => {
         <Hmi hmiType={HmiType.login.daas}
           parentApp={parentApp.application}
           hatName={hatName}
+          language={language}
           dependencyTools={dependencyTools.map(tool => tool.info.name)}
           dependencyApps={dependencyApps.map(app => app.application)}
           onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}

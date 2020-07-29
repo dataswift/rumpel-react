@@ -7,6 +7,8 @@ export const config = {
   tokenExpiryTime: 3,
   supportedDomains: ['.hubofallthings.net', '.hubat.net', '.hat.direct', '.dataswift.me', '.dataswift.dev'],
   supportedPorts: [3000, 9000, 9001],
+  acceptedLanguages: ['en', 'pl', 'pt'],
+  defaultLanguage: 'en',
   native: environment.native,
   protocol: environment.protocol,
   links: {
