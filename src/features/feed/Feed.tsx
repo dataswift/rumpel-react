@@ -4,7 +4,7 @@ import { FeedUserActions } from "./FeedUserActions";
 import { FeedFilteredData } from "./FeedFilteredDataList";
 import { InfiniteScrolling } from "../../components/InfiniteScrolling/InfiniteScrolling";
 
-export const Feed: React.FC = () => {
+const Feed: React.FC = () => {
   const [refreshDate, setRefreshDate] = useState(new Date());
   const [feedState, setFeedState] = useState("infinite-scrolling");
   const [selectedDates, setSelectedDates] = useState({ since: 0, until: 0 });
@@ -44,3 +44,5 @@ export const Feed: React.FC = () => {
     </div>
   );
 };
+
+export default Feed;
