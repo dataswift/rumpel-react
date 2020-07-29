@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 import { FeedList } from "../../features/feed/FeedList";
 import { FeedLoading } from "../Feed/FeedLoading/FeedLoading";
@@ -8,44 +8,21 @@ type Props = {
 }
 
 export const InfiniteScrolling: React.FC<Props> = ({ refreshDate }) => {
+  const [loadMore, setLoadMore] = useState<Date | null>(null);
   const {
     feed,
     loading,
-  } = useInfiniteScrolling(refreshDate);
+  } = useInfiniteScrolling(refreshDate, loadMore);
 
-  // const observer = useRef<IntersectionObserver>();
-
-  // const lastBookElementRef = useCallback(node => {
-  //   if (loading) return;
-  //   if (observer.current) {
-  //     observer.current.disconnect();
-  //   }
-  //
-  //   observer.current = new IntersectionObserver(entries => {
-  //     if (entries[0].isIntersecting && hasMore) {
-  //       // setPageNumber(prevPageNumber => prevPageNumber + 1);
-  //       // setNotEnoughData(true);
-  //     }
-  //   });
-  //   if (node) observer.current.observe(node);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [loading, hasMore]);
+  const lastElementIntersecting = () => {
+    setLoadMore(new Date());
+  };
 
   return (
     <>
-      {/*{feed.map((item, index) => {*/}
-      {/*  if (feed.length === index + 1) {*/}
-      {/*    return <div ref={lastBookElementRef}*/}
-      {/*      style={{ height: '180px', padding: '16px' }}*/}
-      {/*      key={`${ item } key ${ index }`}>{item.day + index}</div>;*/}
-      {/*  } else {*/}
-      {/*    return <FeedList key={`${ item } key ${ index }`} dayGroupedFeed={feed}/>;*/}
-      {/*  }*/}
-      {/*})}*/}
-      <FeedList dayGroupedFeed={feed}/>
-      <FeedLoading dataFetched={!loading} filteredData={false}/>
-      {/*<div>{loading && 'Loading...'}</div>*/}
-      {/*<div>{error && 'Error'}</div>*/}
+      <FeedList dayGroupedFeed={feed} loading={loading} lastFeedElementIntersecting={() => lastElementIntersecting()}/>
+      {feed.length === 0 && <FeedLoading dataFetched={feed.length > 0} filteredData={false}/>}
+
     </>
   );
 };

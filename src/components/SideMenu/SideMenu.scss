@@ -4,7 +4,7 @@
   padding-bottom: 72px;
   width: 390px;
   bottom: 0;
-  height: 100%;
+  height: calc(100% - 82px);
   background-color: white;
 
   h6 {
@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: row;
     padding: 15px 15px 15px 52px;
-    font-size: 18px;
+    font-size: 1.8rem;
     width: 390px;
     letter-spacing: 1.2px;
     color: #939393;
@@ -92,6 +92,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (max-height: 680px) {
+    position: relative;
+  }
 
   p {
     display: inline-block;

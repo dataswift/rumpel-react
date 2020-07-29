@@ -4,7 +4,7 @@ import { DayGroupedSheFeed, SheFeed } from "../../features/feed/she-feed.interfa
 import { groupBy } from 'lodash';
 import { startOfDay, subDays, format } from "date-fns";
 
-export default function useInfiniteScrolling(refreshDate: Date) {
+export default function useInfiniteScrolling(refreshDate: Date, loadMore?: Date | null) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [feed, setFeed] = useState<DayGroupedSheFeed[]>([]);
@@ -31,9 +31,9 @@ export default function useInfiniteScrolling(refreshDate: Date) {
   };
 
   useEffect(() => {
-    setItems([]);
     setSince(Math.round(subDays(Date.now(), 20).getTime() / 1000));
     setUntil(Math.round(startOfDay(Date.now()).getTime() / 1000));
+    setItems([]);
   }, [refreshDate]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function useInfiniteScrolling(refreshDate: Date) {
         setNotEnoughData(false);
 
         if(items.length > 5) {
-          setRepeats(0);
+          // setRepeats(0);
           setLoading(false);
           setHasMore(true);
         } else {
@@ -77,14 +77,16 @@ export default function useInfiniteScrolling(refreshDate: Date) {
       }
     };
 
-    // if (repeats < 2 && notEnoughData) {
-    //   fetchFeed();
-    // }
+    if ((items.length === 0 && repeats < 4)) {
+      fetchFeed();
+    }
 
-    fetchFeed();
+    if (loadMore) {
+      fetchFeed();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshDate, notEnoughData, repeats]);
+  }, [refreshDate, notEnoughData, loadMore, repeats]);
 
   return { loading, error, feed, items, displayItems, hasMore, setNotEnoughData };
 }
