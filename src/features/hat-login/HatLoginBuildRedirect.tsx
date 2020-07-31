@@ -70,8 +70,8 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
                     // TODO Add successful redirection only in sandbox environment
                   } else {
                     // TODO Redirect with error parameters in production
-                  // eslint-disable-next-line max-len
-                  // window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                    // eslint-disable-next-line max-len
+                    // window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
                   }
                 });
             }

@@ -1,7 +1,7 @@
 import { environment } from './environment';
 
 export const config = {
-  version: '4.0.5.0',
+  version: '4.0.6.0',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
