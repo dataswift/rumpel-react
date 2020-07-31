@@ -14,17 +14,11 @@ const Login = React.lazy(() =>
     '../components/user/Login'
   )
 );
+
 const HatLogin = React.lazy(() =>
   import(
-    /* webpackChunkName: "hat_login" */
-    '../features/hat-login/HatLogin'
-  )
-);
-
-const HatSetupLogin = React.lazy(() =>
-  import(
     /* webpackChunkName: "hat_setup_login" */
-    '../features/hat-setup-login/HatSetupLogin'
+    '../features/hat-login/HatLogin'
   )
 );
 const PasswordRecover = React.lazy(() =>
@@ -47,7 +41,7 @@ const AppRouter = () => (
         </PrivateRoute>
 
         <PrivateRoute path={'/hat-setup-login'}>
-          <HatSetupLogin />
+          <HatLogin />
         </PrivateRoute>
 
         <Route exact path="/" render={({ location }) => <Redirect to={location.hash.replace('#', '')} />} />

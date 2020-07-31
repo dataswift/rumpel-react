@@ -1,4 +1,8 @@
 .notification-banner-container {
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  right: 0;
   border-radius: 2px;
   font-size: 1.6rem;
   letter-spacing: 0.4px;
@@ -6,9 +10,12 @@
   text-align: center;
   width: 100vw;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
   &-error {
-    background-color: rgba(228, 81, 81, 0.2);
+    background-color: #fadcdc;
     border-bottom: solid 1px #E45151;
     color: #E45151;
   }
@@ -17,4 +24,13 @@
     margin-right: 17px;
     vertical-align: middle;
   }
+}
+
+.notification-fixed {
+  position: fixed;
+}
+
+.notification-banner-close {
+  right: 16px;
+  top: 16px;
 }
