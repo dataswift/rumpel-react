@@ -50,6 +50,7 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
             const { accessToken } = resAppLogin.parsedBody;
             const setup = app.application.setup;
 
+            // TODO Change this logic to the new validRedirectUris field
             const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(
               decodeURI(redirectParam || '')
             );
@@ -60,15 +61,19 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
             } else {
               console.warn('Provided URL is not registered');
 
-              hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirect }`).finally(() => {
-                if (environment.sandbox) {
+              hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirectParam }`)
+                .finally(() => {
                   // eslint-disable-next-line max-len
                   window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
-                } else {
+
+                  if (environment.sandbox) {
+                    // TODO Add successful redirection only in sandbox environment
+                  } else {
+                    // TODO Redirect with error parameters in production
                   // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
-                }
-              });
+                  // window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                  }
+                });
             }
           }
         } catch (e) {}
