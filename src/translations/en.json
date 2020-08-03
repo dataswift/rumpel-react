@@ -1,0 +1,8 @@
+{
+  "hmi.actions.cancel": "Cancel",
+  "hmi.actions.confirm": "Confirm",
+  "hmi.actions.agreeWithTermsAndPrivacy.part1": "By pressing ‘Confirm’ I agree to Dataswift Ltd ",
+  "hmi.actions.agreeWithTermsAndPrivacy.termsOfService": "Terms of Service",
+  "hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy": "Privacy Policy",
+  "hmi.actions.agreeWithTermsAndPrivacy.part2": " and the permissions laid out above."
+}

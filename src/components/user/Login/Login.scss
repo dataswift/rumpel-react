@@ -1,0 +1,139 @@
+.login {
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  @media (min-width: 851px) {
+    padding-top: 62px;
+  }
+
+  form {
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  hr {
+    background-color: #000;
+    max-width: 320px;
+    width: 80%;
+    height: 1px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .login-remember-me-container {
+    margin-top: 8px;
+
+    label {
+      color: #4a556b;
+      letter-spacing: .25px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+
+  &-dataswift-logo {
+    height: 7.5rem;
+    width: 17rem;
+  }
+
+  .issuer-logo {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 186px;
+    }
+  }
+
+  @media (max-height: 619px) {
+    .issuer-logo {
+
+      img {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .drp-image {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      width: 25%;
+    }
+  }
+
+  .data-rights-description {
+      opacity: 0.87;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: #9a9a9a;
+      margin: 16px auto 0;
+      max-width: 500px;
+      width: 90%;
+  }
+}
+
+.login-password-container {
+  width: 400px;
+  @media (max-width: 450px) {
+    width: 100%;
+  }
+}
+
+.input-password-container {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin-top: 4px;
+    margin-left: -50px;
+    opacity: 0.7;
+    background-color: transparent;
+    border: none;
+  }
+  input {
+    padding-right: 6rem;
+  }
+}
+
+.user-actions {
+  //background-color: $hat-background-color;
+
+  * {
+    display: block;
+    margin: 1.5rem auto;
+    width: 250px;
+    text-align: center;
+  }
+
+  .btn-transparent-grey {
+    margin-top: 0;
+  }
+}
+
+.title-hat-domain-wrapper {
+  padding-left: 2.0rem;
+  padding-right: 2.0rem;
+  margin-top: 1.5rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.hat-name, .hat-domain {
+  display: inline-block;
+  h3 {
+    font-size: 1.8rem;
+  }
+}

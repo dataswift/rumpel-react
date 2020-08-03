@@ -1,0 +1,39 @@
+.app-error {
+  border: solid 2px #E36682;
+  color: #E36682;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 500px;
+
+  &-header {
+    font-size: 22px;
+    margin-top: 0;
+  }
+
+  &-text {
+    font-size: 14px;
+  }
+
+  button {
+    margin-top: 1.1rem;
+  }
+
+  @media (max-width: 500px) {
+    margin: 30px 20px;
+  }
+}
+
+.hat-login-notification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    font-size: 1.6rem;
+  }
+
+  button {
+    margin-top: 1.1rem;
+  }
+}
