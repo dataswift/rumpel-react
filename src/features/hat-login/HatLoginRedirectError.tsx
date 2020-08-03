@@ -23,7 +23,11 @@ const HatLoginRedirectError: React.FC<Props> = props => {
     const { redirect_uri, redirect, fallback, internal } = queryString.parse(window.location.search) as Query;
 
     const callBackUrlWithError = (error: string, errorReason: string): string | null => {
-      const redirectParam = fallback || redirect_uri || redirect;
+      const redirectParam = redirect_uri || redirect;
+
+      if (fallback) {
+        return fallback;
+      }
 
       if (redirectParam) {
         const url = `${ redirectParam }?error=${ error }%26error_reason=${ errorReason }`;
