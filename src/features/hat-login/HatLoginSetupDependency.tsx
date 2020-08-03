@@ -8,6 +8,7 @@ import {
   selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
+import { addMinutes, isFuture } from "date-fns";
 
 type Props = {
     children: React.ReactNode;
@@ -34,6 +35,16 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
       const app = dependencies.filter(d => !d.active)[0];
       const callback = intermediateCallBackUrl(app.application.id);
 
+      const attemptedSetup = sessionStorage.getItem('attempted_setup');
+
+      if (app && attemptedSetup) {
+        const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
+
+        if ((session.applicationId === app.application.id) && isFuture(session.date)) {
+          return;
+        }
+      }
+
       try {
         const hatSvc = HatClientService.getInstance();
 
@@ -41,6 +52,13 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
           const resAppLogin = await hatSvc.appLogin(app.application.id);
 
           if (resAppLogin?.parsedBody?.accessToken) {
+            const attemptedSetup = {
+              applicationId: app.application.id,
+              date: addMinutes(new Date(), 10)
+            };
+
+            sessionStorage.setItem('attempted_setup', JSON.stringify(attemptedSetup));
+
             // eslint-disable-next-line max-len
             window.location.href = `${ app.application.setup.url }?token=${ resAppLogin.parsedBody.accessToken }&redirect=${ callback }`;
           }
@@ -79,9 +97,20 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
       return url.replace('#', '%23');
     };
 
-    if (parentApp && parentApp.enabled && !plugsAreActive) {
+    const attemptedSetup = sessionStorage.getItem('attempted_setup');
+
+    if (dependencyApps && dependencyApps.length > 0 && attemptedSetup) {
+      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
+
+      if ((session.applicationId === dependencyApps[0].application.id) && isFuture(session.date)) {
+        return;
+      }
+    }
+
+    if (parentApp && parentApp.active && !plugsAreActive) {
       setupAppDependencies(dependencyApps);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentApp, dependencyApps, plugsAreActive]);
 
