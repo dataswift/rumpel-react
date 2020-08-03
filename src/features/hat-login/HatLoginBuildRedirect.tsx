@@ -10,6 +10,7 @@ import {
   selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
+import { addMinutes, isFuture } from "date-fns";
 
 type Props = {
     children: React.ReactNode;
@@ -55,6 +56,13 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
               decodeURI(redirectParam || '')
             );
 
+            const attemptedSetup = {
+              applicationId: app.application.id,
+              date: addMinutes(new Date(), 10)
+            };
+
+            sessionStorage.setItem('attempted_setup', JSON.stringify(attemptedSetup));
+
             if (isRedirectUrlValid) {
               // eslint-disable-next-line max-len
               window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
@@ -82,6 +90,19 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
 
     if (parentApp && parentApp.active && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
       buildRedirect(parentApp);
+      return;
+    }
+
+    const attemptedSetup = sessionStorage.getItem('attempted_setup');
+
+    if (parentApp && attemptedSetup) {
+      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
+
+      if ((session.applicationId === parentApp.application.id) && isFuture(session.date)) {
+        buildRedirect(parentApp);
+        return;
+      }
+
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
 
