@@ -10,7 +10,7 @@ import {
   selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
-import { addMinutes, isFuture } from "date-fns";
+import { addMinutes, isFuture, parseISO } from "date-fns";
 
 type Props = {
     children: React.ReactNode;
@@ -65,14 +65,14 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
 
             if (isRedirectUrlValid) {
               // eslint-disable-next-line max-len
-              window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+              window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
             } else {
               console.warn('Provided URL is not registered');
 
               hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirectParam }`)
                 .finally(() => {
                   // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+                  window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
 
                   if (environment.sandbox) {
                     // TODO Add successful redirection only in sandbox environment
@@ -95,14 +95,13 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
 
     const attemptedSetup = sessionStorage.getItem('attempted_setup');
 
-    if (parentApp && attemptedSetup) {
-      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
+    if (parentApp && parentApp.enabled && attemptedSetup) {
+      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: string};
 
-      if ((session.applicationId === parentApp.application.id) && isFuture(session.date)) {
+      if ((session.applicationId === parentApp.application.id) && isFuture(parseISO(session.date))) {
         buildRedirect(parentApp);
         return;
       }
-
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
 
