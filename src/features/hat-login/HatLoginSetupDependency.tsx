@@ -8,7 +8,7 @@ import {
   selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
-import { addMinutes, isFuture } from "date-fns";
+import { addMinutes, isFuture, parseISO } from "date-fns";
 
 type Props = {
     children: React.ReactNode;
@@ -35,16 +35,6 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
       const app = dependencies.filter(d => !d.active)[0];
       const callback = intermediateCallBackUrl(app.application.id);
 
-      const attemptedSetup = sessionStorage.getItem('attempted_setup');
-
-      if (app && attemptedSetup) {
-        const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
-
-        if ((session.applicationId === app.application.id) && isFuture(session.date)) {
-          return;
-        }
-      }
-
       try {
         const hatSvc = HatClientService.getInstance();
 
@@ -53,7 +43,7 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
 
           if (resAppLogin?.parsedBody?.accessToken) {
             const attemptedSetup = {
-              applicationId: app.application.id,
+              applicationId: parentApp?.application.id,
               date: addMinutes(new Date(), 10)
             };
 
@@ -99,10 +89,10 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
 
     const attemptedSetup = sessionStorage.getItem('attempted_setup');
 
-    if (dependencyApps && dependencyApps.length > 0 && attemptedSetup) {
-      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: Date};
+    if (parentApp && dependencyApps && dependencyApps.length > 0 && attemptedSetup) {
+      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: string};
 
-      if ((session.applicationId === dependencyApps[0].application.id) && isFuture(session.date)) {
+      if ((session.applicationId === parentApp.application.id) && isFuture(parseISO(session.date))) {
         return;
       }
     }
