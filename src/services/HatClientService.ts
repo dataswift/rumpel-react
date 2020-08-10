@@ -5,6 +5,7 @@ import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidati
 import { HatTool } from "../features/tools/hat-tool.interface";
 import { SystemStatusInterface } from "../features/system-status/system-status.interface";
 import { Profile } from "../features/profile/profile.interface";
+import { SheFeed } from "../features/feed/she-feed.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -158,5 +159,25 @@ export class HatClientService {
   public async getProfileData() {
 
     return this.hat.hatData().getAll<Profile>("rumpel", "profile", { orderBy: 'dateCreated', take: '1' });
+  }
+
+  public async getSheRecords(endpoint?: string, since?: number | string, until?: number | string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    let path = `${ hatdomain }${ this.pathPrefix }/she/feed`;
+
+    if (since) {
+      path += `?since=${ since.toString() }`;
+    }
+
+    if (until) {
+      path += `&until=${ until.toString() }`;
+    }
+
+
+    return get<SheFeed[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }

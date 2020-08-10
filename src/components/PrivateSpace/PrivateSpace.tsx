@@ -20,7 +20,7 @@ export const PrivateSpace: React.FC<Props> = ({ children }) => {
       <NavigationHeader toggleSideMenu={() => setHideSideMenu(!hideSideMenu)}/>
       <div className={'private-space-wrapper'}>
         <SideMenu hideSideMenu={hideSideMenu}/>
-        <div className={'private-space-content'}>
+        <div className={'private-space-content'} id={'private-space-content'}>
           {children}
         </div>
       </div>

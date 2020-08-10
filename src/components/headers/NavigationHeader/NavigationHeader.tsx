@@ -24,7 +24,7 @@ export const NavigationHeader: React.FC<Props> = ({ toggleSideMenu }) => {
   }, [isAuthenticated, dispatch]);
 
   return (
-    <header className={'app-header'}>
+    <header className={'app-header nav-header'}>
       <div className={'app-header-content flex-row-wrapper'}>
         <button className={'side-menu-toggle'} onClick={ () => toggleSideMenu()}>
           <i className={'material-icons'}>menu</i>
