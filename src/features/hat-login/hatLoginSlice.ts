@@ -73,6 +73,7 @@ export const setupApplication = (parentAppId: string): AppThunk => async dispatc
     const app = await HatClientService.getInstance().setupApplication(parentAppId);
 
     if (app?.parsedBody) {
+      app.parsedBody.active = true;
       return dispatch(setParentApp(app.parsedBody));
     }
   } catch (e) {
