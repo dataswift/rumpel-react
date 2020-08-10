@@ -3,6 +3,8 @@ import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
 import { HatTool } from "../features/tools/hat-tool.interface";
+import { SystemStatusInterface } from "../features/system-status/system-status.interface";
+import { Profile } from "../features/profile/profile.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -140,5 +142,21 @@ export class HatClientService {
     const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/trigger`;
 
     return get(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async getSystemStatusRecords() {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${ hatdomain }${ this.pathPrefix }/system/status`;
+
+    return get<SystemStatusInterface[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async getProfileData() {
+
+    return this.hat.hatData().getAll<Profile>("rumpel", "profile", { orderBy: 'dateCreated', take: '1' });
   }
 }

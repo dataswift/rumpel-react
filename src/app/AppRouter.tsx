@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
+import { Feed } from "../features/feed/Feed";
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -28,6 +30,16 @@ const PasswordRecover = React.lazy(() =>
   )
 );
 
+const PrivateSpaceRoutes = () => {
+  return (
+    <PrivateSpace>
+      <PrivateRoute path={'/feed'}>
+        <Feed />
+      </PrivateRoute>
+    </PrivateSpace>
+  );
+};
+
 const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
@@ -43,6 +55,8 @@ const AppRouter = () => (
         <PrivateRoute path={'/hat-setup-login'}>
           <HatLogin />
         </PrivateRoute>
+
+        <PrivateSpaceRoutes />
 
         <Route exact path="/" render={({ location }) => <Redirect to={location.hash.replace('#', '')} />} />
       </Switch>
