@@ -10,6 +10,7 @@ import {
   selectParentApp
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
+import { addMinutes, isFuture, parseISO } from "date-fns";
 
 type Props = {
     children: React.ReactNode;
@@ -24,7 +25,7 @@ type Query = {
   internal?: string;
 }
 
-export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
+const HatLoginBuildRedirect: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyPlugsAreActive = useSelector(selectDependencyPlugsAreActive);
@@ -50,35 +51,61 @@ export const HatSetupLoginBuildRedirect: React.FC<Props> = props => {
             const { accessToken } = resAppLogin.parsedBody;
             const setup = app.application.setup;
 
+            // TODO Change this logic to the new validRedirectUris field
             const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(
               decodeURI(redirectParam || '')
             );
 
+            const attemptedSetup = {
+              applicationId: app.application.id,
+              date: addMinutes(new Date(), 10)
+            };
+
+            sessionStorage.setItem('attempted_setup', JSON.stringify(attemptedSetup));
+
             if (isRedirectUrlValid) {
               // eslint-disable-next-line max-len
-              window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+              window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
             } else {
               console.warn('Provided URL is not registered');
 
-              hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirect }`).finally(() => {
-                if (environment.sandbox) {
+              hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirectParam }`)
+                .finally(() => {
                   // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
-                } else {
-                  // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
-                }
-              });
+                  window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+
+                  if (environment.sandbox) {
+                    // TODO Add successful redirection only in sandbox environment
+                  } else {
+                    // TODO Redirect with error parameters in production
+                    // eslint-disable-next-line max-len
+                    // window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
+                  }
+                });
             }
           }
         } catch (e) {}
       }
     };
 
-    if (parentApp && parentApp.enabled && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
+    if (parentApp && parentApp.active && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
       buildRedirect(parentApp);
+      return;
+    }
+
+    const attemptedSetup = sessionStorage.getItem('attempted_setup');
+
+    if (parentApp && parentApp.enabled && attemptedSetup) {
+      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: string};
+
+      if ((session.applicationId === parentApp.application.id) && isFuture(parseISO(session.date))) {
+        buildRedirect(parentApp);
+        return;
+      }
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
 
   return <>{props.children}</>;
 };
+
+export default HatLoginBuildRedirect;
