@@ -28,12 +28,20 @@ const PasswordRecover = React.lazy(() =>
   )
 );
 
+const AuthLogin = React.lazy(() =>
+    import(
+      /* webpackChunkName: "auth_login" */
+      '../features/authentication/AuthLogin'
+    )
+);
+
 const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
       <Switch>
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
+        <Route path="/auth/login/" component={AuthLogin} />
         <Route path="/user/password/recover" component={PasswordRecover} />
 
         <PrivateRoute path={'/hatlogin'}>
