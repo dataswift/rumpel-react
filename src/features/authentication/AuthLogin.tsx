@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './AuthLogin.scss';
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import * as queryString from "query-string";
@@ -84,7 +84,7 @@ const AuthLogin: React.FC = () => {
       <div className={'flex-column-wrapper auth-login'}>
         <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
         <h2 className={'auth-login-title'}>Enter your password</h2>
-        <div>{from.search}</div>
+
         <Input type={'password'}
           placeholder={'Password'}
           autoComplete={'password'}
