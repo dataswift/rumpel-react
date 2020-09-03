@@ -5540,9 +5540,9 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-"hmi@git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#v0.2.0-RC-2":
+"hmi@git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#v0.2.0":
   version "0.2.0"
-  resolved "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#e490d28ac3f7c314072dac2c7e37bbc5c5bd09f1"
+  resolved "git+ssh://git@github.com:Hub-of-all-Things/hmi-react.git#7bdf9a9ece0bcc9dcf336929008a7e137e9b5719"
   dependencies:
     components "^0.1.0"
     context "^0.0.1"

@@ -131,12 +131,10 @@
     line-height: 1.6rem;
     letter-spacing: -0.12px;
     color: #9b9b9d;
-    max-width: 300px;
+    max-width: 196px;
     cursor: pointer;
-
-    @media (max-width: 500px) {
-      max-width: 196px;
-    }
+    margin-top: 20px;
+    margin-bottom: 50px;
 
     span {
       color: #9f97bf;

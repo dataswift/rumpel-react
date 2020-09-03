@@ -42,6 +42,13 @@ const AuthRecoverPassword = React.lazy(() =>
     )
 );
 
+const Oauth = React.lazy(() =>
+    import(
+      /* webpackChunkName: "auth_oauth" */
+      '../features/oauth/Oauth'
+    )
+);
+
 const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
@@ -54,6 +61,10 @@ const AppRouter = () => (
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
+        </PrivateRoute>
+
+        <PrivateRoute path={'/auth/oauth'}>
+          <Oauth />
         </PrivateRoute>
 
         <PrivateRoute path={'/hat-setup-login'}>
