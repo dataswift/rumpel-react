@@ -174,3 +174,18 @@
   color: white;
   margin-bottom: 100px;
 }
+
+.auth-change-password {
+  .ds-hmi-btn {
+    margin-top: 30px;
+  }
+
+  .ds-input-wrapper {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  //.ds-input-wrapper:not(:first-of-type) {
+  //  margin-bottom: 30px;
+  //}
+}
