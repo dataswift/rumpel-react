@@ -28,11 +28,12 @@ export const PasswordStrengthIndicator: React.FC<Props> = ({ strong, passwordMat
       setMessage("Password must be stronger.*");
     }
   }, [strong, passwordMatch]);
+
   return (
     <div className={'password-strength'}>
       <PasswordMeter strong={strong}/>
       <div className={'password-strength-message'} style={{ color: textColor }}>{message}</div>
-        {strong &&
+        {!strong &&
         <div className={'password-strength-text'}>
           <span>*</span> Any combination of <a href={'https://docs.dataswift.io'}>three random words</a> is
           one of the strongest passwords you can have.

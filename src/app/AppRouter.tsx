@@ -65,7 +65,7 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateRoute>
 
-        <PrivateRoute path={'/auth/oauth'}>
+        <PrivateRoute path={'/auth/oauth'} newAuth>
           <Oauth />
         </PrivateRoute>
 

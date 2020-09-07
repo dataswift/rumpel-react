@@ -26,7 +26,7 @@ const AuthLogin: React.FC = () => {
   const { target } = queryString.parse(window.location.search) as Query;
   const targetParam = target || '/feed';
   // @ts-ignore
-  const from = location.state?.from;
+  const { from, repeat, email } = location.state;
 
   const loginSuccessful = () => {
     if (from) {
@@ -83,7 +83,12 @@ const AuthLogin: React.FC = () => {
     <div>
       <div className={'flex-column-wrapper auth-login'}>
         <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
-        <h2 className={'auth-login-title'}>Enter your password</h2>
+
+        <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
+
+        <h2 className={'auth-login-title'}>
+          {repeat ? "It looks like you already have an account." : "Enter your password"}
+        </h2>
 
         <Input type={'password'}
           placeholder={'Password'}
@@ -106,8 +111,8 @@ const AuthLogin: React.FC = () => {
 
         <hr />
 
-        <p className={'login-have-an-account'}>
-            Don't have an account?
+        <p className={'auth-login-have-an-account'}>
+          {repeat ? "Want to create a new account?" : "Don't have an account?"}
         </p>
 
         <button className={'auth-login-btn-signup ds-hmi-btn'} onClick={() => navigateToSignup()}>

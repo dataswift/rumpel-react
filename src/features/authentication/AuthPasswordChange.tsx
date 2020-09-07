@@ -1,24 +1,53 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
 import { resetPassword } from "../../api/hatAPI";
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import { Input, IssuedBy } from "hmi";
+import { AgreementsModal, Input, IssuedBy } from "hmi";
 import { PasswordStrengthIndicator } from "../../components/PasswordStrengthMeter/PasswordStrengthIndicator";
 import { loadDynamicZxcvbn } from "../../utils/load-dynamic-zxcvbn";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
+
+import * as queryString from "query-string";
+import { Link } from "react-router-dom";
+
+type Query = {
+  email?: string;
+}
+const debounce = require('lodash.debounce');
 
 declare const zxcvbn: any;
 
 const AuthPasswordChange: React.FC = () => {
+  const history = useHistory();
   const [parentApp, setParentApp] = useState<HatApplicationContent | null>(null);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [email, setEmail] = useState('');
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState("");
+  const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
   let { resetToken } = useParams();
+  const passwordMatchDebounce = useRef(debounce((password: string, passwordConfirm: string, score: number) =>
+    validatePasswordMatch(password, passwordConfirm, score), 400)).current;
+
+  const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
+    if (score > 2) {
+      if (password === passwordConfirm) {
+        setPasswordMatch(true);
+      } else {
+        if (passwordConfirm.length > 0 || passwordMatch) {
+          setPasswordMatch(false);
+        } else {
+          setPasswordMatch(undefined);
+        }
+      }
+    } else {
+      setPasswordMatch(undefined);
+    }
+  };
 
   const resetPasswordRequest = async () => {
     try {
@@ -56,62 +85,65 @@ const AuthPasswordChange: React.FC = () => {
     }
   };
 
+  const login = async () => {
+    if (successfulResponse) {
+      // TODO a proper redirect with params to client or dashboard.
+      history.replace("/auth/oauth");
+    }
+  };
+
   useEffect(() => {
+    const { email } = queryString.parse(window.location.search) as Query;
+    setEmail(email || "");
+
     loadDynamicZxcvbn(() => {
       // zxcvbn ready
+      setSuccessfulResponse(new Date());
     });
   }, []);
 
   useEffect(() => {
-    if (score > 2) {
-      if (password === passwordConfirm) {
-        setPasswordMatch(true);
-      } else {
-        if (passwordConfirm.length > 5) {
-          setPasswordMatch(false);
-        }
-      }
-    } else {
-      setPasswordMatch(undefined);
-    }
-  }, [password, passwordConfirm, score]);
+    passwordMatchDebounce(password, passwordConfirm, score);
+  }, [password, passwordConfirm, score, passwordMatchDebounce]);
 
   return (
     <div>
       <div className={'flex-column-wrapper auth-login auth-change-password'}>
         <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+
+        <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
+
         {successfulResponse &&
-                <>
-                  <h2 className={'ds-hmi-email auth-login-email-title'}>changeme.gmail.com</h2>
-                  <h2 className={'auth-login-title'}>
-                    If this email address is an active account, you will receive an email shortly.
-                  </h2>
+            <>
+              <h2 className={'auth-login-title'}>The password to your Personal Data Account has been reset.</h2>
 
-                  <div className={'auth-login-text'}>
-                    if you do not receive a reset link, check your spam folder or<br />
-                    <span onClick={() => validateAndReset()}>send again</span>.
-                  </div>
-                </>
+              <button className={'auth-login-btn ds-hmi-btn'}
+                onClick={() => login()}
+              >
+                Login
+              </button>
+            </>
         }
-        <h2 className={'ds-hmi-email auth-login-email-title'}>changeme.mail.com</h2>
 
-        <h2 className={'auth-login-title'}>Reset password</h2>
-        <Input type={'password'}
-          placeholder={'Password'}
-          autoComplete={'new-password-1'}
-          name={'password-1'}
-          value={password}
-          hasError={!!errorMessage}
-          errorMessage={errorMessage}
-          passwordMatch={passwordMatch}
-          errorSuggestion={errorSuggestion}
-          onChange={e => onPasswordChange(e)} />
+        {!successfulResponse &&
+        <>
+          <h2 className={'auth-login-title'}>Reset password</h2>
+          <Input type={'password'}
+            placeholder={'Password'}
+            autoComplete={'new-password-1'}
+            name={'password-1'}
+            value={password}
+            hasError={!!errorMessage}
+            errorMessage={errorMessage}
+            passwordMatch={passwordMatch}
+            errorSuggestion={errorSuggestion}
+            onChange={e => onPasswordChange(e)} />
 
-        {password.length > 0 &&
+          {password.length > 0 &&
           <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch}/>
-        }
+          }
 
-        {score >= 3 &&
+          {score >= 3 &&
           <Input type={'password'}
             placeholder={'Confirm Password'}
             autoComplete={'new-password-2'}
@@ -123,16 +155,27 @@ const AuthPasswordChange: React.FC = () => {
             passwordMatch={passwordMatch}
             onChange={e => onPasswordChange(e)}
           />
+          }
+
+          {passwordMatch &&
+          <p className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
+            By proceeding, you agree to the Personal Data Account <span>Policies</span>
+            &nbsp;and <span>Terms</span> provided by Dataswift.
+          </p>
+          }
+
+          <button className={'auth-login-btn ds-hmi-btn'}
+            disabled={score < 3 || !passwordMatch}
+            onClick={() => validateAndReset()}
+          >
+            Next
+          </button>
+        </>
         }
 
-        <button className={'auth-login-btn ds-hmi-btn'}
-          disabled={score < 3 || !passwordMatch}
-          onClick={() => validateAndReset()}
-        >
-                    Next
-        </button>
 
         <IssuedBy />
+        <AgreementsModal language={'en'} open={openPopup} onClose={() => setOpenPopup(!openPopup)}/>
       </div>
     </div>
   );

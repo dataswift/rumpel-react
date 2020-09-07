@@ -1,5 +1,5 @@
 import { Redirect, RedirectProps, Route } from 'react-router';
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';
@@ -8,21 +8,28 @@ import * as queryString from "query-string";
 
 interface OwnProps {
   children: React.ReactNode;
+  newAuth?: boolean;
   path?: string;
   exact?: boolean;
 }
 
 type Query = {
   token?: string;
+  repeat?: string;
+  email?: string;
 }
 
-export function PrivateRoute({ children, ...rest }: OwnProps) {
+export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const [repeatedSignup, setRepeatedSignup] = useState<boolean | null>(null);
+  const [email, setEmail] = useState<string | undefined>(undefined);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const tokenStored = Cookies.get('token') || sessionStorage.getItem('token');
-    const { token } = queryString.parse(window.location.search) as Query;
+    const { token, repeat, email } = queryString.parse(window.location.search) as Query;
+    setRepeatedSignup(repeat === 'true');
+    setEmail(email);
 
     const hatSvc = HatClientService.getInstance();
 
@@ -44,8 +51,8 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
         ) : (
           <DelayedRedirect
             to={{
-              pathname: '/user/login',
-              state: { from: location },
+              pathname: newAuth ? '/auth/login' : '/user/login',
+              state: { from: location, repeat: repeatedSignup, email: email },
             }}
             delay={100}
           />
