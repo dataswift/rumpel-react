@@ -1,5 +1,5 @@
 import { Redirect, RedirectProps, Route } from 'react-router';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';

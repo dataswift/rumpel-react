@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
-import AuthPasswordChange from "../features/authentication/AuthPasswordChange";
+import AuthChangePassword from "../features/authentication/AuthChangePassword";
+import AuthValidateEmail from "../features/authentication/AuthValidateEmail";
+
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -59,7 +61,8 @@ const AppRouter = () => (
         <Route path="/user/password/recover" component={PasswordRecover} />
         <Route path="/auth/login/" component={AuthLogin} />
         <Route path="/auth/recover-password" component={AuthRecoverPassword} />
-        <Route path="/auth/change-password/:resetToken" component={AuthPasswordChange} />
+        <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
+        <Route path="/auth/validate-email/:validateToken" component={AuthValidateEmail} />
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />

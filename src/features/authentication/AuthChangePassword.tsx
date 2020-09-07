@@ -8,7 +8,6 @@ import { loadDynamicZxcvbn } from "../../utils/load-dynamic-zxcvbn";
 import { useHistory, useParams } from "react-router";
 
 import * as queryString from "query-string";
-import { Link } from "react-router-dom";
 
 type Query = {
   email?: string;
@@ -17,7 +16,7 @@ const debounce = require('lodash.debounce');
 
 declare const zxcvbn: any;
 
-const AuthPasswordChange: React.FC = () => {
+const AuthChangePassword: React.FC = () => {
   const history = useHistory();
   const [parentApp, setParentApp] = useState<HatApplicationContent | null>(null);
   const [password, setPassword] = useState('');
@@ -98,7 +97,6 @@ const AuthPasswordChange: React.FC = () => {
 
     loadDynamicZxcvbn(() => {
       // zxcvbn ready
-      setSuccessfulResponse(new Date());
     });
   }, []);
 
@@ -181,4 +179,4 @@ const AuthPasswordChange: React.FC = () => {
   );
 };
 
-export default AuthPasswordChange;
+export default AuthChangePassword;
