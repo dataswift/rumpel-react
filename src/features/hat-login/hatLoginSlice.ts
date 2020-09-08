@@ -5,6 +5,7 @@ import { setParentApp } from "../hmi/hmiSlice";
 
 type ApplicationsState = {
     errorMessage?: string;
+    skipDeps: boolean;
     redirectError: {
         error: string;
         errorReason: string;
@@ -13,6 +14,7 @@ type ApplicationsState = {
 
 export const initialState: ApplicationsState = {
   errorMessage: '',
+  skipDeps: false,
   redirectError: {
     error: '',
     errorReason: ''
@@ -33,10 +35,13 @@ export const slice = createSlice({
       state.redirectError.error = action.payload.error;
       state.redirectError.errorReason = action.payload.errorReason;
     },
+    skipDeps: (state, action: PayloadAction<boolean>) => {
+      state.skipDeps = action.payload;
+    },
   },
 });
 
-export const { errorMessage, redirectError } = slice.actions;
+export const { errorMessage, redirectError, skipDeps } = slice.actions;
 
 export const setErrorMessage = (msg: string): AppThunk => dispatch => {
   dispatch(errorMessage(msg));
@@ -46,8 +51,13 @@ export const setRedirectError = (error: string, errorReason: string): AppThunk =
   dispatch(redirectError({ error, errorReason }));
 };
 
+export const setSkipDeps = (skip: boolean): AppThunk => dispatch => {
+  dispatch(skipDeps(skip));
+};
+
 export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMessage;
 export const selectRedirectError = (state: RootState) => state.hatLogin.redirectError;
+export const selectSkipDeps = (state: RootState) => state.hatLogin.skipDeps;
 
 export const onTermsAgreed = (parentAppId: string): AppThunk => async dispatch => {
   dispatch(setErrorMessage(''));

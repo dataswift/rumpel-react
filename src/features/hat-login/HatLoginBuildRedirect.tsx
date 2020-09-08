@@ -11,6 +11,7 @@ import {
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
 import { addMinutes, isFuture, parseISO } from "date-fns";
+import { selectSkipDeps } from "./hatLoginSlice";
 
 type Props = {
     children: React.ReactNode;
@@ -30,6 +31,7 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyPlugsAreActive = useSelector(selectDependencyPlugsAreActive);
   const dependencyToolsAreEnabled = useSelector(selectDependencyToolsEnabled);
+  const skipsDeps = useSelector(selectSkipDeps);
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
@@ -88,7 +90,8 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp && parentApp.active && dependencyPlugsAreActive && dependencyToolsAreEnabled) {
+    if ((parentApp && parentApp.active) &&
+        ((dependencyPlugsAreActive && dependencyToolsAreEnabled) || skipsDeps)) {
       buildRedirect(parentApp);
       return;
     }
@@ -103,7 +106,7 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
         return;
       }
     }
-  }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);
+  }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled, skipsDeps]);
 
   return <>{props.children}</>;
 };

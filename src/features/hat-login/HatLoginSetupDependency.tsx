@@ -9,6 +9,7 @@ import {
 } from "../hmi/hmiSlice";
 import * as queryString from "query-string";
 import { addMinutes, isFuture, parseISO } from "date-fns";
+import { selectSkipDeps } from "./hatLoginSlice";
 
 type Props = {
     children: React.ReactNode;
@@ -26,6 +27,7 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const plugsAreActive = useSelector(selectDependencyPlugsAreActive);
+  const skipsDeps = useSelector(selectSkipDeps);
 
   useEffect(() => {
     const { application_id, name, redirect_uri, redirect, dependencies } =
@@ -97,7 +99,7 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
       }
     }
 
-    if (parentApp && parentApp.active && !plugsAreActive) {
+    if (parentApp && parentApp.active && !plugsAreActive && !skipsDeps) {
       setupAppDependencies(dependencyApps);
     }
 
