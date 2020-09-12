@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import { PublicProfile } from "../features/public-profile/PublicProfile";
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -32,6 +33,8 @@ const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
       <Switch>
+        <Route path="/public/profile" component={PublicProfile} />
+
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
         <Route path="/user/password/recover" component={PasswordRecover} />
