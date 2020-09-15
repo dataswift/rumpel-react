@@ -34,7 +34,7 @@ const PasswordRecover: React.FC = () => {
 
   return (
     <div className={'password-recover flex-column-wrapper'}>
-      <InfoHeader />
+      <InfoHeader hideMobile={true} fixed={true}/>
       <span className={'flex-spacer-small'} />
 
       <div className="password-recover-title title-hat-domain-wrapper">

@@ -5,13 +5,17 @@ header {
 }
 
 .app-header {
-  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
   color: #fff;
+
+  &-fixed {
+    position: fixed;
+  }
 
   &-content {
     padding: 0 4.0rem;
@@ -99,7 +103,9 @@ header {
       font-size: 22px;
     }
   }
+}
 
+.app-header-hide-mobile {
   @media (max-width: 850px) {
     display: none;
   }

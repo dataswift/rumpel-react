@@ -4,11 +4,18 @@ import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../../features/authentication/authenticationSlice";
 import { Link } from "react-router-dom";
 
-export const InfoHeader: React.FC = () => {
+type Props = {
+    fixed?: boolean;
+    hideMobile?: boolean
+}
+
+export const InfoHeader: React.FC<Props> = ({ fixed, hideMobile }) => {
   const authenticated = useSelector(selectIsAuthenticated);
 
   return (
-    <header className={'app-header'}>
+    <header
+      className={`app-header ${ fixed ? 'app-header-fixed' : '' } ${ hideMobile ? 'app-header-hide-mobile' : '' }`}
+    >
       <div className={'app-header-content flex-row-wrapper'}>
         <img className={'app-header-logo'} src={logo}  alt={'HAT Logo'}/>
         <span className={'flex-spacer-small'} />
