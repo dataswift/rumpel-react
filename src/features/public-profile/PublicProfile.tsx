@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './PublicProfile.scss';
 import { InfoHeader } from "../../components/headers/InfoHeader/InfoHeader";
 import { useDispatch, useSelector } from "react-redux";
-import {getPublicProfileReq, selectPublicProfile, selectPublicProfilePending} from "./publicProfileSlice";
+import { getPublicProfileReq, selectPublicProfile, selectPublicProfilePending } from "./publicProfileSlice";
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
 import googleIcon from '../../assets/icons/google-icon.svg';
