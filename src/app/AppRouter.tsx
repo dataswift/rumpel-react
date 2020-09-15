@@ -47,7 +47,16 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateRoute>
 
-        <Route exact path="/" render={({ location }) => <Redirect to={location.hash.replace('#', '')} />} />
+        <Route exact path="/" render={({ location }) => {
+          let redirectTo = "";
+          if (location.hash) {
+            redirectTo = location.hash.replace('#', '');
+          } else {
+            redirectTo = '/public/profile';
+          }
+          return <Redirect to={redirectTo} />;
+        }} />
+
       </Switch>
     </Suspense>
   </Router>
