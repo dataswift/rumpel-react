@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './PublicProfile.scss';
 import { InfoHeader } from "../../components/headers/InfoHeader/InfoHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicProfileReq, selectPublicProfile } from "./publicProfileSlice";
+import {getPublicProfileReq, selectPublicProfile, selectPublicProfilePending} from "./publicProfileSlice";
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
 import googleIcon from '../../assets/icons/google-icon.svg';
@@ -10,7 +10,6 @@ import linkedinIcon from '../../assets/icons/linkedin-icon.svg';
 import twitterIcon from '../../assets/icons/twitter-grey-icon.svg';
 import websiteIcon from '../../assets/icons/website-icon.svg';
 import youtubeIcon from '../../assets/icons/youtube-icon.svg';
-
 
 const icons: {[index: string]: string} = {
   blog: blogIcon,
@@ -21,10 +20,12 @@ const icons: {[index: string]: string} = {
   website: websiteIcon,
   youtube: youtubeIcon
 };
+
 export const PublicProfile: React.FC = () => {
   const [hatName, setHatName] = useState("");
   const [hatDomain, setHatDomain] = useState("");
   const profile = useSelector(selectPublicProfile);
+  const pendingRequest = useSelector(selectPublicProfilePending);
   const dispatch = useDispatch();
 
 
@@ -84,6 +85,10 @@ export const PublicProfile: React.FC = () => {
     setHatDomain(host.substring(host.indexOf('.') + 1));
     dispatch(getPublicProfileReq());
   }, [dispatch]);
+
+  if (pendingRequest) {
+    return null;
+  }
 
   return (
     <>

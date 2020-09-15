@@ -8,12 +8,14 @@ type PublicProfileState = {
     publicProfile: BundleValues | null;
     profile: Profile | null;
     updatedAt?: string;
+    pending: boolean;
     expirationTime: number;
 };
 
 export const initialState: PublicProfileState = {
   publicProfile: null,
   profile: null,
+  pending: true,
   expirationTime: 20,
 };
 
@@ -26,11 +28,15 @@ export const slice = createSlice({
       if (action.payload.profile) {
         state.profile = action.payload.profile[0].data;
       }
+      state.pending = false;
+    },
+    error: state => {
+      state.pending = false;
     },
   },
 });
 
-export const { publicProfile } = slice.actions;
+export const { publicProfile, error } = slice.actions;
 
 export const setPublicProfile = (profile: BundleValues): AppThunk => dispatch => {
   dispatch(publicProfile(profile));
@@ -38,12 +44,17 @@ export const setPublicProfile = (profile: BundleValues): AppThunk => dispatch =>
 
 export const selectPublicProfileResponse = (state: RootState) => state.publicProfile.publicProfile;
 export const selectPublicProfile = (state: RootState) => state.publicProfile.profile;
+export const selectPublicProfilePending = (state: RootState) => state.publicProfile.pending;
 
 export const getPublicProfileReq = (): AppThunk => async dispatch => {
-  const res = await getPublicProfile();
+  try {
+    const res = await getPublicProfile();
 
-  if (res?.parsedBody) {
-    dispatch(setPublicProfile(res.parsedBody));
+    if (res?.parsedBody) {
+      dispatch(setPublicProfile(res.parsedBody));
+    }
+  } catch (e) {
+    dispatch(error());
   }
 };
 

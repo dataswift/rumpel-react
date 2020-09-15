@@ -88,6 +88,11 @@ header {
     border-radius: 20px;
     border: 1.5px solid #ffffff;
     background-color: transparent;
+
+    &:hover {
+      background-color: white;
+      color: #4a556b;
+    }
   }
 
   &-btn-help {
