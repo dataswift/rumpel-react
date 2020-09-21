@@ -95,7 +95,7 @@ const AuthValidateEmail: React.FC = () => {
 
   const validatePasswordAndRequest = async () => {
     if (password === passwordConfirm) {
-        validateEmailAddress();
+      validateEmailAddress();
     }
   };
 

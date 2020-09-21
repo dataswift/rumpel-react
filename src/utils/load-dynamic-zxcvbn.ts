@@ -1,4 +1,4 @@
-export const loadDynamicZxcvbn = (callback) => {
+export const loadDynamicZxcvbn = (callback: () => void) => {
   const existingScript = document.getElementById('zxcvbn');
 
   if (!existingScript) {
