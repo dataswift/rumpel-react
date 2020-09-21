@@ -5,9 +5,9 @@ import { createMemoryHistory } from 'history';
 import Root from "../../../app/Root";
 import AuthValidateEmail from "../AuthValidateEmail";
 
-fdescribe('AuthValidateEmail tests', () => {
+describe('AuthValidateEmail tests', () => {
   const history = createMemoryHistory();
-  history.push('/auth/recover-password');
+  history.push('/auth/validate-email/41124?email=test@dataswift.io');
 
   // Mock location's search value to pass query parameters.
   // @ts-ignore
