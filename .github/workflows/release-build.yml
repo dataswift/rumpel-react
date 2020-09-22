@@ -1,13 +1,17 @@
-name: Dashboard production build
+name: Build final packages for production
 
 on:
-  push:
+  release:
+    types: [published]
     branches:
       - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ARTIFACTS_REPOSITORY: hubofallthings-net-frontend-build-artifacts
+
     steps:
     - uses: actions/checkout@v1
     - uses: webfactory/ssh-agent@v0.3.0
@@ -33,7 +37,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
       run: |
-        aws s3 sync build/ s3://hubofallthings-net-frontend-build-artifacts/${{ steps.package-version.outputs.current-version }}/ \
+        aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/${{ steps.package-version.outputs.current-version }}/ \
         --region eu-west-1
-        aws s3 sync build/ s3://hubofallthings-net-frontend-build-artifacts/latest/ \
+        aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ \
         --region eu-west-1
