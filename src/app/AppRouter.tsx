@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import UniversalDataViewerDataSources from "../features/universalDataViewer/UniversalDataViewerDataSources";
+import UniversalDataViewerEndpoint from "../features/universalDataViewer/UniversalDataViewerEndpoint";
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -38,6 +40,14 @@ const AppRouter = () => (
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
+        </PrivateRoute>
+
+        <PrivateRoute exact path={'/universal-data-viewer'}>
+          <UniversalDataViewerDataSources />
+        </PrivateRoute>
+
+        <PrivateRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
+          <UniversalDataViewerEndpoint />
         </PrivateRoute>
 
         <PrivateRoute path={'/hat-setup-login'}>

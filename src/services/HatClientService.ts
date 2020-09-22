@@ -3,6 +3,7 @@ import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
 import { HatTool } from "../features/tools/hat-tool.interface";
+import { DataSourcesInterface } from "../features/universalDataViewer/DataSources.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -140,5 +141,16 @@ export class HatClientService {
     const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/trigger`;
 
     return get(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async getDataSources() {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${ hatdomain }${ this.pathPrefix }/data/sources `;
+
+    return get<DataSourcesInterface>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }
