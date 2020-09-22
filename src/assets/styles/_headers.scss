@@ -12,6 +12,7 @@ header {
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
   color: #fff;
+  z-index: 10000;
 
   &-content {
     padding: 0 4.0rem;
