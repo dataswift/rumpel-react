@@ -1,0 +1,203 @@
+.auth-login {
+  align-items: center;
+  height: auto;
+
+  input {
+    height: auto;
+  }
+
+  @media (max-width: 500px) {
+    margin-left: 55px;
+    margin-right: 55px;
+  }
+
+  @media (max-width: 400px) {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+
+  &-email-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  &-title {
+    font-family: 'Muli', sans-serif;
+    font-size: 2.4rem;
+    color: #1c1e20;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 3.0rem;
+    font-weight: 600;
+    max-width: 500px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &-logo-wrapper {
+    min-width: 80px;
+    max-width: 214px;
+    height: 81px;
+    margin: 119px auto 30px;
+
+    @media (max-width: 500px) {
+      margin: 69px auto 30px;
+    }
+
+    img {
+      height: 100%;
+      min-width: 80px;
+      max-width: 214px;
+    }
+  }
+
+  &-btn {
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  hr {
+    border-top: 1px solid #E5E6E3;
+    width: 380px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    @media (max-width: 500px) {
+      width: 90%;
+    }
+  }
+
+  &-have-an-account {
+    font-family: 'Muli', sans-serif;
+    letter-spacing: 0;
+    color: #696A6D;
+    font-size: 1.2rem;
+  }
+
+  &-btn-signup {
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    background-color: transparent;
+    color: #20154E;
+    border: 1px solid #20154E;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &-btn-link {
+    font-family: 'Muli', sans-serif;
+    display: block;
+    width: 25rem;
+    height: 4.8rem;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    letter-spacing: 0;
+    background-color: transparent;
+    color: #20154E;
+    margin-top: 17px;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  &-btn-secondary {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: underline;
+    background-color: transparent;
+    border: 1px solid transparent;
+    letter-spacing: 0;
+    color: #20154E;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    @media (max-width: 500px) {
+      margin-top: 30px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.6rem;
+    letter-spacing: -0.12px;
+    color: #9b9b9d;
+    max-width: 196px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    span {
+      color: #9f97bf;
+      text-decoration: underline;
+    }
+  }
+
+  &-help-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 1.8rem;
+    letter-spacing: -0.12px;
+    color: #9B9B9D;
+    max-width: 250px;
+  }
+
+  &-progress-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.4rem;
+    letter-spacing: 0;
+    color: #696A6D;
+    max-width: 250px;
+    margin-bottom: 120px;
+  }
+}
+
+.auth-recover-password-btn {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F45F09;
+  border: 1px solid #F45F09;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  color: white;
+  margin-bottom: 100px;
+}
+
+.auth-change-password {
+  .ds-hmi-btn {
+    margin-top: 15px;
+  }
+  .auth-login-text {
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+  .ds-input-wrapper {
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+  .ds-input-wrapper:not(:first-of-type) {
+    margin-bottom: 0;
+  }
+}
