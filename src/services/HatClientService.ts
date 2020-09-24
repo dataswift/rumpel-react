@@ -57,8 +57,7 @@ export class HatClientService {
   }
 
   public async getApplicationHmi(applicationId: string) {
-    // TODO Change that
-    const path = `https://testleytis1000.dataswift.dev${ this.pathPrefix }/applications/${ applicationId }/hmi`;
+    const path = `${ this.pathPrefix }/applications/${ applicationId }/hmi`;
 
     return get<HatApplicationContent>(path);
   }
