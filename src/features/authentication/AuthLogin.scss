@@ -34,7 +34,7 @@
     margin-bottom: 0;
   }
 
-  &-logo {
+  &-logo-wrapper {
     min-width: 80px;
     max-width: 214px;
     height: 81px;
@@ -42,6 +42,12 @@
 
     @media (max-width: 500px) {
       margin: 69px auto 30px;
+    }
+
+    img {
+      height: 100%;
+      min-width: 80px;
+      max-width: 214px;
     }
   }
 

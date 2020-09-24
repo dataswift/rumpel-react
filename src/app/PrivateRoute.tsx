@@ -17,19 +17,24 @@ type Query = {
   token?: string;
   repeat?: string;
   email?: string;
+  application_id?: string;
+  redirect_uri?: string;
 }
 
 export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const [repeatedSignup, setRepeatedSignup] = useState<boolean | null>(null);
-  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [query, setQuery] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     const tokenStored = Cookies.get('token') || sessionStorage.getItem('token');
-    const { token, repeat, email } = queryString.parse(window.location.search) as Query;
-    setRepeatedSignup(repeat === 'true');
-    setEmail(email);
+    const { token, repeat, email, application_id, redirect_uri } = queryString.parse(window.location.search) as Query;
+    setQuery({
+      repeat: repeat === 'true',
+      email: email,
+      applicationId: application_id,
+      redirectUri: redirect_uri
+    });
 
     const hatSvc = HatClientService.getInstance();
 
@@ -52,7 +57,7 @@ export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
           <DelayedRedirect
             to={{
               pathname: newAuth ? '/auth/login' : '/user/login',
-              state: { from: location, repeat: repeatedSignup, email: email },
+              state: { from: location, query: query },
             }}
             delay={100}
           />

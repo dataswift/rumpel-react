@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from "enzyme";
-import AuthLogin from "../AuthLogin";
 import { Router } from "react-router";
 import { createMemoryHistory } from 'history';
 import Root from "../../../app/Root";

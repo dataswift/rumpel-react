@@ -1,30 +1,36 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
 import { resetPassword } from "../../api/hatAPI";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import { AgreementsModal, Input, IssuedBy } from "hmi";
 import { PasswordStrengthIndicator } from "../../components/PasswordStrengthMeter/PasswordStrengthIndicator";
 import { loadDynamicZxcvbn } from "../../utils/load-dynamic-zxcvbn";
 import { useHistory, useParams } from "react-router";
 
 import * as queryString from "query-string";
+import { useDispatch, useSelector } from "react-redux";
+import { getApplicationHmi, selectApplicationsHmi } from "../applications/applicationsSlice";
 
 type Query = {
   email?: string;
+  application_id?: string;
+  lang?: string;
+  redirect_uri?: string;
 }
+
 const debounce = require('lodash.debounce');
 
 declare const zxcvbn: any;
 
 const AuthChangePassword: React.FC = () => {
+  const parentApp = useSelector(selectApplicationsHmi);
   const history = useHistory();
-  const [parentApp, setParentApp] = useState<HatApplicationContent | null>(null);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [email, setEmail] = useState('');
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState("");
+  const dispatch = useDispatch();
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
@@ -56,8 +62,8 @@ const AuthChangePassword: React.FC = () => {
         setSuccessfulResponse(new Date());
       }
     } catch (error) {
-      // setErrorMessage('Oops!');
-      // setErrorSuggestion("It seems there was a glitch in the matrix. Please try again.");
+      setErrorMessage('Oops!');
+      setErrorSuggestion("It seems there was a glitch in the matrix. Please try again.");
     }
   };
 
@@ -86,19 +92,30 @@ const AuthChangePassword: React.FC = () => {
 
   const login = async () => {
     if (successfulResponse) {
-      // TODO a proper redirect with params to client or dashboard.
-      history.replace("/auth/oauth");
+      const { application_id, redirect_uri, email, lang } = queryString.parse(window.location.search) as Query;
+
+      if (redirect_uri && application_id) {
+        const path = `/auth/oauth?application_id=${ application_id }`+
+            `&redirect_uri=${ redirect_uri }&email=${ email }&lang=${ lang }`;
+        history.replace(path);
+      } else {
+        history.replace("/auth/login");
+      }
     }
   };
 
   useEffect(() => {
-    const { email } = queryString.parse(window.location.search) as Query;
+    const { email, application_id } = queryString.parse(window.location.search) as Query;
     setEmail(email || "");
 
     loadDynamicZxcvbn(() => {
       // zxcvbn ready
     });
-  }, []);
+
+    if (!parentApp && application_id) {
+      dispatch(getApplicationHmi(application_id));
+    }
+  }, [dispatch, parentApp]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
@@ -107,7 +124,11 @@ const AuthChangePassword: React.FC = () => {
   return (
     <div>
       <div className={'flex-column-wrapper auth-login auth-change-password'}>
-        <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+        <div className={'auth-login-logo-wrapper'}>
+          {parentApp?.info.graphics.logo.normal &&
+          <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+          }
+        </div>
 
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
@@ -132,9 +153,7 @@ const AuthChangePassword: React.FC = () => {
             name={'password-1'}
             value={password}
             hasError={!!errorMessage}
-            errorMessage={errorMessage}
             passwordMatch={passwordMatch}
-            errorSuggestion={errorSuggestion}
             onChange={e => onPasswordChange(e)} />
 
           {password.length > 0 &&

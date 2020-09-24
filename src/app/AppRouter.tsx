@@ -54,7 +54,7 @@ const Oauth = React.lazy(() =>
 
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
+    <Suspense fallback={<LoadingSpinner loadingText={'Loading...'}/>}>
       <Switch>
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />

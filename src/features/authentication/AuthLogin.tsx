@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import './AuthLogin.scss';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import * as queryString from "query-string";
 import { HatClientService } from "../../services/HatClientService";
 import { loginWithToken } from "./authenticationSlice";
 import { userAccessToken } from "../../api/hatAPI";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import { Input } from "hmi";
+import { getApplicationHmi, selectApplicationsHmi } from "../applications/applicationsSlice";
+import { config } from "../../app.config";
 
 type Query = {
     target?: string;
 }
 
+type QueryLocationState = {
+  repeat?: string;
+  email?: string;
+  applicationId?: string;
+  redirectUri?: string;
+}
+
 const AuthLogin: React.FC = () => {
-  const [parentApp, setParentApp] = useState<HatApplicationContent | null>(null);
+  const parentApp = useSelector(selectApplicationsHmi);
   const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(true);
   const [hatName, setHatName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   let history = useHistory();
-  let location = useLocation();
+  let location = useLocation<{from?: string, query: QueryLocationState}>();
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
   const targetParam = target || '/feed';
-  // @ts-ignore
-  const { from, repeat, email } = location.state;
+
+  const { from, query } = location?.state || {};
+  const { repeat, email, applicationId, redirectUri } = query || {};
 
   const loginSuccessful = () => {
     if (from) {
@@ -63,10 +71,10 @@ const AuthLogin: React.FC = () => {
         dispatch(loginWithToken(res.parsedBody.accessToken));
         HatClientService.getInstance(res.parsedBody.accessToken);
 
-        if (remember) {
-          const secure = window.location.protocol === 'https:';
-          Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
-        }
+        const secure = window.location.protocol === 'https:';
+
+        // TODO ensure that this is fine to do
+        Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
 
         loginSuccessful();
       }
@@ -76,13 +84,28 @@ const AuthLogin: React.FC = () => {
   };
 
   const navigateToSignup = () => {
-    window.location.href = `https://hatters.dataswift.io/services/signup?application_id=`;
+    if (applicationId && redirectUri) {
+      window.location.href = `${ config.links.hatters }/services/signup?` +
+          `application_id=${ applicationId }&redirect_uri=${ redirectUri }`;
+    } else {
+      window.location.href = `${ config.links.hatters }/hat/signup`;
+    }
   };
+
+  useEffect(() => {
+    if (applicationId && !parentApp) {
+      dispatch(getApplicationHmi(applicationId));
+    }
+  }, [dispatch, parentApp, applicationId]);
 
   return (
     <div>
       <div className={'flex-column-wrapper auth-login'}>
-        <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+        <div className={'auth-login-logo-wrapper'}>
+          {parentApp?.info.graphics.logo.normal &&
+          <img src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+          }
+        </div>
 
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 

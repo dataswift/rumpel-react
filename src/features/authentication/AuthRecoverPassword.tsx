@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './AuthLogin.scss';
 import { recoverPassword } from "../../api/hatAPI";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import { Input, IssuedBy } from "hmi";
 import { isEmail } from "../../utils/validations";
+import { selectApplicationsHmi } from "../applications/applicationsSlice";
+import { useSelector } from "react-redux";
 
 const AuthRecoverPassword: React.FC = () => {
-  const [parentApp, setParentApp] = useState<HatApplicationContent | null>(null);
+  const parentApp = useSelector(selectApplicationsHmi);
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState("");
@@ -37,7 +38,12 @@ const AuthRecoverPassword: React.FC = () => {
   return (
     <div>
       <div className={'flex-column-wrapper auth-login'}>
-        <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+        <div className={'auth-login-logo-wrapper'}>
+          {parentApp?.info.graphics.logo.normal &&
+          <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
+          }
+        </div>
+
         {successfulResponse &&
             <>
               <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>

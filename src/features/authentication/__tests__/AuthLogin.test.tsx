@@ -7,7 +7,11 @@ import Root from "../../../app/Root";
 
 describe('AuthLogin tests with default settings', () => {
   const history = createMemoryHistory();
-  const state = { from: '/auth/oauth', repeat: false, email: null };
+  const query = {
+    repeat: false,
+    email: null,
+  };
+  const state = { from: '/auth/oauth', query: query };
   history.push('/auth/login', state);
   const wrapper = mount(
     <Router history={history}>
@@ -49,7 +53,11 @@ describe('AuthLogin tests with default settings', () => {
 
 describe('AuthLogin tests for repeated signup', () => {
   const history = createMemoryHistory();
-  const state = { from: '/auth/oauth', repeat: true, email: 'test@dataswift.io' };
+  const query = {
+    repeat: true,
+    email: 'test@dataswift.io',
+  };
+  const state = { from: '/auth/oauth', query: query };
   history.push('/auth/login', state);
   const wrapper = mount(
     <Router history={history}>
