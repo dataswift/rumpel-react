@@ -26,7 +26,8 @@
   "scripts": {
     "start": "env-cmd -e development react-scripts start",
     "build": "env-cmd -e production react-scripts build",
-    "build:staging": "env-cmd -e staging react-scripts build",
+    "build:staging:internal": "env-cmd -e internal-staging react-scripts build",
+    "build:staging:external": "env-cmd -e external-staging react-scripts build",
     "test": "jest -u",
     "test:watch": "jest -u --watchAll",
     "eject": "react-scripts eject",

@@ -15,6 +15,6 @@ export const config = {
     bestPractices: 'https://docs.dataswift.io/technology/why/security-best-practice',
     termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
     privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
-    hatters: 'https://hatters.dataswift.io'
+    hatters:  environment.hattersUrl
   },
 };

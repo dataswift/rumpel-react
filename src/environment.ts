@@ -10,4 +10,5 @@ export const environment = {
   protocol: 'https:',
   appName: process.env.REACT_APP_APP_NAME,
   tokenName: process.env.REACT_APP_TOKEN_NAME,
+  hattersUrl: process.env.REACT_APP_HATTERS_ENV === 'staging' ? 'https://auth.dataswift.dev' : 'https://hatters.dataswift.io'
 };
