@@ -22,7 +22,7 @@ const debounce = require('lodash.debounce');
 
 declare const zxcvbn: any;
 
-const AuthValidateEmail: React.FC = () => {
+const AuthVerifyEmail: React.FC = () => {
   const history = useHistory();
   const parentApp = useSelector(selectApplicationsHmi);
   const [password, setPassword] = useState('');
@@ -34,7 +34,7 @@ const AuthValidateEmail: React.FC = () => {
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
-  let { validateToken } = useParams();
+  let { verifyToken } = useParams();
   const dispatch = useDispatch();
   const passwordMatchDebounce = useRef(debounce((password: string, passwordConfirm: string, score: number) =>
     validatePasswordMatch(password, passwordConfirm, score), 400)).current;
@@ -71,7 +71,7 @@ const AuthValidateEmail: React.FC = () => {
         termsAgreed: true
       };
 
-      const res = await claimHat(validateToken || '', buildClaimRequest(hatClaim));
+      const res = await claimHat(verifyToken || '', buildClaimRequest(hatClaim));
 
       if (res) {
         setSuccessfulResponse(new Date());
@@ -212,4 +212,4 @@ const AuthValidateEmail: React.FC = () => {
   );
 };
 
-export default AuthValidateEmail;
+export default AuthVerifyEmail;

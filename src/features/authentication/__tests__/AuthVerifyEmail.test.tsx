@@ -3,11 +3,11 @@ import { mount } from "enzyme";
 import { Router } from "react-router";
 import { createMemoryHistory } from 'history';
 import Root from "../../../app/Root";
-import AuthValidateEmail from "../AuthValidateEmail";
+import AuthVerifyEmail from "../AuthVerifyEmail";
 
 describe('AuthValidateEmail tests', () => {
   const history = createMemoryHistory();
-  history.push('/auth/validate-email/41124?email=test@dataswift.io');
+  history.push('/auth/verify-email/41124?email=test@dataswift.io');
 
   // Mock location's search value to pass query parameters.
   // @ts-ignore
@@ -23,7 +23,7 @@ describe('AuthValidateEmail tests', () => {
   const wrapper = mount(
     <Router history={history}>
       <Root>
-        <AuthValidateEmail />
+        <AuthVerifyEmail />
       </Root>
     </Router>
   );

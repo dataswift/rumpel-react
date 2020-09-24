@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
 import AuthChangePassword from "../features/authentication/AuthChangePassword";
-import AuthValidateEmail from "../features/authentication/AuthValidateEmail";
+import AuthVerifyEmail from "../features/authentication/AuthVerifyEmail";
 
 const HatClaim = React.lazy(() =>
   import(
@@ -62,7 +62,7 @@ const AppRouter = () => (
         <Route path="/auth/login/" component={AuthLogin} />
         <Route path="/auth/recover-password" component={AuthRecoverPassword} />
         <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
-        <Route path="/auth/validate-email/:validateToken" component={AuthValidateEmail} />
+        <Route path="/auth/verify-email/:verifyToken" component={AuthVerifyEmail} />
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
