@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './AuthLogin.scss';
 import { recoverPassword } from "../../api/hatAPI";
-import { Input, IssuedBy } from "hmi";
+import { AuthApplicationLogo, Input, IssuedBy } from "hmi";
 import { isEmail } from "../../utils/validations";
-import { selectApplicationsHmi } from "../applications/applicationsSlice";
+import { selectApplicationHmi, selectApplicationHmiState } from "../applications/applicationsSlice";
 import { useSelector } from "react-redux";
 
 const AuthRecoverPassword: React.FC = () => {
-  const parentApp = useSelector(selectApplicationsHmi);
+  const parentApp = useSelector(selectApplicationHmi);
+  const parentAppState = useSelector(selectApplicationHmiState);
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState("");
@@ -38,11 +39,11 @@ const AuthRecoverPassword: React.FC = () => {
   return (
     <div>
       <div className={'flex-column-wrapper auth-login'}>
-        <div className={'auth-login-logo-wrapper'}>
-          {parentApp?.info.graphics.logo.normal &&
-          <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
-          }
-        </div>
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+          state={parentAppState}
+        />
 
         {successfulResponse &&
             <>

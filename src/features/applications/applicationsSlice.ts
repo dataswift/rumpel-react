@@ -7,14 +7,16 @@ import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.inter
 
 type ApplicationsState = {
   applications: HatApplication[];
-  applicationsHmi?: HatApplicationContent;
+  applicationHmi?: HatApplicationContent;
+  applicationHmiState: string;
   updatedAt?: string;
   expirationTime: number;
 };
 
 export const initialState: ApplicationsState = {
   applications: [],
-  applicationsHmi: undefined,
+  applicationHmi: undefined,
+  applicationHmiState: 'idle',
   expirationTime: 20,
 };
 
@@ -26,12 +28,16 @@ export const slice = createSlice({
       state.applications.push(...action.payload);
     },
     appsHmi: (state, action: PayloadAction<HatApplicationContent>) => {
-      state.applicationsHmi = action.payload;
+      state.applicationHmi = action.payload;
+      state.applicationHmiState = 'completed';
     },
+    appsHmiState: (state, action: PayloadAction<string>) => {
+      state.applicationHmiState = action.payload;
+    }
   },
 });
 
-export const { apps, appsHmi } = slice.actions;
+export const { apps, appsHmi, appsHmiState } = slice.actions;
 
 export const setApps = (app: Array<HatApplication>): AppThunk => dispatch => {
   dispatch(apps(app));
@@ -41,8 +47,13 @@ export const setAppsHmi = (app: HatApplicationContent): AppThunk => dispatch => 
   dispatch(appsHmi(app));
 };
 
+export const setAppsHmiState = (state: string): AppThunk => dispatch => {
+  dispatch(appsHmiState(state));
+};
+
 export const selectApplications = (state: RootState) => state.applications.applications;
-export const selectApplicationsHmi = (state: RootState) => state.applications.applicationsHmi;
+export const selectApplicationHmi = (state: RootState) => state.applications.applicationHmi;
+export const selectApplicationHmiState = (state: RootState) => state.applications.applicationHmiState;
 
 export const getApplications = (): AppThunk => async dispatch => {
   try {
@@ -51,20 +62,19 @@ export const getApplications = (): AppThunk => async dispatch => {
     if (apps?.parsedBody) {
       dispatch(setApps(apps.parsedBody));
     }
-  } catch (e) {
-
-  }
+  } catch (e) { }
 };
 
 export const getApplicationHmi = (applicationId: string): AppThunk => async dispatch => {
   try {
+    dispatch(setAppsHmiState('pending'));
     const apps = await HatClientService.getInstance().getApplicationHmi(applicationId);
 
     if (apps?.parsedBody) {
       dispatch(setAppsHmi(apps.parsedBody));
     }
   } catch (e) {
-
+    dispatch(setAppsHmiState('error'));
   }
 };
 
