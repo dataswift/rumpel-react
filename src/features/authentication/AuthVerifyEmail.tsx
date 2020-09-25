@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
-import { AgreementsModal, Input, IssuedBy } from "hmi";
+import { AgreementsModal, AuthApplicationLogo, Input, IssuedBy } from "hmi";
 import { PasswordStrengthIndicator } from "../../components/PasswordStrengthMeter/PasswordStrengthIndicator";
 import { loadDynamicZxcvbn } from "../../utils/load-dynamic-zxcvbn";
 import { useHistory, useParams } from "react-router";
@@ -9,7 +9,12 @@ import * as queryString from "query-string";
 import { buildClaimRequest, claimHat } from "../hat-claim/hat-claim.service";
 import { HatClaim } from "../hat-claim/hat-claim.interface";
 import { useDispatch, useSelector } from "react-redux";
-import { getApplicationHmi, selectApplicationsHmi } from "../applications/applicationsSlice";
+import {
+  getApplicationHmi,
+  selectApplicationHmi,
+  selectApplicationHmiState,
+  setAppsHmiState
+} from "../applications/applicationsSlice";
 
 type Query = {
     email?: string;
@@ -24,7 +29,9 @@ declare const zxcvbn: any;
 
 const AuthVerifyEmail: React.FC = () => {
   const history = useHistory();
-  const parentApp = useSelector(selectApplicationsHmi);
+  const parentApp = useSelector(selectApplicationHmi);
+  const parentAppState = useSelector(selectApplicationHmiState);
+  const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [email, setEmail] = useState('');
@@ -125,10 +132,13 @@ const AuthVerifyEmail: React.FC = () => {
 
     loadDynamicZxcvbn(() => {
       // zxcvbn ready
+      setZxcvbnReady(true);
     });
 
     if (!parentApp && application_id) {
       dispatch(getApplicationHmi(application_id));
+    } else {
+      dispatch(setAppsHmiState('completed'));
     }
   }, [dispatch, parentApp]);
 
@@ -136,14 +146,16 @@ const AuthVerifyEmail: React.FC = () => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
 
+  if (!zxcvbnReady) return null;
+
   return (
     <div>
       <div className={'flex-column-wrapper auth-login auth-change-password'}>
-        <div className={'auth-login-logo-wrapper'}>
-          {parentApp?.info.graphics.logo.normal &&
-          <img className={'auth-login-logo'} src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
-          }
-        </div>
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+          state={parentAppState}
+        />
 
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
@@ -164,7 +176,7 @@ const AuthVerifyEmail: React.FC = () => {
                   <h2 className={'auth-login-title'}>Create a password</h2>
                   <Input type={'password'}
                     placeholder={'Password'}
-                    autoComplete={'new-password-1'}
+                    autoComplete={'new-password'}
                     name={'password-1'}
                     value={password}
                     hasError={!!errorMessage}
@@ -178,7 +190,7 @@ const AuthVerifyEmail: React.FC = () => {
                   {score >= 3 &&
                     <Input type={'password'}
                       placeholder={'Confirm Password'}
-                      autoComplete={'new-password-2'}
+                      autoComplete={'new-password'}
                       name={'password-2'}
                       value={passwordConfirm}
                       hasError={!!errorMessage}

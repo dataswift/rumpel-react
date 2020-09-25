@@ -7,8 +7,13 @@ import * as queryString from "query-string";
 import { HatClientService } from "../../services/HatClientService";
 import { loginWithToken } from "./authenticationSlice";
 import { userAccessToken } from "../../api/hatAPI";
-import { Input } from "hmi";
-import { getApplicationHmi, selectApplicationsHmi } from "../applications/applicationsSlice";
+import { AuthApplicationLogo, Input } from "hmi";
+import {
+  getApplicationHmi,
+  selectApplicationHmi,
+  selectApplicationHmiState,
+  setAppsHmiState
+} from "../applications/applicationsSlice";
 import { config } from "../../app.config";
 
 type Query = {
@@ -23,7 +28,8 @@ type QueryLocationState = {
 }
 
 const AuthLogin: React.FC = () => {
-  const parentApp = useSelector(selectApplicationsHmi);
+  const parentApp = useSelector(selectApplicationHmi);
+  const parentAppState = useSelector(selectApplicationHmiState);
   const [password, setPassword] = useState('');
   const [hatName, setHatName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -95,17 +101,19 @@ const AuthLogin: React.FC = () => {
   useEffect(() => {
     if (applicationId && !parentApp) {
       dispatch(getApplicationHmi(applicationId));
+    } else {
+      dispatch(setAppsHmiState('completed'));
     }
   }, [dispatch, parentApp, applicationId]);
 
   return (
     <div>
       <div className={'flex-column-wrapper auth-login'}>
-        <div className={'auth-login-logo-wrapper'}>
-          {parentApp?.info.graphics.logo.normal &&
-          <img src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name}/>
-          }
-        </div>
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+          state={parentAppState}
+        />
 
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 

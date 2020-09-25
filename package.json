@@ -7,7 +7,7 @@
     "@material-ui/core": "^4.9.8",
     "@reduxjs/toolkit": "^1.3.5",
     "date-fns": "^2.12.0",
-    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.2",
+    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.3",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.19",
     "lodash-es": "^4.17.15",
