@@ -14,6 +14,9 @@ import {
   selectApplicationHmiState,
   setAppsHmiState
 } from "../applications/applicationsSlice";
+import FormatMessage from "../messages/FormatMessage";
+import { selectLanguage } from "../language/languageSlice";
+import { selectMessages } from "../messages/messagesSlice";
 
 type Query = {
   email?: string;
@@ -29,6 +32,8 @@ declare const zxcvbn: any;
 const AuthChangePassword: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
+  const language = useSelector(selectLanguage);
+  const messages = useSelector(selectMessages);
   const history = useHistory();
   const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
@@ -69,8 +74,10 @@ const AuthChangePassword: React.FC = () => {
         setSuccessfulResponse(new Date());
       }
     } catch (error) {
-      setErrorMessage('Oops!');
-      setErrorSuggestion("It seems there was a glitch in the matrix. Please try again.");
+      if (messages) {
+        setErrorMessage(messages['ds.auth.error.oops']);
+        setErrorSuggestion(messages['ds.auth.error.tryAgain']);
+      }
     }
   };
 
@@ -146,23 +153,28 @@ const AuthChangePassword: React.FC = () => {
 
         {successfulResponse &&
             <>
-              <h2 className={'auth-login-title'}>The password to your Personal Data Account has been reset.</h2>
+              <h2 className={'auth-login-title'}>
+                <FormatMessage id={'ds.auth.changePassword.success.title'} />
+              </h2>
 
               <button className={'auth-login-btn ds-hmi-btn'}
                 onClick={() => login()}
               >
-                Login
+                <FormatMessage id={'ds.auth.loginBtn'} />
               </button>
             </>
         }
 
         {!successfulResponse &&
         <>
-          <h2 className={'auth-login-title'}>Reset password</h2>
+          <h2 className={'auth-login-title'}>
+            <FormatMessage id={'ds.auth.changePassword.title'} />
+          </h2>
           <Input type={'password'}
-            placeholder={'Password'}
             autoComplete={'new-password'}
             name={'password-1'}
+            id={'password-1'}
+            placeholder={messages['ds.auth.input.password']}
             value={password}
             hasError={!!errorMessage}
             passwordMatch={passwordMatch}
@@ -174,9 +186,11 @@ const AuthChangePassword: React.FC = () => {
 
           {score >= 3 &&
           <Input type={'password'}
-            placeholder={'Confirm Password'}
+            placeholder={messages['ds.auth.input.confirmPassword']}
             autoComplete={'new-password'}
             name={'password-2'}
+            id={'password-2'}
+            hidden={score < 3}
             value={passwordConfirm}
             hasError={!!errorMessage}
             errorMessage={errorMessage}
@@ -187,24 +201,23 @@ const AuthChangePassword: React.FC = () => {
           }
 
           {passwordMatch &&
-          <p className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
-            By proceeding, you agree to the Personal Data Account <span>Policies</span>
-            &nbsp;and <span>Terms</span> provided by Dataswift.
-          </p>
+          <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
+            <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml={true} />
+          </div>
           }
 
           <button className={'auth-login-btn ds-hmi-btn'}
             disabled={score < 3 || !passwordMatch}
             onClick={() => validateAndReset()}
           >
-            Next
+            <FormatMessage id={'ds.auth.nextBtn'} />
           </button>
         </>
         }
 
 
-        <IssuedBy />
-        <AgreementsModal language={'en'} open={openPopup} onClose={() => setOpenPopup(!openPopup)}/>
+        <IssuedBy language={language}/>
+        <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)}/>
       </div>
     </div>
   );

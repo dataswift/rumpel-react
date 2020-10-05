@@ -7,7 +7,7 @@ import * as queryString from "query-string";
 import { HatClientService } from "../../services/HatClientService";
 import { loginWithToken } from "./authenticationSlice";
 import { userAccessToken } from "../../api/hatAPI";
-import { AuthApplicationLogo, Input } from "hmi";
+import { AuthApplicationLogo, Input, IssuedBy } from "hmi";
 import {
   getApplicationHmi,
   selectApplicationHmi,
@@ -15,6 +15,9 @@ import {
   setAppsHmiState
 } from "../applications/applicationsSlice";
 import { config } from "../../app.config";
+import FormatMessage from "../messages/FormatMessage";
+import { selectLanguage } from "../language/languageSlice";
+import { selectMessages } from "../messages/messagesSlice";
 
 type Query = {
     target?: string;
@@ -30,6 +33,8 @@ type QueryLocationState = {
 const AuthLogin: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
+  const language = useSelector(selectLanguage);
+  const messages = useSelector(selectMessages);
   const [password, setPassword] = useState('');
   const [hatName, setHatName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -85,7 +90,9 @@ const AuthLogin: React.FC = () => {
         loginSuccessful();
       }
     } catch (e) {
-      setErrorMessage('Sorry, that password is incorrect!');
+      if (messages) {
+        setErrorMessage('ds.auth.login.passwordIncorrect');
+      }
     }
   };
 
@@ -118,12 +125,15 @@ const AuthLogin: React.FC = () => {
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
         <h2 className={'auth-login-title'}>
-          {repeat ? "It looks like you already have an account." : "Enter your password"}
+          <FormatMessage
+            id={repeat ? "ds.auth.login.title.password.repeat" : "ds.auth.login.title.password"}
+          />
         </h2>
 
         <Input type={'password'}
           placeholder={'Password'}
           autoComplete={'password'}
+          id={'password'}
           value={password}
           hasError={!!errorMessage}
           errorMessage={errorMessage}
@@ -133,35 +143,26 @@ const AuthLogin: React.FC = () => {
           disabled={password.length < 3}
           onClick={() => login()}
         >
-            Next
+          <FormatMessage id={'ds.auth.nextBtn'} />
         </button>
 
         <Link className={'auth-login-btn-link'} to={'/auth/recover-password'}>
-          Forgot password?
+          <FormatMessage id={'ds.auth.login.forgotPassword'} />
         </Link>
 
         <hr />
 
         <p className={'auth-login-have-an-account'}>
-          {repeat ? "Want to create a new account?" : "Don't have an account?"}
+          <FormatMessage
+            id={repeat ? "ds.auth.login.title.wantToCreateAccount" : "ds.auth.login.title.dontHaveAnAccount"}
+          />
         </p>
 
         <button className={'auth-login-btn-signup ds-hmi-btn'} onClick={() => navigateToSignup()}>
-          Sign up
+          <FormatMessage id={'ds.auth.signupBtn'} />
         </button>
 
-        <div className={'ds-hmi-footer'}>
-          <p>Issued by:</p>
-          <img
-            src={'https://cdn.dataswift.io/dataswift/logo/ds-full-dark.svg'}
-            alt={'Dataswift'}
-          />
-          <p>
-              Dataswift provides Personal Data Accounts that make it possible
-              for you to own and securely control your personal data in the
-              cloud.
-          </p>
-        </div>
+        <IssuedBy language={language} />
       </div>
     </div>
   );

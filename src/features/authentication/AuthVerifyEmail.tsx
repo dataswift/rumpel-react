@@ -15,6 +15,9 @@ import {
   selectApplicationHmiState,
   setAppsHmiState
 } from "../applications/applicationsSlice";
+import { selectLanguage } from "../language/languageSlice";
+import { selectMessages } from "../messages/messagesSlice";
+import FormatMessage from "../messages/FormatMessage";
 
 type Query = {
     email?: string;
@@ -31,6 +34,8 @@ const AuthVerifyEmail: React.FC = () => {
   const history = useHistory();
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
+  const language = useSelector(selectLanguage);
+  const messages = useSelector(selectMessages);
   const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -84,8 +89,10 @@ const AuthVerifyEmail: React.FC = () => {
         setSuccessfulResponse(new Date());
       }
     } catch (error) {
-      setErrorMessage('Oops!');
-      setErrorSuggestion("It seems there was a glitch in the matrix. Please try again.");
+      if (messages) {
+        setErrorMessage(messages['ds.auth.error.oops']);
+        setErrorSuggestion(messages['ds.auth.error.tryAgain']);
+      }
     }
   };
 
@@ -161,23 +168,28 @@ const AuthVerifyEmail: React.FC = () => {
 
         {successfulResponse &&
                 <>
-                  <h2 className={'auth-login-title'}>The password to your Personal Data Account has been created.</h2>
+                  <h2 className={'auth-login-title'}>
+                    <FormatMessage id={'ds.auth.verifyEmail.success.title'} />
+                  </h2>
 
                   <button className={'auth-login-btn ds-hmi-btn'}
                     onClick={() => login()}
                   >
-                    Continue
+                    <FormatMessage id={'ds.auth.continueBtn'} />
                   </button>
                 </>
         }
 
         {!successfulResponse &&
                 <>
-                  <h2 className={'auth-login-title'}>Create a password</h2>
+                  <h2 className={'auth-login-title'}>
+                    <FormatMessage id={'ds.auth.verifyEmail.title'} />
+                  </h2>
                   <Input type={'password'}
-                    placeholder={'Password'}
+                    placeholder={messages['ds.auth.input.password']}
                     autoComplete={'new-password'}
                     name={'password-1'}
+                    id={'password-1'}
                     value={password}
                     hasError={!!errorMessage}
                     passwordMatch={passwordMatch}
@@ -187,38 +199,38 @@ const AuthVerifyEmail: React.FC = () => {
                     <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch}/>
                   }
 
-                  {score >= 3 &&
-                    <Input type={'password'}
-                      placeholder={'Confirm Password'}
-                      autoComplete={'new-password'}
-                      name={'password-2'}
-                      value={passwordConfirm}
-                      hasError={!!errorMessage}
-                      errorMessage={errorMessage}
-                      errorSuggestion={errorSuggestion}
-                      passwordMatch={passwordMatch}
-                      onChange={e => onPasswordChange(e)}
-                    />
-                  }
+                  <Input type={'password'}
+                    placeholder={messages['ds.auth.input.confirmPassword']}
+                    autoComplete={'new-password'}
+                    name={'password-2'}
+                    id={'password-2'}
+                    hidden={score < 3}
+                    value={passwordConfirm}
+                    hasError={!!errorMessage}
+                    errorMessage={errorMessage}
+                    errorSuggestion={errorSuggestion}
+                    passwordMatch={passwordMatch}
+                    onChange={e => onPasswordChange(e)}
+                  />
+
 
                   {passwordMatch &&
-                    <p className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
-                      By proceeding, you agree to the Personal Data Account <span>Policies</span>
-                      &nbsp;and <span>Terms</span> provided by Dataswift.
-                    </p>
+                    <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
+                      <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml={true} />
+                    </div>
                   }
 
                   <button className={'auth-login-btn ds-hmi-btn'}
                     disabled={score < 3 || !passwordMatch}
                     onClick={() => validatePasswordAndRequest()}
                   >
-                    Next
+                    <FormatMessage id={'ds.auth.nextBtn'} />
                   </button>
                 </>
         }
 
-        <IssuedBy />
-        <AgreementsModal language={'en'} open={openPopup} onClose={() => setOpenPopup(!openPopup)}/>
+        <IssuedBy language={language}/>
+        <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)}/>
       </div>
     </div>
   );

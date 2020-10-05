@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PasswordMeter } from "../Svgs/PasswordMeter";
 import './PasswordStrengthIndicator.scss';
+import FormatMessage from "../../features/messages/FormatMessage";
 
 type Props = {
     strong: boolean;
@@ -15,31 +16,31 @@ export const PasswordStrengthIndicator: React.FC<Props> = ({ strong, passwordMat
     if (strong) {
       if (typeof passwordMatch === "undefined") {
         setTextColor("#a8c62b");
-        setMessage("This password is strong.");
+        setMessage("ds.auth.passwordIndicator.strongPassword");
       } else if (passwordMatch) {
         setTextColor("#a8c62b");
-        setMessage("Passwords match!");
+        setMessage("ds.auth.passwordIndicator.passwordsMatch");
       } else if (!passwordMatch) {
         setTextColor("#F45F09");
-        setMessage( "Passwords do not match.");
+        setMessage( "ds.auth.passwordIndicator.passwordsDoNotMatch");
       }
     } else {
       setTextColor("#F45F09");
-      setMessage("Password must be stronger.*");
+      setMessage("ds.auth.passwordIndicator.passwordMustBeStronger");
     }
   }, [strong, passwordMatch]);
 
   return (
     <div className={'password-strength'}>
       <PasswordMeter strong={strong}/>
-      <div className={'password-strength-message'} style={{ color: textColor }}>{message}</div>
+      <div className={'password-strength-message'} style={{ color: textColor }}>
+        <FormatMessage id={message} />
+      </div>
       {!strong &&
         <div className={'password-strength-text'}>
-          <span>*</span> Any combination of <a href={'https://docs.dataswift.io'}>three random words</a> is
-          one of the strongest passwords you can have.
+          <FormatMessage id={'ds.auth.passwordIndicator.passwordMustBeStrongerSuggestion'} asHtml={true}/>
         </div>
       }
     </div>
   );
-
 };
