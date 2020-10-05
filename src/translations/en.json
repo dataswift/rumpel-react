@@ -9,6 +9,8 @@
   "ds.auth.signupBtn": "Sign up",
   "ds.auth.loginBtn": "Login",
   "ds.auth.continueBtn": "Continue",
+  "ds.auth.input.password": "Password",
+  "ds.auth.input.confirmPassword": "Confirm Password",
   "ds.auth.passwordIndicator.strongPassword": "This password is strong.",
   "ds.auth.passwordIndicator.passwordsMatch": "Passwords match!",
   "ds.auth.passwordIndicator.passwordsDoNotMatch": "Passwords do not match.",
@@ -30,7 +32,7 @@
   "ds.auth.error.notValidUsernameSuggestion": "Please double-check for accuracy or extra spaces.",
   "ds.auth.changePassword.title": "Reset password",
   "ds.auth.changePassword.confirmPassword": "Confirm password",
-  "ds.auth.changePassword.byProceeding": "By proceeding, you agree to the Personal Data Account <span>Policies</span> and <span>Terms</span> provided by Dataswift.",
+  "ds.auth.changePassword.byProceeding": "By proceeding, you agree to the Personal Data Account <span>Policies and Terms</span> provided by Dataswift.",
   "ds.auth.changePassword.success.title": "The password to your Personal Data Account has been reset.",
   "ds.auth.verifyEmail.title": "Create a password",
   "ds.auth.verifyEmail.success.title": "The password to your Personal Data Account has been created."

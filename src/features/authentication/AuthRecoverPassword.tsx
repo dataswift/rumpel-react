@@ -75,6 +75,7 @@ const AuthRecoverPassword: React.FC = () => {
           <Input type={'email'}
             placeholder={'Email'}
             autoComplete={'email'}
+            id={'email'}
             value={email}
             hasError={!!errorMessage}
             errorMessage={errorMessage}

@@ -171,9 +171,10 @@ const AuthChangePassword: React.FC = () => {
             <FormatMessage id={'ds.auth.changePassword.title'} />
           </h2>
           <Input type={'password'}
-            placeholder={'Password'}
             autoComplete={'new-password'}
             name={'password-1'}
+            id={'password-1'}
+            placeholder={messages['ds.auth.input.password']}
             value={password}
             hasError={!!errorMessage}
             passwordMatch={passwordMatch}
@@ -185,9 +186,11 @@ const AuthChangePassword: React.FC = () => {
 
           {score >= 3 &&
           <Input type={'password'}
-            placeholder={'Confirm Password'}
+            placeholder={messages['ds.auth.input.confirmPassword']}
             autoComplete={'new-password'}
             name={'password-2'}
+            id={'password-2'}
+            hidden={score < 3}
             value={passwordConfirm}
             hasError={!!errorMessage}
             errorMessage={errorMessage}
@@ -198,9 +201,9 @@ const AuthChangePassword: React.FC = () => {
           }
 
           {passwordMatch &&
-          <p className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
+          <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
             <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml={true} />
-          </p>
+          </div>
           }
 
           <button className={'auth-login-btn ds-hmi-btn'}

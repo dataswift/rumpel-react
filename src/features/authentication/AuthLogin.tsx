@@ -133,6 +133,7 @@ const AuthLogin: React.FC = () => {
         <Input type={'password'}
           placeholder={'Password'}
           autoComplete={'password'}
+          id={'password'}
           value={password}
           hasError={!!errorMessage}
           errorMessage={errorMessage}

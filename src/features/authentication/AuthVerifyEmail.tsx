@@ -186,9 +186,10 @@ const AuthVerifyEmail: React.FC = () => {
                     <FormatMessage id={'ds.auth.verifyEmail.title'} />
                   </h2>
                   <Input type={'password'}
-                    placeholder={'Password'}
+                    placeholder={messages['ds.auth.input.password']}
                     autoComplete={'new-password'}
                     name={'password-1'}
+                    id={'password-1'}
                     value={password}
                     hasError={!!errorMessage}
                     passwordMatch={passwordMatch}
@@ -198,24 +199,25 @@ const AuthVerifyEmail: React.FC = () => {
                     <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch}/>
                   }
 
-                  {score >= 3 &&
-                    <Input type={'password'}
-                      placeholder={'Confirm Password'}
-                      autoComplete={'new-password'}
-                      name={'password-2'}
-                      value={passwordConfirm}
-                      hasError={!!errorMessage}
-                      errorMessage={errorMessage}
-                      errorSuggestion={errorSuggestion}
-                      passwordMatch={passwordMatch}
-                      onChange={e => onPasswordChange(e)}
-                    />
-                  }
+                  <Input type={'password'}
+                    placeholder={messages['ds.auth.input.confirmPassword']}
+                    autoComplete={'new-password'}
+                    name={'password-2'}
+                    id={'password-2'}
+                    hidden={score < 3}
+                    value={passwordConfirm}
+                    hasError={!!errorMessage}
+                    errorMessage={errorMessage}
+                    errorSuggestion={errorSuggestion}
+                    passwordMatch={passwordMatch}
+                    onChange={e => onPasswordChange(e)}
+                  />
+
 
                   {passwordMatch &&
-                    <p className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
+                    <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
                       <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml={true} />
-                    </p>
+                    </div>
                   }
 
                   <button className={'auth-login-btn ds-hmi-btn'}

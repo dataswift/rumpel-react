@@ -8,7 +8,7 @@ type Props = {
   values?: object;
 };
 
-export const FormatMessage: React.FC<Props> = props => {
+const FormatMessage: React.FC<Props> = props => {
   const messages = useSelector(selectMessages);
 
   const updateMessageValues = (message: string, values?: object): string => {
