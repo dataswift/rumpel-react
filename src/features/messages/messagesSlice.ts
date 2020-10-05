@@ -26,21 +26,12 @@ export const setMessages = (msgs: Messages): AppThunk => dispatch => {
 export const selectMessages = (state: RootState) => state.messages;
 
 export const fetchMessages = (id: string): AppThunk => async dispatch => {
-  if (id === 'en') {
-    import(
-      /* webpackChunkName: "en_lang" */
-      '../../translations/en.json'
-    ).then(({ default: jsonMenu }) => {
-      return dispatch(setMessages(jsonMenu));
-    });
-  } else if (id === 'pt') {
-    import(
-      /* webpackChunkName: "pt_lang" */
-      '../../translations/pt.json'
-    ).then(({ default: jsonMenu }) => {
-      // do whatever you like with your "jsonMenu" variable
-      return dispatch(setMessages(jsonMenu));
-    });
+  if (id === 'pt') {
+    const { default: messages } = await import( /* webpackChunkName: "pt_lang" */ '../../translations/pt.json');
+    return dispatch(setMessages(messages));
+  } else {
+    const { default: messages } = await import( /* webpackChunkName: "en_lang" */ '../../translations/en.json');
+    return dispatch(setMessages(messages));
   }
 };
 
