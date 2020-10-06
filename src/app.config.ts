@@ -18,27 +18,27 @@ export const config = {
     hatters:  environment.hattersUrl
   },
   mainMenu: [
-    { display: 'My digital life', icon: 'dashboard', link: '/feed', dataType: '', disable: '',
+    { display: 'My digital life', icon: 'dashboard', link: '/feed', external: false, dataType: '', disable: '',
       description: 'My Digital Life' },
 
-    { display: 'Map', icon: 'map', link: '/mashups', dataType: '', disable: '',
+    { display: 'Map', icon: 'map', link: '/mashups', dataType: '', external: true, disable: '',
       description: 'See your feed correlated with the places you\'ve been too.' },
 
-    { display: 'My public profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
-      description: 'View and edit the details of your profile and decide' +
+    { display: 'My public profile', icon: 'security', link: '/datastore', external: true, dataType: 'profile',
+      disable: '', description: 'View and edit the details of your profile and decide' +
           ' what information is private and what is to be shared.' },
 
-    { display: 'Tools & insights', icon: 'assessment', link: '/tools', dataType: '', disable: '',
+    { display: 'Tools & insights', icon: 'assessment', link: '/tools', external: true, dataType: '', disable: '',
       description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)' },
 
-    { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
+    { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', external: true, dataType: '', disable: '',
       description: 'Explore all the apps available in the HAT ecosystem.' },
 
-    { display: 'Data plugs', icon: 'settings_input_component', link: '/explore/DataPlug', dataType: '', disable: '',
-      description: `Data comes into your HAT via data plugs.
+    { display: 'Data plugs', icon: 'settings_input_component', link: '/explore/DataPlug', external: true, dataType: '',
+      disable: '', description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.` },
 
-    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', disable: '',
+    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', external: true, disable: '',
       description: 'Settings on the HAT' },
   ],
 };

@@ -3,10 +3,8 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
 import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
-import { Feed } from "../features/feed/Feed";
 import AuthChangePassword from "../features/authentication/AuthChangePassword";
 import AuthVerifyEmail from "../features/authentication/AuthVerifyEmail";
-
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -18,6 +16,13 @@ const Login = React.lazy(() =>
     /* webpackChunkName: "user_login" */
     '../components/user/Login'
   )
+);
+
+const Feed = React.lazy(() =>
+    import(
+      /* webpackChunkName: "feed" */
+      '../features/feed/Feed'
+    )
 );
 
 const HatLogin = React.lazy(() =>
