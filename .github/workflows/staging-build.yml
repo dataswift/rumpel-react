@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: yarn install --network-concurrency 1
     - name: Build deployment package
-      run: PUBLIC_URL=/assets yarn build:staging
+      run: PUBLIC_URL=/assets yarn build:staging:internal
       env:
         CI: true
     - name: Upload the build

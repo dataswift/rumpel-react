@@ -14,13 +14,14 @@ const UniversalDataViewerEndpoint: React.FC = () => {
     if (namespace && endpoint && !dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
       dispatch(getDataRecords(namespace, endpoint, '1', '0'));
     }
-  }, [endpoint, namespace, dispatch]);
+  }, [endpoint, namespace, dataPreview, dispatch]);
 
   useEffect(() => {
     if (dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
       const flat = flattenObject(dataPreview[`${ namespace }/${ endpoint }`][0].data);
       setDataPreviewFlat(flat);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPreview]);
 
   const onLoadMore = () => {
@@ -66,7 +67,9 @@ const UniversalDataViewerEndpoint: React.FC = () => {
         })}
       </div>
       }
-      <button onClick={() => onLoadMore()}>Load more</button>
+      <button className={'btn btn-accent'} onClick={() => onLoadMore()}>
+        Load more
+      </button>
     </div>
   );
 };

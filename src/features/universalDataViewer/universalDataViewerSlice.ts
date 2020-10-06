@@ -55,18 +55,19 @@ export const getDataSources = (): AppThunk => async dispatch => {
   }
 };
 
-export const getDataRecords = (namespace: string, endpoint: string, take: string, skip: string): AppThunk => async dispatch => {
-  try {
-    const res = await HatClientService
-      .getInstance()
-      .getData(namespace, endpoint, { ordering: 'descending', orderBy: 'dataCreated', take: take, skip: skip });
+export const getDataRecords = (namespace: string, endpoint: string, take: string, skip: string): AppThunk =>
+  async dispatch => {
+    try {
+      const res = await HatClientService
+        .getInstance()
+        .getData(namespace, endpoint, { ordering: 'descending', orderBy: 'dataCreated', take: take, skip: skip });
 
-    if (res?.parsedBody && res.parsedBody.length > 0) {
-      dispatch(setEndpointData(res.parsedBody));
+      if (res?.parsedBody && res.parsedBody.length > 0) {
+        dispatch(setEndpointData(res.parsedBody));
+      }
+    } catch (e) {
+
     }
-  } catch (e) {
-
-  }
-};
+  };
 
 export default slice.reducer;

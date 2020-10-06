@@ -35,7 +35,7 @@ const UniversalDataViewerDataSources: React.FC = () => {
     if (!dataSources) {
       dispatch(getDataSources());
     }
-  }, [dispatch]);
+  }, [dispatch, dataSources]);
 
   if (!dataSources) return null;
 

@@ -2,7 +2,7 @@ import { HatApplicationContent } from '@dataswift/hat-js/lib/interfaces/hat-appl
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import './UpdateNotes.scss';
-import { FormatMessage } from "../../messages/FormatMessage";
+import FormatMessage from "../../messages/FormatMessage";
 import { hmiConfig } from "../../hmi/hmi.config";
 
 type Props = {

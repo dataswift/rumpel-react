@@ -4,6 +4,9 @@ import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
 import UniversalDataViewerDataSources from "../features/universalDataViewer/UniversalDataViewerDataSources";
 import UniversalDataViewerEndpoint from "../features/universalDataViewer/UniversalDataViewerEndpoint";
+import AuthChangePassword from "../features/authentication/AuthChangePassword";
+import AuthVerifyEmail from "../features/authentication/AuthVerifyEmail";
+
 const HatClaim = React.lazy(() =>
   import(
     /* webpackChunkName: "hat_claim" */
@@ -30,13 +33,38 @@ const PasswordRecover = React.lazy(() =>
   )
 );
 
+const AuthLogin = React.lazy(() =>
+    import(
+      /* webpackChunkName: "auth_login" */
+      '../features/authentication/AuthLogin'
+    )
+);
+
+const AuthRecoverPassword = React.lazy(() =>
+    import(
+      /* webpackChunkName: "auth_recover_password" */
+      '../features/authentication/AuthRecoverPassword'
+    )
+);
+
+const Oauth = React.lazy(() =>
+    import(
+      /* webpackChunkName: "auth_oauth" */
+      '../features/oauth/Oauth'
+    )
+);
+
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<LoadingSpinner loadingText={'Loading'}/>}>
+    <Suspense fallback={<LoadingSpinner loadingText={'Loading...'}/>}>
       <Switch>
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
         <Route path="/user/password/recover" component={PasswordRecover} />
+        <Route path="/auth/login/" component={AuthLogin} />
+        <Route path="/auth/recover-password" component={AuthRecoverPassword} />
+        <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
+        <Route path="/auth/verify-email/:verifyToken" component={AuthVerifyEmail} />
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
@@ -48,6 +76,10 @@ const AppRouter = () => (
 
         <PrivateRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
           <UniversalDataViewerEndpoint />
+        </PrivateRoute>
+
+        <PrivateRoute path={'/auth/oauth'} newAuth>
+          <Oauth />
         </PrivateRoute>
 
         <PrivateRoute path={'/hat-setup-login'}>
