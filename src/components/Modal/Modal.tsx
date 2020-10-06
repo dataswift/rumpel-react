@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './Modal.scss';
-import { FormatMessage } from "../../features/messages/FormatMessage";
+import FormatMessage from "../../features/messages/FormatMessage";
 
 type Props = {
   open: boolean;

@@ -2,13 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import Hmi, { HmiType } from "hmi";
-import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
-import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
+import { HmiType, HmiV2 } from "hmi";
+import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 import { selectLanguage } from "../language/languageSlice";
 
-const HatLoginHmi: React.FC = () => {
+const OauthPermissions: React.FC = () => {
   const hatName = window.location.host;
   const dispatch = useDispatch();
   const language = useSelector(selectLanguage);
@@ -42,24 +41,19 @@ const HatLoginHmi: React.FC = () => {
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
-      {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
-        <UpdateNotes app={parentApp.application}
-          onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
-          onRejected={() => dispatch(onTermsDeclined())}
-        />
-      ) : (
-        <Hmi hmiType={HmiType.login.daas}
+      {parentApp && 
+        <HmiV2 hmiType={HmiType.login.daas}
           parentApp={parentApp.application}
-          hatName={hatName}
+          email={hatName}
           language={language}
           dependencyTools={dependencyTools.map(tool => tool.info.name)}
           dependencyApps={dependencyApps.map(app => app.application)}
           onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
           onRejected={() => dispatch(onTermsDeclined())}
-        />)
+        />
       }
     </div>
   );
 };
 
-export default HatLoginHmi;
+export default OauthPermissions;

@@ -1,7 +1,7 @@
 import { environment } from './environment';
 
 export const config = {
-  version: '4.0.8.0',
+  version: '4.1.0',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
@@ -15,6 +15,7 @@ export const config = {
     bestPractices: 'https://docs.dataswift.io/technology/why/security-best-practice',
     termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
     privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
+    hatters:  environment.hattersUrl
   },
   mainMenu: [
     { display: 'My digital life', icon: 'dashboard', link: '/feed', dataType: '', disable: '',

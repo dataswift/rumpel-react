@@ -5,6 +5,7 @@ import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidati
 import { HatTool } from "../features/tools/hat-tool.interface";
 import { SystemStatusInterface } from "../features/system-status/system-status.interface";
 import { Profile } from "../features/profile/profile.interface";
+import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -57,6 +58,12 @@ export class HatClientService {
     return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
+  public async getApplicationHmi(applicationId: string) {
+    const path = `${ this.pathPrefix }/applications/${ applicationId }/hmi`;
+
+    return get<HatApplicationContent>(path);
+  }
+
   public isTokenExpired(token: string) {
     try {
       return this.hat.auth().isTokenExpired(token);
@@ -65,7 +72,7 @@ export class HatClientService {
     }
   }
 
-  public async getApplicationHmi(applicationId: string) {
+  public async getApplicationsHmi(applicationId: string) {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
 

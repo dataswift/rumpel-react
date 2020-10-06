@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './assets/styles/main.scss';
+import 'hmi/dist/hmi.cjs.development.css';
 import * as serviceWorker from './serviceWorker';
 import App from './app/App';
 

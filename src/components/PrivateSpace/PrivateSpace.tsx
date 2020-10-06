@@ -6,6 +6,7 @@ import './PrivateSpace.scss';
 type Props = {
     children: ReactNode;
 }
+
 export const PrivateSpace: React.FC<Props> = ({ children }) => {
   const [hideSideMenu, setHideSideMenu] = useState(false);
 
