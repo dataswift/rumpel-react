@@ -1,28 +1,14 @@
-import { createMemoryHistory } from "history";
-import { mount } from "enzyme";
-import { Router } from "react-router";
-import Root from "../../../app/Root";
-import React from "react";
-import { InfoHeader } from "./InfoHeader";
+import * as React from 'react';
 
-describe('InfoHeader tests', () => {
-  const history = createMemoryHistory();
+import { screen, render } from '@testing-library/react';
+import { InfoHeader } from './InfoHeader';
 
-  const wrapper = mount(
-    <Router history={history}>
-      <Root>
-        <InfoHeader />
-      </Root>
-    </Router>
-  );
+describe('InfoHeader', () => {
+  test('renders the InfoHeader component and ensures the correct details are displayed', () => {
+    render(<InfoHeader />);
 
-  it('has the correct icon and title ', () => {
-    const authTitleText = wrapper.find("div.text-medium");
-    expect(authTitleText.text()).toEqual("What can I do with my HAT?");
-  });
-
-  it('has the correct icon and title ', () => {
-    const authTitleText = wrapper.find("a.app-header-learn-more");
-    expect(authTitleText.text()).toEqual("Learn More");
+    expect(screen.getByText('What can I do with my HAT?')).toBeInTheDocument();
+    expect(screen.getByText('Learn More')).toBeInTheDocument();
+    expect(screen.getByAltText('HAT Logo')).toBeInTheDocument();
   });
 });
