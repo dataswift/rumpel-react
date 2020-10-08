@@ -3,32 +3,32 @@ import './AuthLogin.scss';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import * as queryString from "query-string";
-import { HatClientService } from "../../services/HatClientService";
-import { loginWithToken } from "./authenticationSlice";
-import { userAccessToken } from "../../api/hatAPI";
-import { AuthApplicationLogo, Input, IssuedBy } from "hmi";
+import * as queryString from 'query-string';
+import { HatClientService } from '../../services/HatClientService';
+import { loginWithToken } from './authenticationSlice';
+import { userAccessToken } from '../../api/hatAPI';
+import { AuthApplicationLogo, Input, IssuedBy } from 'hmi';
 import {
   getApplicationHmi,
   selectApplicationHmi,
   selectApplicationHmiState,
-  setAppsHmiState
-} from "../applications/applicationsSlice";
-import { config } from "../../app.config";
-import FormatMessage from "../messages/FormatMessage";
-import { selectLanguage } from "../language/languageSlice";
-import { selectMessages } from "../messages/messagesSlice";
+  setAppsHmiState,
+} from '../applications/applicationsSlice';
+import { config } from '../../app.config';
+import FormatMessage from '../messages/FormatMessage';
+import { selectLanguage } from '../language/languageSlice';
+import { selectMessages } from '../messages/messagesSlice';
 
 type Query = {
-    target?: string;
-}
+  target?: string;
+};
 
 type QueryLocationState = {
   repeat?: string;
   email?: string;
   applicationId?: string;
   redirectUri?: string;
-}
+};
 
 const AuthLogin: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
@@ -39,7 +39,7 @@ const AuthLogin: React.FC = () => {
   const [hatName, setHatName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   let history = useHistory();
-  let location = useLocation<{from?: string, query: QueryLocationState}>();
+  let location = useLocation<{ from?: string; query: QueryLocationState }>();
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
   const targetParam = target || '/feed';
@@ -98,10 +98,9 @@ const AuthLogin: React.FC = () => {
 
   const navigateToSignup = () => {
     if (applicationId && redirectUri) {
-      window.location.href = `${ config.links.hatters }/services/signup?` +
-          `application_id=${ applicationId }&redirect_uri=${ redirectUri }`;
+      window.location.href = `${config.links.hatters}/services/signup?application_id=${applicationId}&redirect_uri=${redirectUri}`;
     } else {
-      window.location.href = `${ config.links.hatters }/hat/signup`;
+      window.location.href = `${config.links.hatters}/hat/signup`;
     }
   };
 
@@ -125,21 +124,24 @@ const AuthLogin: React.FC = () => {
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
         <h2 className={'auth-login-title'}>
-          <FormatMessage
-            id={repeat ? "ds.auth.login.title.password.repeat" : "ds.auth.login.title.password"}
-          />
+          <FormatMessage id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} />
         </h2>
 
-        <Input type={'password'}
+        <Input
+          type={'password'}
+          aria-label="password"
           placeholder={'Password'}
           autoComplete={'password'}
           id={'password'}
           value={password}
           hasError={!!errorMessage}
           errorMessage={errorMessage}
-          onChange={e => setPassword(e.target.value)} />
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-        <button className={'auth-login-btn ds-hmi-btn'}
+        <button
+          aria-label="Next Button"
+          className={'auth-login-btn ds-hmi-btn'}
           disabled={password.length < 3}
           onClick={() => login()}
         >
@@ -154,7 +156,7 @@ const AuthLogin: React.FC = () => {
 
         <p className={'auth-login-have-an-account'}>
           <FormatMessage
-            id={repeat ? "ds.auth.login.title.wantToCreateAccount" : "ds.auth.login.title.dontHaveAnAccount"}
+            id={repeat ? 'ds.auth.login.title.wantToCreateAccount' : 'ds.auth.login.title.dontHaveAnAccount'}
           />
         </p>
 
