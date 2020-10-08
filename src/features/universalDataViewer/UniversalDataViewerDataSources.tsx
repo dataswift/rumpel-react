@@ -41,7 +41,7 @@ const UniversalDataViewerDataSources: React.FC = () => {
 
   return (
     <div className={'universal-data-viewer'}>
-      <h2>Data Sources</h2>
+      <h2 className={'universal-data-viewer-title'}>Data Sources</h2>
       <div className={'universal-data-viewer-list'}>
         {Object.entries(dataSources).map(([key, value], index) => {
           return <UniversalDataViewerDataSourcesListItem

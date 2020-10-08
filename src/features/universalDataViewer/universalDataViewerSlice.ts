@@ -7,6 +7,7 @@ import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface
 type UniversalDataViewerState = {
     dataSources?: DataSourcesInterface;
     endpointDataPreview: Record<string, Array<HatRecord<any>>>;
+    flattenDataPreview: Record<string, string>;
     updatedAt?: string;
     expirationTime: number;
 };
@@ -14,6 +15,7 @@ type UniversalDataViewerState = {
 export const initialState: UniversalDataViewerState = {
   dataSources: undefined,
   endpointDataPreview: {},
+  flattenDataPreview: {},
   expirationTime: 20,
 };
 
@@ -27,6 +29,9 @@ export const slice = createSlice({
     endpointData: (state, action: PayloadAction<Array<HatRecord<any>>>) => {
       state.endpointDataPreview[action.payload[0].endpoint] = action.payload;
     },
+    // flattenEndpointData: (state, action: PayloadAction<Array<HatRecord<any>>>) => {
+    //     state.flattenDataPreview[action.payload[0].endpoint] = faction.payload;
+    // },
   },
 });
 
