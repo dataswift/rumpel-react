@@ -98,8 +98,8 @@ const AuthLogin: React.FC = () => {
 
   const navigateToSignup = () => {
     if (applicationId && redirectUri) {
-      window.location.href = `${config.links.hatters}/services/signup?` +
-          `application_id=${applicationId}&redirect_uri=${redirectUri}`;
+      // eslint-disable-next-line max-len
+      window.location.href = `${config.links.hatters}/services/signup?application_id=${applicationId}&redirect_uri=${redirectUri}`;
     } else {
       window.location.href = `${config.links.hatters}/hat/signup`;
     }
