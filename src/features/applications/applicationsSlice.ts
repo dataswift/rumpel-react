@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import { HatClientService } from "../../services/HatClientService";
-import { setErrorMessage } from "../hat-login/hatLoginSlice";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
+import { HatClientService } from '../../services/HatClientService';
+import { setErrorMessage } from '../hat-login/hatLoginSlice';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 
 type ApplicationsState = {
   applications: HatApplication[];
@@ -33,21 +33,21 @@ export const slice = createSlice({
     },
     appsHmiState: (state, action: PayloadAction<string>) => {
       state.applicationHmiState = action.payload;
-    }
+    },
   },
 });
 
 export const { apps, appsHmi, appsHmiState } = slice.actions;
 
-export const setApps = (app: Array<HatApplication>): AppThunk => dispatch => {
+export const setApps = (app: Array<HatApplication>): AppThunk => (dispatch) => {
   dispatch(apps(app));
 };
 
-export const setAppsHmi = (app: HatApplicationContent): AppThunk => dispatch => {
+export const setAppsHmi = (app: HatApplicationContent): AppThunk => (dispatch) => {
   dispatch(appsHmi(app));
 };
 
-export const setAppsHmiState = (state: string): AppThunk => dispatch => {
+export const setAppsHmiState = (state: string): AppThunk => (dispatch) => {
   dispatch(appsHmiState(state));
 };
 
@@ -55,17 +55,17 @@ export const selectApplications = (state: RootState) => state.applications.appli
 export const selectApplicationHmi = (state: RootState) => state.applications.applicationHmi;
 export const selectApplicationHmiState = (state: RootState) => state.applications.applicationHmiState;
 
-export const getApplications = (): AppThunk => async dispatch => {
+export const getApplications = (): AppThunk => async (dispatch) => {
   try {
     const apps = await HatClientService.getInstance().getApplications();
 
     if (apps?.parsedBody) {
       dispatch(setApps(apps.parsedBody));
     }
-  } catch (e) { }
+  } catch (e) {}
 };
 
-export const getApplicationHmi = (applicationId: string): AppThunk => async dispatch => {
+export const getApplicationHmi = (applicationId: string): AppThunk => async (dispatch) => {
   try {
     dispatch(setAppsHmiState('pending'));
     const apps = await HatClientService.getInstance().getApplicationHmi(applicationId);
@@ -78,7 +78,7 @@ export const getApplicationHmi = (applicationId: string): AppThunk => async disp
   }
 };
 
-export const getApplicationsHmi = (parentAppId: string): AppThunk => async dispatch => {
+export const getApplicationsHmi = (parentAppId: string): AppThunk => async (dispatch) => {
   try {
     const apps = await HatClientService.getInstance().getApplicationsHmi(parentAppId);
 
