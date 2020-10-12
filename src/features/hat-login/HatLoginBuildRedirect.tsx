@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
 import { HatClientService } from "../../services/HatClientService";
-import { environment } from "../../environment";
 import {
   selectDependencyApps,
   selectDependencyPlugsAreActive,
@@ -70,17 +69,12 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
               console.warn('Provided URL is not registered');
 
               hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirectParam }`)
-                .finally(() => {
+                .then(() => {
                   // eslint-disable-next-line max-len
                   window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
-
-                  if (environment.sandbox) {
-                    // TODO Add successful redirection only in sandbox environment
-                  } else {
-                    // TODO Redirect with error parameters in production
-                    // eslint-disable-next-line max-len
-                    // window.location.href = `${ redirectParam }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }error=access_denied&error_reason=hmi_invalid_redirect_url`;
-                  }
+                }).catch(() => {
+                  // eslint-disable-next-line max-len
+                  window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
                 });
             }
           }
