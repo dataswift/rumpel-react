@@ -51,9 +51,8 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
             const setup = app.application.setup;
 
             // TODO Change this logic to the new validRedirectUris field
-            const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(
-              decodeURI(redirectParam || '')
-            );
+            const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl]
+              .indexOf(decodeURI(redirectParam || '')) !== -1;
 
             const attemptedSetup = {
               applicationId: app.application.id,
