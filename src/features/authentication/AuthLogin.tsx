@@ -98,7 +98,8 @@ const AuthLogin: React.FC = () => {
 
   const navigateToSignup = () => {
     if (applicationId && redirectUri) {
-      window.location.href = `${config.links.hatters}/services/signup?application_id=${applicationId}&redirect_uri=${redirectUri}`;
+      window.location.href = `${config.links.hatters}/services/signup?` +
+          `application_id=${applicationId}&redirect_uri=${redirectUri}`;
     } else {
       window.location.href = `${config.links.hatters}/hat/signup`;
     }
