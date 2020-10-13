@@ -62,7 +62,7 @@ const AuthRecoverPassword: React.FC = () => {
               </h2>
 
               <div className={'auth-login-text'} onClick={() => validateAndReset()}>
-                <FormatMessage id={'ds.auth.recoverPassword.success.sendAgain'} />
+                <FormatMessage id={'ds.auth.recoverPassword.success.sendAgain'} asHtml={true} />
               </div>
             </>
         }
