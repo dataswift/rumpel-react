@@ -29,7 +29,7 @@ const OauthPermissions: React.FC = () => {
 
   return (
     <div>
-      <NotificationBanner type={'error'} display={!!errorMessage} fixed={true}>
+      <NotificationBanner type={'error'} display={!!errorMessage} fixed>
         <div className={'hat-login-notification'}>
           <p>
             An error has occurred, please use the back button to return to the previous page <br />
