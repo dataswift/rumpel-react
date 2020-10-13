@@ -14,22 +14,22 @@ import {
   editHatClaim,
   editHatClaimErrorMessage,
   editHatClaimPassword,
-  setCurrentStep
+  setCurrentStep,
 } from '../redux/actions/hatClaimActions';
 import { loadDynamicZxcvbn } from '../../../utils/load-dynamic-zxcvbn';
 import { buildClaimRequest, claimHat } from '../hat-claim.service';
 import HatClaimSuccess from '../HatClaimSuccess/HatClaimSuccess';
-import { NotificationBanner } from "../../../components/banners/NotificationBanner/NotificationBanner";
-import * as queryString from "query-string";
+import { NotificationBanner } from '../../../components/banners/NotificationBanner/NotificationBanner';
+import * as queryString from 'query-string';
 
 type Query = {
   email?: string;
-}
+};
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaim: React.FC<Props> = props => {
-  const { claimToken } = useParams();
+const HatClaim: React.FC<Props> = (props) => {
+  const { claimToken } = useParams<{ claimToken: string }>();
   let history = useHistory();
 
   useEffect(() => {
@@ -91,7 +91,9 @@ const HatClaim: React.FC<Props> = props => {
 
   return (
     <div className="hat-claim flex-column-wrapper">
-      <NotificationBanner type={'error'} display={!!props.errorMsg}>{props.errorMsg}</NotificationBanner>
+      <NotificationBanner type={'error'} display={!!props.errorMsg}>
+        {props.errorMsg}
+      </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
       <HatClaimEmail />
@@ -101,7 +103,7 @@ const HatClaim: React.FC<Props> = props => {
       <HatClaimSuccess />
 
       <span className={'flex-spacer-large'} />
-      <HatClaimActions currentStep={props.currentStep} setCurrentStep={newStep => changeStep(newStep)} />
+      <HatClaimActions currentStep={props.currentStep} setCurrentStep={(newStep) => changeStep(newStep)} />
     </div>
   );
 };
@@ -121,7 +123,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
       editHatClaimPassword,
       editHatClaimErrorMessage,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaim);

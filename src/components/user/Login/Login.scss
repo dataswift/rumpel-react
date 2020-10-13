@@ -1,7 +1,10 @@
 .login {
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: auto;
+  height: auto;
+  min-height: 100vh !important;
+  background-color: #f6f6f6;
 
   @media (min-width: 851px) {
     padding-top: 62px;
@@ -10,7 +13,6 @@
   form {
     justify-content: center;
     align-items: center;
-    overflow: hidden;
   }
 
   hr {
@@ -36,6 +38,7 @@
   }
 
   &-dataswift-logo {
+    margin-top: 30px;
     height: 7.5rem;
     width: 17rem;
   }
@@ -109,8 +112,6 @@
 }
 
 .user-actions {
-  //background-color: $hat-background-color;
-
   * {
     display: block;
     margin: 1.5rem auto;

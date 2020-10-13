@@ -4,10 +4,11 @@ import { selectMessages } from "./messagesSlice";
 
 type Props = {
   id: string;
+  asHtml?: boolean;
   values?: object;
 };
 
-export const FormatMessage: React.FC<Props> = props => {
+const FormatMessage: React.FC<Props> = props => {
   const messages = useSelector(selectMessages);
 
   const updateMessageValues = (message: string, values?: object): string => {
@@ -32,5 +33,11 @@ export const FormatMessage: React.FC<Props> = props => {
 
   const formattedMsg = updateMessageValues(message, values);
 
-  return <>{formattedMsg}</>;
+  if (props.asHtml) {
+    return <div dangerouslySetInnerHTML={{ __html: formattedMsg }} />;
+  } else {
+    return <>{formattedMsg}</>;
+  }
 };
+
+export default FormatMessage;
