@@ -51,6 +51,14 @@ const AuthRecoverPassword = React.lazy(
     ),
 );
 
+const HatApplications = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "hat_applications" */
+      '../features/applications'
+    ),
+);
+
 const Oauth = React.lazy(
   () =>
     import(
@@ -70,6 +78,10 @@ const AppRouter = () => (
         <Route path="/auth/recover-password" component={AuthRecoverPassword} />
         <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
         <Route path="/auth/verify-email/:verifyToken" component={AuthVerifyEmail} />
+
+        <PrivateRoute path={'/applications'}>
+          <HatApplications />
+        </PrivateRoute>
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
