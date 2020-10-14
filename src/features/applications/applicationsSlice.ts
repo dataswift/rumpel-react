@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatClientService } from '../../services/HatClientService';
@@ -25,7 +25,7 @@ export const slice = createSlice({
   initialState,
   reducers: {
     apps: (state, action: PayloadAction<Array<HatApplication>>) => {
-      state.applications.push(...action.payload);
+      state.applications = action.payload;
     },
     appsHmi: (state, action: PayloadAction<HatApplicationContent>) => {
       state.applicationHmi = action.payload;
@@ -55,11 +55,29 @@ export const selectApplications = (state: RootState) => state.applications.appli
 export const selectApplicationHmi = (state: RootState) => state.applications.applicationHmi;
 export const selectApplicationHmiState = (state: RootState) => state.applications.applicationHmiState;
 
-export const getApplications = (): AppThunk => async (dispatch) => {
+export const getApplicationById = (appId: string): AppThunk => async (dispatch, getState) => {
+  const currentApplications = getState().applications.applications;
+  if (currentApplications.find((app) => app.application.id === appId)) return;
+
+  try {
+    const app = await HatClientService.getInstance().getApplicationById(appId);
+    if (app.parsedBody) dispatch(setApps([...currentApplications, app.parsedBody]));
+  } catch (e) {
+    // TODO error handling
+  }
+};
+
+export const selectApplicationById = (id: string) =>
+  createSelector(selectApplications, (apps) => {
+    return apps.find((app) => app.application.id === id);
+  });
+
+export const getApplications = (): AppThunk => async (dispatch, getState) => {
   try {
     const apps = await HatClientService.getInstance().getApplications();
+    const currentApplications = getState().applications.applications;
 
-    if (apps?.parsedBody) {
+    if (apps?.parsedBody && currentApplications.length !== apps.parsedBody.length) {
       dispatch(setApps(apps.parsedBody));
     }
   } catch (e) {}

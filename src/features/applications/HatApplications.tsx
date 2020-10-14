@@ -1,12 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import TileHeader from '../../components/headers/TileHeader/TileHeader';
-import ApplicationList from '../../components/lists/ApplicationList';
+import ApplicationList from './ApplicationList';
 import { getApplications, selectApplications } from './applicationsSlice';
 
 const HATApplications: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const apps = useSelector(selectApplications);
 
   React.useEffect(() => {
@@ -14,7 +16,7 @@ const HATApplications: React.FC = () => {
   }, [dispatch]);
 
   const onAppClick = (appId: string) => {
-    // TODO add navigation when page exists.
+    history.push(`/applications/${appId}`);
   };
 
   return (

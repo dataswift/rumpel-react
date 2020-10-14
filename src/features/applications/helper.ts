@@ -14,9 +14,9 @@ enum HatApplicationKind {
   APP = 'App',
 }
 
-type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline';
+type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app';
 
-const getAppStatus = (app: HatApplication): HatApplicationStatus => {
+export const getAppStatus = (app: HatApplication): HatApplicationStatus => {
   const { setup, enabled, active, needsUpdating, mostRecentData } = app;
   const kind = app.application.kind.kind;
 
@@ -34,13 +34,15 @@ const getAppStatus = (app: HatApplication): HatApplicationStatus => {
 export const getStatusIcon = (app: HatApplication): HatAppStatusIcons => {
   switch (getAppStatus(app)) {
     case HatApplicationStatus.RUNNING:
-    case HatApplicationStatus.GOTO:
       return 'check_circle';
+    case HatApplicationStatus.GOTO:
+      return 'exit_to_app';
     case HatApplicationStatus.FETCHING:
       return 'sync';
     case HatApplicationStatus.FAILING:
-    case HatApplicationStatus.UPDATE:
       return 'sync_problem';
+    case HatApplicationStatus.UPDATE:
+      return 'refresh';
     default:
       return 'add_circle_outline';
   }
