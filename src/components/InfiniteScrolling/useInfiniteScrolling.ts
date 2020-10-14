@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { HatClientService } from "../../services/HatClientService";
 import { DayGroupedSheFeed, SheFeed } from "../../features/feed/she-feed.interface";
-import { groupBy } from 'lodash';
-import { startOfDay, subDays, format } from "date-fns";
+import { startOfDay, subDays } from "date-fns";
+import { groupSheFeedByDay } from "./helper";
 
 export default function useInfiniteScrolling(refreshDate: Date, loadMore?: Date | null) {
+  // TODO Refactoring. There is a quite a few useStates here.
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [feed, setFeed] = useState<DayGroupedSheFeed[]>([]);
@@ -20,15 +21,6 @@ export default function useInfiniteScrolling(refreshDate: Date, loadMore?: Date 
   useEffect(() => {
     setFeed(groupSheFeedByDay(items));
   }, [items]);
-
-  const groupSheFeedByDay = (feedItems: SheFeed[]): { day: string; data: SheFeed[] }[] => {
-    const groupedByDay = groupBy(feedItems, item => format(item.date.unix * 1000, 'EEE dd MMM yyyy') as string);
-
-    return Object.keys(groupedByDay)
-      .map((day: string) => {
-        return { day: day, data: groupedByDay[day] };
-      });
-  };
 
   useEffect(() => {
     setSince(Math.round(subDays(Date.now(), 20).getTime() / 1000));

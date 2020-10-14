@@ -24,21 +24,21 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
   }, [feedItem]);
 
   return (
-    <div className={'feed-item'}>
+    <div className="feed-item">
       <div className="img-wrapper">
         <FeedSourceImg
           source={feedItem.source}
           height="35" width="35"/>
         <div className="arrow-left" />
       </div>
-      <div className={'feed-card'}>
-        <div className={'feed-card-header'}>
+      <div className="feed-card">
+        <div className="feed-card-header">
           <h4 className="card-header-title">{feedItem.title?.text}</h4>
           <span className="flex-spacer" />
         </div>
         {feedItem.content && !feedItem.content.media && (
           <>
-            <div className={'feed-card-content no-image'}>
+            <div className="feed-card-content no-image">
               {feedItem.content.text && (
                 <div className={`feed-item-content ${ expanded ? 'expanded' : '' }`}
                   ref={content}>
@@ -54,7 +54,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
                 </div>
               )}
             </div>
-            <div className={'feed-card-footer'}>
+            <div className="feed-card-footer">
               <span>Posted {format(new Date(feedItem.date.iso), 'dd MMM yyyy h:mma')}</span>
               <span className="flex-spacer-small"/>
               {!expanded && overflowing && (
@@ -64,17 +64,15 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
           </>
         )}
         {feedItem.content && feedItem.content.media && feedItem.content.media.length > 0 && (
-          <>
-            <div className={'feed-card-content single-image'}
-              style={{ backgroundImage: `url(${ feedItem.content.media[0].url })` }}>
-              <div className="feed-item-overlay">
-                <div className="feed-item-overlay-content">{feedItem.content.text}</div>
-                <div className="feed-item-overlay-footer">
+          <div className="feed-card-content single-image"
+            style={{ backgroundImage: `url(${ feedItem.content.media[0].url })` }}>
+            <div className="feed-item-overlay">
+              <div className="feed-item-overlay-content">{feedItem.content.text}</div>
+              <div className="feed-item-overlay-footer">
                     Posted {format(new Date(feedItem.date.iso), 'dd MMM yyyy h:mma') }
-                </div>
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

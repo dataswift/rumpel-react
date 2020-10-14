@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { HatClientService } from "../../services/HatClientService";
-import { DayGroupedSheFeed, SheFeed } from "../../features/feed/she-feed.interface";
-import { groupBy } from 'lodash';
-import { format } from "date-fns";
+import { DayGroupedSheFeed, SheFeed } from "./she-feed.interface";
+import { groupSheFeedByDay } from "../../components/InfiniteScrolling/helper";
 
 export default function useFilterFeedData(since: number, until: number) {
   const [loading, setLoading] = useState(true);
@@ -14,22 +13,11 @@ export default function useFilterFeedData(since: number, until: number) {
     setFeed(groupSheFeedByDay(items));
   }, [items]);
 
-  const groupSheFeedByDay = (feedItems: SheFeed[]): { day: string; data: SheFeed[] }[] => {
-    const groupedByDay = groupBy(feedItems, item => format(item.date.unix * 1000, 'EEE dd MMM yyyy') as string);
-
-    return Object.keys(groupedByDay)
-      .map((day: string) => {
-        return { day: day, data: groupedByDay[day] };
-      });
-  };
-
-  useEffect(() => {
-    setItems([]);
-  }, [since, until]);
-
   useEffect(() => {
 
     const fetchFeed = async () => {
+      setItems([]);
+
       setLoading(true);
       setError(false);
       try {

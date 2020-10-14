@@ -10,7 +10,6 @@ export const WeeklySummaryList: React.FC<Props> = ({ nestedStructure }) => {
 
   if (!nestedStructure) return  null;
 
-
   return (
     <div className={'weekly-summary-list'}>
       {nestedStructure.map((row, index) => {

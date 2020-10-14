@@ -38,7 +38,7 @@ export const ProfileDropDown: React.FC = () => {
   };
 
   const getProfileImage = () => {
-    if (profile && profile.data && profile.data.photo && profile.data.photo.avatar) {
+    if (profile?.data?.photo?.avatar) {
       return profile.data.photo.avatar;
     } else {
       return "";

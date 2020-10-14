@@ -33,10 +33,8 @@ export const Modal: React.FC<Props> = ({
 
   return (
     <div
-      id="myModal"
       ref={content}
       style={open ? { display: 'block' } : {}}
-      onClick={() => {}}
       className="modal"
     >
       <div className="modal-content">

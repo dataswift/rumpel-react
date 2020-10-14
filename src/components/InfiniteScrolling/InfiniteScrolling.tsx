@@ -22,7 +22,6 @@ export const InfiniteScrolling: React.FC<Props> = ({ refreshDate }) => {
     <>
       <FeedList dayGroupedFeed={feed} loading={loading} lastFeedElementIntersecting={() => lastElementIntersecting()}/>
       {feed.length === 0 && <FeedLoading dataFetched={feed.length > 0} filteredData={false}/>}
-
     </>
   );
 };
