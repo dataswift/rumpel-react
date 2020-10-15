@@ -105,7 +105,6 @@ const AppRouter = () => (
         <PrivateRoute path={'/hat-setup-login'}>
           <HatLogin />
         </PrivateRoute>
-        <PrivateSpaceRoutes />
 
 
         <Route exact path="/" render={({ location }) => {
@@ -118,6 +117,7 @@ const AppRouter = () => (
           return <Redirect to={redirectTo} />;
         }} />
 
+        <PrivateSpaceRoutes />
       </Switch>
     </Suspense>
   </Router>

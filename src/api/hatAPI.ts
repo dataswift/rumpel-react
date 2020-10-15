@@ -21,9 +21,9 @@ export const recoverPassword = (body: { email: string }) => {
 
 export const getPublicProfile = () => {
   const path = `/api/v2.6/phata/profile`;
-  const headers = {'Content-Type': 'application/json'};
+  const headers = { 'Content-Type': 'application/json' };
 
-  return get<BundleValues>(path, {method: 'get', headers: headers});
+  return get<BundleValues>(path, { method: 'get', headers: headers });
 };
 
 export const resetPassword = (resetToken: string, body: { newPassword: string }) => {

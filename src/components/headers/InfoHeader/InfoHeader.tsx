@@ -24,34 +24,17 @@ export const InfoHeader: React.FC<Props> = ({ fixed, hideMobile }) => {
           <img className={'app-header-logo'} src={logo}  alt={'HAT Logo'}/>
           <span className={'flex-spacer-small'} />
 
-          {!authenticated &&
-            <>
-              <Link className={'app-header-btn-no-border'} to={'/user/login'}>
-                Sign In
-              </Link>
+          <Link className={'app-header-btn-no-border'} to={authenticated ? '/feed' : '/user/login'}>
+            {authenticated ? 'PDA Dashboard' : 'Sign In'}
+          </Link>
 
-              <a className={'app-header-btn-with-border'} href={'https://hatters.dataswift.io/hat/signup'}>
+          <a className={'app-header-btn-with-border'} href={'https://hatters.dataswift.io/hat/signup'}>
                 Get a hat
-              </a>
-
-              <button className={'app-header-btn-help'} onClick={() => setOpenDialog(true)}>
-                <i className={'material-icons'}>help_outline</i>
-              </button>
-            </>
-          }
-
-          {authenticated &&
-        <>
-          <div className={'text-medium'}>What can I do with my HAT?</div>
-          <a className={'app-header-learn-more'}
-            href={'https://hubofallthings.com'}
-            rel={'noopener noreferrer'}
-            target={'_blank'}
-          >
-            Learn More
           </a>
-        </>
-          }
+
+          <button className={'app-header-btn-help'} onClick={() => setOpenDialog(true)}>
+            <i className={'material-icons'}>help_outline</i>
+          </button>
         </div>
       </header>
 

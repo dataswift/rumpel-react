@@ -99,7 +99,7 @@ export const PublicProfile: React.FC = () => {
           <div className={'public-profile-photo-container'}>
             {!profile?.photo && DefaultAvatar}
 
-            {profile?.photo.avatar && <img src={profile.photo.avatar} alt={'avatar'} /> }
+            {profile?.photo.avatar && <img src={profile.photo.avatar} alt={'Profile avatar'} /> }
 
           </div>
           <div className={'public-profile-of'}>
