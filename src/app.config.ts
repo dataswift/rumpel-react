@@ -1,7 +1,7 @@
 import { environment } from './environment';
 
 export const config = {
-  version: '4.1.0',
+  version: '4.1.1',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
@@ -12,7 +12,7 @@ export const config = {
   native: environment.native,
   protocol: environment.protocol,
   links: {
-    bestPractices: 'https://docs.dataswift.io/technology/why/security-best-practice',
+    bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
     termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
     privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
     hatters:  environment.hattersUrl
