@@ -12,7 +12,7 @@ header {
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
   color: #fff;
-  z-index: 10000;
+  z-index: 10;
 
   &-content {
     padding: 0 4rem;
@@ -44,7 +44,9 @@ header {
       text-decoration: none;
     }
   }
+}
 
+.app-header-hide-small {
   @media (max-width: 850px) {
     display: none;
   }
