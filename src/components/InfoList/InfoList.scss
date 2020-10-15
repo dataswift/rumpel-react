@@ -1,0 +1,56 @@
+@import '../../assets/styles/branding';
+
+.info-card {
+  max-width: 900px;
+  width: 100%;
+  margin: 15px auto;
+  border-radius: 4px;
+  padding: 16px;
+  background-color: #fff;
+
+  .info-card-title {
+    font-weight: 700;
+    color: $app-dark-tone;
+    font-size: 14px;
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 10px;
+  }
+
+  .info-card-list {
+    padding-top: 8px;
+
+    .info-card-item {
+      &:not(:last-child) {
+        border-bottom: 1px solid #f6f6f6;
+      }
+
+      padding: 13px 0;
+      height: auto;
+      width: 100%;
+
+      .info-card-item-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0 16px;
+        position: relative;
+        height: inherit;
+
+        a {
+          text-decoration: underline;
+        }
+
+        .info-card-item-value {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 14px;
+          color: $app-dark-tone;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
