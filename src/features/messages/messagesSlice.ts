@@ -25,13 +25,14 @@ export const setMessages = (msgs: Messages): AppThunk => dispatch => {
 
 export const selectMessages = (state: RootState) => state.messages;
 
-export const fetchMessages = (): AppThunk => async dispatch => {
-  import(
-    /* webpackChunkName: "en_lang" */
-    '../../translations/en.json'
-  ).then(({ default: jsonMenu }) => {
-    return dispatch(setMessages(jsonMenu));
-  });
+export const fetchMessages = (id: string): AppThunk => async dispatch => {
+  if (id === 'pt') {
+    const { default: messages } = await import( /* webpackChunkName: "pt_lang" */ '../../translations/pt.json');
+    return dispatch(setMessages(messages));
+  } else {
+    const { default: messages } = await import( /* webpackChunkName: "en_lang" */ '../../translations/en.json');
+    return dispatch(setMessages(messages));
+  }
 };
 
 export default slice.reducer;

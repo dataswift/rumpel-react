@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import Hmi, { HmiType } from "hmi";
-import 'hmi/dist/hmi.cjs.development.css';
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";

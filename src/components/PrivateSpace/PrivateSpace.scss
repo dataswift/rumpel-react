@@ -1,0 +1,18 @@
+.private-space {
+  overflow: hidden;
+  height: 100vh;
+
+  .private-space-wrapper {
+    margin-top: 78px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+
+    .private-space-content {
+      flex-grow: 1;
+      overflow: auto;
+      height: calc(100vh - 78px);
+      background-color: #f6f6f6;
+    }
+  }
+}

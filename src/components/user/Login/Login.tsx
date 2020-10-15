@@ -26,9 +26,9 @@ const Login: React.FC = () => {
   let location = useLocation();
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
-  const targetParam = target || '/feed';
+  const targetParam = target;
   // @ts-ignore
-  const from = location.state?.from;
+  const from = location.state?.from || '/feed';
 
   const loginSuccessful = () => {
     if (from) {

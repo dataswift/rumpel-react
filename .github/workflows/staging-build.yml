@@ -1,13 +1,17 @@
-name: staging build
+name: Build final packages for internal staging
 
 on:
   push:
     branches:
       - dev
+      - v4.2.0
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ARTIFACTS_REPOSITORY: dswift-hat-stage-frontend-build-artifacts
+
     steps:
     - uses: actions/checkout@v1
     - uses: webfactory/ssh-agent@v0.3.0
@@ -25,7 +29,7 @@ jobs:
     - name: Install dependencies
       run: yarn install --network-concurrency 1
     - name: Build deployment package
-      run: PUBLIC_URL=/assets yarn build:staging
+      run: PUBLIC_URL=/assets yarn build:staging:internal
       env:
         CI: true
     - name: Upload the build
@@ -33,7 +37,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
       run: |
-        aws s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/${{ steps.package-version.outputs.current-version }}/ \
+        aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/${{ steps.package-version.outputs.current-version }}/ \
         --region eu-west-1
-        aws s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/latest/ \
+        aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ \
         --region eu-west-1

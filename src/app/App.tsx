@@ -1,7 +1,6 @@
 import React from 'react';
 import AppRouter from './AppRouter';
 import Root from './Root';
-import { LanguageParamHandler } from './LanguageParamHandler';
 import { config } from "../app.config";
 
 const App = () => {
@@ -9,9 +8,7 @@ const App = () => {
 
   return (
     <Root>
-      <LanguageParamHandler>
-        <AppRouter/>
-      </LanguageParamHandler>
+      <AppRouter/>
     </Root>
   );
 };

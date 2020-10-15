@@ -49,6 +49,7 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
         dispatch(getTools());
       }
     }
+
   }, [applications, dispatch]);
 
   useEffect(() => {

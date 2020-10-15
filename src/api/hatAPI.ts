@@ -21,7 +21,21 @@ export const recoverPassword = (body: { email: string }) => {
 
 export const getPublicProfile = () => {
   const path = `/api/v2.6/phata/profile`;
+  const headers = {'Content-Type': 'application/json'};
+
+  return get<BundleValues>(path, {method: 'get', headers: headers});
+};
+
+export const resetPassword = (resetToken: string, body: { newPassword: string }) => {
+  const path =  `/control/v2/auth/passwordreset/confirm/${ resetToken }`;
   const headers = { 'Content-Type': 'application/json' };
 
-  return get<BundleValues>(path, { method: 'get', headers: headers });
+  return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
+};
+
+export const changePassword = (body: { password: string; newPassword: string; }) => {
+  const path = `/control/v2/auth/password`;
+  const headers = { 'Content-Type': 'application/json' };
+
+  return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
 };
