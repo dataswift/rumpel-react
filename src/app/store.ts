@@ -7,7 +7,7 @@ import hatLoginSlice from "../features/hat-login/hatLoginSlice";
 import hmiSlice from "../features/hmi/hmiSlice";
 import hatClaimCombinedReducer from "../features/hat-claim/redux/reducers/hatClaimCombinedReducer";
 import toolsSlice from "../features/tools/toolsSlice";
-import universalDataViewerSlice from "../features/universalDataViewer/universalDataViewerSlice";
+import universalDataViewerSlice from "../features/universal-data-viewer/universalDataViewerSlice";
 
 export const store = configureStore({
   reducer: {

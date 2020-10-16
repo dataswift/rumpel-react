@@ -3,7 +3,7 @@ import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
 import { HatTool } from "../features/tools/hat-tool.interface";
-import { DataSourcesInterface } from "../features/universalDataViewer/DataSources.interface";
+import { DataSourcesInterface } from "../features/universal-data-viewer/DataSources.interface";
 import { HatHttpParameters } from "@dataswift/hat-js/lib/interfaces/http.interface";
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 

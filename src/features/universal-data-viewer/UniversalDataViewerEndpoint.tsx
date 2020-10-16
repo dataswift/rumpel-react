@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { getDataRecords, selectEndpointDataPreview } from "./universalDataViewerSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { flattenObject } from "./helper";
 
 const UniversalDataViewerEndpoint: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ const UniversalDataViewerEndpoint: React.FC = () => {
   const [dataPreviewFlat, setDataPreviewFlat] = useState<Array<any>>([]);
   const dataPreview = useSelector(selectEndpointDataPreview);
   const { namespace, endpoint } = location?.state || {};
+  const [take, setTake] = useState(1);
+  const [skip, setSkip] = useState(0);
 
   useEffect(() => {
 
@@ -19,9 +22,11 @@ const UniversalDataViewerEndpoint: React.FC = () => {
     }
 
     if (namespace && endpoint && !dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
-      dispatch(getDataRecords(namespace, endpoint, '1', '0'));
+      dispatch(getDataRecords(namespace, endpoint, take, skip));
+      setSkip(take);
+      setTake(19);
     }
-  }, [endpoint, namespace, history, dataPreview, dispatch]);
+  }, [endpoint, namespace, history, dataPreview, skip, take, dispatch]);
 
   useEffect(() => {
     const preview: Array<any> = [];
@@ -40,32 +45,12 @@ const UniversalDataViewerEndpoint: React.FC = () => {
 
   const onLoadMore = () => {
     if (namespace && endpoint) {
-      dispatch(getDataRecords(namespace, endpoint, '19', '1'));
+      dispatch(getDataRecords(namespace, endpoint, take, skip));
+      setSkip(take);
+      setTake(take + 20);
       setLoading(true);
     }
   };
-
-  function flattenObject(ob: any) {
-    let toReturn = {};
-
-    for (let i in ob) {
-      if (!ob.hasOwnProperty(i)) continue;
-
-      if ((typeof ob[i]) == 'object' && ob[i] !== null) {
-        let flatObject = flattenObject(ob[i]);
-        for (let x in flatObject) {
-          if (!flatObject.hasOwnProperty(x)) continue;
-
-          // @ts-ignore
-          toReturn[i + ':' + x] = flatObject[x];
-        }
-      } else {
-        // @ts-ignore
-        toReturn[i] = ob[i];
-      }
-    }
-    return toReturn;
-  }
 
   return (
     <div className={'universal-data-viewer-endpoint'}>
@@ -76,12 +61,12 @@ const UniversalDataViewerEndpoint: React.FC = () => {
       (dataPreviewFlat.map((obj, index) => {
         return (
           <div className={'universal-data-viewer-endpoint-data-preview'} key={'data-preview' + index}>
-            <div>{index}</div>
+            <div className={'universal-data-viewer-endpoint-data-preview-index'}>#{ index + 1 }</div>
             {
               Object.entries(obj).map(([key, value], index) => {
                 return <div key={key + index} className={'universal-data-viewer-endpoint-data-preview-item'}>
                   <h3>{key}</h3>
-                  <p>{value as string}</p>
+                  <p aria-label={value as string}>{value as string}</p>
                 </div>;
               })
             }
@@ -95,7 +80,6 @@ const UniversalDataViewerEndpoint: React.FC = () => {
         Load more
       </button>
       }
-
     </div>
   );
 };

@@ -60,12 +60,18 @@ export const getDataSources = (): AppThunk => async dispatch => {
   }
 };
 
-export const getDataRecords = (namespace: string, endpoint: string, take: string, skip: string): AppThunk =>
+export const getDataRecords = (namespace: string, endpoint: string, take: number, skip: number): AppThunk =>
   async dispatch => {
     try {
+      const options = { 
+        ordering: 'descending', 
+        orderBy: 'dataCreated', 
+        take: `${ take }`,
+        skip: `${ skip }` };
+        
       const res = await HatClientService
         .getInstance()
-        .getData(namespace, endpoint, { ordering: 'descending', orderBy: 'dataCreated', take: take, skip: skip });
+        .getData(namespace, endpoint, options);
 
       if (res?.parsedBody && res.parsedBody.length > 0) {
         dispatch(setEndpointData(res.parsedBody));

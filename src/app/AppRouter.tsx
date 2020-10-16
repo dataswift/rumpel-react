@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
-import UniversalDataViewerDataSources from "../features/universalDataViewer/UniversalDataViewerDataSources";
-import UniversalDataViewerEndpoint from "../features/universalDataViewer/UniversalDataViewerEndpoint";
+import UniversalDataViewerDataSources from "../features/universal-data-viewer/UniversalDataViewerDataSources";
+import UniversalDataViewerEndpoint from "../features/universal-data-viewer/UniversalDataViewerEndpoint";
 import AuthChangePassword from "../features/authentication/AuthChangePassword";
 import AuthVerifyEmail from "../features/authentication/AuthVerifyEmail";
 
