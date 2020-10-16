@@ -132,12 +132,10 @@ const AppRouter = () => (
 
 
         <Route exact path="/" render={({ location }) => {
-          let redirectTo = "";
-          if (location.hash) {
-            redirectTo = location.hash.replace('#', '');
-          } else {
-            redirectTo = '/public/profile';
-          }
+          const redirectTo = location.hash
+            ? location.hash.replace('#', '')
+            : '/public/profile';
+          
           return <Redirect to={redirectTo} />;
         }} />
 

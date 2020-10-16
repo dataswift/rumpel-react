@@ -18,9 +18,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
   useEffect(() => {
     if (!content.current) return;
 
-    const ov = content.current?.clientHeight < content.current?.scrollHeight;
-
-    setOverflowing(ov);
+    setOverflowing(content.current?.clientHeight < content.current?.scrollHeight);
   }, [feedItem]);
 
   return (
