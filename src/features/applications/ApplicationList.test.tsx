@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -35,11 +35,11 @@ describe('HAT Application List', () => {
 
   test('the correct icon text is displayed for each hat application status', () => {
     const { rerender } = render(<ApplicationList hatApps={[TEST_HAT_APPLICATION]} onAppClick={jest.fn()} />);
-    expect(screen.getByText('check_circle')).toBeInTheDocument();
+    expect(screen.getByText('exit_to_app')).toBeInTheDocument();
 
     const needsUpdatingApp = { ...TEST_HAT_APPLICATION, needsUpdating: true };
     rerender(<ApplicationList hatApps={[needsUpdatingApp]} onAppClick={jest.fn()} />);
-    expect(screen.getByText('sync_problem')).toBeInTheDocument();
+    expect(screen.getByText('refresh')).toBeInTheDocument();
 
     const untouchedApp = { ...TEST_HAT_APPLICATION, enabled: false, active: false };
     rerender(<ApplicationList hatApps={[untouchedApp]} onAppClick={jest.fn()} />);
@@ -71,6 +71,6 @@ describe('HAT Application List', () => {
       },
     };
     rerender(<ApplicationList hatApps={[goToApp]} onAppClick={jest.fn()} />);
-    expect(screen.getByText('check_circle')).toBeInTheDocument();
+    expect(screen.getByText('exit_to_app')).toBeInTheDocument();
   });
 });

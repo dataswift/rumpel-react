@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import Card from '../Card/Card';
+import Card from '../../components/Card/Card';
 import { getStatusIcon } from './helper';
 
 import './HatApplication.scss';
