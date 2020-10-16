@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import { PublicProfile } from "../features/public-profile/PublicProfile";
 import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
@@ -83,6 +84,8 @@ const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading...'} />}>
       <Switch>
+        <Route path="/public/profile" component={PublicProfile} />
+
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
         <Route path="/user/password/recover" component={PasswordRecover} />
@@ -103,9 +106,18 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateRoute>
 
-        <PrivateSpaceRoutes />
 
-        <Route exact path="/" render={({ location }) => <Redirect to={location.hash.replace('#', '')} />} />
+        <Route exact path="/" render={({ location }) => {
+          let redirectTo = "";
+          if (location.hash) {
+            redirectTo = location.hash.replace('#', '');
+          } else {
+            redirectTo = '/public/profile';
+          }
+          return <Redirect to={redirectTo} />;
+        }} />
+
+        <PrivateSpaceRoutes />
       </Switch>
     </Suspense>
   </Router>

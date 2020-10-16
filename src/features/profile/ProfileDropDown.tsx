@@ -11,6 +11,7 @@ import {
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 import { logoutUser, selectUserHatDomain, selectUserHatName } from "../authentication/authenticationSlice";
 import { selectProfile } from "./profileSlice";
+import { Link } from "react-router-dom";
 
 export const ProfileDropDown: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -88,7 +89,7 @@ export const ProfileDropDown: React.FC = () => {
               </div>
             }
             <div className="dropdown-divider" />
-            <a className="dropdown-item" href={window.location.origin + '/#/public/profile'}>Public profile</a>
+            <Link className="dropdown-item" to={'/public/profile'}>Public profile</Link>
             <a className="dropdown-item" href={window.location.origin + '/#/user/password/change'}>Change password</a>
             <div className="dropdown-divider" />
 

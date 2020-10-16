@@ -1,18 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import './Modal.scss';
-import FormatMessage from "../../features/messages/FormatMessage";
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
-  titleMessageId: string;
+    open: boolean;
+    onClose: () => void;
 };
 
 export const Modal: React.FC<Props> = ({
   open,
   onClose,
-  titleMessageId,
-  children,
+  children
+
 }) => {
   const content = useRef<HTMLObjectElement>(null);
 
@@ -32,22 +30,13 @@ export const Modal: React.FC<Props> = ({
 
   return (
     <div
+      id="RumpelModal"
       ref={content}
       style={open ? { display: 'block' } : {}}
-      className="modal"
+      className="rum-modal"
     >
-      <div className="modal-content">
-        <div className="modal-header">
-          <div className={'modal-text-title'}>
-            <FormatMessage id={titleMessageId} />
-          </div>
-        </div>
-        <div className="modal-body modal-text-content">{children}</div>
-        <div className="modal-footer">
-          <button onClick={onClose} className={'modal-btn-accent'}>
-            OK
-          </button>
-        </div>
+      <div className="rum-modal-content">
+        {children}
       </div>
     </div>
   );

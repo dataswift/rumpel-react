@@ -84,7 +84,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={'login flex-column-wrapper'}>
-      <InfoHeader />
+      <InfoHeader hideMobile fixed />
       <NotificationBanner type={'error'} display={!!errorMsg}>{errorMsg}</NotificationBanner>
       <span className={'flex-spacer-small'} />
       <img
