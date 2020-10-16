@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import { LoadingSpinner } from '../components/LoadingSpinner/LoadingSpinner';
+import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import { PublicProfile } from "../features/public-profile/PublicProfile";
+import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
 
@@ -12,12 +14,20 @@ const HatClaim = React.lazy(
       '../features/hat-claim/HatClaim'
     ),
 );
+
 const Login = React.lazy(
   () =>
     import(
       /* webpackChunkName: "user_login" */
       '../components/user/Login'
     ),
+);
+
+const Feed = React.lazy(() =>
+  import(
+    /* webpackChunkName: "feed" */
+    '../features/feed/Feed'
+  )
 );
 
 const HatLogin = React.lazy(
@@ -27,6 +37,7 @@ const HatLogin = React.lazy(
       '../features/hat-login/HatLogin'
     ),
 );
+
 const PasswordRecover = React.lazy(
   () =>
     import(
@@ -75,10 +86,30 @@ const Oauth = React.lazy(
     ),
 );
 
+const PrivateSpaceRoutes = () => {
+  return (
+    <PrivateSpace>
+      <PrivateRoute path={'/feed'}>
+        <Feed />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App'}>
+        <HatApplications />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App/:appId'}>
+        <HatApplicationDetails />
+      </PrivateRoute>
+    </PrivateSpace>
+  );
+};
+
 const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading...'} />}>
       <Switch>
+        <Route path="/public/profile" component={PublicProfile} />
+
         <Route path="/hat/claim/:claimToken" component={HatClaim} />
         <Route path="/user/login/" component={Login} />
         <Route path="/user/password/recover" component={PasswordRecover} />
@@ -86,14 +117,6 @@ const AppRouter = () => (
         <Route path="/auth/recover-password" component={AuthRecoverPassword} />
         <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
         <Route path="/auth/verify-email/:verifyToken" component={AuthVerifyEmail} />
-
-        <PrivateRoute exact path={'/applications'}>
-          <HatApplications />
-        </PrivateRoute>
-
-        <PrivateRoute exact path={'/applications/:appId'}>
-          <HatApplicationDetails />
-        </PrivateRoute>
 
         <PrivateRoute path={'/hatlogin'}>
           <HatLogin />
@@ -107,7 +130,16 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateRoute>
 
-        <Route exact path="/" render={({ location }) => <Redirect to={location.hash.replace('#', '')} />} />
+
+        <Route exact path="/" render={({ location }) => {
+          const redirectTo = location.hash
+            ? location.hash.replace('#', '')
+            : '/public/profile';
+          
+          return <Redirect to={redirectTo} />;
+        }} />
+
+        <PrivateSpaceRoutes />
       </Switch>
     </Suspense>
   </Router>

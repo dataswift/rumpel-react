@@ -16,7 +16,7 @@ const HATApplications: React.FC = () => {
   }, [dispatch]);
 
   const onAppClick = (appId: string) => {
-    history.push(`/applications/${appId}`);
+    history.push(`/explore/App/${appId}`);
   };
 
   return (
