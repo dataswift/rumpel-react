@@ -4,7 +4,6 @@ import './Modal.scss';
 type Props = {
     open: boolean;
     onClose: () => void;
-    children: React.ReactNode;
 };
 
 export const Modal: React.FC<Props> = ({

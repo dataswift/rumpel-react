@@ -6,7 +6,6 @@ type Props = {
   open: boolean;
   onClose: () => void;
   titleMessageId: string;
-  children: React.ReactNode;
 };
 
 export const Modal: React.FC<Props> = ({

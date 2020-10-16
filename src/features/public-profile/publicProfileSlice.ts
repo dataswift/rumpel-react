@@ -30,13 +30,13 @@ export const slice = createSlice({
       }
       state.pending = false;
     },
-    error: state => {
+    getPublicProfileError: state => {
       state.pending = false;
     },
   },
 });
 
-export const { publicProfile, error } = slice.actions;
+export const { publicProfile, getPublicProfileError } = slice.actions;
 
 export const setPublicProfile = (profile: BundleValues): AppThunk => dispatch => {
   dispatch(publicProfile(profile));
@@ -54,7 +54,7 @@ export const getPublicProfileReq = (): AppThunk => async dispatch => {
       dispatch(setPublicProfile(res.parsedBody));
     }
   } catch (e) {
-    dispatch(error());
+    dispatch(getPublicProfileError());
   }
 };
 
