@@ -23,7 +23,7 @@ export const store = configureStore({
 
 describe('Hat Application page tests', () => {
   test('renders a list of items that navigates the user when clicked', () => {
-    const history = createMemoryHistory({ initialEntries: ['/applications'] });
+    const history = createMemoryHistory({ initialEntries: ['/explore/App'] });
 
     render(
       <Router history={history}>
@@ -33,12 +33,12 @@ describe('Hat Application page tests', () => {
       </Router>,
     );
 
-    expect(history.location.pathname).toEqual('/applications');
+    expect(history.location.pathname).toEqual('/explore/App');
     const application = screen.getByText('Test Application');
     expect(application).toBeInTheDocument();
 
     fireEvent.click(application);
 
-    expect(history.location.pathname).toEqual('/applications/1');
+    expect(history.location.pathname).toEqual('/explore/App/1');
   });
 });

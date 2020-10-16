@@ -5,20 +5,28 @@ header {
 }
 
 .app-header {
-  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
   color: #fff;
-  z-index: 10000;
+  z-index: 10;
+
+  &-fixed {
+    position: fixed;
+  }
 
   &-content {
     padding: 0 4rem;
     align-items: center;
     justify-content: center;
     height: 100%;
+
+    @media (max-width: 850px) {
+      padding: 0 2.0rem;
+    }
   }
 
   &-logo {
@@ -45,6 +53,65 @@ header {
     }
   }
 
+  &-btn-no-border {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    letter-spacing: 0.13px;
+    opacity: 0.8;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  &-btn-with-border {
+    font-family: 'Roboto', sans-serif;
+    opacity: 0.8;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: 0.13px;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    border-radius: 20px;
+    border: 1.5px solid #ffffff;
+    background-color: transparent;
+
+    &:hover {
+      background-color: white;
+      color: #4a556b;
+    }
+  }
+
+  &-btn-help {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: white;
+    padding: 0.6rem 1.4rem;
+    font-size: 18px;
+    text-align: center;
+    opacity: 0.8;
+
+    i {
+      font-size: 22px;
+    }
+  }
+}
+
+.app-header-hide-mobile {
   @media (max-width: 850px) {
     display: none;
   }

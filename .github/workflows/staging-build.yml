@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - v4.2.0
 
 jobs:
   build:

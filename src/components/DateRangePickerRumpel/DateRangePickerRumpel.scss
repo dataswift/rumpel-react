@@ -1,0 +1,12 @@
+.date-range-picker-rumpel {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+
+  &-done {
+    align-self: flex-end;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    width: 80px;
+  }
+}
