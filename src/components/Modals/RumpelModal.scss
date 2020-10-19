@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.modal {
+.rum-modal {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -14,19 +14,18 @@
 }
 
 /* Modal Content */
-.modal-content {
+.rum-modal-content {
   position: relative;
-  background-color: #fefefe;
   margin: auto;
   padding: 0;
   overflow: hidden;
-  border-radius: 27px;
-  border: 1px solid #888;
   max-width: 80%;
   width: 420px;
-  -webkit-box-shadow: 2px 5px 10px 0 rgba(0, 0, 0, 0.17);
-  -moz-box-shadow: 2px 5px 10px 0 rgba(0, 0, 0, 0.17);
-  box-shadow: 2px 5px 10px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
   animation-name: animatetop;
@@ -71,23 +70,20 @@
   cursor: pointer;
 }
 
-.modal-header {
-  padding: 27px 16px 19px;
+.rum-modal-header {
+  padding: 28px 20px 19px;
   background-color: white;
   color: white;
-  text-align: center;
 }
 
-.modal-body {
-  padding: 30px 19px;
+.rum-modal-body {
+  padding: 0 19px;
   display: flex;
-  border-top: 2px solid #e5e5e5;
-  border-bottom: 2px solid #e5e5e5;
   flex-direction: column;
 }
 
-.modal-footer {
-  padding: 30px 19px;
+.rum-modal-footer {
+  padding: 24px 19px;
   background-color: white;
   text-align: center;
   color: white;
@@ -98,42 +94,54 @@
   }
 }
 
-.modal-text-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 21px;
-  text-align: center;
-  letter-spacing: 0.5px;
-  color: #1f1f1f;
-}
-
-.modal-text-content {
+.rum-modal-text-title {
   font-size: 1.4rem;
-  font-weight: 400;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 21px;
-  letter-spacing: 0.4px;
-  color: #505050;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  color: #4a556b;
 }
 
-.modal-btn-accent {
+.rum-modal-text-content {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #9a9a9a;
+}
+
+.rum-modal-btn-accent {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: 0.25px;
+  text-align: center;
   display: block;
   width: 25rem;
   height: 4.8rem;
-  text-align: center;
-  text-transform: uppercase;
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
   border-radius: 11px;
-  font-size: 1.6rem;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  background-color: #6297b1;
-  color: white;
+  background-color: transparent;
+  color: #4a556b;
+  margin: auto;
+}
+
+.rum-modal-image-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 24px;
 }
