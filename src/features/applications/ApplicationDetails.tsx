@@ -7,6 +7,8 @@ import FormatMessage from '../messages/FormatMessage';
 import { getApplicationById, selectApplicationById } from './applicationsSlice';
 import './HatApplication.scss';
 import { getStatusIcon, getAppStatus } from './helper';
+import InformationDetails from "../../components/InformationDetails/InformationDetails";
+import format from "date-fns/format";
 
 const AppDetailsToolbarActions = () => <i className="material-icons details-close">more_horiz</i>;
 
@@ -33,33 +35,56 @@ const HatApplicationDetails: React.FC = () => {
     );
   };
 
+  const getApplicationDetails = (): Array<{ [key: string]: string }> => {
+    const { name, url, country } = app.application.developer;
+    const { version, termsUrl, supportContact } = app.application.info;
+
+    return [
+      { 'provider': name },
+      { 'website': url },
+      { 'country': country },
+      { 'version': version },
+      { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
+      { 'terms and conditions': termsUrl },
+      { 'support email': supportContact }
+    ];
+  };
+
   return (
-    <DetailsHeader
-      logoSrc={app.application.info.graphics.logo.normal}
-      logoAltText="HAT Application Logo"
-      toolbarActions={<AppDetailsToolbarActions />}
-      backgroundColor="#2b313d"
-    >
-      <div className="app-rating-wrapper">
-        <div className="app-rating">
-          <span className="app-rating-highlighted">{app.application.info.rating.score}</span>
+    <>
+      <DetailsHeader
+        logoSrc={app.application.info.graphics.logo.normal}
+        logoAltText="HAT Application Logo"
+        toolbarActions={<AppDetailsToolbarActions />}
+        backgroundColor="#2b313d"
+      >
+        <div className="app-rating-wrapper">
+          <div className="app-rating">
+            <span className="app-rating-highlighted">{app.application.info.rating.score}</span>
+          </div>
         </div>
-      </div>
 
-      <h3 className="app-details-header-title">{app.application.info.name}</h3>
-      <div className="app-details-header-headline">
-        <FormatMessage id="ds.hat.application.details.rated" /> {app.application.info.rating.score}
-      </div>
+        <h3 className="app-details-header-title">{app.application.info.name}</h3>
+        <div className="app-details-header-headline">
+          <FormatMessage id="ds.hat.application.details.rated" /> {app.application.info.rating.score}
+        </div>
 
-      <a href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291" className="app-link">
-        <FormatMessage id="ds.hat.application.details.learn" />
-      </a>
+        <a href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291" className="app-link">
+          <FormatMessage id="ds.hat.application.details.learn" />
+        </a>
 
-      <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
-        <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
+        <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
+          <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
         Connect
-      </div>
-    </DetailsHeader>
+        </div>
+      </DetailsHeader>
+      <InformationDetails 
+        header={'App Info'}
+        description={app.application.info.description.text}
+        screenshots={app.application.info.graphics.screenshots.map(screenshot => screenshot.normal)}
+        informationListData={getApplicationDetails()}
+      />
+    </>
   );
 };
 
