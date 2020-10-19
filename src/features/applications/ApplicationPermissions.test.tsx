@@ -36,7 +36,7 @@ export const store = configureStore({
 });
 
 describe('Application Permissions', () => {
-  test('renders and displays the correct hat application details', () => {
+  test('renders and displays the correct hat application permissions', () => {
     const history = createMemoryHistory({ initialEntries: ['/explore/App/1/permissions'] });
 
     render(
