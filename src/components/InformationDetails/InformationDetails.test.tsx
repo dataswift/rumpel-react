@@ -2,6 +2,7 @@ import React from 'react';
 
 import { screen, render } from '@testing-library/react';
 import InformationDetails from "./InformationDetails";
+import Root from "../../app/Root";
 
 describe('Information Details', () => {
   test('renders the information and ensures the correct data is present.', () => {
@@ -11,18 +12,20 @@ describe('Information Details', () => {
     ];
 
     render(
-      <InformationDetails
-        header={'Test header Info'}
-        description={'text description'}
-        screenshots={['screenshot1', 'screenshot2']}
-        informationListData={testData}
-      />
+      <Root>
+        <InformationDetails
+          header={'Test header Info'}
+          description={'text description'}
+          screenshots={['screenshot1', 'screenshot2']}
+          informationListData={testData}
+        />
+      </Root>
     );
 
     expect(screen.getByText('Test header Info')).toBeInTheDocument();
 
     expect(screen.getByText('text description')).toBeInTheDocument();
-    expect(screen.queryAllByAltText('screenshot').length).toEqual(2);
+    expect(screen.queryAllByAltText('Screenshot').length).toEqual(2);
 
     expect(screen.getByText('Information')).toBeInTheDocument();
     const link = screen.getByText('https://dataswift.io');
@@ -36,17 +39,19 @@ describe('Information Details', () => {
     ];
 
     render(
-      <InformationDetails
-        header={'Test header Info'}
-        description={'text description'}
-        informationListData={testData}
-      />
+      <Root>
+        <InformationDetails
+          header={'Test header Info'}
+          description={'text description'}
+          informationListData={testData}
+        />
+      </Root>
     );
 
     expect(screen.getByText('Test header Info')).toBeInTheDocument();
 
     expect(screen.getByText('text description')).toBeInTheDocument();
-    expect(screen.queryAllByAltText('screenshot').length).toEqual(0);
+    expect(screen.queryAllByAltText('Screenshot').length).toEqual(0);
 
     expect(screen.getByText('Information')).toBeInTheDocument();
     const link = screen.getByText('https://dataswift.io');

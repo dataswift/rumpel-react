@@ -1,6 +1,7 @@
 import React from "react";
 import './InformationDetails.scss';
 import InfoList from "../InfoList/InfoList";
+import FormatMessage from "../../features/messages/FormatMessage";
 
 type Props = {
     header: string;
@@ -18,7 +19,7 @@ const InformationDetails: React.FC<Props> = ({ header, description, screenshots,
       {description &&
         <div className={'ds-information-details-section'}>
           <h5>
-            Description
+            <FormatMessage id={'ds.hat.application.details.description.title'} />
           </h5>
           <div className={'ds-information-details-section-description'}>
             {description}
@@ -29,12 +30,12 @@ const InformationDetails: React.FC<Props> = ({ header, description, screenshots,
       {(screenshots && screenshots.length > 0) &&
         <div className={'ds-information-details-section'}>
           <h5>
-            Screenshots
+            <FormatMessage id={'ds.hat.application.details.screenshots.title'} />
           </h5>
           <div className={'ds-information-details-section-screenshots'}>
             {screenshots.map((screenshot, index) => {
               return (
-                <img key={'ds-app-screenshot' + index} src={screenshot} alt={'screenshot'} />
+                <img key={'ds-app-screenshot' + index} src={screenshot} alt={'Screenshot'} />
               );
             })}
           </div>

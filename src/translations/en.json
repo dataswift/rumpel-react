@@ -40,5 +40,7 @@
   "ds.hat.applications.header.title": "HAT Applications",
   "ds.hat.applications.header.description": "HAT apps are integrated with you HAT data to give you great services",
   "ds.hat.application.details.rated": "This app is rated",
-  "ds.hat.application.details.learn": "Learn More"
+  "ds.hat.application.details.learn": "Learn More",
+  "ds.hat.application.details.description.title": "Description",
+  "ds.hat.application.details.screenshots.title": "Screenshots"
 }
