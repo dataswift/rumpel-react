@@ -16,15 +16,20 @@ const TEST_HAT_APPLICATION: HatApplication = {
       kind: 'App',
       url: '',
     },
+    dependencies: {
+      tools: [],
+      plugs: [],
+      contracts: []
+    },
     info: {
       dataPreview: [],
-      dataUsePurpose: '',
+      dataUsePurpose: 'Test data use purpose',
       description: { text: 'Test description', html: '', markdown: '' },
       graphics: { logo: { normal: '' }, banner: { normal: '' }, screenshots: [] },
       headline: 'The Test Application',
       name: 'Test Application',
       published: true,
-      rating: { score: '', points: 1 },
+      rating: { score: 'A*BA', points: 19 },
       supportContact: '',
       termsUrl: '',
       updateNotes: {
@@ -32,6 +37,18 @@ const TEST_HAT_APPLICATION: HatApplication = {
         notes: Array(9),
       },
       version: '1.2.6',
+    },
+    permissions: {
+      rolesGranted: [
+        {
+          role: "namespacewrite",
+          detail: "testnamespace"
+        },
+        {
+          role: "namespaceread",
+          detail: "testnamespace"
+        },
+      ]
     },
     status: {
       expectedStatus: 0,
@@ -47,10 +64,7 @@ const TEST_HAT_APPLICATION: HatApplication = {
       kind: '',
       url: '',
       onboarding: [],
-    },
-    permissions: {
-      rolesGranted: [],
-    },
+    }
   },
   enabled: true,
   needsUpdating: false,
