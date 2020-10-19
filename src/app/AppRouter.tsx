@@ -6,6 +6,7 @@ import { PublicProfile } from "../features/public-profile/PublicProfile";
 import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
+import HatApplicationPermissions from "../features/applications/ApplicationPermissions";
 
 const HatClaim = React.lazy(
   () =>
@@ -99,6 +100,10 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateRoute exact path={'/explore/App/:appId'}>
         <HatApplicationDetails />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App/:appId/permissions'}>
+        <HatApplicationPermissions />
       </PrivateRoute>
     </PrivateSpace>
   );
