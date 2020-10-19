@@ -1,6 +1,6 @@
 {
   "name": "rumpel-react",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "private": true,
   "dependencies": {
     "@dataswift/hat-js": "^0.3.2",
@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "date-fns": "^2.12.0",
-    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.4",
+    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.5",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.19",
     "lodash-es": "^4.17.15",
