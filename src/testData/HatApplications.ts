@@ -40,7 +40,7 @@ const TEST_HAT_APPLICATION: HatApplication = {
       dataPreviewEndpoint: '',
       kind: '',
       recentDataCheckEndpoint: '',
-      versionReleaseDate: '',
+      versionReleaseDate: '2019-01-15T12:00:00.000Z',
     },
     setup: {
       iosUrl: '',
