@@ -72,6 +72,11 @@ export const selectApplicationById = (id: string) =>
     return apps.find((app) => app.application.id === id);
   });
 
+export const selectApplicationsByKind = (kind: string) =>
+  createSelector(selectApplications, (apps) => {
+    return apps.filter((app) => app.application.kind.kind === kind);
+  });
+
 export const getApplications = (): AppThunk => async (dispatch, getState) => {
   try {
     const apps = await HatClientService.getInstance().getApplications();
