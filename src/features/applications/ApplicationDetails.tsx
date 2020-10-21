@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import format from 'date-fns/format';
 
 import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader';
 import FormatMessage from '../messages/FormatMessage';
 import { getApplicationById, selectApplicationById } from './applicationsSlice';
 import './HatApplication.scss';
 import { getStatusIcon, getAppStatus } from './helper';
-import InformationDetails from "../../components/InformationDetails/InformationDetails";
-import format from "date-fns/format";
-
-const AppDetailsToolbarActions = () => <i className="material-icons details-close">more_horiz</i>;
+import InformationDetails from '../../components/InformationDetails/InformationDetails';
+import AppDetailsToolbarActions from './ApplicationDetailsActions';
 
 const HatApplicationDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,13 +39,13 @@ const HatApplicationDetails: React.FC = () => {
     const { version, termsUrl, supportContact } = app.application.info;
 
     return [
-      { 'provider': name },
-      { 'website': url },
-      { 'country': country },
-      { 'version': version },
+      { provider: name },
+      { website: url },
+      { country: country },
+      { version: version },
       { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
       { 'terms and conditions': termsUrl },
-      { 'support email': supportContact }
+      { 'support email': supportContact },
     ];
   };
 
@@ -55,7 +54,7 @@ const HatApplicationDetails: React.FC = () => {
       <DetailsHeader
         logoSrc={app.application.info.graphics.logo.normal}
         logoAltText="HAT Application Logo"
-        toolbarActions={<AppDetailsToolbarActions />}
+        toolbarActions={<AppDetailsToolbarActions setup={app.setup} appId={app.application.id} />}
         backgroundColor="#2b313d"
       >
         <div className="app-rating-wrapper">
@@ -75,13 +74,13 @@ const HatApplicationDetails: React.FC = () => {
 
         <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
           <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
-        Connect
+          Connect
         </div>
       </DetailsHeader>
-      <InformationDetails 
+      <InformationDetails
         header={'App Info'}
         description={app.application.info.description.text}
-        screenshots={app.application.info.graphics.screenshots.map(screenshot => screenshot.normal)}
+        screenshots={app.application.info.graphics.screenshots.map((screenshot) => screenshot.normal)}
         informationListData={getApplicationDetails()}
       />
     </>

@@ -108,4 +108,18 @@ export const getApplicationsHmi = (parentAppId: string): AppThunk => async (disp
   }
 };
 
+export const disableHatApplication = (appId: string): AppThunk => async (dispatch, getState) => {
+  try {
+    const app = await HatClientService.getInstance().disableApplication(appId);
+    if (app?.parsedBody) {
+      let currentApps = getState().applications.applications;
+      currentApps = currentApps.filter((a) => a.application.id !== appId);
+      currentApps.push(app.parsedBody);
+      dispatch(setApps([...currentApps]));
+    }
+  } catch (e) {
+    // TODO error handling
+  }
+};
+
 export default slice.reducer;
