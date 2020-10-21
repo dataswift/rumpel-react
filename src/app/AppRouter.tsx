@@ -7,6 +7,8 @@ import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
 import HatApplicationPermissions from "../features/applications/ApplicationPermissions";
+import DataPlugs from "../features/dataplugs/DataPlugs";
+import DataPlugDetails from "../features/dataplugs/DataPlugDetails";
 
 const HatClaim = React.lazy(
   () =>
@@ -103,6 +105,18 @@ const PrivateSpaceRoutes = () => {
       </PrivateRoute>
 
       <PrivateRoute exact path={'/explore/App/:appId/permissions'}>
+        <HatApplicationPermissions />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug'}>
+        <DataPlugs />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug/:appId'}>
+        <DataPlugDetails />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug/:appId/permissions'}>
         <HatApplicationPermissions />
       </PrivateRoute>
     </PrivateSpace>

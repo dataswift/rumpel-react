@@ -3,32 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import TileHeader from '../../components/headers/TileHeader/TileHeader';
-import ApplicationList from './ApplicationList';
-import { getApplications, selectApplicationsByKind } from './applicationsSlice';
+import { getApplications, selectApplicationsByKind } from "../applications/applicationsSlice";
+import ApplicationList from "../applications/ApplicationList";
 
-const HATApplications: React.FC = () => {
+const DataPlugs: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const apps = useSelector(selectApplicationsByKind('App'));
+  const apps = useSelector(selectApplicationsByKind('DataPlug'));
 
   useEffect(() => {
     dispatch(getApplications());
   }, [dispatch]);
 
   const onAppClick = (appId: string) => {
-    history.push(`/explore/App/${appId}`);
+    history.push(`/explore/DataPlug/${appId}`);
   };
 
   return (
     <>
       <TileHeader
-        titleId="ds.hat.applications.header.title"
-        icon="touch_app"
-        descriptionId="ds.hat.applications.header.description"
+        titleId="ds.hat.dataplugs.header.title"
+        icon="settings_input_component"
+        descriptionId="ds.hat.dataplugs.header.description"
       />
       <ApplicationList hatApps={apps} onAppClick={onAppClick} />
     </>
   );
 };
 
-export default HATApplications;
+export default DataPlugs;
