@@ -11,6 +11,7 @@ import DataPlugs from '../features/dataplugs/DataPlugs';
 import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
+import { HatTools } from '../features/tools';
 
 const HatClaim = React.lazy(
   () =>
@@ -129,6 +130,10 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateSpaceRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
         <UniversalDataViewerEndpoint />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute exact path={'/tools'}>
+        <HatTools />
       </PrivateSpaceRoute>
     </Switch>
   );

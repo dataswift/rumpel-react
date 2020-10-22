@@ -10,7 +10,7 @@ import applicationsSlice from './applicationsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import TEST_HAT_APPLICATION from '../../testData/HatApplications';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     applications: applicationsSlice,
   },
