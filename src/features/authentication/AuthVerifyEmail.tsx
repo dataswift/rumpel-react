@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
-import { AgreementsModal, AuthApplicationLogo, Input, IssuedBy } from 'hmi';
+import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
 import { useHistory, useParams } from 'react-router';
@@ -233,7 +233,6 @@ const AuthVerifyEmail: React.FC = () => {
           </>
         )}
 
-        <IssuedBy language={language} />
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>

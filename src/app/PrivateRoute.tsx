@@ -1,16 +1,13 @@
-import { Redirect, RedirectProps, Route } from 'react-router';
+import { Redirect, RedirectProps, Route, RouteProps } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';
 import { HatClientService } from '../services/HatClientService';
-import * as queryString from "query-string";
+import * as queryString from 'query-string';
 
-interface OwnProps {
-  children: React.ReactNode;
+interface OwnProps extends RouteProps {
   newAuth?: boolean;
-  path?: string;
-  exact?: boolean;
 }
 
 type Query = {
@@ -19,7 +16,7 @@ type Query = {
   email?: string;
   application_id?: string;
   redirect_uri?: string;
-}
+};
 
 export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -34,7 +31,7 @@ export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
       repeat: repeat === 'true',
       email: email,
       applicationId: application_id,
-      redirectUri: redirect_uri
+      redirectUri: redirect_uri,
     });
 
     const hatSvc = HatClientService.getInstance();
