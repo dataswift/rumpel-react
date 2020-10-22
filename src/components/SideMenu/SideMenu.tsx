@@ -35,7 +35,7 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu }) => {
 
   const SideMenuOptions = config.mainMenu.map((item, index) => {
     const isSelected = () => {
-      if (!item.external && item.link === window.location.pathname) {
+      if (!item.external && window.location.pathname.startsWith(item.link)) {
         return "side-menu-item-selected";
       }
 

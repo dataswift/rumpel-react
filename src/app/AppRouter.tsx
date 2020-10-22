@@ -6,6 +6,9 @@ import { PublicProfile } from "../features/public-profile/PublicProfile";
 import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
+import HatApplicationPermissions from "../features/applications/ApplicationPermissions";
+import DataPlugs from "../features/dataplugs/DataPlugs";
+import DataPlugDetails from "../features/dataplugs/DataPlugDetails";
 
 const HatClaim = React.lazy(
   () =>
@@ -62,6 +65,22 @@ const AuthRecoverPassword = React.lazy(
     ),
 );
 
+const HatApplications = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "hat_applications" */
+      '../features/applications/HatApplications'
+    ),
+);
+
+const HatApplicationDetails = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "hat_application_details" */
+      '../features/applications/ApplicationDetails'
+    ),
+);
+
 const Oauth = React.lazy(
   () =>
     import(
@@ -75,6 +94,30 @@ const PrivateSpaceRoutes = () => {
     <PrivateSpace>
       <PrivateRoute path={'/feed'}>
         <Feed />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App'}>
+        <HatApplications />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App/:appId'}>
+        <HatApplicationDetails />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/App/:appId/permissions'}>
+        <HatApplicationPermissions />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug'}>
+        <DataPlugs />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug/:appId'}>
+        <DataPlugDetails />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/explore/DataPlug/:appId/permissions'}>
+        <HatApplicationPermissions />
       </PrivateRoute>
     </PrivateSpace>
   );
@@ -108,12 +151,10 @@ const AppRouter = () => (
 
 
         <Route exact path="/" render={({ location }) => {
-          let redirectTo = "";
-          if (location.hash) {
-            redirectTo = location.hash.replace('#', '');
-          } else {
-            redirectTo = '/public/profile';
-          }
+          const redirectTo = location.hash
+            ? location.hash.replace('#', '')
+            : '/public/profile';
+          
           return <Redirect to={redirectTo} />;
         }} />
 

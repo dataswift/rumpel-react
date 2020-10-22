@@ -1,0 +1,146 @@
+@import '../../assets/styles/branding';
+
+.hat-app-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #fafafa;
+}
+
+.app-rating-wrapper {
+  position: relative;
+  margin-top: -20px;
+  background-color: white;
+  padding: 6px;
+  border-radius: 4px;
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    top: -10px;
+    border: solid transparent;
+    border-width: 5px 35px;
+    border-bottom-color: white;
+    border-radius: 4px;
+  }
+
+  .app-rating {
+    position: relative;
+    background-color: #dfc586;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    width: 70px;
+    padding: 2px 0;
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      top: -10px;
+      left: 0;
+      border: solid transparent;
+      border-width: 5px 35px;
+      border-bottom-color: #dfc586;
+    }
+
+    &.red {
+      background-color: #d36969;
+
+      &:before {
+        border-bottom-color: #d36969;
+      }
+    }
+
+    &.green {
+      background-color: #7db774;
+
+      &:before {
+        border-bottom-color: #7db774;
+      }
+    }
+
+    &.gold {
+      background-color: #dfc586;
+
+      &:before {
+        border-bottom-color: #dfc586;
+      }
+    }
+
+    &-highlighted {
+      font-weight: bold;
+    }
+
+    &-italicized {
+      font-style: italic;
+    }
+  }
+}
+
+.app-link {
+  color: #6297b1;
+  font-size: 13px;
+  font-weight: bold;
+  padding-bottom: 16px;
+  text-decoration: none;
+}
+
+.app-details-header-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $app-dark-tone;
+}
+
+.app-details-header-headline {
+  font-size: 13px;
+  color: #9a9a9a;
+  line-height: 1.38;
+  font-style: italic;
+}
+
+.app-details-status {
+  display: flex;
+  align-items: center;
+  border: none;
+  text-decoration: none;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  line-height: 36px;
+
+  &.running {
+    border: 1px solid $app-accent-color;
+    background-color: transparent;
+    color: $app-accent-color;
+  }
+  &.fetching {
+    color: $app-accent-color;
+  }
+  &.failing {
+    background-color: $app-failing-color;
+  }
+  &.untouched,
+  &.goto {
+    background-color: $app-accent-color;
+  }
+
+  &.update {
+    background-color: $app-update-color;
+  }
+
+  .details-button-icon {
+    margin-right: 5px;
+  }
+}
+
+.details-icon {
+  color: white;
+  cursor: pointer;
+}

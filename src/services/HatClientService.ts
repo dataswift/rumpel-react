@@ -1,12 +1,13 @@
 import { HatClient } from '@dataswift/hat-js';
-import { get, post } from './BackendService';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import { HatTokenValidation } from "@dataswift/hat-js/lib/utils/HatTokenValidation";
-import { HatTool } from "../features/tools/hat-tool.interface";
-import { SystemStatusInterface } from "../features/system-status/system-status.interface";
-import { Profile } from "../features/profile/profile.interface";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import { SheFeed } from "../features/feed/she-feed.interface";
+
+import { get, post } from './BackendService';
+import { HatTokenValidation } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
+import { HatTool } from '../features/tools/hat-tool.interface';
+import { SystemStatusInterface } from '../features/system-status/system-status.interface';
+import { Profile } from '../features/profile/profile.interface';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
+import { SheFeed } from '../features/feed/she-feed.interface';
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -54,13 +55,13 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/setup`;
+    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/setup`;
 
     return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
   public async getApplicationHmi(applicationId: string) {
-    const path = `${ this.pathPrefix }/applications/${ applicationId }/hmi`;
+    const path = `${this.pathPrefix}/applications/${applicationId}/hmi`;
 
     return get<HatApplicationContent>(path);
   }
@@ -79,7 +80,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/applications/hmi?applicationId=${ applicationId }`;
+    const path = `${hatdomain}${this.pathPrefix}/applications/hmi?applicationId=${applicationId}`;
 
     return get<HatApplication[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -90,7 +91,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/report-frontend-action`;
+    const path = `${hatdomain}${this.pathPrefix}/report-frontend-action`;
     const body = { actionCode: actionCode, message: message };
 
     return post<HatApplication[]>(
@@ -100,7 +101,7 @@ export class HatClientService {
         method: 'post',
         body: JSON.stringify(body),
         headers: { 'x-auth-token': token, 'content-type': 'application/json' },
-      }
+      },
     );
   }
 
@@ -110,7 +111,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/applications/${ applicationId }/access-token`;
+    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/access-token`;
 
     return get<{ accessToken: string }>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -121,10 +122,10 @@ export class HatClientService {
 
     if (!token) return;
 
-    let path = `${ hatdomain }${ this.pathPrefix }/she/function`;
-    
+    let path = `${hatdomain}${this.pathPrefix}/she/function`;
+
     if (toolId) {
-      path += `/${ toolId }`;
+      path += `/${toolId}`;
     }
 
     return get<HatTool[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
@@ -136,7 +137,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/enable`;
+    const path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}/enable`;
 
     return get<HatTool>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -147,7 +148,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/she/function/${ toolId }/trigger`;
+    const path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}/trigger`;
 
     return get(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -158,14 +159,13 @@ export class HatClientService {
 
     if (!token) return;
 
-    const path = `${ hatdomain }${ this.pathPrefix }/system/status`;
+    const path = `${hatdomain}${this.pathPrefix}/system/status`;
 
     return get<SystemStatusInterface[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
   public async getProfileData() {
-
-    return this.hat.hatData().getAll<Profile>("rumpel", "profile", { orderBy: 'dateCreated', take: '1' });
+    return this.hat.hatData().getAll<Profile>('rumpel', 'profile', { orderBy: 'dateCreated', take: '1' });
   }
 
   public async getSheRecords(endpoint?: string, since?: number | string, until?: number | string) {
@@ -174,17 +174,20 @@ export class HatClientService {
 
     if (!token) return;
 
-    let path = `${ hatdomain }${ this.pathPrefix }/she/feed`;
+    let path = `${hatdomain}${this.pathPrefix}/she/feed`;
 
     if (since) {
-      path += `?since=${ since.toString() }`;
+      path += `?since=${since.toString()}`;
     }
 
     if (until) {
-      path += `&until=${ until.toString() }`;
+      path += `&until=${until.toString()}`;
     }
 
-
     return get<SheFeed[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async disableApplication(applicationId: string) {
+    return get<HatApplication>(`${this.pathPrefix}/applications/${applicationId}/disable`);
   }
 }

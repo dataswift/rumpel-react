@@ -36,5 +36,13 @@
   "ds.auth.changePassword.byProceeding": "By proceeding, you agree to the Personal Data Account <span>Policies and Terms</span> provided by Dataswift.",
   "ds.auth.changePassword.success.title": "The password to your Personal Data Account has been reset.",
   "ds.auth.verifyEmail.title": "Create a password",
-  "ds.auth.verifyEmail.success.title": "The password to your Personal Data Account has been created."
+  "ds.auth.verifyEmail.success.title": "The password to your Personal Data Account has been created.",
+  "ds.hat.applications.header.title": "HAT Applications",
+  "ds.hat.applications.header.description": "HAT apps are integrated with you HAT data to give you great services",
+  "ds.hat.application.details.rated": "This app is rated",
+  "ds.hat.application.details.learn": "Learn More",
+  "ds.hat.application.details.description.title": "Description",
+  "ds.hat.application.details.screenshots.title": "Screenshots",
+  "ds.hat.dataplugs.header.title": "HAT DATA PLUGS",
+  "ds.hat.dataplugs.header.description": "Add new data plugs to your account, or view data from existing plugs."
 }

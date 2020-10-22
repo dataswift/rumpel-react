@@ -31,10 +31,10 @@ export const config = {
     { display: 'Tools & insights', icon: 'assessment', link: '/tools', external: true, dataType: '', disable: '',
       description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)' },
 
-    { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', external: true, dataType: '', disable: '',
+    { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', external: false, dataType: '', disable: '',
       description: 'Explore all the apps available in the HAT ecosystem.' },
 
-    { display: 'Data plugs', icon: 'settings_input_component', link: '/explore/DataPlug', external: true, dataType: '',
+    { display: 'Data plugs', icon: 'settings_input_component', link: '/explore/DataPlug', external: false, dataType: '',
       disable: '', description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.` },
 
