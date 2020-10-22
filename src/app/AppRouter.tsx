@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
-import { PublicProfile } from "../features/public-profile/PublicProfile";
-import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
+import { LoadingSpinner } from '../components/LoadingSpinner/LoadingSpinner';
+import { PublicProfile } from '../features/public-profile/PublicProfile';
+import { PrivateSpace } from '../components/PrivateSpace/PrivateSpace';
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
-import HatApplicationPermissions from "../features/applications/ApplicationPermissions";
-import DataPlugs from "../features/dataplugs/DataPlugs";
-import DataPlugDetails from "../features/dataplugs/DataPlugDetails";
+import HatApplicationPermissions from '../features/applications/ApplicationPermissions';
+import DataPlugs from '../features/dataplugs/DataPlugs';
+import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
+import { HatTools } from '../features/tools';
 
 const HatClaim = React.lazy(
   () =>
@@ -26,11 +27,12 @@ const Login = React.lazy(
     ),
 );
 
-const Feed = React.lazy(() =>
-  import(
-    /* webpackChunkName: "feed" */
-    '../features/feed/Feed'
-  )
+const Feed = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "feed" */
+      '../features/feed/Feed'
+    ),
 );
 
 const HatLogin = React.lazy(
@@ -119,6 +121,10 @@ const PrivateSpaceRoutes = () => {
       <PrivateRoute exact path={'/explore/DataPlug/:appId/permissions'}>
         <HatApplicationPermissions />
       </PrivateRoute>
+
+      <PrivateRoute exact path={'/tools'}>
+        <HatTools />
+      </PrivateRoute>
     </PrivateSpace>
   );
 };
@@ -149,14 +155,15 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateRoute>
 
+        <Route
+          exact
+          path="/"
+          render={({ location }) => {
+            const redirectTo = location.hash ? location.hash.replace('#', '') : '/public/profile';
 
-        <Route exact path="/" render={({ location }) => {
-          const redirectTo = location.hash
-            ? location.hash.replace('#', '')
-            : '/public/profile';
-          
-          return <Redirect to={redirectTo} />;
-        }} />
+            return <Redirect to={redirectTo} />;
+          }}
+        />
 
         <PrivateSpaceRoutes />
       </Switch>
