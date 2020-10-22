@@ -4,6 +4,8 @@ import { getDataRecords, selectEndpointDataPreview } from "./universalDataViewer
 import { useDispatch, useSelector } from "react-redux";
 import { flattenObject } from "./helper";
 
+const ITEMS_PER_PAGE = 20;
+
 const UniversalDataViewerEndpoint: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -46,7 +48,7 @@ const UniversalDataViewerEndpoint: React.FC = () => {
     if (namespace && endpoint) {
       dispatch(getDataRecords(namespace, endpoint, take, skip));
       setSkip(take);
-      setTake(take + 20);
+      setTake(take + ITEMS_PER_PAGE);
       setLoading(true);
     }
   };

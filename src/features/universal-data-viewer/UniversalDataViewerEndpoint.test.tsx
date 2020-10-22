@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, fireEvent } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
@@ -39,9 +39,6 @@ describe('Universal Data Viewer Endpoint page tests', () => {
 
     expect(screen.getByText('Test Data Value')).toBeInTheDocument();
     expect(screen.getByText('Test Another Data Value')).toBeInTheDocument();
-
-    const loadMoreBtn = screen.getByText('Load more');
-
-    fireEvent.click(loadMoreBtn);
+    expect(screen.getByText('Load more')).toBeInTheDocument();
   });
 });
