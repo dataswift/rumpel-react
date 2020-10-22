@@ -29,9 +29,6 @@ export const slice = createSlice({
     endpointData: (state, action: PayloadAction<Array<HatRecord<any>>>) => {
       state.endpointDataPreview[action.payload[0].endpoint] = action.payload;
     },
-    // flattenEndpointData: (state, action: PayloadAction<Array<HatRecord<any>>>) => {
-    //     state.flattenDataPreview[action.payload[0].endpoint] = faction.payload;
-    // },
   },
 });
 
