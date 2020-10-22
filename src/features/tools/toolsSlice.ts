@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import { HatClientService } from "../../services/HatClientService";
-import { HatTool } from "./hat-tool.interface";
+import { HatClientService } from '../../services/HatClientService';
+import { HatTool } from './hat-tool.interface';
 
 type ApplicationsState = {
-    tools: HatTool[];
-    updatedAt?: string;
-    expirationTime: number;
+  tools: HatTool[];
+  updatedAt?: string;
+  expirationTime: number;
 };
 
 export const initialState: ApplicationsState = {
@@ -19,20 +19,20 @@ export const slice = createSlice({
   initialState,
   reducers: {
     tools: (state, action: PayloadAction<Array<HatTool>>) => {
-      state.tools.push(...action.payload);
+      state.tools = [...action.payload];
     },
   },
 });
 
 export const { tools } = slice.actions;
 
-export const setTools = (tool: Array<HatTool>): AppThunk => dispatch => {
+export const setTools = (tool: Array<HatTool>): AppThunk => (dispatch) => {
   dispatch(tools(tool));
 };
 
 export const selectTools = (state: RootState) => state.tools.tools;
 
-export const getTools = (): AppThunk => async dispatch => {
+export const getTools = (): AppThunk => async (dispatch) => {
   const tools = await HatClientService.getInstance().getTools();
 
   if (tools?.parsedBody) {
