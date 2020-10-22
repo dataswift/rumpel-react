@@ -16,17 +16,16 @@ const UniversalDataViewerEndpoint: React.FC = () => {
   const [skip, setSkip] = useState(0);
 
   useEffect(() => {
-
     if (!namespace && !endpoint) {
       history.push('/universal-data-viewer');
     }
 
     if (namespace && endpoint && !dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
-      dispatch(getDataRecords(namespace, endpoint, take, skip));
-      setSkip(take);
+      dispatch(getDataRecords(namespace, endpoint, 1, 0));
+      setSkip(1);
       setTake(19);
     }
-  }, [endpoint, namespace, history, dataPreview, skip, take, dispatch]);
+  }, [endpoint, namespace, history, dataPreview, dispatch]);
 
   useEffect(() => {
     const preview: Array<any> = [];

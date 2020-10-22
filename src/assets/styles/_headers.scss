@@ -1,24 +1,32 @@
-@import "branding";
+@import 'branding';
 
 header {
   position: inherit;
 }
 
 .app-header {
-  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
   color: #fff;
-  z-index: 10000;
+  z-index: 10;
+
+  &-fixed {
+    position: fixed;
+  }
 
   &-content {
-    padding: 0 4.0rem;
+    padding: 0 4rem;
     align-items: center;
     justify-content: center;
     height: 100%;
+
+    @media (max-width: 850px) {
+      padding: 0 2.0rem;
+    }
   }
 
   &-logo {
@@ -33,8 +41,8 @@ header {
     text-transform: uppercase;
     border: 1px solid white;
     border-radius: 4px;
-    padding: 1.0rem 4.0rem;
-    margin: 1.0rem 0 1.0rem 3.0rem;
+    padding: 1rem 4rem;
+    margin: 1rem 0 1rem 3rem;
     font-size: 1.4rem;
     color: white;
     text-decoration: none;
@@ -43,14 +51,192 @@ header {
       color: white;
       text-decoration: none;
     }
+  }
 
-    &:focus {
-      //outline: none;
+  &-btn-no-border {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    letter-spacing: 0.13px;
+    opacity: 0.8;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  &-btn-with-border {
+    font-family: 'Roboto', sans-serif;
+    opacity: 0.8;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: 0.13px;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    border-radius: 20px;
+    border: 1.5px solid #ffffff;
+    background-color: transparent;
+
+    &:hover {
+      background-color: white;
+      color: #4a556b;
     }
   }
 
+  &-btn-help {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: white;
+    padding: 0.6rem 1.4rem;
+    font-size: 18px;
+    text-align: center;
+    opacity: 0.8;
+
+    i {
+      font-size: 22px;
+    }
+  }
+}
+
+.app-header-hide-mobile {
   @media (max-width: 850px) {
     display: none;
   }
 }
 
+.tile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 250px;
+  width: 100%;
+  background-color: $app-dark-tone;
+
+  &:before {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .tile-header-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    height: 75px;
+    font-size: 16px;
+
+    .tile-header-title {
+      color: white;
+      text-transform: uppercase;
+      margin: 0 auto;
+      font-size: 1.25em;
+    }
+  }
+
+  .tile-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    height: 175px;
+
+    .tile-header-icon {
+      height: auto;
+      width: auto;
+      font-size: 30px;
+      padding: 20px;
+      background-color: $app-accent-color;
+      border-radius: 50%;
+    }
+
+    .tile-header-text {
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.43;
+      text-align: center;
+    }
+  }
+}
+
+.details-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 155px;
+  position: relative;
+  height: 234px;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #4a556b;
+
+  &:before {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .details-header-toolbar {
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    height: 64px;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+    padding: 0 2rem;
+  }
+
+  .details-header-card {
+    margin-bottom: -155px;
+    padding: 0 2em;
+    padding-bottom: 20px;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+
+    .details-header-logo-wrapper {
+      margin-top: -50px;
+      background-color: white;
+      padding: 6px;
+      border-radius: 50%;
+
+      .details-header-logo {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+      }
+    }
+  }
+}

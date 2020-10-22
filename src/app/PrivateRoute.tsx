@@ -23,6 +23,7 @@ type Query = {
 
 export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  // TODO Add the type to the state useState<Query>
   const [query, setQuery] = useState({});
   const dispatch = useDispatch();
 

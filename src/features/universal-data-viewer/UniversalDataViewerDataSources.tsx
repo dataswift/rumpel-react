@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDataSources, selectDataSources } from "./universalDataViewerSlice";
 import './UniversalDataViewer.scss';
 import { Link } from "react-router-dom";
+import TileHeader from "../../components/headers/TileHeader/TileHeader";
 
 type Props = {
     namespace: string;
@@ -41,7 +42,11 @@ const UniversalDataViewerDataSources: React.FC = () => {
 
   return (
     <div className={'universal-data-viewer'}>
-      <h2 className={'universal-data-viewer-title'}>Data Sources</h2>
+      <TileHeader
+        titleId="ds.hat.universal-data-viewer.header.title"
+        icon="pageview"
+        descriptionId="ds.hat.universal-data-viewer.header.description"
+      />
       <div className={'universal-data-viewer-list'}>
         {Object.entries(dataSources).map(([key, value], index) => {
           return <UniversalDataViewerDataSourcesListItem
