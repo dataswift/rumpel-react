@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
+import UniversalDataViewerDataSources from "../features/universal-data-viewer/UniversalDataViewerDataSources";
+import UniversalDataViewerEndpoint from "../features/universal-data-viewer/UniversalDataViewerEndpoint";
 import { PublicProfile } from "../features/public-profile/PublicProfile";
 import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
@@ -118,6 +120,14 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateRoute exact path={'/explore/DataPlug/:appId/permissions'}>
         <HatApplicationPermissions />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={'/universal-data-viewer'}>
+        <UniversalDataViewerDataSources />
+      </PrivateRoute>
+
+      <PrivateRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
+        <UniversalDataViewerEndpoint />
       </PrivateRoute>
     </PrivateSpace>
   );

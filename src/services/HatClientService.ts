@@ -1,6 +1,7 @@
 import { HatClient } from '@dataswift/hat-js';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-
+import { DataSourcesInterface } from "../features/universal-data-viewer/DataSources.interface";
+import { HatHttpParameters } from "@dataswift/hat-js/lib/interfaces/http.interface";
 import { get, post } from './BackendService';
 import { HatTokenValidation } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
 import { HatTool } from '../features/tools/hat-tool.interface';
@@ -153,11 +154,25 @@ export class HatClientService {
     return get(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
+  public async getDataSources() {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+    const path = `${ hatdomain }${ this.pathPrefix }/data/sources `;
+
+    return get<DataSourcesInterface>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async getData<T>(namespace: string, endpoint: string, options: HatHttpParameters) {
+    return await this.hat.hatData().getAll<T>(namespace, endpoint, options);
+  }
   public async getSystemStatusRecords() {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
 
     if (!token) return;
+
 
     const path = `${hatdomain}${this.pathPrefix}/system/status`;
 

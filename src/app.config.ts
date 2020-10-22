@@ -38,6 +38,9 @@ export const config = {
       disable: '', description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.` },
 
+    { display: 'Universal Data Viewer', icon: 'pageview', link: '/universal-data-viewer',
+      external: false, dataType: '', disable: '', description: `Universal Data Viewer` },
+
     { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', external: true, disable: '',
       description: 'Settings on the HAT' },
   ],
