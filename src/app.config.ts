@@ -12,7 +12,7 @@ export const config = {
   native: environment.native,
   protocol: environment.protocol,
   links: {
-    bestPractices: 'https://docs.dataswift.io/technology/why/security-best-practice',
+    bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
     termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
     privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
     hatters:  environment.hattersUrl
