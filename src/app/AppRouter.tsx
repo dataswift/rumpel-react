@@ -1,16 +1,16 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { PrivateRoute } from './PrivateRoute';
-import { LoadingSpinner } from "../components/LoadingSpinner/LoadingSpinner";
-import UniversalDataViewerDataSources from "../features/universal-data-viewer/UniversalDataViewerDataSources";
-import UniversalDataViewerEndpoint from "../features/universal-data-viewer/UniversalDataViewerEndpoint";
-import { PublicProfile } from "../features/public-profile/PublicProfile";
-import { PrivateSpace } from "../components/PrivateSpace/PrivateSpace";
+import UniversalDataViewerDataSources from '../features/universal-data-viewer/UniversalDataViewerDataSources';
+import UniversalDataViewerEndpoint from '../features/universal-data-viewer/UniversalDataViewerEndpoint';
+import { LoadingSpinner } from '../components/LoadingSpinner/LoadingSpinner';
+import { PublicProfile } from '../features/public-profile/PublicProfile';
 import AuthChangePassword from '../features/authentication/AuthChangePassword';
 import AuthVerifyEmail from '../features/authentication/AuthVerifyEmail';
-import HatApplicationPermissions from "../features/applications/ApplicationPermissions";
-import DataPlugs from "../features/dataplugs/DataPlugs";
-import DataPlugDetails from "../features/dataplugs/DataPlugDetails";
+import HatApplicationPermissions from '../features/applications/ApplicationPermissions';
+import DataPlugs from '../features/dataplugs/DataPlugs';
+import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
+
+import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
 
 const HatClaim = React.lazy(
   () =>
@@ -28,11 +28,12 @@ const Login = React.lazy(
     ),
 );
 
-const Feed = React.lazy(() =>
-  import(
-    /* webpackChunkName: "feed" */
-    '../features/feed/Feed'
-  )
+const Feed = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "feed" */
+      '../features/feed/Feed'
+    ),
 );
 
 const HatLogin = React.lazy(
@@ -93,43 +94,43 @@ const Oauth = React.lazy(
 
 const PrivateSpaceRoutes = () => {
   return (
-    <PrivateSpace>
-      <PrivateRoute path={'/feed'}>
+    <Switch>
+      <PrivateSpaceRoute path={'/feed'}>
         <Feed />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/App'}>
+      <PrivateSpaceRoute exact path={'/explore/App'}>
         <HatApplications />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/App/:appId'}>
+      <PrivateSpaceRoute exact path={'/explore/App/:appId'}>
         <HatApplicationDetails />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/App/:appId/permissions'}>
+      <PrivateSpaceRoute exact path={'/explore/App/:appId/permissions'}>
         <HatApplicationPermissions />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/DataPlug'}>
+      <PrivateSpaceRoute exact path={'/explore/DataPlug'}>
         <DataPlugs />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/DataPlug/:appId'}>
+      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId'}>
         <DataPlugDetails />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/explore/DataPlug/:appId/permissions'}>
+      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId/permissions'}>
         <HatApplicationPermissions />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute exact path={'/universal-data-viewer'}>
+      <PrivateSpaceRoute exact path={'/universal-data-viewer'}>
         <UniversalDataViewerDataSources />
-      </PrivateRoute>
+      </PrivateSpaceRoute>
 
-      <PrivateRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
+      <PrivateSpaceRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
         <UniversalDataViewerEndpoint />
-      </PrivateRoute>
-    </PrivateSpace>
+      </PrivateSpaceRoute>
+    </Switch>
   );
 };
 
@@ -137,36 +138,59 @@ const AppRouter = () => (
   <Router>
     <Suspense fallback={<LoadingSpinner loadingText={'Loading...'} />}>
       <Switch>
-        <Route path="/public/profile" component={PublicProfile} />
+        <LayoutRoute path="/public/profile">
+          <PublicProfile />
+        </LayoutRoute>
 
-        <Route path="/hat/claim/:claimToken" component={HatClaim} />
-        <Route path="/user/login/" component={Login} />
-        <Route path="/user/password/recover" component={PasswordRecover} />
-        <Route path="/auth/login/" component={AuthLogin} />
-        <Route path="/auth/recover-password" component={AuthRecoverPassword} />
-        <Route path="/auth/change-password/:resetToken" component={AuthChangePassword} />
-        <Route path="/auth/verify-email/:verifyToken" component={AuthVerifyEmail} />
+        <LayoutRoute path="/hat/claim/:claimToken">
+          <HatClaim />
+        </LayoutRoute>
 
-        <PrivateRoute path={'/hatlogin'}>
+        <LayoutRoute path="/user/login/">
+          <Login />
+        </LayoutRoute>
+
+        <LayoutRoute path="/user/password/recover">
+          <PasswordRecover />
+        </LayoutRoute>
+
+        <LayoutRoute path="/auth/login" issuedByFooter footerBackgroundColor="#fff">
+          <AuthLogin />
+        </LayoutRoute>
+
+        <LayoutRoute path="/auth/recover-password" issuedByFooter footerBackgroundColor="#fff">
+          <AuthRecoverPassword />
+        </LayoutRoute>
+
+        <LayoutRoute path="/auth/change-password/:resetToken" issuedByFooter footerBackgroundColor="#fff">
+          <AuthChangePassword />
+        </LayoutRoute>
+
+        <LayoutRoute path="/auth/verify-email/:verifyToken" issuedByFooter footerBackgroundColor="#fff">
+          <AuthVerifyEmail />
+        </LayoutRoute>
+
+        <PrivateLayoutRoute path={'/hatlogin'}>
           <HatLogin />
-        </PrivateRoute>
+        </PrivateLayoutRoute>
 
-        <PrivateRoute path={'/auth/oauth'} newAuth>
+        <PrivateLayoutRoute path={'/auth/oauth'} newAuth footerBackgroundColor="#fff">
           <Oauth />
-        </PrivateRoute>
+        </PrivateLayoutRoute>
 
-        <PrivateRoute path={'/hat-setup-login'}>
+        <PrivateLayoutRoute path={'/hat-setup-login'}>
           <HatLogin />
-        </PrivateRoute>
+        </PrivateLayoutRoute>
 
+        <Route
+          exact
+          path="/"
+          render={({ location }) => {
+            const redirectTo = location.hash ? location.hash.replace('#', '') : '/public/profile';
 
-        <Route exact path="/" render={({ location }) => {
-          const redirectTo = location.hash
-            ? location.hash.replace('#', '')
-            : '/public/profile';
-          
-          return <Redirect to={redirectTo} />;
-        }} />
+            return <Redirect to={redirectTo} />;
+          }}
+        />
 
         <PrivateSpaceRoutes />
       </Switch>

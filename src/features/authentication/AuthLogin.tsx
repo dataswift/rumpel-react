@@ -7,7 +7,7 @@ import * as queryString from 'query-string';
 import { HatClientService } from '../../services/HatClientService';
 import { loginWithToken } from './authenticationSlice';
 import { userAccessToken } from '../../api/hatAPI';
-import { AuthApplicationLogo, Input, IssuedBy } from 'hmi';
+import { AuthApplicationLogo, Input } from 'hmi';
 import {
   getApplicationHmi,
   selectApplicationHmi,
@@ -16,7 +16,6 @@ import {
 } from '../applications/applicationsSlice';
 import { config } from '../../app.config';
 import FormatMessage from '../messages/FormatMessage';
-import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
 
 type Query = {
@@ -33,7 +32,6 @@ type QueryLocationState = {
 const AuthLogin: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
-  const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
   const [password, setPassword] = useState('');
   const [hatName, setHatName] = useState('');
@@ -164,8 +162,6 @@ const AuthLogin: React.FC = () => {
         <button className={'auth-login-btn-signup ds-hmi-btn'} onClick={() => navigateToSignup()}>
           <FormatMessage id={'ds.auth.signupBtn'} />
         </button>
-
-        <IssuedBy language={language} />
       </div>
     </div>
   );
