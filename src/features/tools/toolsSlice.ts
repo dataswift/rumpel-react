@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { HatClientService } from '../../services/HatClientService';
 import { HatTool } from './hat-tool.interface';
@@ -37,6 +37,38 @@ export const getTools = (): AppThunk => async (dispatch) => {
 
   if (tools?.parsedBody) {
     dispatch(setTools(tools.parsedBody));
+  }
+};
+
+export const getToolById = (toolId: string): AppThunk => async (dispatch, getState) => {
+  const currentTools = getState().tools.tools;
+  if (currentTools.find((tool) => tool.id === toolId)) return;
+
+  try {
+    const tool = await HatClientService.getInstance().getTool(toolId);
+    if (tool?.parsedBody) dispatch(setTools([...currentTools, tool.parsedBody]));
+  } catch (e) {
+    // TODO error handling
+  }
+};
+
+export const selectToolById = (id: string) =>
+  createSelector(selectTools, (tools) => {
+    return tools.find((tool) => tool.id === id);
+  });
+
+export const connectTool = (toolId: string): AppThunk => async (dispatch, getState) => {
+  try {
+    const tool = await HatClientService.getInstance().enableTool(toolId);
+
+    if (tool?.parsedBody) {
+      let currentApps = getState().tools.tools;
+      currentApps = currentApps.filter((t) => t.id !== toolId);
+      currentApps.push(tool.parsedBody);
+      dispatch(setTools([...currentApps]));
+    }
+  } catch (e) {
+    // TODO error handling
   }
 };
 
