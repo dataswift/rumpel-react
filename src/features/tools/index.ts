@@ -7,3 +7,11 @@ export const HatTools = React.lazy(
       './ToolsList'
     ),
 );
+
+export const HatToolDetails = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "tool-details" */
+      './ToolDetails'
+    ),
+);
