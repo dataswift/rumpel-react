@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import { BundleValues } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
-import { getPublicProfile } from "../../api/hatAPI";
-import { Profile } from "./profile.interface";
+import { BundleValues } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { Profile } from './profile.interface';
+import { HatClientService } from '../../services/HatClientService';
 
 type PublicProfileState = {
-    publicProfile: BundleValues | null;
-    profile: Profile | null;
-    updatedAt?: string;
-    pending: boolean;
-    expirationTime: number;
+  publicProfile: BundleValues | null;
+  profile: Profile | null;
+  updatedAt?: string;
+  pending: boolean;
+  expirationTime: number;
 };
 
 export const initialState: PublicProfileState = {
@@ -30,7 +30,7 @@ export const slice = createSlice({
       }
       state.pending = false;
     },
-    getPublicProfileError: state => {
+    getPublicProfileError: (state) => {
       state.pending = false;
     },
   },
@@ -38,7 +38,7 @@ export const slice = createSlice({
 
 export const { publicProfile, getPublicProfileError } = slice.actions;
 
-export const setPublicProfile = (profile: BundleValues): AppThunk => dispatch => {
+export const setPublicProfile = (profile: BundleValues): AppThunk => (dispatch) => {
   dispatch(publicProfile(profile));
 };
 
@@ -46,9 +46,9 @@ export const selectPublicProfileResponse = (state: RootState) => state.publicPro
 export const selectPublicProfile = (state: RootState) => state.publicProfile.profile;
 export const selectPublicProfilePending = (state: RootState) => state.publicProfile.pending;
 
-export const getPublicProfileReq = (): AppThunk => async dispatch => {
+export const getPublicProfileReq = (): AppThunk => async (dispatch) => {
   try {
-    const res = await getPublicProfile();
+    const res = await HatClientService.getInstance().getPublicProfile();
 
     if (res?.parsedBody) {
       dispatch(setPublicProfile(res.parsedBody));
