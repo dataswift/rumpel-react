@@ -1,5 +1,5 @@
 import { get, post } from '../services/BackendService';
-import { BundleValues } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
+import { BundleValues } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
 
 export const userAccessToken = (username: string, password: string) => {
   const path = `/users/access_token`;
@@ -19,11 +19,10 @@ export const recoverPassword = (body: { email: string }) => {
   return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
 };
 
-export const getPublicProfile = () => {
-  const path = `/api/v2.6/phata/profile`;
+export const getPublicProfile = (path: string) => {
   const headers = { 'Content-Type': 'application/json' };
 
-  return get<BundleValues>(path, { method: 'get', headers: headers });
+  return get<BundleValues>(path, { method: 'get', headers });
 };
 
 export const resetPassword = (resetToken: string, body: { newPassword: string }) => {

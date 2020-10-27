@@ -1,0 +1,21 @@
+@import '../../assets/styles/branding';
+
+.settings-header-title {
+  font-size: 24px;
+  font-family: 700;
+  color: $app-dark-tone;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.settings-header-headline {
+  margin: 0 30px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: $ds-dusty-gray-color;
+  line-height: 1.38;
+
+  &:last-child {
+    margin-top: 16px;
+  }
+}

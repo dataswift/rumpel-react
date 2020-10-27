@@ -41,7 +41,7 @@ export const config = {
     { display: 'Universal Data Viewer', icon: 'pageview', link: '/universal-data-viewer',
       external: false, dataType: '', disable: '', description: `Universal Data Viewer` },
 
-    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', external: true, disable: '',
+    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', external: false, disable: '',
       description: 'Settings on the HAT' },
   ],
 };
