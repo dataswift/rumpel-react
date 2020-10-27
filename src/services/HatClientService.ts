@@ -180,7 +180,9 @@ export class HatClientService {
   }
 
   public async getProfileData() {
-    return this.hat.hatData().getAll<Profile>('rumpel', 'profile', { orderBy: 'dateCreated', take: '1' });
+    const options = { orderBy: 'dateCreated', ordering: 'descending', take: '1' };
+
+    return this.hat.hatData().getAll<Profile>('rumpel', 'profile', options);
   }
 
   public async getSheRecords(endpoint?: string, since?: number | string, until?: number | string) {
