@@ -96,7 +96,7 @@ export const config = {
       icon: 'settings',
       link: '/settings',
       dataType: '',
-      external: true,
+      external: false,
       disable: '',
       description: 'Settings on the HAT',
     },

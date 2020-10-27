@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import userLogo from '../../assets/icons/user-account-icon.svg';
 import userLogoBlue from '../../assets/icons/user-account-icon-blue.svg';
 import './ProfileDropDown.scss';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectSystemStatusDatabaseStorage, selectSystemStatusPreviousLogin,
+  selectSystemStatusDatabaseStorage,
+  selectSystemStatusPreviousLogin,
   selectSystemStatusRecords,
-  selectSystemStatusUsedPercentage
-} from "../system-status/systemStatusSlice";
-import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
-import { logoutUser, selectUserHatDomain, selectUserHatName } from "../authentication/authenticationSlice";
-import { selectProfile } from "./profileSlice";
-import { Link } from "react-router-dom";
+  selectSystemStatusUsedPercentage,
+} from '../system-status/systemStatusSlice';
+import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import { logoutUser, selectUserHatDomain, selectUserHatName } from '../authentication/authenticationSlice';
+import { selectProfile } from './profileSlice';
+import { Link } from 'react-router-dom';
 
 export const ProfileDropDown: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,7 +43,7 @@ export const ProfileDropDown: React.FC = () => {
     if (profile?.data?.photo?.avatar) {
       return profile.data.photo.avatar;
     } else {
-      return "";
+      return '';
     }
   };
 
@@ -52,15 +53,19 @@ export const ProfileDropDown: React.FC = () => {
   return (
     <>
       <div className={'profile-dropdown'}>
-        <button className="profile-dropdown-toggle"
+        <button
+          className="profile-dropdown-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-haspopup="true" aria-expanded="false">
-
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
           <span className="user-photo">
             <img src={getProfileImage() ? getProfileImage() : userLogo} alt={'Profile'} />
           </span>
 
-          <span className="welcome">Welcome {userHatName}<br />
+          <span className="welcome">
+            Welcome {userHatName}
+            <br />
             {previousLogin && <span>Last login: {previousLogin.kind.metric}</span>}
           </span>
 
@@ -69,39 +74,40 @@ export const ProfileDropDown: React.FC = () => {
           </i>
         </button>
       </div>
-      {menuOpen &&
-          <div className={'profile-dropdown-overlay'}>
-            <div className="accountDetails user-photo">
-              <img src={getProfileImage() ? getProfileImage() : userLogoBlue} alt={'Profile'} />
-              <h6 className="welcome">
-                {userHatName}<br />
-                <span>{userHatDomain}</span>
-              </h6>
-            </div>
-            {systemStatus && systemStatus.length > 0 && databaseUsedPercentage && databaseStorage &&
-              <div className="accountUsage">
-                <ProgressBar progress={getStoragePercentage()}/>
-                <div className="app-details-header-headline">
-                  {`${ getStoragePercentage() }% of ${ 
-                    databaseStorage.kind.metric + databaseStorage.kind.units 
-                  } storage used`}
-                </div>
-              </div>
-            }
-            <div className="dropdown-divider" />
-            <Link className="dropdown-item" to={'/public/profile'}>Public profile</Link>
-            <a className="dropdown-item" href={window.location.origin + '/#/user/password/change'}>Change password</a>
-            <div className="dropdown-divider" />
-
-            <button className="dropdown-item"
-              style={{ display: 'flex', alignItems: 'center' }}
-              onClick={() => logout()}
-            >
-            Logout <i className="material-icons">exit_to_app</i>
-            </button>
+      {menuOpen && (
+        <div className={'profile-dropdown-overlay'}>
+          <div className="accountDetails user-photo">
+            <img src={getProfileImage() ? getProfileImage() : userLogoBlue} alt={'Profile'} />
+            <h6 className="welcome">
+              {userHatName}
+              <br />
+              <span>{userHatDomain}</span>
+            </h6>
           </div>
-      }
+          {systemStatus && systemStatus.length > 0 && databaseUsedPercentage && databaseStorage && (
+            <div className="accountUsage">
+              <ProgressBar progress={getStoragePercentage()} />
+              <div className="app-details-header-headline">
+                {`${getStoragePercentage()}% of ${
+                  databaseStorage.kind.metric + databaseStorage.kind.units
+                } storage used`}
+              </div>
+            </div>
+          )}
+          <div className="dropdown-divider" />
+          <Link className="dropdown-item" to={'/public/profile'}>
+            Public profile
+          </Link>
+          <a className="dropdown-item" href={window.location.origin + '/#/user/password/change'}>
+            Change password
+          </a>
+          <div className="dropdown-divider" />
+
+          <button className="dropdown-item" style={{ display: 'flex', alignItems: 'center' }} onClick={() => logout()}>
+            Logout <i className="material-icons">exit_to_app</i>
+          </button>
+        </div>
+      )}
     </>
   );
 };
-
