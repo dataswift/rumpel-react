@@ -24,7 +24,7 @@ export const config = {
     { display: 'Map', icon: 'map', link: '/mashups', dataType: '', external: true, disable: '',
       description: 'See your feed correlated with the places you\'ve been too.' },
 
-    { display: 'My public profile', icon: 'security', link: '/datastore', external: true, dataType: 'profile',
+    { display: 'My public profile', icon: 'security', link: '/profile', external: false, dataType: 'profile',
       disable: '', description: 'View and edit the details of your profile and decide' +
           ' what information is private and what is to be shared.' },
 
