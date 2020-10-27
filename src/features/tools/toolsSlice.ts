@@ -72,4 +72,19 @@ export const connectTool = (toolId: string): AppThunk => async (dispatch, getSta
   }
 };
 
+export const disconnectTool = (toolId: string): AppThunk => async (dispatch, getState) => {
+  try {
+    const tool = await HatClientService.getInstance().disableTool(toolId);
+
+    if (tool?.parsedBody) {
+      let currentTools = getState().tools.tools;
+      currentTools = currentTools.filter((t) => t.id !== toolId);
+      currentTools.push(tool.parsedBody);
+      dispatch(setTools([...currentTools]));
+    }
+  } catch (e) {
+    // TODO error handling
+  }
+};
+
 export default slice.reducer;
