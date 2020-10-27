@@ -7,15 +7,19 @@ import React from "react";
 import profileSlice from "./profileSlice";
 import TEST_PROFILE from "../../testData/Profile";
 import ProfileHeader from "./ProfileHeader";
+import authenticationSlice from "../authentication/authenticationSlice";
+import TEST_AUTH from "../../testData/Auth";
 
 export const store = configureStore({
   reducer: {
     profile: profileSlice,
+    authentication: authenticationSlice,
   },
   preloadedState: {
     profile: {
       profile: [TEST_PROFILE]
-    }
+    },
+    authentication: TEST_AUTH
   },
 });
 
@@ -35,6 +39,8 @@ describe('Profile Header', () => {
 
     expect(screen.getByAltText('Profile avatar')).toBeInTheDocument();
     expect(screen.getByText('exit_to_app')).toBeInTheDocument();
+    expect(screen.getByText('TestName')).toBeInTheDocument();
+    expect(screen.getByText('.dataswift.dev')).toBeInTheDocument();
     expect(screen.getByAltText('blog social link')).toBeInTheDocument();
     expect(screen.getByAltText('website social link')).toBeInTheDocument();
   });

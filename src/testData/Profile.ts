@@ -10,7 +10,7 @@ const TEST_PROFILE: HatRecord<Profile> = {
       "title": ""
     },
     "photo": {
-      "avatar": "https://testleytis194.hubat.net/api/v2.6/files/content/rumpel1586992748231.jpg"
+      "avatar": "https://test-profile-avatar.com"
     },
     "online": {
       "blog": "https://test-blog.com",

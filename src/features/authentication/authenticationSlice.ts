@@ -9,7 +9,7 @@ export enum AuthState {
   LOGIN_FAILED = 'login_failed',
 }
 
-type AuthenticationState = {
+export type AuthenticationState = {
   isAuthenticated: boolean;
   authState: AuthState;
   rememberMe: boolean;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectProfile } from "./profileSlice";
 
@@ -11,6 +11,7 @@ import websiteIcon from '../../assets/icons/website-icon.svg';
 import youtubeIcon from '../../assets/icons/youtube-icon.svg';
 import ProfileDefaultAvatar from "../../components/Svgs/ProfileDefaultAvatar";
 import { Link } from "react-router-dom";
+import { selectUserHatDomain, selectUserHatName } from "../authentication/authenticationSlice";
 
 const icons: {[index: string]: string} = {
   blog: blogIcon,
@@ -24,23 +25,17 @@ const icons: {[index: string]: string} = {
 
 const ProfileHeader: React.FC = () => {
   const profile = useSelector(selectProfile);
-  const [hatName, setHatName] = useState("");
-  const [hatDomain, setHatDomain] = useState("");
-  
-  useEffect(() => {
-    const host = window.location.hostname;
+  const userHatName = useSelector(selectUserHatName);
+  const userHatDomain = useSelector(selectUserHatDomain);
 
-    setHatName(host.substring(0, host.indexOf('.')));
-    setHatDomain(host.substring(host.indexOf('.') + 1));
-  }, []);
-    
   return (
     <div className={'profile-header'}>
       <div className={'profile-header-box'}>
         <div className={'profile-header-photo-container'}>
-          {!profile?.data.photo && <ProfileDefaultAvatar />}
-
-          {profile?.data.photo.avatar && <img src={profile.data.photo.avatar} alt={'Profile avatar'} /> }
+          {profile?.data?.photo?.avatar 
+            ? <img src={profile.data.photo.avatar} alt={'Profile avatar'} /> 
+            : <ProfileDefaultAvatar />
+          }
         </div>
 
         <div className={'profile-header-link-to-public'}>
@@ -51,11 +46,11 @@ const ProfileHeader: React.FC = () => {
 
         <div className="profile-header-hat-domain-wrapper">
           <div className="hat-name">
-            {hatName}
+            {userHatName}
           </div>
 
           <div className="hat-domain">
-          .{hatDomain}
+            {userHatDomain}
           </div>
         </div>
 
