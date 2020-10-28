@@ -2,6 +2,8 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 import systemStatusSlice from '../system-status/systemStatusSlice';
 import profileSlice from '../profile/profileSlice';
@@ -31,10 +33,13 @@ export const store = configureStore({
 
 describe('Hat Application Details', () => {
   test('renders and displays the correct hat application details', () => {
+    const history = createMemoryHistory();
     render(
-      <Provider store={store}>
-        <Settings />
-      </Provider>,
+      <Router history={history}>
+        <Provider store={store}>
+          <Settings />
+        </Provider>
+      </Router>,
     );
 
     expect(screen.getByText('TestName')).toBeInTheDocument();

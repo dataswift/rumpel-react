@@ -46,5 +46,10 @@
   "ds.hat.dataplugs.header.title": "HAT DATA PLUGS",
   "ds.hat.dataplugs.header.description": "Add new data plugs to your account, or view data from existing plugs.",
   "ds.hat.universal-data-viewer.header.title": "DATA SOURCES",
-  "ds.hat.universal-data-viewer.header.description": "Universal Data Viewer"
+  "ds.hat.universal-data-viewer.header.description": "Universal Data Viewer",
+  "ds.hat.settings.list.header.privateData": "Private data account",
+  "ds.hat.settings.list.header.settings": "My account settings",
+  "ds.hat.settings.list.header.version": "Version",
+  "ds.hat.settings.list.header.vendor": "Vendor (where you got your HAT)",
+  "ds.hat.settings.list.header.issuer": "Hat Issuer"
 }
