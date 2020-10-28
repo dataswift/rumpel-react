@@ -54,5 +54,10 @@
   "ds.hat.application.actions.disconnect": "Disconnect app",
   "ds.hat.tool.actions.disconnect": "Disconnect tool",
   "ds.hat.tool.actions.connect": "Connect",
-  "ds.hat.tool.actions.active": "Active"
+  "ds.hat.tool.actions.active": "Active",
+  "ds.hat.settings.list.header.privateData": "Private data account",
+  "ds.hat.settings.list.header.settings": "My account settings",
+  "ds.hat.settings.list.header.version": "Version",
+  "ds.hat.settings.list.header.vendor": "Vendor (where you got your HAT)",
+  "ds.hat.settings.list.header.issuer": "Hat Issuer"
 }
