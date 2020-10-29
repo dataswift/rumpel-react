@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormFields } from "./formFields.interface";
+import DropDownMenu from "../DropDownMenu/DropDownMenu";
 
 type Props = {
   fields: Array<FormFields>;
@@ -9,7 +10,6 @@ type Props = {
 const FormAdapter: React.FC<Props> = ({ fields, values }) => {
   const [formState, setFormState] = useState<Record<string, string>>(values);
 
-  console.log(formState);
   useEffect(() => {
     setFormState(values);
   }, [values]);
@@ -25,7 +25,12 @@ const FormAdapter: React.FC<Props> = ({ fields, values }) => {
           onChange={e => setFormState( { ...formState, [field.id]: e.target.value })}
         />;
       case 'menu':
-        return <input {...field} key={field.id}/>;
+        return <DropDownMenu 
+          value={formState ? formState[field.id] : ''} 
+          placeholder={field.placeholder} 
+          options={field.options || []} 
+          key={field.id}
+        />;
       case 'DatePicker':
         return <input {...field} key={field.id}/>;
       default:
