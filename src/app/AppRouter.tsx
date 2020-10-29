@@ -12,6 +12,7 @@ import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
 import { Settings } from '../features/settings';
+import ChangePassword from '../components/user/ChangePassword';
 
 const HatClaim = React.lazy(
   () =>
@@ -134,6 +135,10 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateSpaceRoute path={'/settings'}>
         <Settings />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute path={'/user/password/change'}>
+        <ChangePassword />
       </PrivateSpaceRoute>
     </Switch>
   );
