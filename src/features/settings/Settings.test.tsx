@@ -8,6 +8,8 @@ import { createMemoryHistory } from 'history';
 import systemStatusSlice from '../system-status/systemStatusSlice';
 import profileSlice from '../profile/profileSlice';
 import authenticationSlice from '../authentication/authenticationSlice';
+import messagesSlice from '../messages/messagesSlice';
+import messages from '../../translations/en.json';
 
 import TEST_PROFILE from '../../testData/Profile';
 import TEST_AUTH from '../../testData/Auth';
@@ -19,6 +21,7 @@ export const store = configureStore({
     systemStatus: systemStatusSlice,
     profile: profileSlice,
     authentication: authenticationSlice,
+    messages: messagesSlice,
   },
   preloadedState: {
     systemStatus: {
@@ -28,6 +31,7 @@ export const store = configureStore({
       profile: [TEST_PROFILE],
     },
     authentication: TEST_AUTH,
+    messages,
   },
 });
 
@@ -48,5 +52,7 @@ describe('Hat Application Details', () => {
 
     const avatar = screen.getByAltText('Profile Avatar');
     expect(avatar).toHaveAttribute('src', 'avatarTestPath');
+
+    expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument();
   });
 });
