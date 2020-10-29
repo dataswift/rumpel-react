@@ -8,10 +8,16 @@ import { Router, Route } from 'react-router-dom';
 import toolsSlice, { tools } from './toolsSlice';
 import TEST_HAT_TOOL from '../../testData/Tool';
 import ToolDetails from './ToolDetails';
+import messagesSlice from '../messages/messagesSlice';
+import messages from '../../translations/en.json';
 
 export const store = configureStore({
   reducer: {
     tools: toolsSlice,
+    messages: messagesSlice,
+  },
+  preloadedState: {
+    messages,
   },
 });
 

@@ -8,15 +8,19 @@ import { Router, Route } from 'react-router-dom';
 import applicationsSlice from './applicationsSlice';
 import TEST_HAT_APPLICATION from '../../testData/HatApplications';
 import ApplicationDetailsActions from './ApplicationDetailsActions';
+import messagesSlice from '../messages/messagesSlice';
+import messages from '../../translations/en.json';
 
 export const store = configureStore({
   reducer: {
     applications: applicationsSlice,
+    messages: messagesSlice,
   },
   preloadedState: {
     applications: {
       applications: [TEST_HAT_APPLICATION],
     },
+    messages,
   },
 });
 
@@ -70,9 +74,9 @@ describe('Hat Application Details Actions', () => {
     );
 
     fireEvent.click(screen.getByText('more_horiz'));
-    expect(screen.getByLabelText('Application Action Menu')).toHaveAttribute('style', 'display: flex;');
+    expect(screen.getByLabelText('Action Menu')).toHaveAttribute('style', 'display: flex;');
 
     fireEvent.click(screen.getByText('Cancel'));
-    expect(screen.getByLabelText('Application Action Menu')).not.toHaveAttribute('style', 'display: flex;');
+    expect(screen.getByLabelText('Action Menu')).not.toHaveAttribute('style', 'display: flex;');
   });
 });

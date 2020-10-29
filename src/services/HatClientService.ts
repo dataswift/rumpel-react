@@ -142,10 +142,19 @@ export class HatClientService {
   public async enableTool(toolId: string) {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
-
     if (!token) return;
 
     const path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}/enable`;
+
+    return get<HatTool>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async disableTool(toolId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}/disable`;
 
     return get<HatTool>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }

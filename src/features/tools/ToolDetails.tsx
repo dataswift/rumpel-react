@@ -7,6 +7,8 @@ import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader'
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import { HatTool } from './hat-tool.interface';
 import { getToolById, selectToolById, connectTool } from './toolsSlice';
+import ToolDetailsactions from './ToolDetailsActions';
+import FormatMessage from '../messages/FormatMessage';
 
 enum HatToolStatus {
   RUNNING = 'running',
@@ -15,7 +17,8 @@ enum HatToolStatus {
 
 const getToolStatus = (toolEnabled: boolean) => (toolEnabled ? HatToolStatus.RUNNING : HatToolStatus.UNTOUCHED);
 const getToolStatusIcon = (toolEnabled: boolean): string => (toolEnabled ? 'check_circle' : 'add_circle_outline');
-const getToolStatusText = (toolEnabled: boolean): string => (toolEnabled ? 'Active' : 'Connect');
+const getToolStatusText = (toolEnabled: boolean) =>
+  toolEnabled ? <FormatMessage id="ds.hat.tool.actions.active" /> : <FormatMessage id="ds.hat.tool.actions.connect" />;
 
 const getToolDetails = (tool: HatTool): Array<{ [key: string]: string }> => {
   const { name, url, country } = tool.developer;
@@ -47,7 +50,13 @@ const ToolDetails: React.FC = () => {
 
   return (
     <>
-      <DetailsHeader logoSrc={tool.info.graphics.logo.normal} logoAltText="Tool Logo" backgroundColor="#2b313d" isTool>
+      <DetailsHeader
+        logoSrc={tool.info.graphics.logo.normal}
+        logoAltText="Tool Logo"
+        backgroundColor="#2b313d"
+        isTool
+        toolbarActions={<ToolDetailsactions setup={tool.status.enabled} toolId={tool.id} />}
+      >
         <h3 className="app-details-header-title">{tool.info.name}</h3>
 
         <div

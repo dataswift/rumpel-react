@@ -22,7 +22,6 @@ interface HatToolInfo {
   description: HatApplicationDescription;
   termsUrl: string;
   supportContact: string;
-  // dataPreview?: SheFeed[],
   graphics: HatApplicationGraphics;
   dataPreviewEndpoint: string;
 }
