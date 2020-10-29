@@ -60,7 +60,7 @@ export const config = {
       display: 'Tools & insights',
       icon: 'assessment',
       link: '/tools',
-      external: true,
+      external: false,
       dataType: '',
       disable: '',
       description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)',

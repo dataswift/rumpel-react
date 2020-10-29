@@ -13,6 +13,7 @@ import defaultIcon from '../../assets/icons/user-account-icon-blue.svg';
 import './Settings.scss';
 import { getProfile, selectProfile } from '../profile/profileSlice';
 import SettingsList from './SettingsList';
+import Logout from './Logout';
 
 const getStoragePercentage = (databaseUsedPercentage?: SystemStatusInterface): number => {
   if (!databaseUsedPercentage?.kind.metric) return 0;
@@ -63,6 +64,8 @@ const Settings: React.FC = () => {
       </DetailsHeader>
 
       <SettingsList />
+
+      <Logout />
     </div>
   );
 };

@@ -9,6 +9,7 @@
   "ds.auth.nextBtn": "Next",
   "ds.auth.signupBtn": "Sign up",
   "ds.auth.loginBtn": "Login",
+  "ds.auth.logoutBtn": "Logout",
   "ds.auth.continueBtn": "Continue",
   "ds.auth.input.password": "Password",
   "ds.auth.input.confirmPassword": "Confirm Password",
