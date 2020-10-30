@@ -15,6 +15,7 @@ import Profile from "../features/profile/Profile";
 import { HatTools, HatToolDetails } from '../features/tools';
 import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
+import DataDebits from '../features/data-debit';
 
 const HatClaim = React.lazy(
   () =>
@@ -153,6 +154,10 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateSpaceRoute path={'/user/password/change'}>
         <ChangePassword />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute path={'/data-debit'}>
+        <DataDebits />
       </PrivateSpaceRoute>
     </Switch>
   );

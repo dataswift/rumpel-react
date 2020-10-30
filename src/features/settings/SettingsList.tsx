@@ -24,10 +24,10 @@ const SettingsList: React.FC<SettingsListProps> = () => {
 
         {config.settingsPrivateDataMenu.map((item) => {
           return (
-            <div className="settings-list-item link" key={item.display}>
+            <Link to={item.link} className="settings-list-item link" key={item.display}>
               <h3 className="settings-list-row-text">{item.display}</h3>
               <i className="material-icons">{item.icon}</i>
-            </div>
+            </Link>
           );
         })}
 

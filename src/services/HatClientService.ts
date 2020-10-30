@@ -9,10 +9,10 @@ import { SystemStatusInterface } from '../features/system-status/system-status.i
 import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
-import { getPublicProfile } from '../api/hatAPI';
 import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
 import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
+import { getPublicProfile, getDataDebits } from '../api/hatAPI';
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -275,5 +275,9 @@ export class HatClientService {
 
   public generateFileContentUrl(fileId: string) {
     return this.hat.files().generateFileContentUrl(fileId);
+  }
+  public async getDataDebits() {
+    const token = this.hat.auth().getToken() || '';
+    return getDataDebits(this.hat, token);
   }
 }
