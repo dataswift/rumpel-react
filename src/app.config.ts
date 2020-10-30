@@ -1,5 +1,11 @@
 import { environment } from './environment';
 
+const externalLinks = {
+  bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
+  termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
+  privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
+};
+
 export const config = {
   version: '4.2.0',
   name: environment.appName,
@@ -12,9 +18,9 @@ export const config = {
   native: environment.native,
   protocol: environment.protocol,
   links: {
-    bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
-    termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
-    privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
+    bestPractices: externalLinks.bestPractices,
+    termsOfService: externalLinks.termsOfService,
+    privacyPolicy: externalLinks.privacyPolicy,
     hatters: environment.hattersUrl,
   },
   mainMenu: [
@@ -96,9 +102,31 @@ export const config = {
       icon: 'settings',
       link: '/settings',
       dataType: '',
-      external: true,
+      external: false,
       disable: '',
       description: 'Settings on the HAT',
     },
+  ],
+  settingsMenu: [
+    { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change', description: '' },
+
+    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io', description: '' },
+
+    { display: 'Terms of Service', icon: 'exit_to_app', link: externalLinks.termsOfService, description: '' },
+
+    { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },
+
+    { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org', description: '' },
+
+    {
+      display: 'Your HAT functionality level is 4 (learn more)',
+      icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '',
+    },
+  ],
+  settingsPrivateDataMenu: [
+    { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore', description: '' },
+    { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit', description: '' },
   ],
 };
