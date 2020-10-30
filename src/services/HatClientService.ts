@@ -9,7 +9,7 @@ import { SystemStatusInterface } from '../features/system-status/system-status.i
 import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
-import { getPublicProfile } from '../api/hatAPI';
+import { getPublicProfile, getDataDebits } from '../api/hatAPI';
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -225,5 +225,10 @@ export class HatClientService {
   public async getPublicProfile() {
     const path = `${this.pathPrefix}/phata/profile`;
     return getPublicProfile(path);
+  }
+
+  public async getDataDebits() {
+    const token = this.hat.auth().getToken() || '';
+    return getDataDebits(this.hat, token);
   }
 }

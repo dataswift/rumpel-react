@@ -1,15 +1,15 @@
 import * as React from 'react';
 
 import './Card.scss';
-import { useState } from "react";
-import placeholder  from '../../assets/icons/app-logo-placeholder.svg';
+import { useState } from 'react';
+import placeholder from '../../assets/icons/app-logo-placeholder.svg';
 
 type CardProps = {
   imgSrc: string;
   imgAltText: string;
   name: string;
-  description: string;
-  icon: string;
+  description: string | JSX.Element;
+  icon?: string;
   linkText?: string;
   onClick: () => void;
 };
@@ -20,11 +20,12 @@ const Card: React.FC<CardProps> = ({ imgSrc, name, description, icon, imgAltText
   return (
     <div className="card" onClick={onClick}>
       <div className="card-content">
-        <img className="card-logo" 
-          src={imageSrc} 
-          onError={() => setImageSrc(placeholder)} 
-          height="100" 
-          alt={imgAltText} 
+        <img
+          className="card-logo"
+          src={imageSrc}
+          onError={() => setImageSrc(placeholder)}
+          height="100"
+          alt={imgAltText}
         />
 
         <div className="card-description">
