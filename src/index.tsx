@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './assets/styles/main.scss';
 import 'hmi/dist/hmi.cjs.development.css';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 import * as serviceWorker from './serviceWorker';
 import App from './app/App';
 
