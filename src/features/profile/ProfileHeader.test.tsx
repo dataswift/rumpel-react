@@ -24,7 +24,7 @@ export const store = configureStore({
 });
 
 describe('Profile Header', () => {
-  test('renders and displays the correct profile details', () => {
+  test('renders and displays the correct profile header details', () => {
     const history = createMemoryHistory({ initialEntries: ['/profile'] });
 
     render(

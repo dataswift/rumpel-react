@@ -40,7 +40,7 @@ const TEST_PROFILE: HatRecord<Profile> = {
       "lastName": "",
       "nickName": "",
       "birthDate": "",
-      "firstName": "",
+      "firstName": "test firstname",
       "middleName": "",
       "preferredName": ""
     },

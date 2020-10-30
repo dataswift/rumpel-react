@@ -36,7 +36,7 @@ const ProfileFields: Array<ProfileFieldsInterface> = [
       {
         name: 'birthDate',
         id: 'birthDate',
-        placeholder: 'Birth date',
+        placeholder: 'Birthday',
         type: 'DatePicker'
       },
       {

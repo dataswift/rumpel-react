@@ -11,25 +11,35 @@ describe('DropDown menu', () => {
       <DropDownMenu placeholder={placeholder} options={options}/>,
     );
 
+    // Clicks on the placeholder and the menu appears
     fireEvent.click(screen.getByText('testPlaceholder'));
 
     expect(screen.getByText('option1')).toBeInTheDocument();
     expect(screen.getByText('option2')).toBeInTheDocument();
     expect(screen.getByText('option3')).toBeInTheDocument();
 
+    // Selects the option1 from the list
     fireEvent.click(screen.getByText('option3'));
+
+    // The menu disappears
     expect(screen.queryByText('option1')).toBeNull();
     expect(screen.queryByText('option2')).toBeNull();
-    expect(screen.getByText('option3')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('option3')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('option3'));
+    // Clicks on the selected option and the menu appears
+    fireEvent.click(screen.getByDisplayValue('option3'));
 
     expect(screen.getByText('option1')).toBeInTheDocument();
     expect(screen.getByText('option2')).toBeInTheDocument();
 
+    // Selects the option1 from the list
     fireEvent.click(screen.getByText('option1'));
+
+    // The menu disappears
     expect(screen.queryByText('option2')).toBeNull();
     expect(screen.queryByText('option3')).toBeNull();
-    expect(screen.getByText('option1')).toBeInTheDocument();
+
+    // The input's value has been updated
+    expect(screen.getByDisplayValue('option1')).toBeInTheDocument();
   });
 });

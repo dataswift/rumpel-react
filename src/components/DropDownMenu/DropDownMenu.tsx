@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import './DropDownMenu.scss';
+import Input from "../form/Input";
 
 type Props = {
     placeholder: string;
     value?: string;
     options: Array<string>;
+    profileField?: boolean;
 }
 
-const DropDownMenu: React.FC<Props> = ({ options, placeholder, value }) => {
+const DropDownMenu: React.FC<Props> = ({ options, placeholder, profileField, value }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  const toggling = () => setIsOpen(!isOpen);
-  const isValueOrPlaceholder = () => !(value || selectedOption) ? 'dropdown-value' : 'dropdown-placeholder';
 
   const onOptionClicked = (value: string) => () => {
     setSelectedOption(value);
@@ -21,9 +20,15 @@ const DropDownMenu: React.FC<Props> = ({ options, placeholder, value }) => {
     
   return (
     <div className={'dropdown-container'}>
-      <div className={`dropdown-header ${isValueOrPlaceholder()}`} onClick={toggling}>
-        {value || selectedOption || placeholder}
-      </div>
+      <Input label={placeholder}
+        id={'gender'}
+        type={'text'}
+        value={value || selectedOption || ''}
+        onClick={() => setIsOpen(!isOpen)}
+        profileField={profileField}
+        onChange={() => {}}
+      />
+
       {isOpen && (
         <div className={'dropdown-list-container'}>
           <ul className={'dropdown-list'}>

@@ -11,16 +11,24 @@ const ProfileDetails: React.FC = () => {
     return (
       <div className={'profile-details-section'} key={field.title}>
         <div className={'profile-details-heading'}>{field.title}</div>
-        <FormAdapter fields={field.fields} values={// @ts-ignore
-          profile?.data[field.id]}/>
+        <div className={'profile-details-content'}>
+          <FormAdapter 
+            profileField 
+            fields={field.fields} 
+            values={
+                  // @ts-ignore
+                  profile?.data[field.id]
+            }
+          />
+        </div>
       </div>
     );
   });
   
   return (
-    <div>
+    <>
       {profileElement}
-    </div>
+    </>
   );
 };
 
