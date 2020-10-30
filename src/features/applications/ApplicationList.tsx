@@ -13,7 +13,7 @@ export interface ApplicationListProps {
 
 const ApplicationList: React.FC<ApplicationListProps> = ({ hatApps, onAppClick }) => {
   return (
-    <div className="hat-app-list">
+    <div className="card-list">
       {hatApps.map((app) => (
         <Card
           key={app.application.id}

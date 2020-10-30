@@ -46,5 +46,13 @@
   "ds.hat.dataplugs.header.title": "HAT DATA PLUGS",
   "ds.hat.dataplugs.header.description": "Add new data plugs to your account, or view data from existing plugs.",
   "ds.hat.universal-data-viewer.header.title": "DATA SOURCES",
-  "ds.hat.universal-data-viewer.header.description": "Universal Data Viewer"
+  "ds.hat.universal-data-viewer.header.description": "Universal Data Viewer",
+  "ds.hat.tools.header.title": "Hat Tools",
+  "ds.hat.tools.header.description": "Tools and Insights are powered by the Smart HAT Engine (SHE)",
+  "ds.hat.action.menu.cancel": "Cancel",
+  "ds.hat.application.actions.permissions": "App permissions",
+  "ds.hat.application.actions.disconnect": "Disconnect app",
+  "ds.hat.tool.actions.disconnect": "Disconnect tool",
+  "ds.hat.tool.actions.connect": "Connect",
+  "ds.hat.tool.actions.active": "Active"
 }
