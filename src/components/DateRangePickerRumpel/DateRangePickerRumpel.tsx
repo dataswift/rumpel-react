@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
 import './DateRangePickerRumpel.scss';
+// @ts-ignore
 import { DateRange, Range } from 'react-date-range';
 import { endOfDay, getUnixTime, startOfDay } from "date-fns";
 
