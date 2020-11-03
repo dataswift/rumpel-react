@@ -1,57 +1,38 @@
-import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
-import { Profile } from "../features/profile/profile.interface";
+import { HatRecord } from '@dataswift/hat-js/lib/interfaces/hat-record.interface';
+import { Profile } from '../features/profile/profile.interface';
 
 const TEST_PROFILE: HatRecord<Profile> = {
-  "endpoint": "rumpel/profile",
-  "recordId": "875029f5-a178-4539-a82c-37161816aa67",
-  "data": {
-    "about": {
-      "body": "",
-      "title": ""
+  endpoint: 'rumpel/profile',
+  recordId: '12345',
+  data: {
+    about: { body: '', title: '' },
+    address: { city: '', county: '', country: '' },
+    contact: { mobile: '', landline: '', primaryEmail: '', alternativeEmail: '' },
+    dateCreated: 1586992748,
+    emergencyContact: { mobile: '', lastName: '', firstName: '', relationship: '' },
+    online: {
+      blog: 'https://test-blog.com',
+      google: '',
+      twitter: '',
+      website: 'https://test-website.com',
+      youtube: '',
+      facebook: '',
+      linkedin: ''
     },
-    "photo": {
-      "avatar": "https://test-profile-avatar.com"
+    personal: {
+      title: 'Mr',
+      gender: 'male',
+      ageGroup: '',
+      lastName: 'TestLastName',
+      nickName: 'TestNickName',
+      firstName: 'TestFirstName',
+      preferredName: '',
+      middleName: 'TestMiddleName',
+      birthDate: '',
     },
-    "online": {
-      "blog": "https://test-blog.com",
-      "google": "",
-      "twitter": "",
-      "website": "https://test-website.com",
-      "youtube": "",
-      "facebook": "",
-      "linkedin": ""
-    },
-    "shared": false,
-    "address": {
-      "city": "",
-      "county": "",
-      "country": ""
-    },
-    "contact": {
-      "mobile": "",
-      "landline": "",
-      "primaryEmail": "",
-      "alternativeEmail": ""
-    },
-    "personal": {
-      "title": "",
-      "gender": "",
-      "ageGroup": "",
-      "lastName": "",
-      "nickName": "",
-      "birthDate": "",
-      "firstName": "",
-      "middleName": "",
-      "preferredName": ""
-    },
-    "dateCreated": 1586992748,
-    "emergencyContact": {
-      "mobile": "",
-      "lastName": "",
-      "firstName": "",
-      "relationship": ""
-    }
-  }
+    photo: { avatar: 'avatarTestPath' },
+    shared: false,
+  },
 };
 
 export default TEST_PROFILE;

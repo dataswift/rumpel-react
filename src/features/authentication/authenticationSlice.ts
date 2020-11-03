@@ -23,7 +23,7 @@ export const initialState: AuthenticationState = {
   authState: AuthState.LOGIN_REQUEST,
   rememberMe: false,
   hatName: '',
-  hatDomain: ''
+  hatDomain: '',
 };
 
 export const slice = createSlice({
@@ -34,14 +34,14 @@ export const slice = createSlice({
       state.token = action.payload;
       state.isAuthenticated = true;
     },
-    updateHatName: (state, action: PayloadAction<{hatName: string, hatDomain: string}>) => {
+    updateHatName: (state, action: PayloadAction<{ hatName: string; hatDomain: string }>) => {
       state.hatName = action.payload.hatName;
       state.hatDomain = action.payload.hatDomain;
     },
     loginAuthState: (state, actions: PayloadAction<AuthState>) => {
       state.authState = actions.payload;
     },
-    logout: state => {
+    logout: (state) => {
       state.authState = AuthState.LOGIN_REQUEST;
       state.hatName = '';
       state.hatDomain = '';
@@ -53,7 +53,7 @@ export const slice = createSlice({
 
 export const { authenticateWithToken, updateHatName, loginAuthState, logout } = slice.actions;
 
-export const loginWithToken = (token: string): AppThunk => dispatch => {
+export const loginWithToken = (token: string): AppThunk => (dispatch) => {
   try {
     const decodedToken = HatTokenValidation.decodeToken(token);
 
@@ -73,7 +73,7 @@ export const loginWithToken = (token: string): AppThunk => dispatch => {
   }
 };
 
-export const logoutUser = (): AppThunk => dispatch => {
+export const logoutUser = (): AppThunk => (dispatch) => {
   dispatch(logout());
 };
 

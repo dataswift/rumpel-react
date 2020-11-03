@@ -1,0 +1,117 @@
+@import '../../assets/styles/branding';
+
+.settings-header-title {
+  font-size: 24px;
+  font-family: 700;
+  color: $app-dark-tone;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.settings-header-headline {
+  margin: 0 30px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: $ds-dusty-gray-color;
+  line-height: 1.38;
+
+  &:last-child {
+    margin-top: 16px;
+  }
+}
+
+.settings-list-wrapper {
+  padding-top: 8px;
+
+  .settings-list {
+    max-width: 500px;
+    margin: auto;
+    font-family: inherit;
+
+    .settings-list-title {
+      margin-top: 15px;
+      padding-left: 13px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      line-height: 1.1;
+      color: inherit;
+      font-family: inherit;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .settings-list-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: relative;
+      height: inherit;
+      height: 48px;
+      width: 100%;
+
+      background: white;
+      letter-spacing: 0.5px;
+
+      &:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    .link {
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+      display: block;
+      color: $ds-dusty-gray-color;
+      background: white;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      outline: none;
+
+      &:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
+  }
+  .settings-list-row-text {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+}
+
+.settings-user-actions {
+  position: -webkit-sticky;
+  position: sticky;
+  margin: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background-color: #f6f6f6;
+
+  button {
+    margin: 10px auto;
+  }
+}

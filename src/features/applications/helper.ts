@@ -1,4 +1,5 @@
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import format from 'date-fns/format';
 
 enum HatApplicationStatus {
   GOTO = 'goto',
@@ -46,4 +47,19 @@ export const getStatusIcon = (app: HatApplication): HatAppStatusIcons => {
     default:
       return 'add_circle_outline';
   }
+};
+
+export const getApplicationDetails = (app: HatApplication): Array<{ [key: string]: string }> => {
+  const { name, url, country } = app.application.developer;
+  const { version, termsUrl, supportContact } = app.application.info;
+
+  return [
+    { provider: name },
+    { website: url },
+    { country: country },
+    { version: version },
+    { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
+    { 'terms and conditions': termsUrl },
+    { 'support email': supportContact },
+  ];
 };

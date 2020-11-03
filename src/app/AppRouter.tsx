@@ -12,6 +12,9 @@ import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
 import Profile from "../features/profile/Profile";
+import { HatTools, HatToolDetails } from '../features/tools';
+import { Settings } from '../features/settings';
+import ChangePassword from '../components/user/ChangePassword';
 
 const HatClaim = React.lazy(
   () =>
@@ -134,6 +137,22 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateSpaceRoute exact path={'/profile'}>
         <Profile />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute exact path={'/tools'}>
+        <HatTools />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute exact path={'/tools/:toolId'}>
+        <HatToolDetails />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute path={'/settings'}>
+        <Settings />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute path={'/user/password/change'}>
+        <ChangePassword />
       </PrivateSpaceRoute>
     </Switch>
   );

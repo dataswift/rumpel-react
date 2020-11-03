@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import format from 'date-fns/format';
 
 import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader';
 import FormatMessage from '../messages/FormatMessage';
 import { getApplicationById, selectApplicationById } from './applicationsSlice';
 import './HatApplication.scss';
-import { getStatusIcon, getAppStatus } from './helper';
+import { getStatusIcon, getAppStatus, getApplicationDetails } from './helper';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import AppDetailsToolbarActions from './ApplicationDetailsActions';
 
@@ -32,21 +31,6 @@ const HatApplicationDetails: React.FC = () => {
       `/auth/oauth?` +
         `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectUrl}%3Fredirect=${redirectRumpel}`,
     );
-  };
-
-  const getApplicationDetails = (): Array<{ [key: string]: string }> => {
-    const { name, url, country } = app.application.developer;
-    const { version, termsUrl, supportContact } = app.application.info;
-
-    return [
-      { provider: name },
-      { website: url },
-      { country: country },
-      { version: version },
-      { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
-      { 'terms and conditions': termsUrl },
-      { 'support email': supportContact },
-    ];
   };
 
   return (
@@ -81,7 +65,7 @@ const HatApplicationDetails: React.FC = () => {
         header={'App Info'}
         description={app.application.info.description.text}
         screenshots={app.application.info.graphics.screenshots.map((screenshot) => screenshot.normal)}
-        informationListData={getApplicationDetails()}
+        informationListData={getApplicationDetails(app)}
       />
     </>
   );
