@@ -7,15 +7,19 @@ type Props = {
     value?: string;
     options: Array<string>;
     profileField?: boolean;
+    errorMessage?: string;
+    onChange: (value: string) => void;
 }
 
-const DropDownMenu: React.FC<Props> = ({ options, placeholder, profileField, value }) => {
+const DropDownMenu: React.FC<Props> = (props) => {
+  const { options, placeholder, errorMessage, onChange, profileField, value } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string>('');
 
-  const onOptionClicked = (value: string) => () => {
-    setSelectedOption(value);
+  const onOptionClicked = (newValue: string) => () => {
+    setSelectedOption(newValue);
     setIsOpen(false);
+    onChange(newValue);
   };
     
   return (
@@ -23,9 +27,10 @@ const DropDownMenu: React.FC<Props> = ({ options, placeholder, profileField, val
       <Input label={placeholder}
         id={'gender'}
         type={'text'}
-        value={value || selectedOption || ''}
+        value={selectedOption || value}
         onClick={() => setIsOpen(!isOpen)}
         profileField={profileField}
+        errorMessage={errorMessage}
         onChange={() => {}}
       />
 

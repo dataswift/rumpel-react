@@ -7,6 +7,8 @@ import { selectProfile } from "./profileSlice";
 const ProfileDetails: React.FC = () => {
   const profile = useSelector(selectProfile);
 
+  if (!profile) return null;
+
   const profileElement = ProfileFields.map(field => {
     return (
       <div className={'profile-details-section'} key={field.title}>
@@ -14,7 +16,8 @@ const ProfileDetails: React.FC = () => {
         <div className={'profile-details-content'}>
           <FormAdapter 
             profileField 
-            fields={field.fields} 
+            fields={field.fields}
+            validations={field.validations}
             values={
                   // @ts-ignore
                   profile?.data[field.id]

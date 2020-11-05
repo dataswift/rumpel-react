@@ -43,18 +43,6 @@ export const config = {
       disable: '',
       description: "See your feed correlated with the places you've been too.",
     },
-
-    {
-      display: 'My public profile',
-      icon: 'security',
-      link: '/datastore',
-      external: true,
-      dataType: 'profile',
-      disable: '',
-      description:
-        'View and edit the details of your profile and decide' +
-        ' what information is private and what is to be shared.',
-    },
     { 
       display: 'My public profile', 
       icon: 'security', 
