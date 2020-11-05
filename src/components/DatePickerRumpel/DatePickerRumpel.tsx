@@ -8,17 +8,23 @@ type Props = {
     label: string;
     value?: string;
     profileField?: boolean;
+    errorMessage?: string;
+    onChange: (value: string) => void;
 }
 
-const DatePickerRumpel: React.FC<Props> = ({ label, profileField, value }) => {
+const DatePickerRumpel: React.FC<Props> = (props) => {
+  const { label, profileField, onChange, errorMessage, value } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [displayValue, setDisplayValue] = useState<string>(value || '');
 
-  const inputValue = selectedDate ? format(new Date(selectedDate), 'dd/MM/yyyy') : value || '';
+  const onDateChange = (date: Date) => {
+    const parsedDate = format(date, 'dd/MM/yyyy');
 
-  const onChange = (date: Date) => {
     setSelectedDate(date);
     setIsOpen(false);
+    setDisplayValue(parsedDate);
+    onChange(parsedDate);
   };
 
   return (
@@ -26,15 +32,16 @@ const DatePickerRumpel: React.FC<Props> = ({ label, profileField, value }) => {
       <Input type={'text'} 
         id={'calendar'} 
         label={label}
-        value={inputValue}
+        value={displayValue}
         onClick={() => setIsOpen(!isOpen)}
         profileField={profileField}
+        errorMessage={errorMessage}
         onChange={() => {}}
       />
       {isOpen && (
         <Calendar
           date={selectedDate || new Date()}
-          onChange={onChange}
+          onChange={onDateChange}
         />
       )}
     </div>

@@ -1,14 +1,17 @@
 import { FormFields } from "../../components/form/formFields.interface";
+import { profileAboutValidations, profileInfoValidations, profileOnlineValidations } from "./validations";
 
 export interface ProfileFieldsInterface {
   id: string;
   title: string;
+  validations: Record<string, string>;
   fields: Array<FormFields>;
 }
 const ProfileFields: Array<ProfileFieldsInterface> = [
   {
     id: 'personal',
     title: 'Personal Info',
+    validations: profileInfoValidations,
     fields: [
       {
         name: 'firstName',
@@ -28,9 +31,8 @@ const ProfileFields: Array<ProfileFieldsInterface> = [
         placeholder: 'Gender',
         type: 'menu',
         options: [
-          'Male',
-          'Female',
-          'Decline to state'
+          'male',
+          'female'
         ]
       },
       {
@@ -68,6 +70,7 @@ const ProfileFields: Array<ProfileFieldsInterface> = [
   {
     id: 'online',
     title: 'Online',
+    validations: profileOnlineValidations,
     fields: [
       {
         name: 'facebook',
@@ -82,8 +85,8 @@ const ProfileFields: Array<ProfileFieldsInterface> = [
         type: 'text'
       },
       {
-        name: 'Linkedin',
-        id: 'Linkedin',
+        name: 'linkedin',
+        id: 'linkedin',
         placeholder: 'Linkedin',
         type: 'text'
       },
@@ -116,6 +119,7 @@ const ProfileFields: Array<ProfileFieldsInterface> = [
   {
     id: 'about',
     title: 'About',
+    validations: profileAboutValidations,
     fields: [
       {
         name: 'title',

@@ -7,6 +7,7 @@ describe('DatePickerRumpel', () => {
     render(
       <DatePickerRumpel 
         profileField={true}
+        onChange={() => {}}
         label={'DatePicker'}/>,
     );
 

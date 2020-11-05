@@ -17,8 +17,8 @@ const TEST_PROFILE_FIELDS = [
     placeholder: 'Gender',
     type: 'menu',
     options: [
-      'Male',
-      'Female',
+      'male',
+      'female',
       'Decline to state'
     ]
   },

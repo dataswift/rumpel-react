@@ -7,8 +7,13 @@ describe('DropDown menu', () => {
   const placeholder = 'testPlaceholder';
 
   test('renders the dropdown menu without error', () => {
+    const mockOnChange = jest.fn();
+
     render(
-      <DropDownMenu placeholder={placeholder} options={options}/>,
+      <DropDownMenu
+        placeholder={placeholder}
+        onChange={mockOnChange}
+        options={options}/>,
     );
 
     // Clicks on the placeholder and the menu appears
@@ -18,8 +23,11 @@ describe('DropDown menu', () => {
     expect(screen.getByText('option2')).toBeInTheDocument();
     expect(screen.getByText('option3')).toBeInTheDocument();
 
-    // Selects the option1 from the list
+    // Selects the option3 from the list
     fireEvent.click(screen.getByText('option3'));
+
+    expect(mockOnChange).toHaveBeenCalledTimes(1);
+    expect(mockOnChange).toHaveBeenCalledWith('option3');
 
     // The menu disappears
     expect(screen.queryByText('option1')).toBeNull();
@@ -34,6 +42,9 @@ describe('DropDown menu', () => {
 
     // Selects the option1 from the list
     fireEvent.click(screen.getByText('option1'));
+
+    expect(mockOnChange).toHaveBeenCalledTimes(2);
+    expect(mockOnChange).toHaveBeenCalledWith('option1');
 
     // The menu disappears
     expect(screen.queryByText('option2')).toBeNull();
