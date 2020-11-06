@@ -91,7 +91,7 @@ const AuthRecoverPassword: React.FC = () => {
         </>
         }
 
-        <IssuedBy language={language}/>
+        <IssuedBy language={language} wrapperStyles={{ backgroundColor: '#ffffff' }} />
       </div>
     </div>
   );
