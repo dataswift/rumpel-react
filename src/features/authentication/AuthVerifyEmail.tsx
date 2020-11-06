@@ -233,7 +233,7 @@ const AuthVerifyEmail: React.FC = () => {
           </>
         )}
 
-        <IssuedBy language={language} />
+        <IssuedBy language={language} wrapperStyles={{ backgroundColor: '#ffffff' }} />
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>

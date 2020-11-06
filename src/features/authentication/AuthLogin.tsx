@@ -165,7 +165,7 @@ const AuthLogin: React.FC = () => {
           <FormatMessage id={'ds.auth.signupBtn'} />
         </button>
 
-        <IssuedBy language={language} />
+        <IssuedBy language={language} wrapperStyles={{ backgroundColor: '#ffffff' }} />
       </div>
     </div>
   );
