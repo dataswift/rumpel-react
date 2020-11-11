@@ -10,6 +10,7 @@ import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
 import { getPublicProfile } from '../api/hatAPI';
+import { BundleStructure } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -227,5 +228,16 @@ export class HatClientService {
   public async getPublicProfile() {
     const path = `${this.pathPrefix}/phata/profile`;
     return getPublicProfile(path);
+  }
+
+  public async getDataBundleStructure(bundleId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}/structure`;
+
+    return get<BundleStructure>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }

@@ -2,10 +2,11 @@ import React from "react";
 import FormAdapter from "../../components/form/FormAdapter";
 import ProfileFields from "./ProfileFields";
 import { useSelector } from "react-redux";
-import { selectProfile } from "./profileSlice";
+import { selectProfile, selectProfileSharingConfig } from "./profileSlice";
 
 const ProfileDetails: React.FC = () => {
   const profile = useSelector(selectProfile);
+  const profileSharing = useSelector(selectProfileSharingConfig);
 
   if (!profile) return null;
 
@@ -17,11 +18,12 @@ const ProfileDetails: React.FC = () => {
           <FormAdapter 
             profileField 
             fields={field.fields}
+            formId={field.id}
             validations={field.validations}
             values={
-                  // @ts-ignore
-                  profile?.data[field.id]
+              profile?.data[field.id] as Record<string, string>
             }
+            profileSharing={profileSharing}
           />
         </div>
       </div>

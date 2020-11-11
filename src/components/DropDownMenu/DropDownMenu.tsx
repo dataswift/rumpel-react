@@ -9,10 +9,21 @@ type Props = {
     profileField?: boolean;
     errorMessage?: string;
     onChange: (value: string) => void;
+    profilePrivacyToggle?: boolean;
+    onProfileSharingChange?: () => void;
 }
 
 const DropDownMenu: React.FC<Props> = (props) => {
-  const { options, placeholder, errorMessage, onChange, profileField, value } = props;
+  const { 
+    options, 
+    placeholder, 
+    errorMessage, 
+    onChange, 
+    profileField, 
+    value, 
+    profilePrivacyToggle, 
+    onProfileSharingChange 
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>('');
 
@@ -32,6 +43,8 @@ const DropDownMenu: React.FC<Props> = (props) => {
         profileField={profileField}
         errorMessage={errorMessage}
         onChange={() => {}}
+        profilePrivacyToggle={profilePrivacyToggle}
+        onProfileSharingChange={onProfileSharingChange}
       />
 
       {isOpen && (

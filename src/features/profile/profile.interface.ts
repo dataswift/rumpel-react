@@ -45,4 +45,54 @@ export interface Profile {
         google: string;
         youtube: string;
     };
+
+    [index: string]: number | boolean | Record<string, string>;
+}
+
+export interface ProfileSharingConfig {
+    photo: {
+        avatar: boolean;
+    };
+    personal: {
+        title: boolean;
+        firstName: boolean;
+        middleName: boolean;
+        lastName: boolean;
+        preferredName: boolean;
+        nickName: boolean;
+        birthDate: boolean;
+        gender: boolean;
+        ageGroup: boolean;
+    };
+    contact: {
+        primaryEmail: boolean;
+        alternativeEmail: boolean;
+        mobile: boolean;
+        landline: boolean;
+    };
+    emergencyContact: {
+        firstName: boolean;
+        lastName: boolean;
+        mobile: boolean;
+        relationship: boolean;
+    };
+    address: {
+        city: boolean;
+        county: boolean;
+        country: boolean;
+    };
+    about: {
+        title: boolean;
+        body: boolean;
+    };
+    online: {
+        website: boolean;
+        blog: boolean;
+        facebook: boolean;
+        twitter: boolean;
+        linkedin: boolean;
+        google: boolean;
+        youtube: boolean;
+    };
+    [index: string]: {[index: string]: boolean};
 }

@@ -10,6 +10,8 @@ type OwnProps = {
   key?: string;
   errorMessage?: string;
   profileField?: boolean;
+  profilePrivacyToggle?: boolean;
+  onProfileSharingChange?: () => void;
 };
 
 type Props = OwnProps &
@@ -26,11 +28,13 @@ const Input: React.FC<Props> = (props) => {
     errorMessage,
     profileField,
     value,
+    profilePrivacyToggle,
+    onProfileSharingChange,
     ...rest
   } = props;
   const [onInputFocus, setOnInputFocus] = useState('');
   const [onFilled, setOnFilled] = useState('');
-  const [privacy, setPrivacy] = useState(true);
+  const [privacy, setPrivacy] = useState(false);
 
   const onBlur = (value: string) => {
     if (value) {
@@ -48,6 +52,12 @@ const Input: React.FC<Props> = (props) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (profilePrivacyToggle === undefined) return;
+
+    setPrivacy(profilePrivacyToggle);
+  }, [profilePrivacyToggle]);
+
   return (
     <div className={`form-group ${onInputFocus}`}>
       <label className="form-label" htmlFor={id}>{label}</label>
@@ -62,9 +72,9 @@ const Input: React.FC<Props> = (props) => {
       {profileField && (
         <button className={'form-input-profile-toggle'} 
           type={'button'}
-          onClick={() => setPrivacy(!privacy)}
+          onClick={() => onProfileSharingChange?.()}
         >
-          {privacy ? 'Private' : 'Public'}
+          {privacy ? 'Public' : 'Private'}
         </button>
       )
       }
