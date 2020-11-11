@@ -4,15 +4,22 @@ import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import DatePickerRumpel from "../DatePickerRumpel/DatePickerRumpel";
 import Input from "./Input";
 import { useFormValidations } from "./useFormValidations";
+import { ProfileSharingConfig } from "../../features/profile/profile.interface";
+import { setProfileSharingConfigKey } from "../../features/profile/profileSlice";
+import { useDispatch } from "react-redux";
 
 type Props = {
   fields: Array<FormFields>;
   values: Record<string, string>;
   validations: Record<string, string>;
   profileField?: boolean;
+  formId: string;
+  profileSharing?: ProfileSharingConfig;
 }
 
-const FormAdapter: React.FC<Props> = ({ fields,profileField, validations, values }) => {
+const FormAdapter: React.FC<Props> = (props) => {
+  const { fields, profileField, formId, validations, values, profileSharing } = props;
+  const dispatch = useDispatch();
   const [formState, setFormState] = useState<Record<string, string>>(values);
   const { errors } = useFormValidations(validations, formState);
 
@@ -22,6 +29,10 @@ const FormAdapter: React.FC<Props> = ({ fields,profileField, validations, values
 
   const onChange = (fieldId: string, value: string) => {
     setFormState({ ...formState, [fieldId]: value });
+  };
+
+  const onProfileSharingChange = (key: string, id: string) => {
+    dispatch(setProfileSharingConfigKey(key, id));
   };
 
   const elements = fields.map(field => {
@@ -37,6 +48,10 @@ const FormAdapter: React.FC<Props> = ({ fields,profileField, validations, values
           profileField={profileField}
           value={formState[field.id] || ''}
           onChange={e => onChange(field.id, e.target.value)}
+          profilePrivacyToggle={
+            profileSharing?.[formId]?.[field.id]
+          }
+          onProfileSharingChange={() => onProfileSharingChange(formId, field.id)}
         />;
       case 'menu':
         return <DropDownMenu 
@@ -47,6 +62,10 @@ const FormAdapter: React.FC<Props> = ({ fields,profileField, validations, values
           profileField={profileField}
           onChange={option => onChange(field.id, option)}
           key={field.id}
+          profilePrivacyToggle={
+            profileSharing?.[formId]?.[field.id]
+          }
+          onProfileSharingChange={() => onProfileSharingChange(formId, field.id)}
         />;
       case 'DatePicker':
         return <DatePickerRumpel 
@@ -56,6 +75,10 @@ const FormAdapter: React.FC<Props> = ({ fields,profileField, validations, values
           errorMessage={errors[field.id]}
           onChange={date => onChange(field.id, date)}
           label={field.placeholder}
+          profilePrivacyToggle={
+            profileSharing?.[formId]?.[field.id]
+          }
+          onProfileSharingChange={() => onProfileSharingChange(formId, field.id)}
         />;
       default:
         return null;

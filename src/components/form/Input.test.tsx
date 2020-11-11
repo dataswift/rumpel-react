@@ -16,12 +16,15 @@ describe('Input Rumpel', () => {
   });
 
   test('user clicks on privacy toggle', () => {
+    const mockOnChange = jest.fn();
     render(
       <Input
         label={'Test Input'}
         id={'Test Input'}
         type={'text'}
         profileField={true}
+        profilePrivacyToggle={false}
+        onProfileSharingChange={mockOnChange}
       />,
     );
 
@@ -29,15 +32,18 @@ describe('Input Rumpel', () => {
     expect(screen.getByText('Private')).toBeInTheDocument();
 
     fireEvent.click(screen.getByText('Private'));
-    expect(screen.getByText('Public')).toBeInTheDocument();
+    expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
 
   test('use attempt a value change', () => {
+    const mockOnChange = jest.fn();
+
     render(
       <Input
         label={'test label'}
         id={'test input'}
         type={'text'}
+        onChange={mockOnChange}
       />,
     );
 
@@ -48,5 +54,7 @@ describe('Input Rumpel', () => {
     fireEvent.change(input, { target: { value: 'test random value' } });
 
     expect(screen.getByDisplayValue('test random value')).toBeInTheDocument();
+
+    expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
 });

@@ -3,16 +3,20 @@ import React from "react";
 import FormAdapter from "./FormAdapter";
 import TEST_PROFILE_FIELDS from "../../testData/ProfileFields";
 import { profileInfoValidations } from "../../features/profile/validations";
+import Root from "../../app/Root";
 
 describe('FormAdapter', () => {
   test('renders the correct elements without error', () => {
     render(
-      <FormAdapter
-        profileField={true}
-        fields={TEST_PROFILE_FIELDS}
-        validations={profileInfoValidations}
-        values={{}}
-      />,
+      <Root>
+        <FormAdapter
+          profileField={true}
+          fields={TEST_PROFILE_FIELDS}
+          validations={profileInfoValidations}
+          formId={'form-id'}
+          values={{}}
+        />
+      </Root>
     );
 
     expect(screen.getByText('First name')).toBeInTheDocument();
@@ -28,12 +32,15 @@ describe('FormAdapter', () => {
 
   test('renders the correct error messages', async () => {
     render(
-      <FormAdapter
-        profileField={true}
-        fields={TEST_PROFILE_FIELDS}
-        validations={profileInfoValidations}
-        values={{}}
-      />,
+      <Root>
+        <FormAdapter
+          profileField={true}
+          fields={TEST_PROFILE_FIELDS}
+          validations={profileInfoValidations}
+          formId={'form-id'}
+          values={{}}
+        />
+      </Root>
     );
 
     const firstName = screen.getByLabelText('First name');
@@ -70,12 +77,15 @@ describe('FormAdapter', () => {
 
   test('no errors are displayed when user inputs valid values', async () => {
     render(
-      <FormAdapter
-        profileField={true}
-        fields={TEST_PROFILE_FIELDS}
-        validations={profileInfoValidations}
-        values={{}}
-      />,
+      <Root>
+        <FormAdapter
+          profileField={true}
+          fields={TEST_PROFILE_FIELDS}
+          validations={profileInfoValidations}
+          formId={'form-id'}
+          values={{}}
+        />
+      </Root>
     );
 
     const firstName = screen.getByLabelText('First name');

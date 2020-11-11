@@ -10,10 +10,20 @@ type Props = {
     profileField?: boolean;
     errorMessage?: string;
     onChange: (value: string) => void;
+    profilePrivacyToggle?: boolean;
+    onProfileSharingChange?: () => void;
 }
 
 const DatePickerRumpel: React.FC<Props> = (props) => {
-  const { label, profileField, onChange, errorMessage, value } = props;
+  const { 
+    label, 
+    profileField, 
+    onChange, 
+    errorMessage, 
+    value, 
+    profilePrivacyToggle, 
+    onProfileSharingChange 
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [displayValue, setDisplayValue] = useState<string>(value || '');
@@ -37,6 +47,8 @@ const DatePickerRumpel: React.FC<Props> = (props) => {
         profileField={profileField}
         errorMessage={errorMessage}
         onChange={() => {}}
+        profilePrivacyToggle={profilePrivacyToggle}
+        onProfileSharingChange={onProfileSharingChange}
       />
       {isOpen && (
         <Calendar
