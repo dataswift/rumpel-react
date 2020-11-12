@@ -26,6 +26,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
       <div className="img-wrapper">
         <FeedSourceImg
           source={feedItem.source}
+          types={feedItem.types}
           height="35" width="35"/>
         <div className="arrow-left" />
       </div>
