@@ -80,7 +80,7 @@ export const slice = createSlice({
   initialState,
   reducers: {
     profile: (state, action: PayloadAction<HatRecord<Profile>[]>) => {
-      state.profile.push(...action.payload);
+      state.profile = action.payload;
     },
     profileBundle: (state, action: PayloadAction<BundleStructure>) => {
       state.profileBundle = action.payload;
@@ -103,6 +103,16 @@ export const setProfileBundle = (bundle: BundleStructure): AppThunk => dispatch 
 
 export const setProfileSharingConfig = (config: ProfileSharingConfig): AppThunk => dispatch => {
   dispatch(profileSharingConfig(config));
+};
+
+export const setProfileKeyValue = (
+  key: string,
+  value: number | boolean | Record<string, string>
+): AppThunk => (dispatch, getState) => {
+  let current = JSON.parse(JSON.stringify(getState().profile.profile[0])) as HatRecord<Profile>;
+  current.data[key] = value;
+
+  dispatch(profile([current]));
 };
 
 export const setProfileSharingConfigKey = (id: string, key: string): AppThunk => (dispatch, getState) => {

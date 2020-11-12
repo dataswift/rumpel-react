@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectProfile } from "./profileSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProfile, setProfileKeyValue } from "./profileSlice";
 
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
@@ -9,9 +9,9 @@ import linkedinIcon from '../../assets/icons/linkedin-icon.svg';
 import twitterIcon from '../../assets/icons/twitter-grey-icon.svg';
 import websiteIcon from '../../assets/icons/website-icon.svg';
 import youtubeIcon from '../../assets/icons/youtube-icon.svg';
-import ProfileDefaultAvatar from "../../components/Svgs/ProfileDefaultAvatar";
 import { Link } from "react-router-dom";
 import { selectUserHatDomain, selectUserHatName } from "../authentication/authenticationSlice";
+import { ProfilePicUpload } from "./ProfilePicUpload";
 
 const icons: {[index: string]: string} = {
   blog: blogIcon,
@@ -24,18 +24,24 @@ const icons: {[index: string]: string} = {
 };
 
 const ProfileHeader: React.FC = () => {
+  const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
   const userHatName = useSelector(selectUserHatName);
   const userHatDomain = useSelector(selectUserHatDomain);
+
+  const onLogoUploaded = (url: string) => {
+    dispatch(setProfileKeyValue('photo', { avatar: url }));
+  };
 
   return (
     <div className={'profile-header'}>
       <div className={'profile-header-box'}>
         <div className={'profile-header-photo-container'}>
-          {profile?.data?.photo?.avatar 
-            ? <img src={profile.data.photo.avatar} alt={'Profile avatar'} /> 
-            : <ProfileDefaultAvatar />
-          }
+          <ProfilePicUpload
+            currentImageSrc={profile?.data?.photo.avatar}
+            enabled 
+            onLogoUploaded={onLogoUploaded}
+          />
         </div>
 
         <div className={'profile-header-link-to-public'}>

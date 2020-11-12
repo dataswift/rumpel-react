@@ -11,6 +11,7 @@ import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.inter
 import { SheFeed } from '../features/feed/she-feed.interface';
 import { getPublicProfile } from '../api/hatAPI';
 import { BundleStructure } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
+import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -239,5 +240,17 @@ export class HatClientService {
     const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}/structure`;
 
     return get<BundleStructure>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async uploadFile(meta: FileMetadataReq, file: ArrayBuffer, fileType: string) {
+    return this.hat.files().uploadFile(meta, file, fileType);
+  }
+
+  public async markFilesAsPublic(fileId: string) {
+    return this.hat.files().markFileAsPublic(fileId);
+  }
+
+  public generateFileContentUrl(fileId: string) {
+    return this.hat.files().generateFileContentUrl(fileId);
   }
 }
