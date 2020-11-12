@@ -41,16 +41,16 @@ const OauthPermissions: React.FC = () => {
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
-      {parentApp && 
-        <HmiV2 hmiType={HmiType.login.daas}
-          parentApp={parentApp.application}
-          email={hatName}
-          language={language}
-          dependencyTools={dependencyTools.map(tool => tool.info.name)}
-          dependencyApps={dependencyApps.map(app => app.application)}
-          onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
-          onRejected={() => dispatch(onTermsDeclined())}
-        />
+      {parentApp &&
+      <HmiV2 hmiType={HmiType.login.daas}
+        parentApp={parentApp.application}
+        email={hatName}
+        language={language}
+        dependencyTools={dependencyTools.map(tool => tool.info.name)}
+        dependencyApps={dependencyApps.map(app => app.application)}
+        onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
+        onRejected={() => dispatch(onTermsDeclined())}
+      />
       }
     </div>
   );
