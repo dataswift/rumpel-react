@@ -79,18 +79,22 @@ export const PrivateSpaceRoute: React.FC<CustomRouteProps> = ({
   return (
     <PrivateRoute {...rest}>
       <div>
-        <PrivateSpace>{children}</PrivateSpace>
-        {issuedByFooter ? (
-          <IssuedBy
-            language={language}
-            wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-          />
-        ) : (
-          <Footer
-            language={language}
-            wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-          />
-        )}
+        <PrivateSpace>
+          <>
+            {children}
+            {issuedByFooter ? (
+              <IssuedBy
+                language={language}
+                wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+              />
+            ) : (
+              <Footer
+                language={language}
+                wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+              />
+            )}
+          </>
+        </PrivateSpace>
       </div>
     </PrivateRoute>
   );

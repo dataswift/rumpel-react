@@ -232,7 +232,6 @@ const AuthVerifyEmail: React.FC = () => {
             </button>
           </>
         )}
-
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>

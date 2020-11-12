@@ -219,7 +219,6 @@ const AuthChangePassword: React.FC = () => {
             </button>
           </>
         )}
-
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>

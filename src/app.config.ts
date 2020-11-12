@@ -33,17 +33,7 @@ export const config = {
       disable: '',
       description: 'My Digital Life',
     },
-
-    {
-      display: 'Map',
-      icon: 'map',
-      link: '/mashups',
-      dataType: '',
-      external: true,
-      disable: '',
-      description: "See your feed correlated with the places you've been too.",
-    },
-
+      
     {
       display: 'My public profile',
       icon: 'security',
