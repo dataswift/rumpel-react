@@ -1,35 +1,46 @@
 import React from "react";
 import FormAdapter from "../../components/form/FormAdapter";
-import ProfileFields from "./ProfileFields";
-import { useSelector } from "react-redux";
-import { selectProfile, selectProfileSharingConfig } from "./profileSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProfile, selectProfileFetched, selectProfileSharingConfig, setProfileKeyValue } from "./profileSlice";
+import ProfileSections from "./ProfileSections";
 
 const ProfileDetails: React.FC = () => {
   const profile = useSelector(selectProfile);
+  const profileFetched = useSelector(selectProfileFetched);
   const profileSharing = useSelector(selectProfileSharingConfig);
+  const dispatch = useDispatch();
 
-  if (!profile) return null;
+  const onFormDataChange = (key: string, data: Record<string, string>) => {
+    dispatch(setProfileKeyValue(key, data));
+  };
 
-  const profileElement = ProfileFields.map(field => {
+  if (!profileFetched) return null;
+
+  const profileElement = ProfileSections.map(section => {
     return (
-      <div className={'profile-details-section'} key={field.title}>
-        <div className={'profile-details-heading'}>{field.title}</div>
+      <div className={'profile-details-section'} key={section.title}>
+        <div className={'profile-details-heading'}>{section.title}</div>
         <div className={'profile-details-content'}>
-          <FormAdapter 
-            profileField 
-            fields={field.fields}
-            formId={field.id}
-            validations={field.validations}
-            values={
-              profile?.data[field.id] as Record<string, string>
-            }
-            profileSharing={profileSharing}
-          />
+          {section.groupFields.map(fields => {
+            return <FormAdapter
+              profileField
+              key={fields.id}
+              fields={fields.fields}
+              formId={fields.id}
+              validations={fields.validations}
+              values={
+                  profile?.data[fields.id] as Record<string, string>
+              }
+              profileSharing={profileSharing}
+              onFormDataChange={onFormDataChange}
+            />;
+          })
+          }
         </div>
       </div>
     );
   });
-  
+
   return (
     <>
       {profileElement}
