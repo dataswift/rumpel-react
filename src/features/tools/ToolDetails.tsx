@@ -53,7 +53,7 @@ const ToolDetails: React.FC = () => {
       <DetailsHeader
         logoSrc={tool.info.graphics.logo.normal}
         logoAltText="Tool Logo"
-        backgroundColor="#2b313d"
+        backgroundColor="rgba(43, 49, 61, 0.7)"
         isTool
         toolbarActions={<ToolDetailsactions setup={tool.status.enabled} toolId={tool.id} />}
       >
