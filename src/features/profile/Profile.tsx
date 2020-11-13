@@ -3,17 +3,18 @@ import ProfileHeader from "./ProfileHeader";
 import './Profile.scss';
 import ProfileDetails from "./ProfileDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfilePrivacyDataBundle, selectProfile } from "./profileSlice";
+import { getProfilePrivacyDataBundle, selectProfile, selectProfileFetched } from "./profileSlice";
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
+  const profileFetched = useSelector(selectProfileFetched);
 
   useEffect(() => {
-    if (profile) {
+    if (profile && !profileFetched) {
       dispatch(getProfilePrivacyDataBundle());
     }
-  }, [dispatch, profile]);
+  }, [dispatch, profileFetched, profile]);
 
   return (
     <div className={'profile'}>
