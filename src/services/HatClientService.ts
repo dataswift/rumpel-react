@@ -10,6 +10,9 @@ import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
 import { getPublicProfile } from '../api/hatAPI';
+import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
+import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
+import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -196,7 +199,13 @@ export class HatClientService {
   }
 
   public async getProfileData() {
-    return this.hat.hatData().getAll<Profile>('rumpel', 'profile', { orderBy: 'dateCreated', take: '1' });
+    const options = { orderBy: 'dateCreated', ordering: 'descending', take: '1' };
+
+    return this.hat.hatData().getAll<Profile>('rumpel', 'profile', options);
+  }
+
+  public async postProfileData(profile: HatRecord<Profile>) {
+    return this.hat.hatData().update<Profile>([profile]);
   }
 
   public async getSheRecords(endpoint?: string, since?: number | string, until?: number | string) {
@@ -225,5 +234,46 @@ export class HatClientService {
   public async getPublicProfile() {
     const path = `${this.pathPrefix}/phata/profile`;
     return getPublicProfile(path);
+  }
+
+  public async getDataBundleStructure(bundleId: string) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}/structure`;
+
+    return get<BundleStructure>(path, { method: 'get', headers: { 'x-auth-token': token } });
+  }
+
+  public async postDataBundleStructure(bundleId: string, bundle: { [bundleVersion: string]: PropertyQuery }) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}`;
+
+    return post<BundleStructure>(
+      path, 
+      {},  
+      {
+        method: 'post',
+        body: JSON.stringify(bundle),
+        headers: { 'x-auth-token': token, 'content-type': 'application/json' } }
+    );
+  }
+
+  public async uploadFile(meta: FileMetadataReq, file: ArrayBuffer, fileType: string) {
+    return this.hat.files().uploadFile(meta, file, fileType);
+  }
+
+  public async markFilesAsPublic(fileId: string) {
+    return this.hat.files().markFileAsPublic(fileId);
+  }
+
+  public generateFileContentUrl(fileId: string) {
+    return this.hat.files().generateFileContentUrl(fileId);
   }
 }

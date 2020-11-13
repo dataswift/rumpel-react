@@ -8,9 +8,17 @@ const TEST_PROFILE: HatRecord<Profile> = {
     about: { body: '', title: '' },
     address: { city: '', county: '', country: '' },
     contact: { mobile: '', landline: '', primaryEmail: '', alternativeEmail: '' },
-    dateCreated: 1,
+    dateCreated: 1586992748,
     emergencyContact: { mobile: '', lastName: '', firstName: '', relationship: '' },
-    online: { blog: '', google: '', twitter: '', website: '', youtube: '', facebook: '', linkedin: '' },
+    online: {
+      blog: 'https://test-blog.com',
+      google: '',
+      twitter: '',
+      website: 'https://test-website.com',
+      youtube: '',
+      facebook: '',
+      linkedin: ''
+    },
     personal: {
       title: 'Mr',
       gender: 'male',

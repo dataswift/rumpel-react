@@ -33,19 +33,17 @@ export const config = {
       disable: '',
       description: 'My Digital Life',
     },
-      
-    {
-      display: 'My public profile',
-      icon: 'security',
-      link: '/datastore',
-      external: true,
-      dataType: 'profile',
-      disable: '',
-      description:
-        'View and edit the details of your profile and decide' +
-        ' what information is private and what is to be shared.',
+    { 
+      display: 'My public profile', 
+      icon: 'security', 
+      link: '/profile', 
+      external: false, 
+      dataType: 'profile', 
+      disable: '', 
+      description: 
+          'View and edit the details of your profile and decide' +
+          ' what information is private and what is to be shared.' ,
     },
-
     {
       display: 'Tools & insights',
       icon: 'assessment',
@@ -55,7 +53,6 @@ export const config = {
       disable: '',
       description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)',
     },
-
     {
       display: 'Explore HAT apps',
       icon: 'touch_app',

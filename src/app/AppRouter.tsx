@@ -11,6 +11,7 @@ import DataPlugs from '../features/dataplugs/DataPlugs';
 import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
+import Profile from "../features/profile/Profile";
 import { HatTools, HatToolDetails } from '../features/tools';
 import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
@@ -132,6 +133,10 @@ const PrivateSpaceRoutes = () => {
 
       <PrivateSpaceRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
         <UniversalDataViewerEndpoint />
+      </PrivateSpaceRoute>
+
+      <PrivateSpaceRoute exact path={'/profile'}>
+        <Profile />
       </PrivateSpaceRoute>
 
       <PrivateSpaceRoute exact path={'/tools'}>
