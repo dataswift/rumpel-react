@@ -240,7 +240,13 @@ export class HatClientService {
   }
 
   public async getPublicProfile() {
-    const path = `${this.pathPrefix}/phata/profile`;
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+    
+    let path = (token && hatdomain) 
+      ? `${hatdomain}${this.pathPrefix}/phata/profile`
+      : `${this.pathPrefix}/phata/profile`;
+    
     return getPublicProfile(path);
   }
 

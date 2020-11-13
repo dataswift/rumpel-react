@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProfile, setProfileKeyValue } from "./profileSlice";
+import { selectProfile, setProfileKeyValue, setProfileSharingConfigKey } from "./profileSlice";
 
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
@@ -30,6 +30,8 @@ const ProfileHeader: React.FC = () => {
   const userHatDomain = useSelector(selectUserHatDomain);
 
   const onLogoUploaded = (url: string) => {
+    dispatch(setProfileSharingConfigKey('photo', 'avatar', true));
+
     dispatch(setProfileKeyValue('photo', { avatar: url }));
   };
 
