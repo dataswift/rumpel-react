@@ -13,6 +13,7 @@ import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces
 import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
 import { getPublicProfile, getDataDebits } from '../api/hatAPI';
+import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -228,7 +229,14 @@ export class HatClientService {
   }
 
   public async disableApplication(applicationId: string) {
-    return get<HatApplication>(`${this.pathPrefix}/applications/${applicationId}/disable`);
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/disable`;
+
+    return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
   public async getPublicProfile() {
@@ -277,7 +285,17 @@ export class HatClientService {
     return this.hat.files().generateFileContentUrl(fileId);
   }
   public async getDataDebits() {
-    const token = this.hat.auth().getToken() || '';
-    return getDataDebits(this.hat, token);
+    return getDataDebits(this.hat);
+  }
+
+  public async disableDataDebit(dataDebitId: string, atPeriodEnd: boolean) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    let path = `${hatdomain}${this.pathPrefix}/data-debit/${dataDebitId}/disable?atPeriodEnd=${atPeriodEnd}`;
+
+    return get<DataDebit>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }
