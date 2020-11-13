@@ -48,6 +48,8 @@
   "ds.hat.application.details.learn": "Learn More",
   "ds.hat.application.details.description.title": "Description",
   "ds.hat.application.details.screenshots.title": "Screenshots",
+  "ds.hat.application.details.purpose.title": "Purpose",
+  "ds.hat.application.details.requirements.title": "Requirements",
   "ds.hat.dataplugs.header.title": "HAT DATA PLUGS",
   "ds.hat.dataplugs.header.description": "Add new data plugs to your account, or view data from existing plugs.",
   "ds.hat.universal-data-viewer.header.title": "DATA SOURCES",

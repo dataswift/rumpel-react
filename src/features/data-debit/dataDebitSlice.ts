@@ -1,5 +1,5 @@
 import { DataDebit } from '@dataswift/hat-js/lib/interfaces/data-debit.interface';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { HatClientService } from '../../services/HatClientService';
 
@@ -24,6 +24,11 @@ export const slice = createSlice({
 export const { setDataDebits } = slice.actions;
 
 export const selectDataDebits = (state: RootState): DataDebit[] => state.dataDebits.dataDebits;
+
+export const selectDataDebitById = (id: string) =>
+  createSelector(selectDataDebits, (dataDebits) => {
+    return dataDebits.find((dataDebit) => dataDebit.dataDebitKey === id);
+  });
 
 export const getDataDebits = (): AppThunk => async (dispatch) => {
   const dataDebits = await HatClientService.getInstance().getDataDebits();
