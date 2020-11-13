@@ -62,12 +62,8 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu }) => {
     );
   });
 
-  if (hideSideMenu) {
-    return null;
-  }
-
   return (
-    <div className={'side-menu'}>
+    <div className={'side-menu'} style={{ visibility: hideSideMenu ? 'hidden' : 'visible' } }>
       <div className={'side-menu-scroll'}>
         <h6>Menu</h6>
         {SideMenuOptions}
