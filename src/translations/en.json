@@ -68,5 +68,6 @@
   "ds.hat.settings.list.header.vendor": "Vendor (where you got your HAT)",
   "ds.hat.settings.list.header.issuer": "Hat Issuer",
   "ds.hat.dataDebits.header.title": "Data Debits",
-  "ds.hat.dataDebits.header.description": "See all data debits you have enabled so far in your HAT"
+  "ds.hat.dataDebits.header.description": "See all data debits you have enabled so far in your HAT",
+  "ds.hat.dataDebits.actions.disconnect": "Make debit inactive"
 }

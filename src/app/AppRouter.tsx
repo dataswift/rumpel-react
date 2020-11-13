@@ -203,7 +203,7 @@ const AppRouter = () => (
           <HatLogin />
         </PrivateLayoutRoute>
 
-        <PrivateLayoutRoute path={'/auth/oauth'} newAuth footerBackgroundColor="#fff">
+        <PrivateLayoutRoute path={'/auth/oauth'} newAuth issuedByFooter footerBackgroundColor="#fff">
           <Oauth />
         </PrivateLayoutRoute>
 

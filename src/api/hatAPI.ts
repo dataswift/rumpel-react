@@ -40,8 +40,6 @@ export const changePassword = (body: { password: string; newPassword: string }) 
   return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
 };
 
-export const getDataDebits = (client: HatClient, token: string) => {
-  if (!token) return;
-
-  return client.dataDebits().getAll({ 'x-auth-token': token });
+export const getDataDebits = (client: HatClient) => {
+  return client.dataDebits().getAllDefault();
 };

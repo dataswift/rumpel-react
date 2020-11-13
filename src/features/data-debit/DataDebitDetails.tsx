@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader';
 import './DataDebitDetails.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import { getDataDebits, selectDataDebitById } from "./dataDebitSlice";
-import AppDetailsToolbarActions from "../applications/ApplicationDetailsActions";
 import { unbundle } from "../../utils/unbundle";
 import Card from "../../components/Card/Card";
 import { format } from "date-fns";
+import DataDebitDetailsActions from "./DataDebitDetailsActions";
 
 const DataDebitDetails: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { dataDebitParam } = useParams<{ dataDebitParam: string }>();
   const dataDebit = useSelector(selectDataDebitById(dataDebitParam));
   const [requirements, setRequirements] = useState<{ title: string; fields: string[]; expanded?: boolean }[]>([]);
@@ -33,7 +34,7 @@ const DataDebitDetails: React.FC = () => {
       <DetailsHeader
         logoSrc={dataDebit.requestClientLogoUrl}
         logoAltText="Data Debit Logo"
-        toolbarActions={<AppDetailsToolbarActions setup={false} appId={dataDebit.dataDebitKey} />}
+        toolbarActions={<DataDebitDetailsActions active={dataDebit.active} dataDebitId={dataDebit.dataDebitKey} />}
         backgroundColor="#2b313d"
       >
         <h3 className="app-details-header-title">{dataDebit.dataDebitKey}</h3>
@@ -69,16 +70,18 @@ const DataDebitDetails: React.FC = () => {
           imgAltText={'data debit'}
           name={dataDebit.requestClientName}
           description={'Created the data debit'}
-          onClick={() => {}} />
+          onClick={() => history.push(`/explore/App/${dataDebit.requestApplicationId}`)} />
       </div>
-
-      <a 
-        className={'data-debit-privacy-policy'} 
-        href={dataDebit.permissionsLatest?.termsUrl}
-        rel="noopener noreferrer"
-        target="_blank">
+        
+      {dataDebit.permissionsLatest?.termsUrl &&
+        <a
+          className={'data-debit-privacy-policy'}
+          href={dataDebit.permissionsLatest?.termsUrl}
+          rel="noopener noreferrer"
+          target="_blank">
           Privacy policy
-      </a>
+        </a>
+      }
     </>
   );
 };
