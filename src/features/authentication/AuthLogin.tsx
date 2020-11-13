@@ -89,7 +89,7 @@ const AuthLogin: React.FC = () => {
       }
     } catch (e) {
       if (messages) {
-        setErrorMessage('ds.auth.login.passwordIncorrect');
+        setErrorMessage(messages['ds.auth.login.passwordIncorrect']);
       }
     }
   };
