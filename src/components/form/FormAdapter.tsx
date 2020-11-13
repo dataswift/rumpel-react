@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FormFields } from "./formFields.interface";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import DatePickerRumpel from "../DatePickerRumpel/DatePickerRumpel";
@@ -7,6 +7,7 @@ import { useFormValidations } from "./useFormValidations";
 import { ProfileSharingConfig } from "../../features/profile/profile.interface";
 import { setProfileSharingConfigKey } from "../../features/profile/profileSlice";
 import { useDispatch } from "react-redux";
+const debounce = require('lodash.debounce');
 
 type Props = {
   fields: Array<FormFields>;
@@ -15,17 +16,22 @@ type Props = {
   profileField?: boolean;
   formId: string;
   profileSharing?: ProfileSharingConfig;
+  onFormDataChange?: (key: string, data: Record<string, string>) => void;
 }
 
 const FormAdapter: React.FC<Props> = (props) => {
-  const { fields, profileField, formId, validations, values, profileSharing } = props;
+  const { fields, profileField, formId, validations, values, onFormDataChange, profileSharing } = props;
   const dispatch = useDispatch();
   const [formState, setFormState] = useState<Record<string, string>>(values);
+  const [previousState] = useState<Record<string, string>>(values);
   const { errors } = useFormValidations(validations, formState);
-
-  useEffect(() => {
-    setFormState(values);
-  }, [values]);
+  const onFormStateDebounce = useRef(
+    debounce(
+      (key: string, data: Record<string, string>) =>
+              onFormDataChange?.(key, data),
+      1000,
+    ),
+  ).current;
 
   const onChange = (fieldId: string, value: string) => {
     setFormState({ ...formState, [fieldId]: value });
@@ -34,6 +40,12 @@ const FormAdapter: React.FC<Props> = (props) => {
   const onProfileSharingChange = (key: string, id: string) => {
     dispatch(setProfileSharingConfigKey(key, id));
   };
+
+  useEffect(() => {
+    if (previousState !== formState) {
+      onFormStateDebounce(formId, formState);
+    }
+  }, [formId, previousState, formState, onFormStateDebounce]);
 
   const elements = fields.map(field => {
     switch (field.type) {

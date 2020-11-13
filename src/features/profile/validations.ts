@@ -3,6 +3,9 @@ export const profileInfoValidations = {
   lastName: 'optional|name|min-length:1|max-length:30',
   gender: 'optional|options:male,female',
   birthDate: 'optional|date-format:dd/MM/yyyy',
+};
+
+export const profileContactValidations = {
   primaryEmail: 'optional|email',
   alternativeEmail: 'optional|email',
   mobile: 'optional|number',

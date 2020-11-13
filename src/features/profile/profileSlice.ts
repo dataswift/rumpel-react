@@ -4,7 +4,7 @@ import { HatClientService } from "../../services/HatClientService";
 import { Profile, ProfileSharingConfig } from "./profile.interface";
 import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
 import { BundleStructure } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
-import { generateProfileShare } from "./helpers";
+import { generatePhataBundle, generateProfileShare } from "./helpers";
 
 type ProfileState = {
     profile: HatRecord<Profile>[];
@@ -12,6 +12,7 @@ type ProfileState = {
     expirationTime: number;
     profileBundle: BundleStructure;
     profileSharingConfig: ProfileSharingConfig;
+    profileFetched: boolean;
 };
 
 const DEFAULT_PROFILE_SHARE_CONFIG: ProfileSharingConfig = {
@@ -72,7 +73,8 @@ export const initialState: ProfileState = {
   profile: [],
   expirationTime: 20,
   profileBundle: DEFAULT_PHATA_BUNDLE,
-  profileSharingConfig: DEFAULT_PROFILE_SHARE_CONFIG
+  profileSharingConfig: DEFAULT_PROFILE_SHARE_CONFIG,
+  profileFetched: false,
 };
 
 export const slice = createSlice({
@@ -87,6 +89,7 @@ export const slice = createSlice({
     },
     profileSharingConfig: (state, action: PayloadAction<ProfileSharingConfig>) => {
       state.profileSharingConfig = action.payload;
+      state.profileFetched = true;
     },
   },
 });
@@ -113,16 +116,19 @@ export const setProfileKeyValue = (
   current.data[key] = value;
 
   dispatch(profile([current]));
+  dispatch(saveProfile());
 };
 
 export const setProfileSharingConfigKey = (id: string, key: string): AppThunk => (dispatch, getState) => {
   const newSharingConfig = JSON.parse(JSON.stringify(getState().profile.profileSharingConfig));
   newSharingConfig[id][key] = !getState().profile.profileSharingConfig[id][key];
   dispatch(profileSharingConfig(newSharingConfig));
+  dispatch(saveProfileSharingDetails());
 };
 
 export const selectProfile = (state: RootState) => state.profile.profile[0];
 export const selectProfileSharingConfig = (state: RootState) => state.profile.profileSharingConfig;
+export const selectProfileFetched = (state: RootState) => state.profile.profileFetched;
 
 export const getProfile = (): AppThunk => async dispatch => {
   try {
@@ -133,9 +139,38 @@ export const getProfile = (): AppThunk => async dispatch => {
     }
   } catch (e) {
     // TODO Error Handling
-    console.log(e);
   }
 };
+
+export const saveProfile = (): AppThunk => async (dispatch, getState) => {
+  try {
+    const profile = getState().profile.profile[0];
+
+    if (!profile) return;
+
+    const res = await HatClientService.getInstance().postProfileData(profile);
+
+    if (res?.parsedBody && res.parsedBody.length > 0) {
+      dispatch(setProfile(res.parsedBody));
+    }
+  } catch (e) {
+    // TODO Error Handling
+  }
+};
+
+export const saveProfileSharingDetails = (): AppThunk => async (dispatch, getState) => {
+  try {
+    const newDataBundle = generatePhataBundle(
+      getState().profile.profileSharingConfig,
+      getState().profile.profileBundle
+    );
+    
+    await HatClientService.getInstance().postDataBundleStructure('phata', newDataBundle);
+  } catch (e) {
+    // TODO Error Handling
+  }
+};
+
 
 export const getProfilePrivacyDataBundle = (): AppThunk => async (dispatch, getState) => {
   try {
@@ -147,7 +182,6 @@ export const getProfilePrivacyDataBundle = (): AppThunk => async (dispatch, getS
     }
   } catch (e) {
     // TODO Error Handling
-    console.log(e);
   }
 };
 
