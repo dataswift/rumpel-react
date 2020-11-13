@@ -46,13 +46,13 @@ describe('Data Debits page tests', () => {
     expect(history.location.pathname).toEqual('/data-debit');
     expect(mockGetDataDebits).toHaveBeenCalledTimes(1);
 
-    expect(screen.getByText('Test Expired Data Debit')).toBeInTheDocument();
+    expect(screen.getByText('TestExpiredDataDebit')).toBeInTheDocument();
     expect(screen.getByText('expired 12 Dec 2017 1:55PM')).toBeInTheDocument();
 
     expect(screen.getByText('active')).toBeInTheDocument();
-    const activeDataDebit = screen.getByText('Test Active Data Debit');
+    const activeDataDebit = screen.getByText('TestActiveDataDebit');
     fireEvent.click(activeDataDebit);
 
-    expect(history.location.pathname).toEqual('/data-debit/Test Active Data Debit');
+    expect(history.location.pathname).toEqual('/data-debit/TestActiveDataDebit');
   });
 });

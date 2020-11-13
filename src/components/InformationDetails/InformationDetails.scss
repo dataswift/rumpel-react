@@ -54,5 +54,21 @@
         margin-bottom: 10px;
       }
     }
+
+    &-requirements {
+      margin-left: 15px;
+      .requirements-title {
+        font-weight: 700;
+        color: $app-dark-tone;
+        font-size: 1.3rem;
+        margin-top: 10px;
+      }
+      ul {
+        li {
+          margin-left: 25px;
+          font-size: 1.3rem;
+        }
+      }
+    }
   }
 }
