@@ -9,10 +9,11 @@ import { SystemStatusInterface } from '../features/system-status/system-status.i
 import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
-import { getPublicProfile } from '../api/hatAPI';
 import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
 import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
+import { getPublicProfile, getDataDebits } from '../api/hatAPI';
+import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -228,7 +229,14 @@ export class HatClientService {
   }
 
   public async disableApplication(applicationId: string) {
-    return get<HatApplication>(`${this.pathPrefix}/applications/${applicationId}/disable`);
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/disable`;
+
+    return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
   public async getPublicProfile() {
@@ -275,5 +283,19 @@ export class HatClientService {
 
   public generateFileContentUrl(fileId: string) {
     return this.hat.files().generateFileContentUrl(fileId);
+  }
+  public async getDataDebits() {
+    return getDataDebits(this.hat);
+  }
+
+  public async disableDataDebit(dataDebitId: string, atPeriodEnd: boolean) {
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+
+    if (!token) return;
+
+    let path = `${hatdomain}${this.pathPrefix}/data-debit/${dataDebitId}/disable?atPeriodEnd=${atPeriodEnd}`;
+
+    return get<DataDebit>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 }

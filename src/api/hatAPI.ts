@@ -1,5 +1,6 @@
 import { get, post } from '../services/BackendService';
 import { BundleValues } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { HatClient } from '@dataswift/hat-js';
 
 export const userAccessToken = (username: string, password: string) => {
   const path = `/users/access_token`;
@@ -37,4 +38,8 @@ export const changePassword = (body: { password: string; newPassword: string }) 
   const headers = { 'Content-Type': 'application/json' };
 
   return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
+};
+
+export const getDataDebits = (client: HatClient) => {
+  return client.dataDebits().getAllDefault();
 };
