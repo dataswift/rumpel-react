@@ -23,11 +23,17 @@ export const PrivateSpace: React.FC<Props> = ({ children }) => {
     content.current?.scrollTo(0, 0);
   }, [pathname]);
 
+  const onSideMenuClick = () => {
+    if (window.innerWidth < 730) {
+      setHideSideMenu(!hideSideMenu);
+    }
+  };
+
   return (
     <div className={'private-space'}>
       <NavigationHeader toggleSideMenu={() => setHideSideMenu(!hideSideMenu)}/>
       <div className={'private-space-wrapper'}>
-        <SideMenu hideSideMenu={hideSideMenu}/>
+        <SideMenu hideSideMenu={hideSideMenu} onSideMenuClick={onSideMenuClick}/>
         <div
           className={`private-space-content ${hideSideMenu && 'side-menu-hidden'}`}
           id={'private-space-content'}
