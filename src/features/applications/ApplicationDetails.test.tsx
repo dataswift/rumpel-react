@@ -57,7 +57,7 @@ describe('Hat Application Details', () => {
 
     expect(history.location.pathname).toEqual('/auth/oauth');
     expect(history.location.search).toEqual(
-      '?application_id=1&fallback=http://localhost/&redirect_uri=%3Fredirect=http://localhost/',
+      '?application_id=1&fallback=http://localhost/&redirect_uri=http://localhost/&internal=true',
     );
   });
 });

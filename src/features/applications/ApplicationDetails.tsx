@@ -23,13 +23,12 @@ const HatApplicationDetails: React.FC = () => {
   if (!app) return null;
 
   const onAppStatusClick = () => {
-    const { id, setup } = app.application;
+    const { id } = app.application;
     const redirectRumpel = window.location.href;
-    const redirectUrl = setup.url || setup.iosUrl || '';
 
     history.push(
       `/auth/oauth?` +
-        `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectUrl}%3Fredirect=${redirectRumpel}`,
+        `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectRumpel}&internal=true`,
     );
   };
 
