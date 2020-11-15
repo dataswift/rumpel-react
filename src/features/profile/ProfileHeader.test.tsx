@@ -17,7 +17,7 @@ export const store = configureStore({
   },
   preloadedState: {
     profile: {
-      profile: [TEST_PROFILE]
+      profile: TEST_PROFILE
     },
     authentication: TEST_AUTH
   },

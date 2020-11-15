@@ -29,7 +29,7 @@ const ProfileDetails: React.FC = () => {
               formId={fields.id}
               validations={fields.validations}
               values={
-                  profile?.data[fields.id] as Record<string, string>
+                  profile?.[fields.id] as Record<string, string>
               }
               profileSharing={profileSharing}
               onFormDataChange={onFormDataChange}

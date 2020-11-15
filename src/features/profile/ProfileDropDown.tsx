@@ -40,8 +40,8 @@ export const ProfileDropDown: React.FC = () => {
   };
 
   const getProfileImage = () => {
-    if (profile?.data?.photo?.avatar) {
-      return profile.data.photo.avatar;
+    if (profile?.photo?.avatar) {
+      return profile.photo.avatar;
     } else {
       return '';
     }

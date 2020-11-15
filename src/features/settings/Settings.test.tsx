@@ -28,7 +28,7 @@ export const store = configureStore({
       systemStatus: TEST_SYSTEM_STATUS,
     },
     profile: {
-      profile: [TEST_PROFILE],
+      profile: TEST_PROFILE,
     },
     authentication: TEST_AUTH,
     messages,

@@ -40,7 +40,7 @@ const ProfileHeader: React.FC = () => {
       <div className={'profile-header-box'}>
         <div className={'profile-header-photo-container'}>
           <ProfilePicUpload
-            currentImageSrc={profile?.data?.photo.avatar}
+            currentImageSrc={profile?.photo.avatar}
             enabled 
             onLogoUploaded={onLogoUploaded}
           />
@@ -63,9 +63,9 @@ const ProfileHeader: React.FC = () => {
         </div>
 
         <p>
-          {profile?.data.online &&
+          {profile?.online &&
             <span className={'profile-header-social-links'}>
-              {Object.entries(profile.data.online).map(([key, value], index) => {
+              {Object.entries(profile.online).map(([key, value], index) => {
                 if (!value) return null;
 
                 return <a href={value} target={'_blank'} rel="noopener noreferrer" key={key + index}>
