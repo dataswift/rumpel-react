@@ -6,7 +6,7 @@ import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader'
 import FormatMessage from '../messages/FormatMessage';
 import { getApplicationById, selectApplicationById } from './applicationsSlice';
 import './HatApplication.scss';
-import { getStatusIcon, getAppStatus, getApplicationDetails } from './helper';
+import { getStatusIcon, getAppStatus, getApplicationDetails, getStatusButtonText } from './helper';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import AppDetailsToolbarActions from './ApplicationDetailsActions';
 
@@ -57,7 +57,7 @@ const HatApplicationDetails: React.FC = () => {
 
         <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
           <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
-          Connect
+          {getStatusButtonText(app)}
         </div>
       </DetailsHeader>
       <InformationDetails

@@ -36,7 +36,7 @@ describe('Hat Application Details', () => {
 
     expect(screen.getByText('Test Application')).toBeInTheDocument();
     expect(screen.getByText('more_horiz')).toBeInTheDocument();
-    expect(screen.getByText('Connect')).toBeInTheDocument();
+    expect(screen.getByText('Active')).toBeInTheDocument();
     expect(screen.getByAltText('HAT Application Logo')).toBeInTheDocument();
   });
 

@@ -9,7 +9,7 @@ import '../applications/HatApplication.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import { getApplicationById, selectApplicationById } from "../applications/applicationsSlice";
 import AppDetailsToolbarActions from "../applications/ApplicationDetailsActions";
-import { getAppStatus, getStatusIcon } from "../applications/helper";
+import {getAppStatus, getStatusButtonText, getStatusIcon} from "../applications/helper";
 
 const DataPlugDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ const DataPlugDetails: React.FC = () => {
 
         <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
           <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
-                    Connect
+          {getStatusButtonText(app)}
         </div>
       </DetailsHeader>
       <InformationDetails
