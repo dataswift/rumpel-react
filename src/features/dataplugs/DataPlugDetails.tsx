@@ -9,7 +9,7 @@ import '../applications/HatApplication.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import { getApplicationById, selectApplicationById } from "../applications/applicationsSlice";
 import AppDetailsToolbarActions from "../applications/ApplicationDetailsActions";
-import {getAppStatus, getStatusButtonText, getStatusIcon} from "../applications/helper";
+import { getAppStatus, getStatusButtonText, getStatusIcon } from "../applications/helper";
 
 const DataPlugDetails: React.FC = () => {
   const dispatch = useDispatch();
