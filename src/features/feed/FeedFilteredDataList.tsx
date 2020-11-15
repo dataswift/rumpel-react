@@ -8,13 +8,12 @@ type Props = {
 }
 
 export const FeedFilteredData: React.FC<Props> = ({ selectedDates }) => {
-  const { loading, feed, error } = useFilterFeedData(selectedDates.since, selectedDates.until);
+  const { loading, feed } = useFilterFeedData(selectedDates.since, selectedDates.until);
 
   return (
-    <>
-      {loading && <FeedLoading filteredData={!loading} dataFetched={!loading}>Loading</FeedLoading>}
-      {error && <div>Error</div>}
+    <div className={'feed-wrapper'}>
       <FeedList dayGroupedFeed={feed}/>
-    </>
+      {loading && <FeedLoading filteredData={true} dataFetched={!loading}>Loading</FeedLoading>}
+    </div>
   );
 };

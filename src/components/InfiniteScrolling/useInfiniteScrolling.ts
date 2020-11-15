@@ -71,6 +71,8 @@ export default function useInfiniteScrolling(refreshDate: Date, loadMore?: Date 
 
     if ((items.length === 0 && repeats < 4)) {
       fetchFeed();
+    } else {
+      setLoading(false);
     }
 
     if (loadMore) {

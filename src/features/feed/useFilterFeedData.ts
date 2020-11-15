@@ -17,9 +17,9 @@ export default function useFilterFeedData(since: number, until: number) {
 
     const fetchFeed = async () => {
       setItems([]);
-
       setLoading(true);
       setError(false);
+
       try {
         const res = await HatClientService.getInstance().getSheRecords("", since, until);
 
@@ -34,7 +34,6 @@ export default function useFilterFeedData(since: number, until: number) {
         // TODO Error Handling
         setError(true);
         setLoading(false);
-        console.log(e);
       }
     };
 
