@@ -13,6 +13,7 @@ type ProfileState = {
     profileBundle: BundleStructure;
     profileSharingConfig: ProfileSharingConfig;
     profileFetched: boolean;
+    profileBundleFetched: boolean;
 };
 
 const DEFAULT_PROFILE_SHARE_CONFIG: ProfileSharingConfig = {
@@ -90,6 +91,7 @@ export const initialState: ProfileState = {
   profileBundle: DEFAULT_PHATA_BUNDLE,
   profileSharingConfig: DEFAULT_PROFILE_SHARE_CONFIG,
   profileFetched: false,
+  profileBundleFetched: false,
 };
 
 export const slice = createSlice({
@@ -102,6 +104,7 @@ export const slice = createSlice({
     },
     profileBundle: (state, action: PayloadAction<BundleStructure>) => {
       state.profileBundle = action.payload;
+      state.profileBundleFetched = true;
     },
     profileSharingConfig: (state, action: PayloadAction<ProfileSharingConfig>) => {
       state.profileSharingConfig = action.payload;
@@ -149,6 +152,7 @@ export const setProfileSharingConfigKey = (
 export const selectProfile = (state: RootState) => state.profile.profile;
 export const selectProfileSharingConfig = (state: RootState) => state.profile.profileSharingConfig;
 export const selectProfileFetched = (state: RootState) => state.profile.profileFetched;
+export const selectProfileBundleFetched = (state: RootState) => state.profile.profileBundleFetched;
 
 export const getProfile = (): AppThunk => async dispatch => {
   try {
