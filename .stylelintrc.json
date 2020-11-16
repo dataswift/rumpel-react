@@ -1,0 +1,7 @@
+{
+    "extends": "stylelint-config-sass-guidelines",
+    "rules": {
+        "selector-max-id": [2],
+        "max-nesting-depth": null
+    }
+}

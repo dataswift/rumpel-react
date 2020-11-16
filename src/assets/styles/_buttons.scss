@@ -1,9 +1,9 @@
-@import "branding";
+@import 'branding';
 
 button {
+  cursor: pointer;
   font-family: $font-standard;
   font-weight: 500;
-  cursor: pointer;
 }
 
 button:focus {
@@ -16,20 +16,19 @@ button::-moz-focus-inner {
 }
 
 .btn {
-  display: block;
-  font-weight: normal;
-  width: 25rem;
-  height: 4.8rem;
-  text-align: center;
-  vertical-align: middle;
-  text-transform: uppercase;
-  touch-action: manipulation;
-  cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid transparent;
-  white-space: nowrap;
   border-radius: 4px;
+  cursor: pointer;
+  display: block;
   font-size: 1.4rem;
+  font-weight: normal;
+  height: 4.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  white-space: nowrap;
+  width: 25rem;
 }
 
 .btn-accent {
@@ -51,19 +50,19 @@ button::-moz-focus-inner {
   background-color: $button-transparent-color;
   color: #acacac;
   font-size: 1.6rem;
-  text-transform: initial;
-  text-decoration: none;
   letter-spacing: 0.15px;
+  text-decoration: none;
+  text-transform: initial;
 }
 
 .link-button {
-  border: none;
   background: transparent;
+  border: 0;
   color: $app-accent-color;
-  font-weight: 700;
   cursor: pointer;
-  letter-spacing: 0.4px;
   font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
 }
 
 a {
@@ -74,4 +73,3 @@ a:focus {
   outline: 1px solid #afafaf;
   outline-offset: 2px;
 }
-

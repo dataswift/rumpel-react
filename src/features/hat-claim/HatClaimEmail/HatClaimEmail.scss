@@ -1,13 +1,13 @@
-.hat-claim-email {
-  //min-height: 60%;
+/* stylelint-disable selector-no-qualifying-type -- This is allowed. */
 
-  input[type=email] {
-    margin-top: 2.4rem;
+.hat-claim-email {
+  input[type='email'] {
     margin-bottom: 1.6rem;
+    margin-top: 2.4rem;
   }
 
   .text-small {
-    margin-top: 2rem;
     margin-bottom: 2rem;
+    margin-top: 2rem;
   }
 }

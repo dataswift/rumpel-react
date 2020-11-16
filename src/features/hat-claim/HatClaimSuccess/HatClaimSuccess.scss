@@ -2,29 +2,31 @@
   h2 {
     margin: 0;
   }
+
   h3 {
     font-size: 1.8rem;
   }
+
   .text-medium {
-    margin: 2.5rem auto;
-    line-height: 1.57;
     font-size: 1.4rem;
     letter-spacing: 0.25px;
+    line-height: 1.57;
+    margin: 2.5rem auto;
   }
 }
 
 .your-hat-issuer {
-  margin-top: 7rem;
-  margin-bottom: 1rem;
+  color: #9a9a9a;
   font-size: 1.6rem;
   line-height: 1.57;
-  color: #9a9a9a;
+  margin-bottom: 1rem;
+  margin-top: 7rem;
 }
 
 .issuer-logo {
-  width: 100%;
-  text-align: center;
   margin-bottom: 3.9rem;
+  text-align: center;
+  width: 100%;
 
   img {
     max-width: 18.6rem;
@@ -33,12 +35,12 @@
 }
 
 .drp-image {
-  width: 100%;
   text-align: center;
+  width: 100%;
 
   img {
-    max-width: 10rem;
     max-height: 10rem;
+    max-width: 10rem;
     width: 25%;
   }
 }

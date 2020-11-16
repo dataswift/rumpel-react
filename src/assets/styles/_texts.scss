@@ -1,6 +1,10 @@
-@import "branding";
+@import 'branding';
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: $app-dark-tone;
   font-weight: 500;
   letter-spacing: 0.17px;
@@ -9,45 +13,47 @@ h1, h2, h3, h4, h5 {
 h1 {
   font-size: 3.2rem;
 }
+
 h2 {
   font-size: 2.8rem;
-  margin-top: 3.2rem;
   margin-bottom: 3.2rem;
+  margin-top: 3.2rem;
 }
+
 h3 {
   font-size: 2.4rem;
 }
 
 .text-medium {
+  color: #9a9a9a;
   font-size: 1.6rem;
-  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: normal;
+  font-weight: normal;
   letter-spacing: normal;
-  text-align: center;
-  color: #9a9a9a;
+  line-height: normal;
   max-width: 42.4rem;
+  text-align: center;
 
   @media only screen and (max-width: $bp-smallest) {
     max-width: 90%;
   }
 
   a {
-    text-decoration: none;
     color: $app-accent-color;
     font-weight: 500;
+    text-decoration: none;
   }
 }
 
 .text-small {
+  color: #9a9a9a;
   font-size: 1.4rem;
-  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.33;
+  font-weight: normal;
   letter-spacing: normal;
-  color: #9a9a9a;
+  line-height: 1.33;
   max-width: 42.4rem;
 
   @media only screen and (max-width: $bp-smallest) {
@@ -55,9 +61,9 @@ h3 {
   }
 
   a {
-    text-decoration: none;
     color: $app-accent-color;
     font-weight: 500;
+    text-decoration: none;
   }
 }
 

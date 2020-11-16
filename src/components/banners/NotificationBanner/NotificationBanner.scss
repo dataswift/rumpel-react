@@ -1,23 +1,23 @@
 .notification-banner-container {
-  z-index: 10000;
-  top: 0;
-  left: 0;
-  right: 0;
   border-radius: 2px;
-  font-size: 1.6rem;
-  letter-spacing: 0.4px;
-  padding: 1.5rem 0.5rem;
-  text-align: center;
-  width: 100vw;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  font-size: 1.6rem;
   justify-content: center;
+  left: 0;
+  letter-spacing: 0.4px;
+  padding: 1.5rem 0.5rem;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100vw;
+  z-index: 10000;
 
   &-error {
     background-color: #fadcdc;
-    border-bottom: solid 1px #E45151;
-    color: #E45151;
+    border-bottom: solid 1px #e45151;
+    color: #e45151;
   }
 
   &-icon {
