@@ -27,10 +27,11 @@
   left: 0;
   top: 10px;
   color: #9a9a9a;
-  background-color: #fff;
+  background-color: transparent;
   font-size: 1.4rem;
   z-index: 10;
   transition: transform 150ms ease-out, font-size 150ms ease-out;
+  margin-right: 56px;
 }
 
 .focused .form-label {

@@ -32,15 +32,18 @@ export const FeedList: React.FC<Props> = ({ dayGroupedFeed, loading, lastFeedEle
     <div className={'she-feed'} id={'she-feed'}>
       {dayGroupedFeed.map((day, index) => {
         if (dayGroupedFeed.length === index + 1) {
-          return <div key={day.day + index} ref={lastFeedElementRef}>
+          return (
+            <div key={day.day + index} ref={lastFeedElementRef}>
+              <h5 className="day-separator">{day.day}</h5>
+              <FeedRollup sheFeed={day.data}/>
+            </div>
+          );
+        }
+        return (
+          <div key={day.day + index}>
             <h5 className="day-separator">{day.day}</h5>
             <FeedRollup sheFeed={day.data}/>
-          </div>;
-        }
-        return <div key={day.day + index}>
-          <h5 className="day-separator">{day.day}</h5>
-          <FeedRollup sheFeed={day.data}/>
-        </div>;
+          </div>);
       })}
     </div>
   );
