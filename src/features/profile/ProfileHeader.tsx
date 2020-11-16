@@ -40,7 +40,7 @@ const ProfileHeader: React.FC = () => {
       <div className={'profile-header-box'}>
         <div className={'profile-header-photo-container'}>
           <ProfilePicUpload
-            currentImageSrc={profile?.photo.avatar}
+            currentImageSrc={profile?.photo?.avatar}
             enabled 
             onLogoUploaded={onLogoUploaded}
           />

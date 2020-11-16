@@ -55,7 +55,7 @@ const DataPlugDetails: React.FC = () => {
         logoSrc={app.application.info.graphics.logo.normal}
         logoAltText="Data Plug Logo"
         toolbarActions={<AppDetailsToolbarActions setup={app.setup} appId={app.application.id} />}
-        backgroundColor={app.application.info.primaryColor || 'rgba(43, 49, 61, 0.7)'}
+        backgroundColor={app.application.info.primaryColor}
       >
         <div className="app-rating-wrapper">
           <div className="app-rating">

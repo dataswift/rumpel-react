@@ -30,7 +30,7 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu, onSideMenuClick }) => 
 
       return <a href={linkTo} className={'side-menu-item-wrapper'}>{children}</a>;
     } else {
-      return <Link to={link} className={'side-menu-item-wrapper'} onClick={() => onSideMenuClick()}>{children}</Link>;
+      return <Link to={link} className={'side-menu-item-wrapper'} onClick={onSideMenuClick}>{children}</Link>;
     }
   };
 

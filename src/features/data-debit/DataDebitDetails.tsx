@@ -35,7 +35,6 @@ const DataDebitDetails: React.FC = () => {
         logoSrc={dataDebit.requestClientLogoUrl}
         logoAltText="Data Debit Logo"
         toolbarActions={<DataDebitDetailsActions active={dataDebit.active} dataDebitId={dataDebit.dataDebitKey} />}
-        backgroundColor="rgba(43, 49, 61, 0.7)"
       >
         <h3 className="app-details-header-title">{dataDebit.dataDebitKey}</h3>
 

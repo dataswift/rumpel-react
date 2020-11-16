@@ -137,11 +137,11 @@ export const setProfileKeyValue = (
 export const setProfileSharingConfigKey = (
   id: string,
   key: string,
-  overridePublic?: boolean
+  overrideToPublic?: boolean
 ): AppThunk => (dispatch, getState) => {
   const newSharingConfig = JSON.parse(JSON.stringify(getState().profile.profileSharingConfig));
 
-  newSharingConfig[id][key] = overridePublic ? true : !getState().profile.profileSharingConfig[id][key];
+  newSharingConfig[id][key] = overrideToPublic ? true : !getState().profile.profileSharingConfig[id][key];
   dispatch(profileSharingConfig(newSharingConfig));
   dispatch(saveProfileSharingDetails());
 };

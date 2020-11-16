@@ -39,14 +39,6 @@ export const ProfileDropDown: React.FC = () => {
     }
   };
 
-  const getProfileImage = () => {
-    if (profile?.photo?.avatar) {
-      return profile.photo.avatar;
-    } else {
-      return '';
-    }
-  };
-
   const logout = () => {
     dispatch(logoutUser());
   };
@@ -60,7 +52,7 @@ export const ProfileDropDown: React.FC = () => {
           aria-expanded="false"
         >
           <span className="user-photo">
-            <img src={getProfileImage() ? getProfileImage() : userLogo} alt={'Profile'} />
+            <img src={profile?.photo?.avatar || userLogo} alt={'Profile'} />
           </span>
 
           <span className="welcome">
@@ -77,7 +69,7 @@ export const ProfileDropDown: React.FC = () => {
       {menuOpen && (
         <div className={'profile-dropdown-overlay'}>
           <div className="accountDetails user-photo">
-            <img src={getProfileImage() ? getProfileImage() : userLogoBlue} alt={'Profile'} />
+            <img src={profile?.photo?.avatar || userLogoBlue} alt={'Profile'} />
             <h6 className="welcome">
               {userHatName}
               <br />
