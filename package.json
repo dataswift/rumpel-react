@@ -7,7 +7,7 @@
     "@material-ui/core": "^4.9.8",
     "@reduxjs/toolkit": "^1.3.5",
     "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.1",
+    "@testing-library/react": "^11.1.2",
     "date-fns": "^2.12.0",
     "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.10",
     "js-cookie": "^2.2.1",
