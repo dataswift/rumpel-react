@@ -1,27 +1,33 @@
-import React, { useState } from "react";
-import useInfiniteScrolling from "./useInfiniteScrolling";
+import React, { useEffect } from "react";
 import { FeedList } from "../../features/feed/FeedList";
 import { FeedLoading } from "../Feed/FeedLoading/FeedLoading";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getInitSheFeed,
+  getMoreSheFeedData,
+  selectSheFeedDisplayData,
+  selectSheFeedFetching
+} from "../../features/feed/feedSlice";
 
-type Props = {
-    refreshDate: Date
-}
+export const InfiniteScrolling: React.FC = () => {
+  const feed = useSelector(selectSheFeedDisplayData);
+  const fetching = useSelector(selectSheFeedFetching);
+  const dispatch = useDispatch();
 
-export const InfiniteScrolling: React.FC<Props> = ({ refreshDate }) => {
-  const [loadMore, setLoadMore] = useState<Date | null>(null);
-  const {
-    feed,
-    loading,
-  } = useInfiniteScrolling(refreshDate, loadMore);
+  useEffect(() => {
+    if (feed.length === 0) {
+      dispatch(getInitSheFeed());
+    }
+  }, [feed, dispatch]);
 
   const lastElementIntersecting = () => {
-    setLoadMore(new Date());
+    dispatch(getMoreSheFeedData());
   };
 
   return (
     <>
-      <FeedList dayGroupedFeed={feed} loading={loading} lastFeedElementIntersecting={() => lastElementIntersecting()}/>
-      {feed.length === 0 && <FeedLoading dataFetched={!loading} filteredData={false}/>}
+      <FeedList dayGroupedFeed={feed} loading={fetching} lastFeedElementIntersecting={() => lastElementIntersecting()}/>
+      {feed.length === 0 && <FeedLoading fetchingData={fetching}/>}
     </>
   );
 };

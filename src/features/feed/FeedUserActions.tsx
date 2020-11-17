@@ -3,7 +3,7 @@ import { DateRangePickerRumpel } from "../../components/DateRangePickerRumpel/Da
 
 type Props = {
   onSelectedDates: (since: number, until: number) => void;
-  onRefresh: (date: Date) => void;
+  onRefresh: () => void;
   onGoToToday: () => void;
 }
 
@@ -31,7 +31,7 @@ export const FeedUserActions: React.FC<Props> = ({ onSelectedDates, onRefresh, o
           <i className={'material-icons'}>fullscreen_exit</i>
         Today
         </button>
-        <button className="today-button" onClick={() => onRefresh(new Date())}>
+        <button className="today-button" onClick={() => onRefresh()}>
           <i className={'material-icons'}>refresh</i>
         Refresh
         </button>

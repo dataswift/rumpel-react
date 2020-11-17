@@ -14,7 +14,6 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
   const [overflowing, setOverflowing] = useState(false);
   const content = useRef<HTMLObjectElement>(null);
 
-
   useEffect(() => {
     if (!content.current) return;
 
@@ -64,6 +63,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
         )}
         {feedItem.content && feedItem.content.media && feedItem.content.media.length > 0 && (
           <div className="feed-card-content single-image"
+            data-testid={'feed-card-content-image'}
             style={{ backgroundImage: `url(${ feedItem.content.media[0].url })` }}>
             <div className="feed-item-overlay">
               <div className="feed-item-overlay-content">{feedItem.content.text}</div>

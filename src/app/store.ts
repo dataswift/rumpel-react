@@ -12,6 +12,7 @@ import publicProfileSlice from '../features/public-profile/publicProfileSlice';
 import systemStatusSlice from '../features/system-status/systemStatusSlice';
 import profileSlice from '../features/profile/profileSlice';
 import dataDebitsSlice from '../features/data-debit/dataDebitSlice';
+import feedSlice from '../features/feed/feedSlice';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     publicProfile: publicProfileSlice,
     systemStatus: systemStatusSlice,
     profile: profileSlice,
+    feed: feedSlice,
     hatClaim: hatClaimCombinedReducer,
     dataDebits: dataDebitsSlice,
   },

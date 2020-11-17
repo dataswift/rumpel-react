@@ -48,5 +48,5 @@ interface SheLocation {
         city?: string;
         country?: string;
     };
-    tags: string[];
+    tags?: string[];
 }
