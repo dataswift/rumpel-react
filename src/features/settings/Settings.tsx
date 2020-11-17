@@ -39,9 +39,7 @@ const Settings: React.FC = () => {
     if (!profileRecord) dispatch(getProfile());
   }, [dispatch, profileRecord]);
 
-  if (!profileRecord?.data) return null;
-
-  const profile = profileRecord.data;
+  const profile = profileRecord;
   const storagePercentage = getStoragePercentage(databaseUsed);
 
   return (

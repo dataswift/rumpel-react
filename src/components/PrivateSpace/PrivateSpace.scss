@@ -1,18 +1,36 @@
 .private-space {
   overflow: hidden;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
 
   .private-space-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
+    flex: 1;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     .private-space-content {
       flex-grow: 1;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      height: calc(100vh - 78px);
+      margin-left: 325px;
       background-color: #f6f6f6;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      overflow: auto;
+
+      @media (max-width: 730px) {
+        margin-left: 0;
+      }
+
+      &.side-menu-hidden {
+        margin-left: 0;
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ const OauthPermissions: React.FC = () => {
     dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
   };
 
-  if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
+  if ((!parentApp || (parentApp.active && !parentApp.needsUpdating)) || (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
       (parentApp.application.dependencies &&
           parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {

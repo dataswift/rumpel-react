@@ -113,7 +113,7 @@ export const config = {
     },
   ],
   settingsPrivateDataMenu: [
-    { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore', description: '' },
+    { display: 'Profile', icon: 'keyboard_arrow_right', link: '/profile', description: '' },
     { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit', description: '' },
   ],
 };

@@ -36,7 +36,7 @@ describe('Data Plug Details', () => {
 
     expect(screen.getByText('Test Data Plug')).toBeInTheDocument();
     expect(screen.getByText('more_horiz')).toBeInTheDocument();
-    expect(screen.getByText('Connect')).toBeInTheDocument();
+    expect(screen.getByText('Fetching...')).toBeInTheDocument();
     expect(screen.getByAltText('Data Plug Logo')).toBeInTheDocument();
   });
 

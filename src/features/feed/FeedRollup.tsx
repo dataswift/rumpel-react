@@ -35,9 +35,10 @@ const FeedRollupItem: React.FC<PropsItem> = ({ rolledUpItem }) => {
     return (
       <div>
         <FeedItem feedItem={rolledUpItem.rollup[0]}/>
-        <button className={'feed-item-rollup-control'}
+        <button 
+          className={'feed-item-rollup-control'} 
           onClick={() => setExpanded(!expanded)}>
-                    See {rolledUpItem.rollup.length - 1} more items
+            See {rolledUpItem.rollup.length - 1} more items
         </button>
       </div>
     );

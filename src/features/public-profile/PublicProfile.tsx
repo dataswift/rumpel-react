@@ -103,7 +103,7 @@ export const PublicProfile: React.FC = () => {
               </span>
             }
 
-            {(!profile || !(profile?.online && profile.contact && profile.about)) &&
+            {(!profile || (!profile?.personal && !profile?.online && !profile.contact && !profile.about)) &&
                 <span>
                   This user has no public information
                 </span>

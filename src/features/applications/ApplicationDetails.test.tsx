@@ -36,7 +36,7 @@ describe('Hat Application Details', () => {
 
     expect(screen.getByText('Test Application')).toBeInTheDocument();
     expect(screen.getByText('more_horiz')).toBeInTheDocument();
-    expect(screen.getByText('Connect')).toBeInTheDocument();
+    expect(screen.getByText('Active')).toBeInTheDocument();
     expect(screen.getByAltText('HAT Application Logo')).toBeInTheDocument();
   });
 
@@ -57,7 +57,7 @@ describe('Hat Application Details', () => {
 
     expect(history.location.pathname).toEqual('/auth/oauth');
     expect(history.location.search).toEqual(
-      '?application_id=1&fallback=http://localhost/&redirect_uri=%3Fredirect=http://localhost/',
+      '?application_id=1&fallback=http://localhost/&redirect_uri=http://localhost/&internal=true',
     );
   });
 });

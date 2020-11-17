@@ -11,7 +11,6 @@ import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.inter
 import { SheFeed } from '../features/feed/she-feed.interface';
 import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
 import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
-import { HatRecord } from "@dataswift/hat-js/lib/interfaces/hat-record.interface";
 import { getPublicProfile, getDataDebits } from '../api/hatAPI';
 import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
 
@@ -205,8 +204,8 @@ export class HatClientService {
     return this.hat.hatData().getAll<Profile>('rumpel', 'profile', options);
   }
 
-  public async postProfileData(profile: HatRecord<Profile>) {
-    return this.hat.hatData().update<Profile>([profile]);
+  public async postProfileData(profile: Profile) {
+    return this.hat.hatData().create<Profile>('rumpel', 'profile', profile);
   }
 
   public async getSheRecords(endpoint?: string, since?: number | string, until?: number | string) {
@@ -240,7 +239,13 @@ export class HatClientService {
   }
 
   public async getPublicProfile() {
-    const path = `${this.pathPrefix}/phata/profile`;
+    const token = this.hat.auth().getToken();
+    const hatdomain = this.hat.auth().getHatDomain();
+    
+    let path = (token && hatdomain) 
+      ? `${hatdomain}${this.pathPrefix}/phata/profile`
+      : `${this.pathPrefix}/phata/profile`;
+    
     return getPublicProfile(path);
   }
 

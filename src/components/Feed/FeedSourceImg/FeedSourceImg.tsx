@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import facebookIcon from "../../../assets/icons/she-facebook.svg";
 import twitterIcon from "../../../assets/icons/she-twitter.svg";
 import fitbitIcon from "../../../assets/icons/she-fitbit.svg";
@@ -8,6 +8,7 @@ import spotifyIcon from "../../../assets/icons/she-spotify.svg";
 import sheIcon from "../../../assets/icons/she-she.svg";
 import wordCloudIcon from "../../../assets/icons/she-wordcloud.svg";
 import sentimentIcon from "../../../assets/icons/she-sentiment.svg";
+import placeholderIcon from "../../../assets/icons/app-logo-placeholder.svg";
 
 type Props = {
     source: string;
@@ -27,11 +28,11 @@ const imgSrc: Record<string, any> = {
   she: sheIcon,
   sentiment: sentimentIcon,
   wordCloud: wordCloudIcon,
-  drops: sheIcon
+  drops: sheIcon,
+  placeholder: placeholderIcon
 };
 
 export const FeedSourceImg: React.FC<Props> = ({ source, types, height, width, className }) => {
-
   const imageSource = (source: string, types?: string[]) => {
     if (source === 'she') {
       if (types && types.indexOf('sentiment') !== -1) {
@@ -49,16 +50,17 @@ export const FeedSourceImg: React.FC<Props> = ({ source, types, height, width, c
       return imageAsset(source);
     }
   };
+
   const imageAsset = (source: string): string => {
     return source.split('-')[0] || 'she';
   };
-    
+
   return (
     <img 
-      src={imgSrc[imageSource(source, types)]} 
+      src={imgSrc[imageSource(source, types)] || imgSrc['placeholder']}
       height={height}
-      width={width} 
-      className={className} 
+      width={width}
+      className={className}
       alt={source}
     />
   );

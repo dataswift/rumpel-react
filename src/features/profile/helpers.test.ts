@@ -12,7 +12,7 @@ describe('Profile Helpers', () => {
   });
 
   test('Generate Profile Share returns the correct object', () => {
-    const profileShare = generateProfileShare(TEST_PROFILE.data, TEST_PROFILE_BUNDLE_STRUCTURE);
+    const profileShare = generateProfileShare(TEST_PROFILE, TEST_PROFILE_BUNDLE_STRUCTURE);
 
     expect(profileShare).toEqual(TEST_PROFILE_SHARING_CONFIG);
   });

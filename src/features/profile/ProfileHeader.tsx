@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProfile, setProfileKeyValue } from "./profileSlice";
+import { selectProfile, setProfileKeyValue, setProfileSharingConfigKey } from "./profileSlice";
 
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
@@ -30,6 +30,8 @@ const ProfileHeader: React.FC = () => {
   const userHatDomain = useSelector(selectUserHatDomain);
 
   const onLogoUploaded = (url: string) => {
+    dispatch(setProfileSharingConfigKey('photo', 'avatar', true));
+
     dispatch(setProfileKeyValue('photo', { avatar: url }));
   };
 
@@ -38,7 +40,7 @@ const ProfileHeader: React.FC = () => {
       <div className={'profile-header-box'}>
         <div className={'profile-header-photo-container'}>
           <ProfilePicUpload
-            currentImageSrc={profile?.data?.photo.avatar}
+            currentImageSrc={profile?.photo?.avatar}
             enabled 
             onLogoUploaded={onLogoUploaded}
           />
@@ -61,9 +63,9 @@ const ProfileHeader: React.FC = () => {
         </div>
 
         <p>
-          {profile?.data.online &&
+          {profile?.online &&
             <span className={'profile-header-social-links'}>
-              {Object.entries(profile.data.online).map(([key, value], index) => {
+              {Object.entries(profile.online).map(([key, value], index) => {
                 if (!value) return null;
 
                 return <a href={value} target={'_blank'} rel="noopener noreferrer" key={key + index}>

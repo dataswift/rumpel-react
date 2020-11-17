@@ -14,7 +14,7 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({
   logoSrc,
   logoAltText,
   toolbarActions,
-  backgroundColor,
+  backgroundColor = 'rgba(43, 49, 61, 0.7)',
   children,
   isTool = false,
 }) => {

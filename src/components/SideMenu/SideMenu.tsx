@@ -17,9 +17,10 @@ type LinkProps = {
 
 type Props = {
     hideSideMenu: boolean;
+    onSideMenuClick: () => void;
 }
 
-export const SideMenu: React.FC<Props> = ({ hideSideMenu }) => {
+export const SideMenu: React.FC<Props> = ({ hideSideMenu, onSideMenuClick }) => {
   const hatName = useSelector(selectUserHatName);
   const hatDomain = useSelector(selectUserHatDomain);
 
@@ -29,7 +30,7 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu }) => {
 
       return <a href={linkTo} className={'side-menu-item-wrapper'}>{children}</a>;
     } else {
-      return <Link to={link} className={'side-menu-item-wrapper'}>{children}</Link>;
+      return <Link to={link} className={'side-menu-item-wrapper'} onClick={onSideMenuClick}>{children}</Link>;
     }
   };
 
@@ -62,12 +63,8 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu }) => {
     );
   });
 
-  if (hideSideMenu) {
-    return null;
-  }
-
   return (
-    <div className={'side-menu'}>
+    <div className={'side-menu'} style={{ visibility: hideSideMenu ? 'hidden' : 'visible' } }>
       <div className={'side-menu-scroll'}>
         <h6>Menu</h6>
         {SideMenuOptions}

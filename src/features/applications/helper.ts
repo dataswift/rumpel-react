@@ -49,6 +49,24 @@ export const getStatusIcon = (app: HatApplication): HatAppStatusIcons => {
   }
 };
 
+export const getStatusButtonText = (app: HatApplication): string => {
+  switch (getAppStatus(app)) {
+    case HatApplicationStatus.RUNNING:
+      return 'Active';
+    case HatApplicationStatus.GOTO:
+      // This is indented as the Go to app won't work.
+      return 'Active';
+    case HatApplicationStatus.FETCHING:
+      return 'Fetching...';
+    case HatApplicationStatus.FAILING:
+      return 'Reconnect';
+    case HatApplicationStatus.UPDATE:
+      return 'Update';
+    default:
+      return 'Connect';
+  }
+};
+
 export const getApplicationDetails = (app: HatApplication): Array<{ [key: string]: string }> => {
   const { name, url, country } = app.application.developer;
   const { version, termsUrl, supportContact } = app.application.info;
