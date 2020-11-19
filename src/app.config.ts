@@ -29,8 +29,6 @@ export const config = {
       icon: 'dashboard',
       link: '/feed',
       external: false,
-      dataType: '',
-      disable: '',
       description: 'My Digital Life',
     },
     { 
@@ -38,9 +36,7 @@ export const config = {
       icon: 'security', 
       link: '/profile', 
       external: false, 
-      dataType: 'profile', 
-      disable: '', 
-      description: 
+      description:
           'View and edit the details of your profile and decide' +
           ' what information is private and what is to be shared.' ,
     },
@@ -49,8 +45,6 @@ export const config = {
       icon: 'assessment',
       link: '/tools',
       external: false,
-      dataType: '',
-      disable: '',
       description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)',
     },
     {
@@ -58,8 +52,6 @@ export const config = {
       icon: 'touch_app',
       link: '/explore/App',
       external: false,
-      dataType: '',
-      disable: '',
       description: 'Explore all the apps available in the HAT ecosystem.',
     },
 
@@ -68,8 +60,6 @@ export const config = {
       icon: 'settings_input_component',
       link: '/explore/DataPlug',
       external: false,
-      dataType: '',
-      disable: '',
       description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.`,
     },
@@ -79,8 +69,6 @@ export const config = {
       icon: 'pageview',
       link: '/universal-data-viewer',
       external: false,
-      dataType: '',
-      disable: '',
       description: `Universal Data Viewer`,
     },
 
@@ -88,9 +76,7 @@ export const config = {
       display: 'Settings',
       icon: 'settings',
       link: '/settings',
-      dataType: '',
       external: false,
-      disable: '',
       description: 'Settings on the HAT',
     },
   ],

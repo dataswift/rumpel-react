@@ -2,17 +2,20 @@ $font-standard: 'Roboto', sans-serif;
 $font-auth-standard: 'Mulish', sans-serif;
 $font-auth-secondary: 'Poppins', sans-serif;
 
+$ds-accent-color: #20154e;
+$ds-dusty-gray-color: #9a9a9a;
+$ds-wild-sand-color: #f6f6f6;
+$ds-text-light-color: white;
+
 $app-dark-tone: #4a556b;
 $app-accent-color: #6297b1;
 $app-background-color: white;
+$app-background-color-dashboard: $ds-wild-sand-color;
 $app-failing-color: #e45151;
 $app-update-color: #f5a623;
 
-$ds-accent-color: #20154E;
-$ds-dusty-gray-color: #9A9A9A;
-
 $button-accent-color: $app-accent-color;
-$button-accent-text-color: white;
+$button-accent-text-color: $ds-text-light-color;
 $button-accent-disabled-color: #d2d5da;
 $button-transparent-color: transparent;
 

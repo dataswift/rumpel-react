@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { isEmail, URL_PATTERN } from "../../utils/validations";
+import { isEmail, NAME_PATTERN, NUMBER_PATTERN, URL_PATTERN } from "../../utils/validations";
 
 const debounce = require('lodash.debounce');
 
@@ -47,7 +47,7 @@ export const useFormValidations = (validationPatterns: Record<string, string>, v
             break;
           }
           case pattern.startsWith('name'): {
-            if (!/^[a-zA-Z]+(?:-[a-zA-Z]+)*$/.test(value)) {
+            if (!NAME_PATTERN.test(value)) {
               newErrors[key] = `This is not a valid name`;
             }
             break;
@@ -77,15 +77,14 @@ export const useFormValidations = (validationPatterns: Record<string, string>, v
             break;
           }
           case pattern.startsWith('number'): {
-            if (!/^\d+$/.test(value)) {
+            if (!NUMBER_PATTERN.test(value)) {
               newErrors[key] = `This field must be a number`;
             }
             break;
           }
           case pattern.startsWith('url'): {
             if (!URL_PATTERN.test(value)) {
-              newErrors[key] = `Looks like invalid URL was entered. Please follow format: https://example.com/
-`;
+              newErrors[key] = `Looks like an invalid URL was entered. Please follow this format: https://example.com/`;
             }
             break;
           }

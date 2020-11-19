@@ -1,9 +1,11 @@
+@import '../../assets/styles/branding';
+
 .public-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh !important;
-  background-color: #f6f6f6;
+  background-color: $app-background-color-dashboard;
 
 
   p {
@@ -20,7 +22,7 @@
     max-width: 650px;
     border-radius: 8px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
-    background-color: #ffffff;
+    background-color: $app-background-color;
   }
 
   &-photo-container {
@@ -45,7 +47,7 @@
 
   &-of {
     opacity: 0.6;
-    font-family: 'Roboto', sans-serif;
+    font-family: $font-standard;
     font-size: 1.4rem;
     font-weight: bold;
     font-stretch: normal;
@@ -54,7 +56,7 @@
     line-height: 1.71;
     text-align: center;
     letter-spacing: 1.4px;
-    color: #4a556b;
+    color: $app-dark-tone;
   }
 
   .public-profile-hat-domain-wrapper {
@@ -88,7 +90,7 @@
         top: 0;
         border: none;
         border-radius: 50%;
-        background: #f6f6f6;
+        background: $app-background-color-dashboard;
 
         @media (max-width: 500px) {
           width: 25px;
@@ -108,7 +110,7 @@
       border-top-right-radius: 10px;
       background-color: #dbdde1;
       padding: 1.6rem 2.4rem;
-      font-family: 'Roboto', sans-serif;
+      font-family: $font-standard;
       font-size: 1.4rem;
       font-weight: bold;
       font-stretch: normal;
@@ -116,7 +118,7 @@
       text-transform: uppercase;
       line-height: 1.71;
       letter-spacing: 1.4px;
-      color: #4a556b;
+      color: $app-dark-tone;
     }
 
     &-content {
@@ -125,14 +127,14 @@
       flex-direction: column;
 
       div {
-        font-family: 'Roboto', sans-serif;
+        font-family: $font-standard;
         font-size: 1.4rem;
         font-weight: normal;
         font-stretch: normal;
         font-style: normal;
         line-height: 1.8;
         letter-spacing: normal;
-        color: #9a9a9a;
+        color: $ds-dusty-gray-color;
 
       }
     }
@@ -140,7 +142,7 @@
   &-footer {
     margin-top: 60px;
     margin-bottom: 40px;
-    color: #9a9a9a;
+    color: $ds-dusty-gray-color;
     text-align: center;
     font-size: 1.2rem;
     font-weight: normal;

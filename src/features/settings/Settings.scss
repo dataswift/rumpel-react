@@ -1,16 +1,15 @@
 @import '../../assets/styles/branding';
 
 .settings-header-title {
-  font-size: 24px;
-  font-family: 700;
+  font-size: 20px;
+  font-weight: bold;
   color: $app-dark-tone;
   margin-top: 20px;
   margin-bottom: 0;
 }
 
 .settings-header-headline {
-  margin: 0 30px;
-  margin-bottom: 16px;
+  margin: 0 30px 16px;
   font-size: 14px;
   color: $ds-dusty-gray-color;
   line-height: 1.38;
@@ -48,11 +47,9 @@
       box-sizing: border-box;
       padding: 0 16px;
       position: relative;
-      height: inherit;
       height: 48px;
       width: 100%;
-
-      background: white;
+      background: $app-background-color;
       letter-spacing: 0.5px;
 
       &:first-child {
@@ -78,7 +75,7 @@
       text-decoration: none;
       display: block;
       color: $ds-dusty-gray-color;
-      background: white;
+      background: $app-background-color;
       letter-spacing: 0.5px;
       cursor: pointer;
       outline: none;
@@ -104,7 +101,7 @@
 .settings-user-actions {
   margin-top: 30px;
   padding: 5px;
-  background-color: #f6f6f6;
+  background-color: $app-background-color-dashboard;
 
   button {
     margin: 10px auto;

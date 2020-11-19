@@ -11,7 +11,7 @@ header {
   right: 0;
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
-  color: #fff;
+  color: $ds-text-light-color;
   z-index: 10;
 
   &-fixed {
@@ -34,7 +34,7 @@ header {
   }
 
   .text-medium {
-    color: white;
+    color: $ds-text-light-color;
   }
 
   &-learn-more {
@@ -44,11 +44,11 @@ header {
     padding: 1rem 4rem;
     margin: 1rem 0 1rem 3rem;
     font-size: 1.4rem;
-    color: white;
+    color: $ds-text-light-color;
     text-decoration: none;
 
     &:hover {
-      color: white;
+      color: $ds-text-light-color;
       text-decoration: none;
     }
   }
@@ -66,7 +66,7 @@ header {
     font-style: normal;
     line-height: 1.67;
     text-align: center;
-    color: #ffffff;
+    color: $ds-text-light-color;
     border: 1px solid transparent;
     background-color: transparent;
   }

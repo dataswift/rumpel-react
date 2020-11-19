@@ -1,5 +1,6 @@
-.universal-data-viewer {
+@import '../../assets/styles/branding';
 
+.universal-data-viewer {
   &-title {
     padding-left: 40px;
     font-size: 2.2rem;
@@ -19,7 +20,7 @@
       min-height: 144px;
       border-radius: 6px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-      background-color: #ffffff;
+      background-color: $app-background-color;
       margin: 25px 40px 25px 0;
       transition: all .3s;
       overflow: hidden;
@@ -33,7 +34,7 @@
         line-height: 1.5;
         letter-spacing: 0.15px;
         text-transform: capitalize;
-        color: #20154e;
+        color: $ds-accent-color;
       }
 
       &-endpoints {
@@ -50,7 +51,7 @@
           padding: 10px 15px;
           border-radius: 6px;
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-          background-color: #ffffff;
+          background-color: $app-background-color;
           margin: 10px 10px 0 0;
           transition: all .3s;
           font-size: 1.2rem;
@@ -59,7 +60,7 @@
           font-stretch: normal;
           letter-spacing: 0.15px;
           text-transform: capitalize;
-          color: #20154e;
+          color: $ds-accent-color;
 
           &:hover {
             box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.3);
@@ -88,7 +89,7 @@
     min-height: 144px;
     border-radius: 6px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-    background-color: #ffffff;
+    background-color: $app-background-color;
     padding-top: 25px;
     padding-bottom: 25px;
     overflow: hidden;
@@ -97,7 +98,7 @@
     &-index {
       margin-left: 20px;
       padding: 1.1rem 1.2rem;
-      color: #20154e;
+      color: $ds-accent-color;
       font-size: 2.0rem;
       font-weight: 700;
     }
@@ -132,7 +133,7 @@
     }
 
     &-item:not(:last-child) {
-      border-bottom: 1px solid #f6f6f6;
+      border-bottom: 1px solid $ds-wild-sand-color;
     }
   }
 

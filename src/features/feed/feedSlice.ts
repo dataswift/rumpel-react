@@ -6,8 +6,11 @@ import { startOfDay, subDays } from "date-fns";
 import { groupSheFeedByDay } from "../../components/InfiniteScrolling/helper";
 
 const MAX_REPEATS = 5;
-let since: number = Math.round(subDays(Date.now(), 30).getTime() / 1000);
-let until: number = Math.round(startOfDay(Date.now()).getTime() / 1000);
+const sinceInitDate = Math.round(subDays(Date.now(), 30).getTime() / 1000);
+const untilInitDate = Math.round(startOfDay(Date.now()).getTime() / 1000);
+
+let since: number = sinceInitDate;
+let until: number = untilInitDate;
 let step = 1;
 let repeats = 0;
 
@@ -97,8 +100,8 @@ export const getInitSheFeed = (): AppThunk => async (dispatch) => {
 };
 
 export const resetSheFeedValues = (sinceDate?: number, untilDate?: number): AppThunk => async (dispatch) => {
-  since = sinceDate || Math.round(subDays(Date.now(), 30).getTime() / 1000);
-  until = untilDate || Math.round(startOfDay(Date.now()).getTime() / 1000);
+  since = sinceDate || sinceInitDate;
+  until = untilDate || untilInitDate;
   repeats = 0;
   step = 1;
   dispatch(sheFeedFetching(true));

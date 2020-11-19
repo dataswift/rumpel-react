@@ -6,7 +6,7 @@
   margin: 15px auto;
   border-radius: 4px;
   padding: 16px;
-  background-color: #fff;
+  background-color: $app-background-color;
 
   .info-card-title {
     font-weight: 700;
@@ -22,7 +22,7 @@
 
     .info-card-item {
       &:not(:last-child) {
-        border-bottom: 1px solid #f6f6f6;
+        border-bottom: 1px solid $ds-wild-sand-color;
       }
 
       padding: 13px 0;

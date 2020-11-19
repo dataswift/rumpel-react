@@ -1,3 +1,5 @@
+@import '../../assets/styles/branding';
+
 /* The Modal (background) */
 .rum-modal {
   display: none;
@@ -23,7 +25,7 @@
   width: 420px;
   border-radius: 8px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
+  background-color: $app-background-color;
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   -webkit-animation-name: animatetop;
@@ -57,7 +59,7 @@
 
 /* The Close Button */
 .close {
-  color: white;
+  color: $ds-text-light-color;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -73,7 +75,7 @@
 .rum-modal-header {
   padding: 28px 20px 19px;
   background-color: white;
-  color: white;
+  color: $ds-text-light-color;
 }
 
 .rum-modal-body {
@@ -86,7 +88,7 @@
   padding: 24px 19px;
   background-color: white;
   text-align: center;
-  color: white;
+  color: $ds-text-light-color;
 
   button {
     margin: 0 auto;
@@ -101,11 +103,11 @@
   font-style: normal;
   line-height: 20px;
   letter-spacing: 0.3px;
-  color: #4a556b;
+  color: $app-dark-tone;
 }
 
 .rum-modal-text-content {
-  font-family: 'Roboto', sans-serif;
+  font-family: $font-standard;
   font-size: 1.2rem;
   font-weight: normal;
   font-stretch: normal;
@@ -116,7 +118,7 @@
 }
 
 .rum-modal-btn-accent {
-  font-family: 'Roboto', sans-serif;
+  font-family: $font-standard;
   font-size: 1.4rem;
   font-weight: bold;
   font-stretch: normal;
@@ -134,7 +136,7 @@
   white-space: nowrap;
   border-radius: 11px;
   background-color: transparent;
-  color: #4a556b;
+  color: $app-dark-tone;
   margin: auto;
 }
 

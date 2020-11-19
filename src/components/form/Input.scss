@@ -1,11 +1,11 @@
 @import '../../assets/styles/branding';
 
 .form-group {
-  position:relative;
+  position: relative;
   margin-bottom: 30px;
 
   input[type=text], input[type=password], input[type=email] {
-    color: #4a556b;
+    color: $app-dark-tone;
     min-height: 45px;
     border: initial;
     font-weight: initial;
@@ -26,7 +26,7 @@
   position: absolute;
   left: 0;
   top: 10px;
-  color: #9a9a9a;
+  color: $ds-dusty-gray-color;
   background-color: transparent;
   font-size: 1.4rem;
   z-index: 10;
@@ -49,19 +49,15 @@
   transition: box-shadow 150ms ease-out;
 
   &:focus {
-    box-shadow: 0 2px 0 0 #4a556b;
+    box-shadow: 0 2px 0 0 $app-dark-tone;
   }
-}
-
-.form-input.filled {
-  //box-shadow: 0 2px 0 0 #4a556b;
 }
 
 .form-input-profile-toggle {
   position: absolute;
   right: 10px;
   top: 10px;
-  color: #4a556b;
+  color: $app-dark-tone;
   background-color: transparent;
   border: 1px solid transparent;
   outline: 0;
