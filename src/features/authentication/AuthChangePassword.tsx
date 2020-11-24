@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
 import { resetPassword } from '../../api/hatAPI';
-import { AgreementsModal, AuthApplicationLogo, Input, IssuedBy } from 'hmi';
+import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
 import { useHistory, useParams } from 'react-router';
@@ -219,8 +219,6 @@ const AuthChangePassword: React.FC = () => {
             </button>
           </>
         )}
-
-        <IssuedBy language={language} wrapperStyles={{ backgroundColor: '#ffffff' }} />
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>

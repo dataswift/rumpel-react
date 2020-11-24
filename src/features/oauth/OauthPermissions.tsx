@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { HmiType, HmiV2, IssuedBy } from "hmi";
+import { HmiType, HmiV2 } from "hmi";
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 import { selectLanguage } from "../language/languageSlice";
@@ -20,7 +20,7 @@ const OauthPermissions: React.FC = () => {
     dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
   };
 
-  if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
+  if ((!parentApp || (parentApp.active && !parentApp.needsUpdating)) || (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
       (parentApp.application.dependencies &&
           parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {
@@ -41,19 +41,16 @@ const OauthPermissions: React.FC = () => {
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
-      {parentApp && 
-          <>
-            <HmiV2 hmiType={HmiType.login.daas}
-              parentApp={parentApp.application}
-              email={hatName}
-              language={language}
-              dependencyTools={dependencyTools.map(tool => tool.info.name)}
-              dependencyApps={dependencyApps.map(app => app.application)}
-              onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
-              onRejected={() => dispatch(onTermsDeclined())}
-            />
-            <IssuedBy language={language} wrapperStyles={{ backgroundColor: '#ffffff' }} />
-          </>
+      {parentApp &&
+      <HmiV2 hmiType={HmiType.login.daas}
+        parentApp={parentApp.application}
+        email={hatName}
+        language={language}
+        dependencyTools={dependencyTools.map(tool => tool.info.name)}
+        dependencyApps={dependencyApps.map(app => app.application)}
+        onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
+        onRejected={() => dispatch(onTermsDeclined())}
+      />
       }
     </div>
   );

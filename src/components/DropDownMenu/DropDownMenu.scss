@@ -1,0 +1,48 @@
+@import '../../assets/styles/branding';
+
+.dropdown-container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dropdown-header {
+  background: $app-background-color;
+  height: 5rem;
+  border: 1px solid #e0e0e0;
+  color: $app-dark-tone;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.dropdown-value {
+  font-size: 1.6rem;
+}
+
+.dropdown-placeholder {
+  font-size: 1.8rem;
+}
+.dropdown-list {
+  padding: 0;
+  margin: 0;
+  padding-left: 1em;
+  background: $app-background-color;
+  border: 2px solid #e5e5e5;
+  box-sizing: border-box;
+  color: $app-dark-tone;
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  &:first-child {
+    padding-top: 0.8em;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 0.8em;
+    cursor: pointer;
+  }
+}

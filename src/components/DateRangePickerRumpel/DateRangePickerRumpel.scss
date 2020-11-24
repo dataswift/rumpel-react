@@ -1,0 +1,14 @@
+@import '../../assets/styles/branding';
+
+.date-range-picker-rumpel {
+  background-color: $app-background-color;
+  display: flex;
+  flex-direction: column;
+
+  &-done {
+    align-self: flex-end;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    width: 80px;
+  }
+}

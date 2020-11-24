@@ -1,0 +1,9 @@
+@import "branding";
+
+.card-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: $ds-wild-sand-color;
+  flex: 1 1 auto;
+}

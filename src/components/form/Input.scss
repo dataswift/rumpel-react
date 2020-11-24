@@ -1,0 +1,70 @@
+@import '../../assets/styles/branding';
+
+.form-group {
+  position: relative;
+  margin-bottom: 30px;
+
+  input[type=text], input[type=password], input[type=email] {
+    color: $app-dark-tone;
+    min-height: 45px;
+    border: initial;
+    font-weight: initial;
+    font-size: 18px;
+    padding: initial;
+    border-radius: initial;
+    -webkit-appearance: initial;
+
+    @media (max-width: $bp-smallest) {
+      border-left: none;
+      border-right: none;
+    }
+
+  }
+}
+
+.form-label {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: $ds-dusty-gray-color;
+  background-color: transparent;
+  font-size: 1.4rem;
+  z-index: 10;
+  transition: transform 150ms ease-out, font-size 150ms ease-out;
+  margin-right: 56px;
+}
+
+.focused .form-label {
+  transform: translateY(-125%);
+  font-size: 1.1rem;
+}
+
+.form-input {
+  position: relative;
+  padding: 12px 0 5px 0;
+  width: 100%;
+  outline: 0;
+  border: 0;
+  box-shadow: 0 1px 0 0 #e5e5e5;
+  transition: box-shadow 150ms ease-out;
+
+  &:focus {
+    box-shadow: 0 2px 0 0 $app-dark-tone;
+  }
+}
+
+.form-input-profile-toggle {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: $app-dark-tone;
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: 0;
+}
+
+.form-input-error-message {
+  color: $app-failing-color;
+  margin-top: 4px;
+  font-size: 1.2rem;
+}
