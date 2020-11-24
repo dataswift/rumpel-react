@@ -27,15 +27,18 @@ type Query = {
 
 const debounce = require('lodash.debounce');
 
-declare const zxcvbn: any;
+declare const zxcvbn: (pass: string) => { score: number };
 
-const AuthChangePassword: React.FC = () => {
+type ChangePasswordProps = {
+  passwordStrength: (password: string) => { score: number };
+};
+
+export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStrength }) => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
   const history = useHistory();
-  const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [email, setEmail] = useState('');
@@ -87,10 +90,10 @@ const AuthChangePassword: React.FC = () => {
   };
 
   const validatePassword = (password: string) => {
-    if (!zxcvbn) return;
+    if (!passwordStrength) return;
 
     setPassword(password);
-    const score = zxcvbn(password).score;
+    const score = passwordStrength(password).score;
     setScore(score);
   };
 
@@ -127,11 +130,6 @@ const AuthChangePassword: React.FC = () => {
     const { email, application_id } = queryString.parse(window.location.search) as Query;
     setEmail(email || '');
 
-    loadDynamicZxcvbn(() => {
-      // zxcvbn ready
-      setZxcvbnReady(true);
-    });
-
     if (!parentApp && application_id) {
       dispatch(getApplicationHmi(application_id));
     } else {
@@ -142,8 +140,6 @@ const AuthChangePassword: React.FC = () => {
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
-
-  if (!zxcvbnReady) return null;
 
   return (
     <div>
@@ -225,4 +221,19 @@ const AuthChangePassword: React.FC = () => {
   );
 };
 
-export default AuthChangePassword;
+const AuthChangePasswordContainer: React.FC = () => {
+  const [zxcvbnReady, setZxcvbnReady] = useState(false);
+
+  useEffect(() => {
+    loadDynamicZxcvbn(() => {
+      // zxcvbn ready
+      setZxcvbnReady(true);
+    });
+  }, []);
+
+  if (!zxcvbnReady) return null;
+
+  return <AuthChangePassword passwordStrength={zxcvbn}/>;
+};
+
+export default AuthChangePasswordContainer;

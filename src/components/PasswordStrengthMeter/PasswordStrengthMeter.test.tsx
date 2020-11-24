@@ -1,15 +1,15 @@
 import { createMemoryHistory } from "history";
-import { mount } from "enzyme";
 import { Router } from "react-router";
 import React from "react";
 import Root from "../../app/Root";
 import { PasswordStrengthMeter } from "./PasswordStrengthMeter";
+import { render, screen } from "@testing-library/react";
 
 describe('PasswordStrengthMeter', () => {
   const history = createMemoryHistory();
 
   it('has the correct message when score is 0', () => {
-    const wrapper = mount(
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 0 }} />
@@ -17,15 +17,11 @@ describe('PasswordStrengthMeter', () => {
       </Router>
     );
 
-    const progress = wrapper.find("progress.password-strength-meter-progress");
-    const text = wrapper.find("div.password-strength-meter-label");
-
-    expect(progress.props().value).toEqual(1);
-    expect(text.text()).toEqual("Too weak");
+    expect(screen.getByText('Too weak')).toBeInTheDocument();
   });
 
   it('has the correct message when score is 1', () => {
-    const wrapper = mount(
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 1 }} />
@@ -33,15 +29,11 @@ describe('PasswordStrengthMeter', () => {
       </Router>
     );
 
-    const progress = wrapper.find("progress.password-strength-meter-progress");
-    const text = wrapper.find("div.password-strength-meter-label");
-
-    expect(progress.props().value).toEqual(1);
-    expect(text.text()).toEqual("Too weak");
+    expect(screen.getByText('Too weak')).toBeInTheDocument();
   });
 
   it('has the correct message when score is 2', () => {
-    const wrapper = mount(
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 2 }} />
@@ -49,15 +41,11 @@ describe('PasswordStrengthMeter', () => {
       </Router>
     );
 
-    const progress = wrapper.find("progress.password-strength-meter-progress");
-    const text = wrapper.find("div.password-strength-meter-label");
-
-    expect(progress.props().value).toEqual(2);
-    expect(text.text()).toEqual("So-so");
+    expect(screen.getByText('So-so')).toBeInTheDocument();
   });
 
   it('has the correct message when score is 3', () => {
-    const wrapper = mount(
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 3 }} />
@@ -65,15 +53,11 @@ describe('PasswordStrengthMeter', () => {
       </Router>
     );
 
-    const progress = wrapper.find("progress.password-strength-meter-progress");
-    const text = wrapper.find("div.password-strength-meter-label");
-
-    expect(progress.contains("4")).toEqual(false);
-    expect(text.text()).toEqual("Strong");
+    expect(screen.getByText('Strong')).toBeInTheDocument();
   });
 
   it('has the correct message when score is 4', () => {
-    const wrapper = mount(
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 4 }} />
@@ -81,10 +65,6 @@ describe('PasswordStrengthMeter', () => {
       </Router>
     );
 
-    const progress = wrapper.find("progress.password-strength-meter-progress");
-    const text = wrapper.find("div.password-strength-meter-label");
-
-    expect(progress.props().value).toEqual(4);
-    expect(text.text()).toEqual("Very Strong");
+    expect(screen.getByText('Very Strong')).toBeInTheDocument();
   });
 });
