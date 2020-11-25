@@ -94,7 +94,7 @@
   }
 }
 
-.user-actions {
+.feed-user-actions {
   display: flex;
   flex-direction: column;
   position: -webkit-sticky; /* Safari */
@@ -105,11 +105,9 @@
   right: 0;
   padding: 5px;
 
-  .user-actions-content {
+  &-content {
     margin: 15px auto;
     background-color: $app-background-color;
-    width: 75%;
-    max-width: 360px;
     height: 45px;
     display: flex;
     border: 1px solid $app-accent-color;
@@ -118,7 +116,7 @@
     padding-bottom: 5px;
 
     button {
-      width: 150px;
+      min-width: 90px;
       cursor: pointer;
       border: 1px solid transparent;
       text-transform: uppercase;

@@ -28,7 +28,7 @@ const FormAdapter: React.FC<Props> = (props) => {
   const onFormStateDebounce = useRef(
     debounce(
       (key: string, data: Record<string, string>) =>
-              onFormDataChange?.(key, data),
+        onFormDataChange?.(key, data),
       1000,
     ),
   ).current;
