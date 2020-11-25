@@ -16,13 +16,13 @@ export const FeedUserActions: React.FC<Props> = ({ onSelectedDates, onRefresh, o
   };
 
   return (
-    <div className="user-actions">
+    <div className="feed-user-actions">
       {!hideDateRangePicker &&
         <div style={{ margin: 'auto' }}>
           <DateRangePickerRumpel selectedDates={(since, until) => selectedDates(since, until)}/>
         </div>
       }
-      <div className="user-actions-content">
+      <div className="feed-user-actions-content">
         <button className="filter-button" onClick={() => setHideDateRangePicker(!hideDateRangePicker)}>
           <i className={'material-icons'}>filter_list</i>
             Filter
