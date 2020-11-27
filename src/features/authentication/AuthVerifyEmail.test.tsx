@@ -58,7 +58,7 @@ describe('AuthVerifyEmail tests', () => {
     expect(screen.getByText('Next')).toBeDisabled();
   });
 
-  test('a weak-password message is displayed if the password is not strong enough', () => {
+  test('a weak-password message is displayed if the password is not strong enough', async () => {
     const mockPasswordStrength = jest.fn().mockImplementation(() => ({ score: 1 }));
     render(
       <Router history={history}>
@@ -70,9 +70,9 @@ describe('AuthVerifyEmail tests', () => {
 
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'testPass' } });
 
-    expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument();
-    expect(screen.getByText(/Any combination of/)).toBeInTheDocument();
-    expect(screen.getByText('Next')).toBeDisabled();
+    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Any combination of/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Next')).toBeDisabled());
   });
 
   test('display a message if the passwords do not match', async () => {

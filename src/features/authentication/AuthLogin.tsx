@@ -140,7 +140,7 @@ const AuthLogin: React.FC = () => {
 
         <button
           aria-label="Next Button"
-          className={'auth-login-btn ds-hmi-btn'}
+          className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
           disabled={password.length < 3}
           onClick={() => login()}
         >
@@ -159,7 +159,7 @@ const AuthLogin: React.FC = () => {
           />
         </p>
 
-        <button className={'auth-login-btn-signup ds-hmi-btn'} onClick={() => navigateToSignup()}>
+        <button className={'auth-login-btn-signup ds-hmi-btn ds-hmi-btn-primary'} onClick={() => navigateToSignup()}>
           <FormatMessage id={'ds.auth.signupBtn'} />
         </button>
       </div>

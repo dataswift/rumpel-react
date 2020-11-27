@@ -58,6 +58,14 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
     ),
   ).current;
 
+  const validatePasswordScoreDebounce = useRef(
+    debounce(
+      (password: string) =>
+        validatePassword(password),
+      400,
+    ),
+  ).current;
+
   const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
     if (score > 2) {
       if (password === passwordConfirm) {
@@ -92,7 +100,6 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   const validatePassword = (password: string) => {
     if (!passwordStrength) return;
 
-    setPassword(password);
     const score = passwordStrength(password).score;
     setScore(score);
   };
@@ -100,7 +107,8 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'password-1') {
-      validatePassword(value);
+      setPassword(value);
+      validatePasswordScoreDebounce(value);
     } else if (name === 'password-2') {
       setPasswordConfirm(value);
     }
@@ -158,7 +166,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
               <FormatMessage id={'ds.auth.changePassword.success.title'} />
             </h2>
 
-            <button className={'auth-login-btn ds-hmi-btn'} onClick={() => login()}>
+            <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
               <FormatMessage id={'ds.auth.loginBtn'} />
             </button>
           </>
@@ -181,16 +189,16 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
               onChange={(e) => onPasswordChange(e)}
             />
 
-            {password.length > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
+            {score > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
 
-            {score >= 3 && (
+            {
               <Input
                 type={'password'}
                 placeholder={messages['ds.auth.input.confirmPassword']}
                 autoComplete={'new-password'}
                 name={'password-2'}
                 id={'password-2'}
-                hidden={score < 3}
+                hidden={score < 3 && passwordConfirm.length === 0}
                 value={passwordConfirm}
                 hasError={!!errorMessage}
                 errorMessage={errorMessage}
@@ -198,7 +206,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
                 passwordMatch={passwordMatch}
                 onChange={(e) => onPasswordChange(e)}
               />
-            )}
+            }
 
             {passwordMatch && (
               <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
@@ -207,7 +215,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
             )}
 
             <button
-              className={'auth-login-btn ds-hmi-btn'}
+              className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
               disabled={score < 3 || !passwordMatch}
               onClick={() => validateAndReset()}
             >
