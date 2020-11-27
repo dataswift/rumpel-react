@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from '../authentication/authenticationSlice';
+import { logoutUser } from '../authentication/authenticationSlice';
 import FormatMessage from '../messages/FormatMessage';
 
 import './Settings.scss';
@@ -8,7 +8,7 @@ import './Settings.scss';
 const Logout: React.FC = () => {
   const dispatch = useDispatch();
 
-  const onLogout = () => dispatch(logout());
+  const onLogout = () => dispatch(logoutUser());
 
   return (
     <div className="settings-user-actions">

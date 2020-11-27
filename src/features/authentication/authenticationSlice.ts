@@ -3,6 +3,8 @@ import { AppThunk, RootState } from '../../app/store';
 import { HatTokenValidation, JWTDecoded } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
 import { config } from '../../app.config';
 import { isFuture, toDate, addDays } from 'date-fns';
+import Cookies from "js-cookie";
+import { HatClientService } from "../../services/HatClientService";
 
 export enum AuthState {
   LOGIN_REQUEST = 'login_request',
@@ -74,6 +76,13 @@ export const loginWithToken = (token: string): AppThunk => (dispatch) => {
 };
 
 export const logoutUser = (): AppThunk => (dispatch) => {
+  const hatSvc = HatClientService.getInstance();
+  const secure = window.location.protocol === 'https:';
+
+  window.sessionStorage.removeItem('token');
+  Cookies.remove('token',{ secure: secure, sameSite: 'strict' });
+  hatSvc.logout();
+
   dispatch(logout());
 };
 
