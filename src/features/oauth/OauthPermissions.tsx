@@ -6,6 +6,7 @@ import { HmiType, HmiV2 } from "hmi";
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 import { selectLanguage } from "../language/languageSlice";
+import { isHmiLoading } from "../hat-login/helpers";
 
 const OauthPermissions: React.FC = () => {
   const hatName = window.location.host;
@@ -20,10 +21,7 @@ const OauthPermissions: React.FC = () => {
     dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
   };
 
-  if ((!parentApp || (parentApp.active && !parentApp.needsUpdating)) || (parentApp.application.dependencies &&
-      parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
-      (parentApp.application.dependencies &&
-          parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {
+  if (!parentApp || isHmiLoading(parentApp, dependencyApps, dependencyTools)) {
     return <LoadingSpinner loadingText={'Loading permissions...'}/>;
   }
 

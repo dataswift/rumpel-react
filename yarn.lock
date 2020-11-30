@@ -5912,9 +5912,9 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-"hmi@git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.12-RC-2":
+"hmi@git+ssh://git@github.com:dataswift/hmi-react.git#v0.2.12":
   version "0.2.12"
-  resolved "git+ssh://git@github.com:dataswift/hmi-react.git#94196a12d1dce60174eeea3ab3f31dd599a781e0"
+  resolved "git+ssh://git@github.com:dataswift/hmi-react.git#0d43e23179094bdb8ede888f2497979c4028b066"
   dependencies:
     components "^0.1.0"
     context "^0.0.1"
