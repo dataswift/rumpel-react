@@ -51,11 +51,20 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
   let { verifyToken } = useParams<{ verifyToken: string }>();
+  
   const dispatch = useDispatch();
   const passwordMatchDebounce = useRef(
     debounce(
       (password: string, passwordConfirm: string, score: number) =>
         validatePasswordMatch(password, passwordConfirm, score),
+      400,
+    ),
+  ).current;
+
+  const validatePasswordScoreDebounce = useRef(
+    debounce(
+      (password: string) =>
+        validatePassword(password),
       400,
     ),
   ).current;
@@ -108,7 +117,6 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const validatePassword = (password: string) => {
     if (!passwordStrength) return;
 
-    setPassword(password);
     const score = passwordStrength(password).score;
     setScore(score);
   };
@@ -116,7 +124,8 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'password-1') {
-      validatePassword(value);
+      setPassword(value);
+      validatePasswordScoreDebounce(value);
     } else if (name === 'password-2') {
       setPasswordConfirm(value);
     }
@@ -174,7 +183,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
               <FormatMessage id={'ds.auth.verifyEmail.success.title'} />
             </h2>
 
-            <button className={'auth-login-btn ds-hmi-btn'} onClick={() => login()}>
+            <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
               <FormatMessage id={'ds.auth.continueBtn'} />
             </button>
           </>
@@ -197,7 +206,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
               onChange={(e) => onPasswordChange(e)}
             />
 
-            {password.length > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
+            {score > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
 
             <Input
               type={'password'}
@@ -205,7 +214,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
               autoComplete={'new-password'}
               name={'password-2'}
               id={'password-2'}
-              hidden={score < 3}
+              hidden={score < 3 && passwordConfirm.length === 0}
               value={passwordConfirm}
               hasError={!!errorMessage}
               errorMessage={errorMessage}
@@ -221,7 +230,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
             )}
 
             <button
-              className={'auth-login-btn ds-hmi-btn'}
+              className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
               disabled={score < 3 || !passwordMatch}
               onClick={() => validatePasswordAndRequest()}
             >
