@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
-import { AgreementsModal, AuthApplicationLogo, Input, IssuedBy } from 'hmi';
+import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
 import { useHistory, useParams } from 'react-router';
 
 import * as queryString from 'query-string';
-import { buildClaimRequest, claimHat } from '../hat-claim/hat-claim.service';
+import { buildClaimRequest } from '../hat-claim/hat-claim.service';
 import { HatClaim } from '../hat-claim/hat-claim.interface';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -18,6 +18,7 @@ import {
 import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
 import FormatMessage from '../messages/FormatMessage';
+import { verifyEmail } from "../../api/hatAPI";
 
 type Query = {
   email?: string;
@@ -28,15 +29,18 @@ type Query = {
 
 const debounce = require('lodash.debounce');
 
-declare const zxcvbn: any;
+declare const zxcvbn: (pass: string) => { score: number };
 
-const AuthVerifyEmail: React.FC = () => {
+type AuthVerifyEmailProps = {
+  passwordStrength: (password: string) => { score: number };
+};
+
+export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStrength }) => {
   const history = useHistory();
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
-  const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [email, setEmail] = useState('');
@@ -47,11 +51,20 @@ const AuthVerifyEmail: React.FC = () => {
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
   let { verifyToken } = useParams<{ verifyToken: string }>();
+  
   const dispatch = useDispatch();
   const passwordMatchDebounce = useRef(
     debounce(
       (password: string, passwordConfirm: string, score: number) =>
         validatePasswordMatch(password, passwordConfirm, score),
+      400,
+    ),
+  ).current;
+
+  const validatePasswordScoreDebounce = useRef(
+    debounce(
+      (password: string) =>
+        validatePassword(password),
       400,
     ),
   ).current;
@@ -88,7 +101,7 @@ const AuthVerifyEmail: React.FC = () => {
         termsAgreed: true,
       };
 
-      const res = await claimHat(verifyToken || '', buildClaimRequest(hatClaim));
+      const res = await verifyEmail(verifyToken || '', buildClaimRequest(hatClaim));
 
       if (res) {
         setSuccessfulResponse(new Date());
@@ -102,17 +115,17 @@ const AuthVerifyEmail: React.FC = () => {
   };
 
   const validatePassword = (password: string) => {
-    if (!zxcvbn) return;
+    if (!passwordStrength) return;
 
-    setPassword(password);
-    const score = zxcvbn(password).score;
+    const score = passwordStrength(password).score;
     setScore(score);
   };
 
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'password-1') {
-      validatePassword(value);
+      setPassword(value);
+      validatePasswordScoreDebounce(value);
     } else if (name === 'password-2') {
       setPasswordConfirm(value);
     }
@@ -142,11 +155,6 @@ const AuthVerifyEmail: React.FC = () => {
     const { email, application_id } = queryString.parse(window.location.search) as Query;
     setEmail(email || '');
 
-    loadDynamicZxcvbn(() => {
-      // zxcvbn ready
-      setZxcvbnReady(true);
-    });
-
     if (!parentApp && application_id) {
       dispatch(getApplicationHmi(application_id));
     } else {
@@ -157,8 +165,6 @@ const AuthVerifyEmail: React.FC = () => {
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
-
-  if (!zxcvbnReady) return null;
 
   return (
     <div>
@@ -177,7 +183,7 @@ const AuthVerifyEmail: React.FC = () => {
               <FormatMessage id={'ds.auth.verifyEmail.success.title'} />
             </h2>
 
-            <button className={'auth-login-btn ds-hmi-btn'} onClick={() => login()}>
+            <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
               <FormatMessage id={'ds.auth.continueBtn'} />
             </button>
           </>
@@ -200,7 +206,7 @@ const AuthVerifyEmail: React.FC = () => {
               onChange={(e) => onPasswordChange(e)}
             />
 
-            {password.length > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
+            {score > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
 
             <Input
               type={'password'}
@@ -208,7 +214,7 @@ const AuthVerifyEmail: React.FC = () => {
               autoComplete={'new-password'}
               name={'password-2'}
               id={'password-2'}
-              hidden={score < 3}
+              hidden={score < 3 && passwordConfirm.length === 0}
               value={passwordConfirm}
               hasError={!!errorMessage}
               errorMessage={errorMessage}
@@ -224,7 +230,7 @@ const AuthVerifyEmail: React.FC = () => {
             )}
 
             <button
-              className={'auth-login-btn ds-hmi-btn'}
+              className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
               disabled={score < 3 || !passwordMatch}
               onClick={() => validatePasswordAndRequest()}
             >
@@ -232,12 +238,25 @@ const AuthVerifyEmail: React.FC = () => {
             </button>
           </>
         )}
-
-        <IssuedBy language={language} />
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>
   );
 };
 
-export default AuthVerifyEmail;
+const AuthVerificationEmailContainer: React.FC = () => {
+  const [zxcvbnReady, setZxcvbnReady] = useState(false);
+
+  useEffect(() => {
+    loadDynamicZxcvbn(() => {
+      // zxcvbn ready
+      setZxcvbnReady(true);
+    });
+  }, []);
+
+  if (!zxcvbnReady) return null;
+
+  return <AuthVerifyEmail passwordStrength={zxcvbn}/>;
+};
+
+export default AuthVerificationEmailContainer;

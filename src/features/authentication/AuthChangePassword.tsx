@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './AuthLogin.scss';
 import { resetPassword } from '../../api/hatAPI';
-import { AgreementsModal, AuthApplicationLogo, Input, IssuedBy } from 'hmi';
+import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
 import { useHistory, useParams } from 'react-router';
@@ -27,15 +27,18 @@ type Query = {
 
 const debounce = require('lodash.debounce');
 
-declare const zxcvbn: any;
+declare const zxcvbn: (pass: string) => { score: number };
 
-const AuthChangePassword: React.FC = () => {
+type ChangePasswordProps = {
+  passwordStrength: (password: string) => { score: number };
+};
+
+export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStrength }) => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
   const history = useHistory();
-  const [zxcvbnReady, setZxcvbnReady] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [email, setEmail] = useState('');
@@ -51,6 +54,14 @@ const AuthChangePassword: React.FC = () => {
     debounce(
       (password: string, passwordConfirm: string, score: number) =>
         validatePasswordMatch(password, passwordConfirm, score),
+      400,
+    ),
+  ).current;
+
+  const validatePasswordScoreDebounce = useRef(
+    debounce(
+      (password: string) =>
+        validatePassword(password),
       400,
     ),
   ).current;
@@ -87,17 +98,17 @@ const AuthChangePassword: React.FC = () => {
   };
 
   const validatePassword = (password: string) => {
-    if (!zxcvbn) return;
+    if (!passwordStrength) return;
 
-    setPassword(password);
-    const score = zxcvbn(password).score;
+    const score = passwordStrength(password).score;
     setScore(score);
   };
 
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'password-1') {
-      validatePassword(value);
+      setPassword(value);
+      validatePasswordScoreDebounce(value);
     } else if (name === 'password-2') {
       setPasswordConfirm(value);
     }
@@ -127,11 +138,6 @@ const AuthChangePassword: React.FC = () => {
     const { email, application_id } = queryString.parse(window.location.search) as Query;
     setEmail(email || '');
 
-    loadDynamicZxcvbn(() => {
-      // zxcvbn ready
-      setZxcvbnReady(true);
-    });
-
     if (!parentApp && application_id) {
       dispatch(getApplicationHmi(application_id));
     } else {
@@ -142,8 +148,6 @@ const AuthChangePassword: React.FC = () => {
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
-
-  if (!zxcvbnReady) return null;
 
   return (
     <div>
@@ -162,7 +166,7 @@ const AuthChangePassword: React.FC = () => {
               <FormatMessage id={'ds.auth.changePassword.success.title'} />
             </h2>
 
-            <button className={'auth-login-btn ds-hmi-btn'} onClick={() => login()}>
+            <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
               <FormatMessage id={'ds.auth.loginBtn'} />
             </button>
           </>
@@ -185,16 +189,16 @@ const AuthChangePassword: React.FC = () => {
               onChange={(e) => onPasswordChange(e)}
             />
 
-            {password.length > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
+            {score > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
 
-            {score >= 3 && (
+            {
               <Input
                 type={'password'}
                 placeholder={messages['ds.auth.input.confirmPassword']}
                 autoComplete={'new-password'}
                 name={'password-2'}
                 id={'password-2'}
-                hidden={score < 3}
+                hidden={score < 3 && passwordConfirm.length === 0}
                 value={passwordConfirm}
                 hasError={!!errorMessage}
                 errorMessage={errorMessage}
@@ -202,7 +206,7 @@ const AuthChangePassword: React.FC = () => {
                 passwordMatch={passwordMatch}
                 onChange={(e) => onPasswordChange(e)}
               />
-            )}
+            }
 
             {passwordMatch && (
               <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
@@ -211,7 +215,7 @@ const AuthChangePassword: React.FC = () => {
             )}
 
             <button
-              className={'auth-login-btn ds-hmi-btn'}
+              className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
               disabled={score < 3 || !passwordMatch}
               onClick={() => validateAndReset()}
             >
@@ -219,12 +223,25 @@ const AuthChangePassword: React.FC = () => {
             </button>
           </>
         )}
-
-        <IssuedBy language={language} />
         <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
       </div>
     </div>
   );
 };
 
-export default AuthChangePassword;
+const AuthChangePasswordContainer: React.FC = () => {
+  const [zxcvbnReady, setZxcvbnReady] = useState(false);
+
+  useEffect(() => {
+    loadDynamicZxcvbn(() => {
+      // zxcvbn ready
+      setZxcvbnReady(true);
+    });
+  }, []);
+
+  if (!zxcvbnReady) return null;
+
+  return <AuthChangePassword passwordStrength={zxcvbn}/>;
+};
+
+export default AuthChangePasswordContainer;

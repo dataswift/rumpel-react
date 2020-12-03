@@ -2,24 +2,32 @@ $font-standard: 'Roboto', sans-serif;
 $font-auth-standard: 'Mulish', sans-serif;
 $font-auth-secondary: 'Poppins', sans-serif;
 
+$ds-accent-color: #20154e;
+$ds-dusty-gray-color: #9a9a9a;
+$ds-wild-sand-color: #f6f6f6;
+$ds-text-light-color: white;
+$ds-color-title: #1C1E20;
+$ds-color-text: #53545F;
+
 $app-dark-tone: #4a556b;
 $app-accent-color: #6297b1;
 $app-background-color: white;
-
-$ds-accent-color: #20154E;
+$app-background-color-dashboard: $ds-wild-sand-color;
+$app-failing-color: #e45151;
+$app-update-color: #f5a623;
 
 $button-accent-color: $app-accent-color;
-$button-accent-text-color: white;
+$button-accent-text-color: $ds-text-light-color;
 $button-accent-disabled-color: #d2d5da;
 $button-transparent-color: transparent;
 
-$progress-bar-weak: #E45151;
-$progress-bar-average: #F5A623;
-$progress-bar-strong: #64B467;
-$progress-bar-background-color: #D8D8D8;
+$progress-bar-weak: $app-failing-color;
+$progress-bar-average: $app-update-color;
+$progress-bar-strong: #64b467;
+$progress-bar-background-color: #d8d8d8;
 
-$bp-largest: 75em;     // 1200px
-$bp-large: 68.75em;    // 1100px
-$bp-medium: 56.25em;   // 900px
-$bp-small: 37.5em;     // 600px
+$bp-largest: 75em; // 1200px
+$bp-large: 68.75em; // 1100px
+$bp-medium: 56.25em; // 900px
+$bp-small: 37.5em; // 600px
 $bp-smallest: 31.25em; // 500px

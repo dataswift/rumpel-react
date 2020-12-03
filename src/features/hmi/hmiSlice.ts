@@ -23,7 +23,7 @@ export const slice = createSlice({
       state.parentApp = action.payload;
     },
     dependencyApps: (state, action: PayloadAction<HatApplication[]>) => {
-      state.dependencyApps.push(...action.payload);
+      state.dependencyApps = action.payload;
     },
     dependencyTools: (state, action: PayloadAction<HatTool[]>) => {
       state.dependencyTools = action.payload;

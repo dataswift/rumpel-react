@@ -1,33 +1,29 @@
 import { createMemoryHistory } from "history";
-import { mount } from "enzyme";
 import { Router } from "react-router";
 import React from "react";
 import Root from "../../app/Root";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
-
-/*
- In PasswordStrengthIndicator's test I created multiple suites as the component couldn't get
- the messages if the component was mounted in every different test.
- */
+import { render, waitFor, screen } from "@testing-library/react";
 
 describe('PasswordStrengthIndicator tests', () => {
-  const history = createMemoryHistory();
+  it('has the correct message when password is strong and match',  async () => {
+    const history = createMemoryHistory();
 
-  const wrapper = mount(
-    <Router history={history}>
-      <Root>
-        <PasswordStrengthIndicator strong={true} passwordMatch={true} />
-      </Root>
-    </Router>
-  );
+    render(
+      <Router history={history}>
+        <Root>
+          <PasswordStrengthIndicator strong={true} passwordMatch={true} />
+        </Root>
+      </Router>
+    );
 
-  it('has the correct message when password is strong and match',  () => {
-    const text = wrapper.find("div.password-strength-message");
-    expect(text.text()).toEqual("Passwords match!");
+    await waitFor(() => expect(screen.getByText('Passwords match!')).toBeInTheDocument());
   });
 
-  it('doesn\'t have a message suggestion when password is strong', () => {
-    const wrapper = mount(
+  it('doesn\'t have a message suggestion when password is strong', async () => {
+    const history = createMemoryHistory();
+
+    render(
       <Router history={history}>
         <Root>
           <PasswordStrengthIndicator strong={true} passwordMatch={false} />
@@ -35,60 +31,48 @@ describe('PasswordStrengthIndicator tests', () => {
       </Router>
     );
 
-    const text = wrapper.find("div.password-strength-text");
-    expect(text.length).toEqual(0);
+    await waitFor(() => expect(screen.queryByText('Passwords match!')).toBeNull());
   });
-});
 
-describe('PasswordStrengthIndicator tests 2', () => {
-  const history = createMemoryHistory();
+  it('has the correct message when password isn\'t strong but match', async () => {
+    const history = createMemoryHistory();
 
-  const wrapper = mount(
-    <Router history={history}>
-      <Root>
-        <PasswordStrengthIndicator strong={false} passwordMatch={true} />
-      </Root>
-    </Router>
-  );
+    render(
+      <Router history={history}>
+        <Root>
+          <PasswordStrengthIndicator strong={false} passwordMatch={true} />
+        </Root>
+      </Router>
+    );
 
-  it('has the correct message when password isn\'t strong but match', () => {
-    const text = wrapper.find("div.password-strength-message");
-    expect(text.text()).toEqual("Password must be stronger.*");
+    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
   });
-});
 
-describe('PasswordStrengthIndicator tests 3', () => {
-  const history = createMemoryHistory();
+  it('has the correct message when password is strong but don\'t match', async () => {
+    const history = createMemoryHistory();
 
-  const wrapper = mount(
-    <Router history={history}>
-      <Root>
-        <PasswordStrengthIndicator strong={true} passwordMatch={false} />
-      </Root>
-    </Router>
-  );
+    render(
+      <Router history={history}>
+        <Root>
+          <PasswordStrengthIndicator strong={true} passwordMatch={false} />
+        </Root>
+      </Router>
+    );
 
-  it('has the correct message when password is strong but don\'t match', () => {
-    const text = wrapper.find("div.password-strength-message");
-    expect(text.text()).toEqual("Passwords do not match.");
+    await waitFor(() => expect(screen.getByText('Passwords do not match.')).toBeInTheDocument());
   });
-});
 
+  it('has the correct message when password isn\'t strong and don\'t match', async () => {
+    const history = createMemoryHistory();
 
-describe('PasswordStrengthIndicator tests 4', () => {
-  const history = createMemoryHistory();
+    render(
+      <Router history={history}>
+        <Root>
+          <PasswordStrengthIndicator strong={false} passwordMatch={false} />
+        </Root>
+      </Router>
+    );
 
-  const wrapper = mount(
-    <Router history={history}>
-      <Root>
-        <PasswordStrengthIndicator strong={false} passwordMatch={false} />
-      </Root>
-    </Router>
-  );
-
-
-  it('has the correct message when password isn\'t strong and don\'t match', () => {;
-    const text = wrapper.find("div.password-strength-message");
-    expect(text.text()).toEqual("Password must be stronger.*");
+    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
   });
 });

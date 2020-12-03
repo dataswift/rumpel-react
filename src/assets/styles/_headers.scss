@@ -5,20 +5,28 @@ header {
 }
 
 .app-header {
-  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   height: 62px; // Fix this to 6.2rem when migrate everything
   background-color: $app-dark-tone;
-  color: #fff;
-  z-index: 10000;
+  color: $ds-text-light-color;
+  z-index: 10;
+
+  &-fixed {
+    position: fixed;
+  }
 
   &-content {
     padding: 0 4rem;
     align-items: center;
     justify-content: center;
     height: 100%;
+
+    @media (max-width: 850px) {
+      padding: 0 2rem;
+    }
   }
 
   &-logo {
@@ -26,7 +34,7 @@ header {
   }
 
   .text-medium {
-    color: white;
+    color: $ds-text-light-color;
   }
 
   &-learn-more {
@@ -36,15 +44,74 @@ header {
     padding: 1rem 4rem;
     margin: 1rem 0 1rem 3rem;
     font-size: 1.4rem;
-    color: white;
+    color: $ds-text-light-color;
     text-decoration: none;
 
     &:hover {
-      color: white;
+      color: $ds-text-light-color;
       text-decoration: none;
     }
   }
 
+  &-btn-no-border {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    letter-spacing: 0.13px;
+    opacity: 0.8;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    text-align: center;
+    color: $ds-text-light-color;
+    border: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  &-btn-with-border {
+    font-family: 'Roboto', sans-serif;
+    opacity: 0.8;
+    padding: 0.6rem 1.4rem;
+    min-width: 85px;
+    min-height: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: 0.13px;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    border-radius: 20px;
+    border: 1.5px solid #ffffff;
+    background-color: transparent;
+
+    &:hover {
+      background-color: white;
+      color: #4a556b;
+    }
+  }
+
+  &-btn-help {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: white;
+    padding: 0.6rem 1.4rem;
+    font-size: 18px;
+    text-align: center;
+    opacity: 0.8;
+
+    i {
+      font-size: 22px;
+    }
+  }
+}
+
+.app-header-hide-mobile {
   @media (max-width: 850px) {
     display: none;
   }
@@ -108,6 +175,77 @@ header {
       font-size: 14px;
       line-height: 1.43;
       text-align: center;
+    }
+  }
+}
+
+.details-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 155px;
+  position: relative;
+  height: 234px;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #4a556b;
+
+  &.tool {
+    margin-bottom: 110px;
+  }
+
+  &:before {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .details-header-toolbar {
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    height: 64px;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+    padding: 0 2rem;
+  }
+
+  .details-header-card {
+    margin-bottom: -155px;
+    margin-top: 50px;
+    padding: 0 30px;
+    padding-bottom: 20px;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+
+    &.tool {
+      margin-bottom: -110px;
+    }
+
+    .details-header-logo-wrapper {
+      margin-top: -50px;
+      background-color: white;
+      padding: 6px;
+      border-radius: 50%;
+
+      .details-header-logo {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
     }
   }
 }

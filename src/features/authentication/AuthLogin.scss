@@ -2,7 +2,7 @@
 
 .auth-login {
   align-items: center;
-  background-color: white;
+  background-color: $app-background-color;
   height: auto;
 
   input {
@@ -27,7 +27,7 @@
   &-title {
     font-family: $font-auth-standard;
     font-size: 2.4rem;
-    color: #1c1e20;
+    color: $ds-color-title;
     text-align: center;
     letter-spacing: 0;
     line-height: 3.0rem;
@@ -75,7 +75,7 @@
   &-have-an-account {
     font-family: $font-auth-standard;
     letter-spacing: 0;
-    color: #696A6D;
+    color: $ds-color-text;
     font-size: 1.2rem;
   }
 
@@ -142,15 +142,16 @@
     text-align: center;
     line-height: 1.6rem;
     letter-spacing: -0.12px;
-    color: #9b9b9d;
+    color: $ds-color-text;
     max-width: 196px;
     cursor: pointer;
     margin-top: 20px;
     margin-bottom: 50px;
 
     span {
-      color: #9f97bf;
+      color: $ds-accent-color;
       text-decoration: underline;
+      text-underline-position: under;
     }
   }
 
@@ -160,7 +161,7 @@
     text-align: center;
     line-height: 1.8rem;
     letter-spacing: -0.12px;
-    color: #9B9B9D;
+    color: $ds-color-text;
     max-width: 250px;
   }
 
@@ -170,7 +171,7 @@
     text-align: center;
     line-height: 1.4rem;
     letter-spacing: 0;
-    color: #696A6D;
+    color: $ds-color-text;
     max-width: 250px;
     margin-bottom: 120px;
   }

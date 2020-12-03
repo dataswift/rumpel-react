@@ -1,14 +1,14 @@
 import { createMemoryHistory } from "history";
-import { mount } from "enzyme";
 import { Router } from "react-router";
 import Root from "../../../app/Root";
 import React from "react";
 import { NotificationBanner } from "./NotificationBanner";
+import { render, screen } from "@testing-library/react";
 
 describe('NotificationBanner tests', () => {
   const history = createMemoryHistory();
 
-  const wrapper = mount(
+  render(
     <Router history={history}>
       <Root>
         <NotificationBanner type={'error'} display={true}>An error message</NotificationBanner>
@@ -17,7 +17,7 @@ describe('NotificationBanner tests', () => {
   );
 
   it('has the correct icon and title ', () => {
-    const authTitleText = wrapper.find("div.notification-banner-container");
-    expect(authTitleText.text()).toEqual("warningAn error message");
+    expect(screen.getByText('warning')).toBeInTheDocument();
+    expect(screen.getByText('An error message')).toBeInTheDocument();
   });
 });

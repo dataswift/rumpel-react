@@ -6,6 +6,7 @@ import { HmiType, HmiV2 } from "hmi";
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 import { selectLanguage } from "../language/languageSlice";
+import { isHmiLoading } from "../hat-login/helpers";
 
 const OauthPermissions: React.FC = () => {
   const hatName = window.location.host;
@@ -20,10 +21,7 @@ const OauthPermissions: React.FC = () => {
     dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
   };
 
-  if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
-      parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
-      (parentApp.application.dependencies &&
-          parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {
+  if (!parentApp || isHmiLoading(parentApp, dependencyApps, dependencyTools)) {
     return <LoadingSpinner loadingText={'Loading permissions...'}/>;
   }
 
@@ -41,16 +39,16 @@ const OauthPermissions: React.FC = () => {
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
-      {parentApp && 
-        <HmiV2 hmiType={HmiType.login.daas}
-          parentApp={parentApp.application}
-          email={hatName}
-          language={language}
-          dependencyTools={dependencyTools.map(tool => tool.info.name)}
-          dependencyApps={dependencyApps.map(app => app.application)}
-          onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
-          onRejected={() => dispatch(onTermsDeclined())}
-        />
+      {parentApp &&
+      <HmiV2 hmiType={HmiType.login.daas}
+        parentApp={parentApp.application}
+        email={hatName}
+        language={language}
+        dependencyTools={dependencyTools.map(tool => tool.info.name)}
+        dependencyApps={dependencyApps.map(app => app.application)}
+        onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
+        onRejected={() => dispatch(onTermsDeclined())}
+      />
       }
     </div>
   );
