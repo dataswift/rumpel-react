@@ -17,7 +17,8 @@ export const config = {
     '.hat.direct', 
     '.dataswift.me', 
     '.dataswift.dev',
-    '.dataswift.us'
+    '.dataswift.us',
+    '.dataswift.ca'
   ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
