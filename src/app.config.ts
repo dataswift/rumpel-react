@@ -7,11 +7,18 @@ const externalLinks = {
 };
 
 export const config = {
-  version: '4.2.1',
+  version: '4.2.2',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
-  supportedDomains: ['.hubofallthings.net', '.hubat.net', '.hat.direct', '.dataswift.me', '.dataswift.dev'],
+  supportedDomains: [
+    '.hubofallthings.net', 
+    '.hubat.net', 
+    '.hat.direct', 
+    '.dataswift.me', 
+    '.dataswift.dev',
+    '.dataswift.us'
+  ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
   defaultLanguage: 'en',
