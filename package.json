@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@dataswift/hat-js": "^0.3.2",
-    "@material-ui/core": "^4.11.1",
+    "@material-ui/core": "^4.11.2",
     "@reduxjs/toolkit": "^1.3.5",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
