@@ -1,4 +1,4 @@
-@import "../../assets/styles/branding";
+@import '../../assets/styles/branding';
 
 .she-feed {
   overflow: auto;
@@ -16,9 +16,10 @@
     color: $ds-dusty-gray-color;
     max-width: 500px;
 
-    &:before, &:after {
+    &:before,
+    &:after {
       background-color: #e0e0e0;
-      content: " ";
+      content: ' ';
       display: inline-block;
       height: 1px;
       position: relative;
@@ -97,8 +98,8 @@
 .feed-user-actions {
   display: flex;
   flex-direction: column;
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
+  position: -webkit-fixed; /* Safari */
+  position: fixed;
   margin: auto auto 0; /* Fix the issue with the small feed height */
   bottom: 0;
   left: 0;
@@ -120,7 +121,7 @@
       cursor: pointer;
       border: 1px solid transparent;
       text-transform: uppercase;
-      flex:  1 1 auto;
+      flex: 1 1 auto;
       padding: 0;
       background-color: transparent;
       color: $app-accent-color;
@@ -130,7 +131,7 @@
       align-items: center;
 
       &:not(:last-child) {
-        border-right: 1px solid rgba(0, 0, 0, 0.20);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 0;
       }
     }

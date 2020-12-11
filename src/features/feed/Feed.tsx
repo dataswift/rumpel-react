@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import './Feed.scss';
-import { FeedUserActions } from "./FeedUserActions";
-import { FeedFilteredData } from "./FeedFilteredDataList";
-import { InfiniteScrolling } from "../../components/InfiniteScrolling/InfiniteScrolling";
-import { resetSheFeedValues } from "./feedSlice";
-import { useDispatch } from "react-redux";
+import { FeedUserActions } from './FeedUserActions';
+import { FeedFilteredData } from './FeedFilteredDataList';
+import { InfiniteScrolling } from '../../components/InfiniteScrolling/InfiniteScrolling';
+import { resetSheFeedValues } from './feedSlice';
+import { useDispatch } from 'react-redux';
 
 const Feed: React.FC = () => {
-  const [feedState, setFeedState] = useState("infinite-scrolling");
+  const [feedState, setFeedState] = useState('infinite-scrolling');
   const [selectedDates, setSelectedDates] = useState({ since: 0, until: 0 });
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedDates.since) {
-      setFeedState("filtering");
+      setFeedState('filtering');
     }
   }, [selectedDates]);
 
@@ -27,18 +27,14 @@ const Feed: React.FC = () => {
 
   const onRefreshClick = () => {
     dispatch(resetSheFeedValues());
-    setFeedState("infinite-scrolling");
+    setFeedState('infinite-scrolling');
   };
 
   return (
     <div className={'feed-wrapper'}>
-      {feedState === 'filtering' && (
-        <FeedFilteredData selectedDates={selectedDates}/>
-      )}
+      {feedState === 'filtering' && <FeedFilteredData selectedDates={selectedDates} />}
 
-      {feedState === 'infinite-scrolling' && (
-        <InfiniteScrolling />
-      )}
+      {feedState === 'infinite-scrolling' && <InfiniteScrolling />}
       <FeedUserActions
         onSelectedDates={(since, until) => setSelectedDates({ since: since, until: until })}
         onRefresh={onRefreshClick}
