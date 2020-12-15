@@ -1,12 +1,12 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { useLocation } from "react-router-dom";
-import { NavigationHeader } from "../headers/NavigationHeader/NavigationHeader";
-import { SideMenu } from "../SideMenu/SideMenu";
+import { useLocation } from 'react-router-dom';
+import { NavigationHeader } from '../headers/NavigationHeader/NavigationHeader';
+import { SideMenu } from '../SideMenu/SideMenu';
 import './PrivateSpace.scss';
 
 type Props = {
-    children: ReactNode;
-}
+  children: ReactNode;
+};
 
 export const PrivateSpace: React.FC<Props> = ({ children }) => {
   const [hideSideMenu, setHideSideMenu] = useState(false);
@@ -18,7 +18,7 @@ export const PrivateSpace: React.FC<Props> = ({ children }) => {
       setHideSideMenu(true);
     }
   }, []);
-    
+
   useEffect(() => {
     content.current?.scrollTo(0, 0);
   }, [pathname]);
@@ -31,13 +31,14 @@ export const PrivateSpace: React.FC<Props> = ({ children }) => {
 
   return (
     <div className={'private-space'}>
-      <NavigationHeader toggleSideMenu={() => setHideSideMenu(!hideSideMenu)}/>
+      <NavigationHeader toggleSideMenu={() => setHideSideMenu(!hideSideMenu)} />
       <div className={'private-space-wrapper'}>
-        <SideMenu hideSideMenu={hideSideMenu} onSideMenuClick={onSideMenuClick}/>
+        <SideMenu hideSideMenu={hideSideMenu} onSideMenuClick={onSideMenuClick} />
         <div
           className={`private-space-content ${hideSideMenu && 'side-menu-hidden'}`}
           id={'private-space-content'}
-          ref={content}>
+          ref={content}
+        >
           {children}
         </div>
       </div>
