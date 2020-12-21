@@ -163,7 +163,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
         {successfulResponse && (
           <>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.changePassword.success.title'} />
+              <FormatMessage id={'ds.auth.changePassword.success.title'} asHtml />
             </h2>
 
             <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
@@ -175,7 +175,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
         {!successfulResponse && (
           <>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.changePassword.title'} />
+              <FormatMessage id={'ds.auth.changePassword.title'} asHtml />
             </h2>
             <Input
               type={'password'}
