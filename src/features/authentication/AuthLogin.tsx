@@ -123,7 +123,10 @@ const AuthLogin: React.FC = () => {
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
         <h2 className={'auth-login-title'}>
-          <FormatMessage id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} />
+          <FormatMessage 
+            id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} 
+            asHtml
+          />
         </h2>
 
         <Input

@@ -31,10 +31,14 @@
     text-align: center;
     letter-spacing: 0;
     line-height: 3.0rem;
-    font-weight: 600;
     max-width: 500px;
     margin-top: 0;
     margin-bottom: 0;
+    font-weight: 400;
+
+    b {
+      font-weight: 700;
+    }
   }
 
   &-logo-wrapper {
