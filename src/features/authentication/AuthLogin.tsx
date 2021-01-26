@@ -46,7 +46,7 @@ const AuthLogin: React.FC = () => {
   const { repeat, email, applicationId, redirectUri } = query || {};
 
   const loginSuccessful = () => {
-    if (from && from.redirectUri != "https://www.dataswift.io/sign-up-login") {      
+    if (from && from.redirectUri != "https://www.dataswift.io/sign-up-login") {
       history.replace(from);
     } else {
       window.location.href = window.location.origin + '/#' + targetParam;
