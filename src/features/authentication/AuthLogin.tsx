@@ -46,10 +46,11 @@ const AuthLogin: React.FC = () => {
   const { repeat, email, applicationId, redirectUri } = query || {};
 
   const loginSuccessful = () => {
-    console.log(from);
+    // This is a hack and ideally should be removed. This is what allows the log in via dataswift.io webpage,
+    // without this check users are redirected back to the dataswift.io page with the token attached. The problem
+    // is that the dataswift.io page has no idea what to do with the token and uses are stuck there. With this hack
+    // users are being redirected back to their PDA Dashboard which is the intended behaviour.
     const isDataswiftWebsite = (from?.search.toString().includes("www.dataswift.io%2Fsign-up-login"));
-    console.log(isDataswiftWebsite);
-
     if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {

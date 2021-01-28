@@ -7,7 +7,7 @@ const externalLinks = {
 };
 
 export const config = {
-  version: '4.2.6',
+  version: '4.2.7',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
