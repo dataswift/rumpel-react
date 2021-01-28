@@ -47,7 +47,9 @@ const AuthLogin: React.FC = () => {
 
   const loginSuccessful = () => {
     console.log(from);
-    const isDataswiftWebsite = (from?.search.toString().includes("https://www.dataswift.io/sign-up-login"));
+    const isDataswiftWebsite = (from?.search.toString().includes("www.dataswift.io%2Fsign-up-login"));
+    console.log(isDataswiftWebsite);
+
     if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {
