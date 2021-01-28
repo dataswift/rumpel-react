@@ -46,7 +46,11 @@ const AuthLogin: React.FC = () => {
   const { repeat, email, applicationId, redirectUri } = query || {};
 
   const loginSuccessful = () => {
-    if (from) {
+    console.log(from);
+    const isDataswiftWebsite = (from?.search.toString().includes("www.dataswift.io%2Fsign-up-login"));
+    console.log(isDataswiftWebsite);
+
+    if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {
       window.location.href = window.location.origin + '/#' + targetParam;
@@ -123,7 +127,10 @@ const AuthLogin: React.FC = () => {
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
         <h2 className={'auth-login-title'}>
-          <FormatMessage id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} />
+          <FormatMessage 
+            id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} 
+            asHtml
+          />
         </h2>
 
         <Input

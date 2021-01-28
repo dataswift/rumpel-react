@@ -1,0 +1,49 @@
+name: Deploy Sandbox
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ARTIFACTS_REPOSITORY: dswift-hat-sandbox-frontend-build-artifacts
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_HMI_LIBRARY }}
+
+      - name: Setup NODEJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}   
+
+      - name: Install
+        run: yarn install --network-concurrency 1
+
+      # TODO: ADD ENVIRONMENT UNIFICATION 
+      - name: Build deployment package
+        run: PUBLIC_URL=/assets yarn build:staging:external
+        env:
+          CI: true
+
+      - name: Upload the build
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_SANDBOX }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+        run: aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ --region eu-west-1

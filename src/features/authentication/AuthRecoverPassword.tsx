@@ -56,11 +56,11 @@ const AuthRecoverPassword: React.FC = () => {
           <>
             <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.recoverPassword.success.title'} />
+              <FormatMessage id={'ds.auth.recoverPassword.success.title'} asHtml />
             </h2>
 
             <div className={'auth-login-text'} onClick={() => validateAndReset()}>
-              <FormatMessage id={'ds.auth.recoverPassword.success.sendAgain'} asHtml={true} />
+              <FormatMessage id={'ds.auth.recoverPassword.success.sendAgain'} asHtml />
             </div>
           </>
         )}
@@ -68,7 +68,7 @@ const AuthRecoverPassword: React.FC = () => {
         {!successfulResponse && (
           <>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.recoverPassword.title'} />
+              <FormatMessage id={'ds.auth.recoverPassword.title'} asHtml />
             </h2>
             <Input
               type={'email'}

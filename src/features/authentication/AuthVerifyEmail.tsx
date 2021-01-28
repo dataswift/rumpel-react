@@ -180,7 +180,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
         {successfulResponse && (
           <>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.verifyEmail.success.title'} />
+              <FormatMessage id={'ds.auth.verifyEmail.success.title'} asHtml />
             </h2>
 
             <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
@@ -192,7 +192,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
         {!successfulResponse && (
           <>
             <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.verifyEmail.title'} />
+              <FormatMessage id={'ds.auth.verifyEmail.title'} asHtml />
             </h2>
             <Input
               type={'password'}
@@ -225,7 +225,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
 
             {passwordMatch && (
               <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
-                <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml={true} />
+                <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml />
               </div>
             )}
 
