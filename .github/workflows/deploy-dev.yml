@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - dev
-      - devops20
 
 env:
   ARTIFACTS_REPOSITORY: dswift-hat-stage-frontend-build-artifacts
