@@ -2,7 +2,6 @@ module.exports = {
   plugins: ['standard', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
     'no-var': 'error',
-    'no-unused-vars': 1,
     'arrow-spacing': ['error', { before: true, after: true }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -21,7 +20,7 @@ module.exports = {
       'warn',
       {
         vars: 'all',
-        args: 'none',
+        args: 'after-used',
       },
     ],
 
