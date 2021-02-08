@@ -2,12 +2,12 @@ import { environment } from './environment';
 
 const externalLinks = {
   bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
-  termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
-  privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf',
+  termsOfService: 'https://www.dataswift.io/legal/pda-owner-agreement-en',
+  privacyPolicy: 'https://www.dataswift.io/legal/privacy-policy-en',
 };
 
 export const config = {
-  version: '4.2.7',
+  version: '4.2.8',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
@@ -98,13 +98,6 @@ export const config = {
     { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },
 
     { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org', description: '' },
-
-    {
-      display: 'Your HAT functionality level is 4 (learn more)',
-      icon: 'exit_to_app',
-      link: externalLinks.privacyPolicy,
-      description: '',
-    },
   ],
   settingsPrivateDataMenu: [
     { display: 'Profile', icon: 'keyboard_arrow_right', link: '/profile', description: '' },
