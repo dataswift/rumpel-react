@@ -93,7 +93,11 @@ export const config = {
 
     { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io', description: '' },
 
-    { display: 'Terms of Service', icon: 'exit_to_app', link: externalLinks.termsOfService, description: '' },
+    { display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
+      icon: 'exit_to_app',
+      link: externalLinks.termsOfService,
+      description: ''
+    },
 
     { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },
 
