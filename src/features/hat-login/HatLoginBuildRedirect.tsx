@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
-import { HatClientService } from "../../services/HatClientService";
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import { HatClientService } from '../../services/HatClientService';
 import {
   selectDependencyApps,
   selectDependencyPlugsAreActive,
   selectDependencyToolsEnabled,
-  selectParentApp
-} from "../hmi/hmiSlice";
-import * as queryString from "query-string";
-import { addMinutes, isFuture, parseISO } from "date-fns";
+  selectParentApp,
+} from '../hmi/hmiSlice';
+import * as queryString from 'query-string';
+import { addMinutes, isFuture, parseISO } from 'date-fns';
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 type Query = {
   application_id?: string;
@@ -22,9 +22,9 @@ type Query = {
   redirect?: string;
   fallback?: string;
   internal?: string;
-}
+};
 
-const HatLoginBuildRedirect: React.FC<Props> = props => {
+const HatLoginBuildRedirect: React.FC<Props> = (props) => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const dependencyPlugsAreActive = useSelector(selectDependencyPlugsAreActive);
@@ -32,8 +32,7 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
-      const { redirect_uri, redirect, internal } =
-          queryString.parse(window.location.search) as Query;
+      const { redirect_uri, redirect, internal } = queryString.parse(window.location.search) as Query;
 
       const isInternal = internal === 'true';
       const redirectParam = redirect_uri || redirect;
@@ -51,29 +50,42 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
             const setup = app.application.setup;
 
             // TODO Change this logic to the new validRedirectUris field
-            const isRedirectUrlValid = [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl]
-              .indexOf(decodeURI(redirectParam || '')) !== -1;
+            const isRedirectUrlValid =
+              [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].indexOf(decodeURI(redirectParam || '')) !==
+              -1;
 
             const attemptedSetup = {
               applicationId: app.application.id,
-              date: addMinutes(new Date(), 10)
+              date: addMinutes(new Date(), 10),
             };
 
             sessionStorage.setItem('attempted_setup', JSON.stringify(attemptedSetup));
 
+            // This is a hack and ideally should be removed. This is what allows the log in via dataswift.io webpage,
+            // without this check users are redirected back to the dataswift.io page with the token attached.
+            // The problem is that the dataswift.io page has no idea what to do with the token and
+            // users are stuck there. With this hack users are being redirected
+            // back to their PDA Dashboard which is the intended behaviour.
+            const isDataswiftWebsite = redirectParam?.includes('www.dataswift.io%2Fsign-up-login');
+            const paramTokem = redirectParam?.indexOf('?') !== -1 ? '&' : '?';
+
+            const url = isDataswiftWebsite
+              ? window.location.origin + '/#/feed'
+              : `${redirectParam?.replace('#', '%23')}${paramTokem}token=${accessToken}`;
+
             if (isRedirectUrlValid) {
               // eslint-disable-next-line max-len
-              window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+              window.location.href = url;
             } else {
               console.warn('Provided URL is not registered');
 
-              hatSvc.sendReport('hmi_invalid_redirect_url', `${ app.application.id }: ${ redirectParam }`)
+              hatSvc
+                .sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirectParam}`)
                 .then(() => {
-                  // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
-                }).catch(() => {
-                  // eslint-disable-next-line max-len
-                  window.location.href = `${ redirectParam?.replace('#', '%23') }${ (redirectParam?.indexOf('?') !== -1) ? '&' : '?' }token=${ accessToken }`;
+                  window.location.href = url;
+                })
+                .catch(() => {
+                  window.location.href = url;
                 });
             }
           }
@@ -81,11 +93,13 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
       }
     };
 
-    if (parentApp &&
-        parentApp.active &&
-        !parentApp.needsUpdating &&
-        dependencyPlugsAreActive &&
-        dependencyToolsAreEnabled) {
+    if (
+      parentApp &&
+      parentApp.active &&
+      !parentApp.needsUpdating &&
+      dependencyPlugsAreActive &&
+      dependencyToolsAreEnabled
+    ) {
       buildRedirect(parentApp);
       return;
     }
@@ -93,9 +107,9 @@ const HatLoginBuildRedirect: React.FC<Props> = props => {
     const attemptedSetup = sessionStorage.getItem('attempted_setup');
 
     if (parentApp && parentApp.enabled && attemptedSetup) {
-      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: string};
+      const session = JSON.parse(attemptedSetup) as { applicationId: string; date: string };
 
-      if ((session.applicationId === parentApp.application.id) && isFuture(parseISO(session.date))) {
+      if (session.applicationId === parentApp.application.id && isFuture(parseISO(session.date))) {
         buildRedirect(parentApp);
         return;
       }
