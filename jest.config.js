@@ -11,6 +11,9 @@ module.exports = {
             "tsconfig": 'tsconfig.test.json'
         }
     },
+    "transformIgnorePatterns": [
+        "/node_modules/(?!react-select-search).+\\.js$"
+    ],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
     "moduleFileExtensions": [
         "ts",

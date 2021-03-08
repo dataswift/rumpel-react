@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@dataswift/hat-js": "^0.3.2",
+    "@dataswift/shared": "v0.0.3",
     "@material-ui/core": "^4.11.3",
     "@reduxjs/toolkit": "^1.3.5",
     "@testing-library/jest-dom": "^5.11.6",
@@ -11,8 +12,8 @@
     "date-fns": "^2.12.0",
     "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.3.3",
     "js-cookie": "^2.2.1",
-    "lodash": "^4.17.19",
-    "lodash-es": "^4.17.20",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "markdown-to-jsx": "^7.1.0",
     "query-string": "^6.14.1",
     "react": "^17.0.1",
@@ -22,7 +23,7 @@
     "react-redux": "^7.2.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^4.0.1",
+    "react-scripts": "^4.0.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.2.3"
