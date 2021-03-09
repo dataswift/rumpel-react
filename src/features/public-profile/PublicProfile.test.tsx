@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, waitFor } from '@testing-library/react';
+import { screen, render, waitFor, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter as Router } from 'react-router-dom';
 
@@ -57,13 +57,18 @@ describe('Public Profile Page', () => {
   });
 
   test('notification appears when landing on the screen', async () => {
+    window.open = jest.fn();
     window.localStorage.clear();
     mockFetchNotification.mockResolvedValueOnce({
       title: 'ribbon notification',
+      link: 'testLink',
     });
     renderWithProviders(<PublicProfile />);
 
     await waitFor(() => expect(screen.queryByText('ribbon notification')).toBeInTheDocument());
+    fireEvent.click(screen.getByText('ribbon notification'));
+    expect(window.open).toHaveBeenCalledTimes(1);
+    expect(window.open).toHaveBeenCalledWith('testLink');
   });
 
   test('notification does not appear is the date is the same as the curent day.', async () => {
