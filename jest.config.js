@@ -8,9 +8,12 @@ module.exports = {
     },
     "globals": {
         'ts-jest': {
-            "tsConfig": 'tsconfig.test.json'
+            "tsconfig": 'tsconfig.test.json'
         }
     },
+    "transformIgnorePatterns": [
+        "/node_modules/(?!react-select-search).+\\.js$"
+    ],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
     "moduleFileExtensions": [
         "ts",
