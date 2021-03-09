@@ -50,6 +50,9 @@ export const useDataswiftNotification = (manual: boolean = false) => {
 
         openRibbon({
           message: notification.title,
+          onClick: () => {
+            if (notification.link) window.open(notification.link);
+          },
           customStyles: {
             theme: 'custom',
           },
