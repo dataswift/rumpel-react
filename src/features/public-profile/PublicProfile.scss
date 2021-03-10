@@ -7,7 +7,6 @@
   min-height: 100vh !important;
   background-color: $app-background-color-dashboard;
 
-
   p {
     font-size: 14px;
     color: #9b9b9b;
@@ -34,7 +33,8 @@
     position: relative;
     top: -50px;
 
-    svg, img {
+    svg,
+    img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
@@ -66,7 +66,8 @@
     margin-bottom: 15px;
     text-align: center;
 
-    .hat-name, .hat-domain {
+    .hat-name,
+    .hat-domain {
       display: inline-block;
       font-size: 18px;
       font-weight: bold;
@@ -135,7 +136,6 @@
         line-height: 1.8;
         letter-spacing: normal;
         color: $ds-dusty-gray-color;
-
       }
     }
   }
@@ -155,6 +155,26 @@
       vertical-align: bottom;
       margin-right: 5px;
       font-size: 22px;
+    }
+  }
+}
+
+.ds-ribbon.custom {
+  display: flex;
+  justify-content: center;
+  background-color: $app-accent-color;
+  color: white;
+
+  .ds-ribbon-container {
+    position: relative;
+    justify-content: center;
+    flex: none;
+    width: 60%;
+    padding: 0;
+
+    .ds-ribbon-close {
+      position: absolute;
+      right: 0;
     }
   }
 }

@@ -25,18 +25,21 @@ jobs:
       - name: Setup NODEJS
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: 12
+          registry-url: https://npm.pkg.github.com
 
       - name: Cache
         uses: actions/cache@v2
         with:
           path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}   
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
         run: yarn install --network-concurrency 1
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      # TODO: ADD ENVIRONMENT UNIFICATION 
+      # TODO: ADD ENVIRONMENT UNIFICATION
       - name: Build deployment package
         run: PUBLIC_URL=/assets yarn build
         env:
