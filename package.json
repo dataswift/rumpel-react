@@ -9,7 +9,7 @@
     "@reduxjs/toolkit": "^1.3.5",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
-    "date-fns": "^2.12.0",
+    "date-fns": "^2.19.0",
     "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.3.3",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
