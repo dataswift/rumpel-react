@@ -83,6 +83,6 @@
     "lodash.debounce": "^4.0.8",
     "node-sass": "^4.14.1",
     "prettier": "^2.2.0",
-    "ts-jest": "^26.5.3"
+    "ts-jest": "^26.5.4"
   }
 }
