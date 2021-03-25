@@ -27,7 +27,7 @@ describe('Settings List', () => {
 
     expect(screen.getByText('Private data account')).toBeInTheDocument();
     expect(screen.getByText('Change password').closest('a')).toHaveAttribute('href', '/user/password/change');
-    expect(screen.getByText('Terms of Service')).toBeInTheDocument();
+    expect(screen.getByText('Dataswift Personal Data Account (PDA) Owner Agreement')).toBeInTheDocument();
     expect(screen.getByText('Version')).toBeInTheDocument();
     expect(screen.getByText('Vendor (where you got your HAT)')).toBeInTheDocument();
   });

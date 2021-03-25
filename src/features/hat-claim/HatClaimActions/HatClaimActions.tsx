@@ -22,15 +22,15 @@ const HatClaimActions: React.FC<Props> = props => {
         <div className="text-small" style={{ textAlign: 'center', marginTop: '1.8rem' }}>
           By selecting 'Confirm', I agree to the Dataswift&nbsp;
           <a
-            href="https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf"
+            href="https://www.dataswift.io/legal/dataswift-personal-data-account-owner-agreement"
             rel="noopener noreferrer"
             target="_blank"
           >
-            Terms of Service
+            Personal Data Account (PDA) Owner Agreement
           </a>
           &nbsp; and{' '}
           <a
-            href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf"
+            href="https://www.dataswift.io/legal/privacy-policy"
             rel="noopener noreferrer"
             target="_blank"
           >
