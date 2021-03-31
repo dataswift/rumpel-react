@@ -22,7 +22,6 @@ const TEST_HAT_APPLICATION: HatApplication = {
       contracts: []
     },
     info: {
-      dataPreview: [],
       dataUsePurpose: 'Test data use purpose',
       description: { text: 'Test description', html: '', markdown: '' },
       graphics: { logo: { normal: '' }, banner: { normal: '' }, screenshots: [] },
@@ -64,6 +63,7 @@ const TEST_HAT_APPLICATION: HatApplication = {
       kind: '',
       url: '',
       onboarding: [],
+      validRedirectUris: []
     }
   },
   enabled: true,

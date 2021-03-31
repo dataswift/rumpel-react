@@ -11,7 +11,7 @@ describe('FeedDefaultItem', () => {
 
     expect(screen.getByAltText('testsource')).toBeInTheDocument();
     expect(screen.getByText('Test Text Title')).toBeInTheDocument();
-    expect(screen.getByText('Posted 16 Nov 2020 6:00PM')).toBeInTheDocument();
+    expect(screen.getByText(/Posted 16 Nov 2020/i)).toBeInTheDocument();
     expect(screen.getByText('Test content text')).toBeInTheDocument();
   });
 
@@ -24,7 +24,7 @@ describe('FeedDefaultItem', () => {
     expect(screen.getByTestId('feed-card-content-image'))
       .toHaveStyle(`background-image: url(${SheFeedItemTextAndImage.content?.media?.[0].url})`);
     expect(screen.getByText('Test Text Title')).toBeInTheDocument();
-    expect(screen.getByText('Posted 16 Nov 2020 6:00PM')).toBeInTheDocument();
+    expect(screen.getByText(/Posted 16 Nov 2020/i)).toBeInTheDocument();
     expect(screen.getByText('Test content text')).toBeInTheDocument();
   });
 
@@ -37,7 +37,7 @@ describe('FeedDefaultItem', () => {
     expect(screen.getByText('Test Text Title')).toBeInTheDocument();
     expect(screen.getByText('TestAddress')).toBeInTheDocument();
     expect(screen.getByText('TestStreet')).toBeInTheDocument();
-    expect(screen.getByText('Posted 16 Nov 2020 6:00PM')).toBeInTheDocument();
+    expect(screen.getByText(/Posted 16 Nov 2020/i)).toBeInTheDocument();
     expect(screen.getByText('Test content text')).toBeInTheDocument();
   });
 });

@@ -22,7 +22,6 @@ const TEST_DATA_PLUG: HatApplication = {
       contracts: []
     },
     info: {
-      dataPreview: [],
       dataUsePurpose: 'Test data use purpose',
       description: { text: 'Test description', html: '', markdown: '' },
       graphics: { logo: { normal: '' }, banner: { normal: '' }, screenshots: [] },
@@ -60,6 +59,7 @@ const TEST_DATA_PLUG: HatApplication = {
       kind: '',
       url: 'https://setup-url.dataswift.io',
       onboarding: [],
+      validRedirectUris: []
     }
   },
   enabled: true,
