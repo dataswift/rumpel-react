@@ -23,7 +23,7 @@ describe('FeedRollup', () => {
     expect(screen.getByAltText('testsource')).toBeInTheDocument();
     expect(screen.getByText('Test Text Title')).toBeInTheDocument();
     expect(screen.getByText('Test content text')).toBeInTheDocument();
-    expect(screen.getByText('Posted 16 Nov 2020 6:00PM')).toBeInTheDocument();
+    expect(screen.getByText(/Posted 16 Nov 2020/i)).toBeInTheDocument();
     expect(screen.getByText('See 4 more items')).toBeInTheDocument();
     // Ensure that only the first items is displayed.
     expect(screen.queryAllByAltText('testsource')).toHaveLength(1);

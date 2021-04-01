@@ -47,7 +47,7 @@ describe('Data Debits page tests', () => {
     expect(mockGetDataDebits).toHaveBeenCalledTimes(1);
 
     expect(screen.getByText('TestExpiredDataDebit')).toBeInTheDocument();
-    expect(screen.getByText('expired 12 Dec 2017 1:55PM')).toBeInTheDocument();
+    expect(screen.getByText(/expired 12 Dec 2017/i)).toBeInTheDocument();
 
     expect(screen.getByText('active')).toBeInTheDocument();
     const activeDataDebit = screen.getByText('TestActiveDataDebit');
