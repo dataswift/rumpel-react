@@ -1182,10 +1182,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dataswift/hat-js@^0.4.0":
-  version "0.4.0"
-  resolved "https://npm.pkg.github.com/download/@dataswift/hat-js/v0.4.0/026ca20e12c9351690216a8f3bc2480b0da4e7c9cefc73db93222091c15ca1e5#04702c32a23f469b6124f7a398eb9a0aef18a2d0"
-  integrity sha512-upCn5yETywd0k1sLmWYjntvkRmpmWKusjfV+YoOQ2qedLGMwjfHywuBsppzlNizbP/RWyZoGjN2xIuIjeYO+mw==
+"@dataswift/hat-js@^0.5.0":
+  version "0.5.0"
+  resolved "https://npm.pkg.github.com/download/@dataswift/hat-js/v0.5.0/c5b0002a67ae907aace5c796ebd40a4b12fc202cf34e99c14ed9c55861f9a44d#37d99ef7f56bfb04c448adbf9bc110bb73655fea"
+  integrity sha512-vd745FEnbiUpc7C8iElGeJSeiDNhpER5fypIxTgQMkpzsPARDHDEurTcWRX5RiNixzuWNT3ViF6iK8IvrjualQ==
   dependencies:
     cross-fetch "^3.1.2"
     jwt-decode "^3.1.2"
