@@ -36,6 +36,7 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
 
       const isInternal = internal === 'true';
       const redirectParam = redirect_uri || redirect;
+      const redirectParamDecoded = decodeURIComponent(redirectParam || '');
 
       if (isInternal) {
         window.location.href = redirectParam || '';
@@ -49,10 +50,7 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
             const { accessToken } = resAppLogin.parsedBody;
             const setup = app.application.setup;
 
-            // TODO Change this logic to the new validRedirectUris field
-            const isRedirectUrlValid =
-              [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].indexOf(decodeURI(redirectParam || '')) !==
-              -1;
+            const isRedirectUrlValid = setup.validRedirectUris.includes(redirectParamDecoded);
 
             const attemptedSetup = {
               applicationId: app.application.id,
@@ -66,11 +64,12 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
             // The problem is that the dataswift.io page has no idea what to do with the token and
             // users are stuck there. With this hack users are being redirected
             // back to their PDA Dashboard which is the intended behaviour.
-            const isDataswiftWebsite = redirectParam?.includes('www.dataswift.io%2Fsign-up-login');
-            const paramTokem = redirectParam?.indexOf('?') !== -1 ? '&' : '?';
+            const isDataswiftWebsite = redirectParamDecoded?.includes('www.dataswift.io/sign-up-login');
+
+            const paramTokem = redirectParam?.includes('?') ? '&' : '?';
 
             const url = isDataswiftWebsite
-              ? window.location.origin + '/#/feed'
+              ? window.location.origin + '/feed'
               : `${redirectParam?.replace('#', '%23')}${paramTokem}token=${accessToken}`;
 
             if (isRedirectUrlValid) {
