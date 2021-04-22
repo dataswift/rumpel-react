@@ -7,7 +7,7 @@
     "@dataswift/shared": "v0.0.3",
     "@material-ui/core": "^4.11.3",
     "@reduxjs/toolkit": "^1.5.1",
-    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "date-fns": "^2.21.1",
     "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.4.1",
