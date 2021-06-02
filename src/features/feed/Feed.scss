@@ -98,7 +98,6 @@
 .feed-user-actions {
   display: flex;
   flex-direction: column;
-  position: -webkit-fixed; /* Safari */
   position: fixed;
   margin: auto auto 0; /* Fix the issue with the small feed height */
   bottom: 0;

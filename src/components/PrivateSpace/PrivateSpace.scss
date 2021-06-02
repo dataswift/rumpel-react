@@ -29,8 +29,18 @@
         margin-left: 0;
       }
 
+      // This is a hack to center the action buttons when the side nav is opened
+      .feed-user-actions {
+        left: 325px;
+      }
+
       &.side-menu-hidden {
         margin-left: 0;
+
+        // This is a hack to reset the action buttons left to 0 when the side nav is closed
+        .feed-user-actions {
+          left: 0;
+        }
       }
     }
   }
