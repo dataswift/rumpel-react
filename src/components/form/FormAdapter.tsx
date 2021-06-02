@@ -22,8 +22,12 @@ type Props = {
 const FormAdapter: React.FC<Props> = (props) => {
   const { fields, profileField, formId, validations, values, onFormDataChange, profileSharing } = props;
   const dispatch = useDispatch();
+
+  // This helps the useEffect to set the latest values to the form state.
+  const initialValues = Object.values(values).join('');
+
   const [formState, setFormState] = useState<Record<string, string>>(values);
-  const [previousState] = useState<Record<string, string>>(values);
+  const [previousState, setPreviousState] = useState<Record<string, string>>(values);
   const { errors } = useFormValidations(validations, formState);
   const onFormStateDebounce = useRef(
     debounce(
@@ -32,6 +36,12 @@ const FormAdapter: React.FC<Props> = (props) => {
       1000,
     ),
   ).current;
+
+  useEffect(() => {
+    setFormState(values);
+    setPreviousState(values);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   const onChange = (fieldId: string, value: string) => {
     setFormState({ ...formState, [fieldId]: value });
