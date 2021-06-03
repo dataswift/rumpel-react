@@ -22,8 +22,9 @@ type Props = {
 const FormAdapter: React.FC<Props> = (props) => {
   const { fields, profileField, formId, validations, values, onFormDataChange, profileSharing } = props;
   const dispatch = useDispatch();
+
   const [formState, setFormState] = useState<Record<string, string>>(values);
-  const [previousState] = useState<Record<string, string>>(values);
+  const [previousState, setPreviousState] = useState<Record<string, string>>(values);
   const { errors } = useFormValidations(validations, formState);
   const onFormStateDebounce = useRef(
     debounce(
@@ -32,6 +33,11 @@ const FormAdapter: React.FC<Props> = (props) => {
       1000,
     ),
   ).current;
+
+  useEffect(() => {
+    setFormState(values);
+    setPreviousState(values);
+  }, [values]);
 
   const onChange = (fieldId: string, value: string) => {
     setFormState({ ...formState, [fieldId]: value });

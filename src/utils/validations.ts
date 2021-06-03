@@ -4,7 +4,7 @@ const HAT_URL_REGEX = /^[a-z][a-z0-9]{2,19}[a-z0-9]$/;
 const SPECIAL_CHARS_REGEX = /[_~\-!"`¬|:;'#@$£%^&.,*()<>]+/;
 const NUMBER_FIRST_CHAR_REGEX = /^\d+/;
 export const URL_PATTERN = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
-export const NAME_PATTERN = /^[a-zA-Z]+(?:-[a-zA-Z]+)*$/;
+export const NAME_PATTERN = /^(?=.{1,50}$)[a-zA-Z]+(?:['_.\s][a-zA-Z]+)*$/;
 export const NUMBER_PATTERN = /^\d+$/;
 const ERROR_MESSAGES: { [key: string]: string } = {
   lengthError: 'The username must be between 4 to 21 characters.',
