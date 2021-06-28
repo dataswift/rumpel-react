@@ -70,7 +70,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.14",
     "@types/react-router-dom": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.26.0",
     "env-cmd": "^10.1.0",
     "eslint-plugin-react": "^7.24.0",
