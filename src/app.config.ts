@@ -12,13 +12,14 @@ export const config = {
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
   supportedDomains: [
-    '.hubofallthings.net', 
-    '.hubat.net', 
-    '.hat.direct', 
-    '.dataswift.me', 
+    '.hubofallthings.net',
+    '.hubat.net',
+    '.hat.direct',
+    '.dataswift.me',
     '.dataswift.dev',
     '.dataswift.us',
-    '.dataswift.ca'
+    '.dataswift.ca',
+    '.dataswift.net'
   ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
@@ -39,14 +40,14 @@ export const config = {
       external: false,
       description: 'My Digital Life',
     },
-    { 
-      display: 'My public profile', 
-      icon: 'security', 
-      link: '/profile', 
-      external: false, 
+    {
+      display: 'My public profile',
+      icon: 'security',
+      link: '/profile',
+      external: false,
       description:
-          'View and edit the details of your profile and decide' +
-          ' what information is private and what is to be shared.' ,
+        'View and edit the details of your profile and decide' +
+        ' what information is private and what is to be shared.',
     },
     {
       display: 'Tools & insights',
@@ -93,7 +94,8 @@ export const config = {
 
     { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io', description: '' },
 
-    { display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
+    {
+      display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
       icon: 'exit_to_app',
       link: externalLinks.termsOfService,
       description: ''
