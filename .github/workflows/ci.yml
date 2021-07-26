@@ -22,7 +22,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_HMI_LIBRARY }}
 
       - name: Setup NODEJS
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com
