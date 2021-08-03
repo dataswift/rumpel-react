@@ -60,4 +60,4 @@ jobs:
       - name: Deploy - dashboard
         uses: docker://amazon/aws-cli
         with:
-          args: cloudfront create-invalidation --distribution-id E1ZCAI6VCTF9K7 --paths /*
+          args: cloudfront create-invalidation --distribution-id E1ZCAI6VCTF9K7 --paths /* --region us-east-1 
