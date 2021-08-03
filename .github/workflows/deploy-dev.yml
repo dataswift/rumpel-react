@@ -9,7 +9,6 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER_STAGING_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER_STAGING_SECRET_ACCESS_KEY }}
-  ARTIFACTS_REPOSITORY: dswift-hat-stage-frontend-build-artifacts
 
 jobs:
   build:
@@ -51,7 +50,7 @@ jobs:
       - name: Upload the build
         uses: docker://amazon/aws-cli
         with:
-          args: s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ --region eu-west-1
+          args: s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/latest/ --region eu-west-1
 
       - name: Upload - dashboard
         uses: docker://amazon/aws-cli
