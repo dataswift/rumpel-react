@@ -7,7 +7,8 @@ on:
       - dev
 
 env:
-  ARTIFACTS_REPOSITORY: dswift-hat-stage-frontend-build-artifacts
+  AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER_STAGING_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER_STAGING_SECRET_ACCESS_KEY }}
 
 jobs:
   build:
@@ -47,7 +48,16 @@ jobs:
           CI: true
 
       - name: Upload the build
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER_STAGING_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER_STAGING_SECRET_ACCESS_KEY }}
-        run: aws s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ --region eu-west-1
+        uses: docker://amazon/aws-cli
+        with:
+          args: s3 sync build/ s3://dswift-hat-stage-frontend-build-artifacts/latest/ --region eu-west-1
+
+      - name: Upload - dashboard
+        uses: docker://amazon/aws-cli
+        with:
+          args: s3 sync build/ s3://dataswift-staging-one-dashboard --region us-east-1 --sse AES256 --follow-symlinks --delete
+
+      - name: Deploy - dashboard
+        uses: docker://amazon/aws-cli
+        with:
+          args: cloudfront create-invalidation --distribution-id E1ZCAI6VCTF9K7 --paths /* --region us-east-1 
