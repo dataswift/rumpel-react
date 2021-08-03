@@ -30,6 +30,7 @@ export const config = {
     termsOfService: externalLinks.termsOfService,
     privacyPolicy: externalLinks.privacyPolicy,
     hatters: environment.hattersUrl,
+    pdaSignup: `${environment.hattersUrl}/services/signup?application_id=hatapp&redirect_uri=https://www.dataswift.io/sign-up-login`,
   },
   mainMenu: [
     {

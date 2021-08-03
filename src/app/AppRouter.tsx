@@ -17,6 +17,7 @@ import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
 import DataDebits from '../features/data-debit';
 import DataDebitDetails from "../features/data-debit/DataDebitDetails";
+import { LandingLoginPage } from "../pages";
 
 const HatClaim = React.lazy(
   () =>
@@ -176,6 +177,11 @@ const AppRouter = () => (
           <PublicProfile />
         </LayoutRoute>
 
+        <LayoutRoute path="/login" footerBackgroundColor="#fff">
+          <LandingLoginPage />
+        </LayoutRoute>
+
+
         <LayoutRoute path="/hat/claim/:claimToken">
           <HatClaim />
         </LayoutRoute>
@@ -220,7 +226,7 @@ const AppRouter = () => (
           exact
           path="/"
           render={({ location }) => {
-            const redirectTo = location.hash ? location.hash.replace('#', '') : '/public/profile';
+            const redirectTo = location.hash ? location.hash.replace('#', '') : '/login';
 
             return <Redirect to={redirectTo} />;
           }}
