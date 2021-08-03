@@ -43,7 +43,7 @@ jobs:
 
       # TODO: ADD ENVIRONMENT UNIFICATION
       - name: Build deployment package
-        run: PUBLIC_URL=/assets yarn build:staging:internal
+        run: yarn build:staging:internal
         env:
           CI: true
 
