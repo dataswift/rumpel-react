@@ -50,11 +50,13 @@ jobs:
 
       - name: Upload the build
         uses: docker://amazon/aws-cli
-        run: s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ --region eu-west-1
+        with:
+          args: s3 sync build/ s3://$ARTIFACTS_REPOSITORY/latest/ --region eu-west-1
 
       - name: Upload - dashboard
         uses: docker://amazon/aws-cli
-        run: s3 sync build/ s3://dataswift-staging-one-dashboard --region us-east-1 --sse AES256 --follow-symlinks --delete
+        with:
+          args: s3 sync build/ s3://dataswift-staging-one-dashboard --region us-east-1 --sse AES256 --follow-symlinks --delete
 
       - name: Deploy - dashboard
         uses: docker://amazon/aws-cli
