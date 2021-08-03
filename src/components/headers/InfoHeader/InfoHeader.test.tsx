@@ -50,6 +50,6 @@ describe('InfoHeader', () => {
         </Router>
       </Root>);
 
-    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(environment.hattersUrl + '/hat/signup');
+    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(environment.hattersFrontendUrl + '/hat/signup');
   });
 });

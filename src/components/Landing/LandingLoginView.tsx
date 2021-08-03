@@ -54,7 +54,7 @@ const LandingLoginView: React.FC = () => {
     }
   };
 
-  const onSignup = async (email: string) => {
+  const onSignup = async () => {
     window.location.assign(`${config.links.pdaSignup}&email=${email}`);
   };
 
@@ -108,7 +108,7 @@ const LandingLoginView: React.FC = () => {
       <div className="landing-dont-have-account">Don't have an account?</div>
       <button
         className="ds-hmi-btn ds-hmi-btn-primary landing-btn-secondary"
-        onClick={() => onSignup(email)}>
+        onClick={onSignup}>
         Signup
       </button>
     </div>

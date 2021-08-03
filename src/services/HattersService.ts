@@ -3,5 +3,5 @@ import { PdaLookupResponse } from "../types/Hatters";
 import { config } from "../app.config";
 
 export const pdaLookupWithEmail = (email: string) => {
-  return get<PdaLookupResponse>(`${config.links.hatters}/api/hat/lookup?email=${email}`);
+  return get<PdaLookupResponse>(`${config.links.hattersBackend}/api/hat/lookup?email=${email}`);
 };

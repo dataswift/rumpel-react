@@ -1,5 +1,7 @@
 import { environment } from './environment';
 
+const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
+
 const externalLinks = {
   bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
   termsOfService: 'https://www.dataswift.io/legal/pda-owner-agreement-en',
@@ -29,8 +31,9 @@ export const config = {
     bestPractices: externalLinks.bestPractices,
     termsOfService: externalLinks.termsOfService,
     privacyPolicy: externalLinks.privacyPolicy,
-    hatters: environment.hattersUrl,
-    pdaSignup: `${environment.hattersUrl}/services/signup?application_id=hatapp&redirect_uri=https://www.dataswift.io/sign-up-login`,
+    hattersBackend: environment.hattersBackendUrl,
+    hattersFrontend: environment.hattersFrontendUrl,
+    pdaSignup: `${environment.hattersFrontendUrl}/services/signup?application_id=${APPLICATION_ID}&redirect_uri=https://www.dataswift.io/sign-up-login`,
   },
   mainMenu: [
     {
