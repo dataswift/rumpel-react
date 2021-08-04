@@ -5,7 +5,7 @@ import { pdaLookupWithEmail } from "../../services/HattersService";
 import { PdaLookupResponse } from "../../types/Hatters";
 import { config } from "../../app.config";
 import { useHistory } from "react-router-dom";
-import { userAccessToken } from "../../api/hatAPI";
+import { newUserAccessToken } from "../../api/hatAPI";
 import { loginWithToken } from "../../features/authentication/authenticationSlice";
 import { HatClientService } from "../../services/HatClientService";
 import Cookies from "js-cookie";
@@ -37,7 +37,7 @@ const LandingLoginView: React.FC = () => {
     try {
       if (!response?.hatName) return;
 
-      const res = await userAccessToken(response?.hatName, password);
+      const res = await newUserAccessToken(response.hatName + '.' + response.hatCluster, response.hatName, password);
 
       if (res.parsedBody) {
         dispatch(loginWithToken(res.parsedBody.accessToken));

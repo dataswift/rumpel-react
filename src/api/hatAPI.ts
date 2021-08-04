@@ -13,6 +13,16 @@ export const userAccessToken = (username: string, password: string) => {
   return get<{ accessToken: string }>(path, { headers: headers });
 };
 
+export const newUserAccessToken = (pda: string, username: string, password: string) => {
+  const path = `https://${pda}/users/access_token`;
+  const headers = {
+    username: encodeURIComponent(username),
+    password: encodeURIComponent(password),
+  };
+
+  return get<{ accessToken: string }>(path, { headers: headers });
+};
+
 export const recoverPassword = (body: { email: string }) => {
   const path = `/control/v2/auth/passwordReset`;
   const headers = { 'Content-Type': 'application/json' };

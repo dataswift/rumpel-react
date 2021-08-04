@@ -1,5 +1,5 @@
 export interface PdaLookupResponse {
-  hatCLuster: string;
+  hatCluster: string;
   hatName: string;
   verified: boolean;
 }
