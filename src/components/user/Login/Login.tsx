@@ -7,13 +7,13 @@ import { loginWithToken } from '../../../features/authentication/authenticationS
 import { useDispatch } from 'react-redux';
 import { HatClientService } from '../../../services/HatClientService';
 import Cookies from 'js-cookie';
-import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
-import { NotificationBanner } from "../../banners/NotificationBanner/NotificationBanner";
-import * as queryString from "query-string";
+import { InfoHeader } from '../../headers/InfoHeader/InfoHeader';
+import { NotificationBanner } from '../../banners/NotificationBanner/NotificationBanner';
+import * as queryString from 'query-string';
 
 type Query = {
   target?: string;
-}
+};
 
 const Login: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -85,7 +85,9 @@ const Login: React.FC = () => {
   return (
     <div className={'login flex-column-wrapper'}>
       <InfoHeader hideMobile fixed />
-      <NotificationBanner type={'error'} display={!!errorMsg}>{errorMsg}</NotificationBanner>
+      <NotificationBanner type={'error'} display={!!errorMsg}>
+        {errorMsg}
+      </NotificationBanner>
       <span className={'flex-spacer-small'} />
       <img
         className={'login-dataswift-logo'}
@@ -102,11 +104,12 @@ const Login: React.FC = () => {
         </div>
       </div>
 
-      <form onSubmit={e => {
-        e.preventDefault();
-        login();
-      }}
-      className={'flex-column-wrapper'}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          login();
+        }}
+        className={'flex-column-wrapper'}
       >
         <div className="input-password-container login-password-container">
           <input
@@ -115,7 +118,7 @@ const Login: React.FC = () => {
             autoComplete={'password'}
             onFocus={() => setErrorMsg('')}
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
           <button type="button" tabIndex={-1} onClick={() => setHidePassword(!hidePassword)}>
@@ -125,13 +128,13 @@ const Login: React.FC = () => {
 
         <div className={'checkbox-container login-remember-me-container'}>
           <label htmlFor={'rememberMe'}>
-          Remember me
+            Remember me
             <input
               id={'rememberMe'}
               name={'rememberMe'}
               type={'checkbox'}
               checked={remember}
-              onChange={e => setRemember(e.target.checked)}
+              onChange={(e) => setRemember(e.target.checked)}
             />
             <span className="checkbox-checkmark" />
           </label>
@@ -144,20 +147,16 @@ const Login: React.FC = () => {
         </div>
 
         <div className="data-rights-description">
-        Data rights protection ensures your HAT is always secure and that the rights to your data are preserved. Your
-        password will not be shared with the application.
+          Data rights protection ensures your HAT is always secure and that the rights to your data are preserved. Your
+          password will not be shared with the application.
         </div>
 
         <div className="user-actions">
           <button type="submit" className="btn btn-accent" onClick={() => login()}>
-          Log in
+            Log in
           </button>
-          <button
-            className={'btn btn-transparent-grey'}
-            type={'button'}
-            onClick={() => navigateToPasswordRecovery()}
-          >
-          Forgotten password?
+          <button className={'btn btn-transparent-grey'} type={'button'} onClick={() => navigateToPasswordRecovery()}>
+            Forgotten password?
           </button>
         </div>
       </form>

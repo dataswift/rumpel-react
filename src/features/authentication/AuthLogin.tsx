@@ -50,7 +50,7 @@ const AuthLogin: React.FC = () => {
     // without this check users are redirected back to the dataswift.io page with the token attached. The problem
     // is that the dataswift.io page has no idea what to do with the token and uses are stuck there. With this hack
     // users are being redirected back to their PDA Dashboard which is the intended behaviour.
-    const isDataswiftWebsite = (from?.search.toString().includes("www.dataswift.io%2Fsign-up-login"));
+    const isDataswiftWebsite = from?.search.toString().includes('www.dataswift.io%2Fsign-up-login');
     if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {
@@ -128,10 +128,7 @@ const AuthLogin: React.FC = () => {
         <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
 
         <h2 className={'auth-login-title'}>
-          <FormatMessage 
-            id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} 
-            asHtml
-          />
+          <FormatMessage id={repeat ? 'ds.auth.login.title.password.repeat' : 'ds.auth.login.title.password'} asHtml />
         </h2>
 
         <Input

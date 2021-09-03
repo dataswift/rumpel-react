@@ -5,9 +5,9 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
 import { configureStore } from '@reduxjs/toolkit';
-import UniversalDataViewerDataSources from "./UniversalDataViewerDataSources";
-import universalDataViewerSlice from "./universalDataViewerSlice";
-import TEST_DATA_SOURCES from "../../testData/DataSources";
+import UniversalDataViewerDataSources from './UniversalDataViewerDataSources';
+import universalDataViewerSlice from './universalDataViewerSlice';
+import TEST_DATA_SOURCES from '../../testData/DataSources';
 
 export const store = configureStore({
   reducer: {

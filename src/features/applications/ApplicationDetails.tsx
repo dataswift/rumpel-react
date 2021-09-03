@@ -27,8 +27,7 @@ const HatApplicationDetails: React.FC = () => {
     const redirectRumpel = window.location.href;
 
     history.push(
-      `/auth/oauth?` +
-        `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectRumpel}&internal=true`,
+      `/auth/oauth?` + `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectRumpel}&internal=true`,
     );
   };
 

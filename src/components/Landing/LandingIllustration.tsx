@@ -1,5 +1,5 @@
-import React from "react";
-import LandingPageIllustration from "../../assets/images/landing-page-illustration.svg";
+import React from 'react';
+import LandingPageIllustration from '../../assets/images/landing-page-illustration.svg';
 
 const LandingIllustration: React.FC = () => {
   return (

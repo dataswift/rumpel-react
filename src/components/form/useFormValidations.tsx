@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { isEmail, NAME_PATTERN, NUMBER_PATTERN, URL_PATTERN } from "../../utils/validations";
+import { useEffect, useRef, useState } from 'react';
+import { isEmail, NAME_PATTERN, NUMBER_PATTERN, URL_PATTERN } from '../../utils/validations';
 
 const debounce = require('lodash.debounce');
 
@@ -7,26 +7,24 @@ export const useFormValidations = (validationPatterns: Record<string, string>, v
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [unmounted, setUnmounted] = useState(false);
   const validationDebounce = useRef(
-    debounce(
-      (values: Record<string, string>, abort: boolean) =>
-      {
-        if (abort) return;
+    debounce((values: Record<string, string>, abort: boolean) => {
+      if (abort) return;
 
-        generateErrors(values);
-      },
-      600,
-    ),
+      generateErrors(values);
+    }, 600),
   ).current;
 
   useEffect(() => {
-    return () => { setUnmounted(true); };
+    return () => {
+      setUnmounted(true);
+    };
   }, []);
 
   const generateErrors = (values: Record<string, string>) => {
     if (!values) return;
-      
+
     let newErrors: Record<string, string> = {};
-    
+
     Object.entries(values).forEach(([key, value]) => {
       const validationArray = validationPatterns[key]?.split('|');
 
@@ -102,7 +100,7 @@ export const useFormValidations = (validationPatterns: Record<string, string>, v
       setErrors(newErrors);
     }
   };
-    
+
   useEffect(() => {
     validationDebounce(values);
 

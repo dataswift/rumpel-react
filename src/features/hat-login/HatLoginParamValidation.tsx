@@ -1,26 +1,25 @@
-import React, { useEffect } from "react";
-import { getApplicationsHmi } from "../applications/applicationsSlice";
-import { useDispatch } from "react-redux";
-import { setRedirectError } from "./hatLoginSlice";
-import * as queryString from "query-string";
+import React, { useEffect } from 'react';
+import { getApplicationsHmi } from '../applications/applicationsSlice';
+import { useDispatch } from 'react-redux';
+import { setRedirectError } from './hatLoginSlice';
+import * as queryString from 'query-string';
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 type Query = {
   application_id?: string;
   name?: string;
   redirect_uri?: string;
   redirect?: string;
-}
+};
 
-const HatLoginParamValidation: React.FC<Props> = props => {
+const HatLoginParamValidation: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { application_id, name, redirect_uri, redirect } =
-        queryString.parse(window.location.search) as Query;
+    const { application_id, name, redirect_uri, redirect } = queryString.parse(window.location.search) as Query;
     const applicationId = application_id || name;
     const applicationIdSafe = applicationId?.toLowerCase();
     const redirectParam = redirect_uri || redirect;

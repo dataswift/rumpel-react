@@ -1,12 +1,12 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { HmiType, HmiV2 } from "hmi";
-import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
-import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
-import { selectLanguage } from "../language/languageSlice";
-import { isHmiLoading } from "../hat-login/helpers";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDependencyApps, selectDependencyTools, selectParentApp } from '../hmi/hmiSlice';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { HmiType, HmiV2 } from 'hmi';
+import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from '../hat-login/hatLoginSlice';
+import { NotificationBanner } from '../../components/banners/NotificationBanner/NotificationBanner';
+import { selectLanguage } from '../language/languageSlice';
+import { isHmiLoading } from '../hat-login/helpers';
 
 const OauthPermissions: React.FC = () => {
   const hatName = window.location.host;
@@ -22,7 +22,7 @@ const OauthPermissions: React.FC = () => {
   };
 
   if (!parentApp || isHmiLoading(parentApp, dependencyApps, dependencyTools)) {
-    return <LoadingSpinner loadingText={'Loading permissions...'}/>;
+    return <LoadingSpinner loadingText={'Loading permissions...'} />;
   }
 
   return (
@@ -32,24 +32,29 @@ const OauthPermissions: React.FC = () => {
           <p>
             An error has occurred, please use the back button to return to the previous page <br />
             and try confirming again. If this error persists please{' '}
-            <a href={'mailto:contact@dataswift.io'} className={'link-button'}>contact us</a>
+            <a href={'mailto:contact@dataswift.io'} className={'link-button'}>
+              contact us
+            </a>
           </p>
-          <button className={'btn btn-accent'} onClick={() => redirectBack()}>Back</button>
+          <button className={'btn btn-accent'} onClick={() => redirectBack()}>
+            Back
+          </button>
         </div>
       </NotificationBanner>
 
       <span className={'flex-spacer-small'} />
-      {parentApp &&
-      <HmiV2 hmiType={HmiType.login.daas}
-        parentApp={parentApp.application}
-        email={hatName}
-        language={language}
-        dependencyTools={dependencyTools.map(tool => tool.info.name)}
-        dependencyApps={dependencyApps.map(app => app.application)}
-        onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
-        onRejected={() => dispatch(onTermsDeclined())}
-      />
-      }
+      {parentApp && (
+        <HmiV2
+          hmiType={HmiType.login.daas}
+          parentApp={parentApp.application}
+          email={hatName}
+          language={language}
+          dependencyTools={dependencyTools.map((tool) => tool.info.name)}
+          dependencyApps={dependencyApps.map((app) => app.application)}
+          onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
+          onRejected={() => dispatch(onTermsDeclined())}
+        />
+      )}
     </div>
   );
 };

@@ -21,7 +21,7 @@ export const config = {
     '.dataswift.dev',
     '.dataswift.us',
     '.dataswift.ca',
-    '.dataswift.net'
+    '.dataswift.net',
   ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
@@ -102,7 +102,7 @@ export const config = {
       display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
       icon: 'exit_to_app',
       link: externalLinks.termsOfService,
-      description: ''
+      description: '',
     },
 
     { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },

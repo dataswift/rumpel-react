@@ -19,7 +19,7 @@ const TEST_HAT_APPLICATION: HatApplication = {
     dependencies: {
       tools: [],
       plugs: [],
-      contracts: []
+      contracts: [],
     },
     info: {
       dataUsePurpose: 'Test data use purpose',
@@ -40,14 +40,14 @@ const TEST_HAT_APPLICATION: HatApplication = {
     permissions: {
       rolesGranted: [
         {
-          role: "namespacewrite",
-          detail: "testnamespace"
+          role: 'namespacewrite',
+          detail: 'testnamespace',
         },
         {
-          role: "namespaceread",
-          detail: "testnamespace"
+          role: 'namespaceread',
+          detail: 'testnamespace',
         },
-      ]
+      ],
     },
     status: {
       expectedStatus: 0,
@@ -63,8 +63,8 @@ const TEST_HAT_APPLICATION: HatApplication = {
       kind: '',
       url: '',
       onboarding: [],
-      validRedirectUris: []
-    }
+      validRedirectUris: [],
+    },
   },
   enabled: true,
   needsUpdating: false,

@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import './DropDownMenu.scss';
-import Input from "../form/Input";
+import Input from '../form/Input';
 
 type Props = {
-    placeholder: string;
-    value?: string;
-    options: Array<string>;
-    profileField?: boolean;
-    errorMessage?: string;
-    onChange: (value: string) => void;
-    profilePrivacyToggle?: boolean;
-    onProfileSharingChange?: () => void;
-}
+  placeholder: string;
+  value?: string;
+  options: Array<string>;
+  profileField?: boolean;
+  errorMessage?: string;
+  onChange: (value: string) => void;
+  profilePrivacyToggle?: boolean;
+  onProfileSharingChange?: () => void;
+};
 
 const DropDownMenu: React.FC<Props> = (props) => {
-  const { 
-    options, 
-    placeholder, 
-    errorMessage, 
-    onChange, 
-    profileField, 
-    value, 
-    profilePrivacyToggle, 
-    onProfileSharingChange 
+  const {
+    options,
+    placeholder,
+    errorMessage,
+    onChange,
+    profileField,
+    value,
+    profilePrivacyToggle,
+    onProfileSharingChange,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>('');
@@ -32,10 +32,11 @@ const DropDownMenu: React.FC<Props> = (props) => {
     setIsOpen(false);
     onChange(newValue);
   };
-    
+
   return (
     <div className={'dropdown-container'}>
-      <Input label={placeholder}
+      <Input
+        label={placeholder}
         id={'gender'}
         type={'text'}
         value={selectedOption || value}
@@ -50,7 +51,7 @@ const DropDownMenu: React.FC<Props> = (props) => {
       {isOpen && (
         <div className={'dropdown-list-container'}>
           <ul className={'dropdown-list'}>
-            {options.map(option => {
+            {options.map((option) => {
               return (
                 <li onClick={onOptionClicked(option)} key={Math.random()}>
                   {option}
@@ -59,8 +60,7 @@ const DropDownMenu: React.FC<Props> = (props) => {
             })}
           </ul>
         </div>
-      )
-      }
+      )}
     </div>
   );
 };

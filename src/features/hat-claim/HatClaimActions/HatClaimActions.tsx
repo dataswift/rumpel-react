@@ -6,7 +6,7 @@ interface Props {
   setCurrentStep: (newStep: number) => void;
 }
 
-const HatClaimActions: React.FC<Props> = props => {
+const HatClaimActions: React.FC<Props> = (props) => {
   return (
     <div className="hat-claim-actions flex-column-wrapper flex-align-items-center">
       <button className={'btn btn-accent'} onClick={() => props.setCurrentStep(props.currentStep + 1)}>
@@ -29,11 +29,7 @@ const HatClaimActions: React.FC<Props> = props => {
             Personal Data Account (PDA) Owner Agreement
           </a>
           &nbsp; and{' '}
-          <a
-            href="https://www.dataswift.io/legal/privacy-policy"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a href="https://www.dataswift.io/legal/privacy-policy" rel="noopener noreferrer" target="_blank">
             Privacy Policy
           </a>
           .

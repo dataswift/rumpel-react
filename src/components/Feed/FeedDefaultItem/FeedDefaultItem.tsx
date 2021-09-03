@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import './FeedDefaultItem.scss';
 
-import { format } from "date-fns";
-import { SheFeed } from "../../../features/feed/she-feed.interface";
-import { FeedSourceImg } from "../FeedSourceImg/FeedSourceImg";
+import { format } from 'date-fns';
+import { SheFeed } from '../../../features/feed/she-feed.interface';
+import { FeedSourceImg } from '../FeedSourceImg/FeedSourceImg';
 
 type Props = {
-    feedItem: SheFeed;
-}
+  feedItem: SheFeed;
+};
 
 export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
   const [expanded, setExpanded] = useState(false);
@@ -23,10 +23,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
   return (
     <div className="feed-item">
       <div className="img-wrapper">
-        <FeedSourceImg
-          source={feedItem.source}
-          types={feedItem.types}
-          height="35" width="35"/>
+        <FeedSourceImg source={feedItem.source} types={feedItem.types} height="35" width="35" />
         <div className="arrow-left" />
       </div>
       <div className="feed-card">
@@ -38,8 +35,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
           <>
             <div className="feed-card-content no-image">
               {feedItem.content.text && (
-                <div className={`feed-item-content ${ expanded ? 'expanded' : '' }`}
-                  ref={content}>
+                <div className={`feed-item-content ${expanded ? 'expanded' : ''}`} ref={content}>
                   {feedItem.content.text.trim()}
                 </div>
               )}
@@ -54,21 +50,25 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
             </div>
             <div className="feed-card-footer">
               <span>Posted {format(new Date(feedItem.date.iso), 'dd MMM yyyy h:mma')}</span>
-              <span className="flex-spacer-small"/>
+              <span className="flex-spacer-small" />
               {!expanded && overflowing && (
-                <span className="card-expand-tag" onClick={() => setExpanded(true)}>Show More</span>
+                <span className="card-expand-tag" onClick={() => setExpanded(true)}>
+                  Show More
+                </span>
               )}
             </div>
           </>
         )}
         {feedItem.content && feedItem.content.media && feedItem.content.media.length > 0 && (
-          <div className="feed-card-content single-image"
+          <div
+            className="feed-card-content single-image"
             data-testid={'feed-card-content-image'}
-            style={{ backgroundImage: `url(${ feedItem.content.media[0].url })` }}>
+            style={{ backgroundImage: `url(${feedItem.content.media[0].url})` }}
+          >
             <div className="feed-item-overlay">
               <div className="feed-item-overlay-content">{feedItem.content.text}</div>
               <div className="feed-item-overlay-footer">
-                    Posted {format(new Date(feedItem.date.iso), 'dd MMM yyyy h:mma') }
+                Posted {format(new Date(feedItem.date.iso), 'dd MMM yyyy h:mma')}
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { get, post } from '../services/BackendService';
 import { BundleValues } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
 import { HatClient } from '@dataswift/hat-js';
-import { HatClaimApiResponse, HatClaimRequest } from "../features/hat-claim/hat-claim.interface";
+import { HatClaimApiResponse, HatClaimRequest } from '../features/hat-claim/hat-claim.interface';
 
 export const userAccessToken = (username: string, password: string) => {
   const path = `/users/access_token`;
@@ -56,11 +56,11 @@ export const getDataDebits = (client: HatClient) => {
 };
 
 export const verifyEmail = (claimToken: string, body: HatClaimRequest) => {
-  const path = `https://${ body.hatName + '.' + body.hatCluster }/control/v2/auth/claim/complete/${ claimToken }`;
-  const args: RequestInit = { 
-    method: 'post', 
-    body: JSON.stringify(body), 
-    headers: { 'Content-Type': 'application/json' } 
+  const path = `https://${body.hatName + '.' + body.hatCluster}/control/v2/auth/claim/complete/${claimToken}`;
+  const args: RequestInit = {
+    method: 'post',
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
   };
 
   return post<HatClaimApiResponse>(path, body, args);

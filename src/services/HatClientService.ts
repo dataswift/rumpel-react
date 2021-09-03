@@ -9,10 +9,10 @@ import { SystemStatusInterface } from '../features/system-status/system-status.i
 import { Profile } from '../features/profile/profile.interface';
 import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
-import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
-import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
+import { BundleStructure, PropertyQuery } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { FileMetadataReq } from '@dataswift/hat-js/lib/interfaces/file.interface';
 import { getPublicProfile, getDataDebits } from '../api/hatAPI';
-import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
+import { DataDebit } from '@dataswift/hat-js/lib/interfaces/data-debit.interface';
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -241,11 +241,9 @@ export class HatClientService {
   public async getPublicProfile() {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
-    
-    let path = (token && hatdomain) 
-      ? `${hatdomain}${this.pathPrefix}/phata/profile`
-      : `${this.pathPrefix}/phata/profile`;
-    
+
+    let path = token && hatdomain ? `${hatdomain}${this.pathPrefix}/phata/profile` : `${this.pathPrefix}/phata/profile`;
+
     return getPublicProfile(path);
   }
 
@@ -269,12 +267,13 @@ export class HatClientService {
     const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}`;
 
     return post<BundleStructure>(
-      path, 
-      {},  
+      path,
+      {},
       {
         method: 'post',
         body: JSON.stringify(bundle),
-        headers: { 'x-auth-token': token, 'content-type': 'application/json' } }
+        headers: { 'x-auth-token': token, 'content-type': 'application/json' },
+      },
     );
   }
 

@@ -1,9 +1,9 @@
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
-import React from "react";
-import { LoadingSpinner } from "./LoadingSpinner";
-import Root from "../../app/Root";
-import { render, screen } from "@testing-library/react";
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
+import React from 'react';
+import { LoadingSpinner } from './LoadingSpinner';
+import Root from '../../app/Root';
+import { render, screen } from '@testing-library/react';
 
 describe('LoadingSpinner tests', () => {
   const history = createMemoryHistory();
@@ -13,7 +13,7 @@ describe('LoadingSpinner tests', () => {
       <Root>
         <LoadingSpinner loadingText={'Loading...'} />
       </Root>
-    </Router>
+    </Router>,
   );
 
   it('has the correct icon and title ', () => {

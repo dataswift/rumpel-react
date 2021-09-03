@@ -1,6 +1,4 @@
-export const fileReader = (
-  file: File
-): Promise<string | ArrayBuffer | null> => {
+export const fileReader = (file: File): Promise<string | ArrayBuffer | null> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
