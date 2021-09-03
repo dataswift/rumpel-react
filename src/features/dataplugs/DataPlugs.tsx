@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import TileHeader from '../../components/headers/TileHeader/TileHeader';
-import { getApplications, selectApplicationsByKind } from "../applications/applicationsSlice";
-import ApplicationList from "../applications/ApplicationList";
+import { getApplications, selectApplicationsByKind } from '../applications/applicationsSlice';
+import ApplicationList from '../applications/ApplicationList';
 
 const DataPlugs: React.FC = () => {
   const dispatch = useDispatch();

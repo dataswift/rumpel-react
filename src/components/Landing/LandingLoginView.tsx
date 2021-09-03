@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import DataswiftTm from '../../assets/icons/dataswift_tm.svg';
-import { Input } from "hmi";
-import { pdaLookupWithEmail } from "../../services/HattersService";
-import { PdaLookupResponse } from "../../types/Hatters";
-import { config } from "../../app.config";
-import { useHistory } from "react-router-dom";
-import { newUserAccessToken } from "../../api/hatAPI";
-import { loginWithToken } from "../../features/authentication/authenticationSlice";
-import { HatClientService } from "../../services/HatClientService";
-import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { Input } from 'hmi';
+import { pdaLookupWithEmail } from '../../services/HattersService';
+import { PdaLookupResponse } from '../../types/Hatters';
+import { config } from '../../app.config';
+import { useHistory } from 'react-router-dom';
+import { newUserAccessToken } from '../../api/hatAPI';
+import { loginWithToken } from '../../features/authentication/authenticationSlice';
+import { HatClientService } from '../../services/HatClientService';
+import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
 
 const LandingLoginView: React.FC = () => {
   const history = useHistory();
@@ -71,7 +71,7 @@ const LandingLoginView: React.FC = () => {
             autoComplete="email"
             placeholder="Enter Email"
             value={email}
-            onChange={e => {
+            onChange={(e) => {
               setEmail(e.target.value);
               setError('');
             }}
@@ -95,7 +95,7 @@ const LandingLoginView: React.FC = () => {
             autoComplete="password"
             placeholder="Enter Password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <button className="ds-hmi-btn ds-hmi-btn-primary" onClick={onLogin}>
@@ -106,9 +106,7 @@ const LandingLoginView: React.FC = () => {
 
       <hr />
       <div className="landing-dont-have-account">Don't have an account?</div>
-      <button
-        className="ds-hmi-btn ds-hmi-btn-primary landing-btn-secondary"
-        onClick={onSignup}>
+      <button className="ds-hmi-btn ds-hmi-btn-primary landing-btn-secondary" onClick={onSignup}>
         Signup
       </button>
     </div>

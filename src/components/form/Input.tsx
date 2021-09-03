@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import './Input.scss';
 
 type OwnProps = {
@@ -14,24 +14,11 @@ type OwnProps = {
   onProfileSharingChange?: () => void;
 };
 
-type Props = OwnProps &
-    React.DetailedHTMLProps<
-        React.InputHTMLAttributes<HTMLInputElement>,
-        HTMLInputElement
-        >;
+type Props = OwnProps & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 const Input: React.FC<Props> = (props) => {
-  const {
-    label,
-    id,
-    type,
-    errorMessage,
-    profileField,
-    value,
-    profilePrivacyToggle,
-    onProfileSharingChange,
-    ...rest
-  } = props;
+  const { label, id, type, errorMessage, profileField, value, profilePrivacyToggle, onProfileSharingChange, ...rest } =
+    props;
   const [onInputFocus, setOnInputFocus] = useState('');
   const [onFilled, setOnFilled] = useState('');
   const [privacy, setPrivacy] = useState(false);
@@ -60,9 +47,12 @@ const Input: React.FC<Props> = (props) => {
 
   return (
     <div className={`form-group ${onInputFocus}`}>
-      <label className="form-label" htmlFor={id}>{label}</label>
-      <input id={id}
-        className={`form-input ${onFilled}`} 
+      <label className="form-label" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        className={`form-input ${onFilled}`}
         type={type}
         value={value}
         onFocus={() => setOnInputFocus('focused')}
@@ -70,14 +60,10 @@ const Input: React.FC<Props> = (props) => {
         {...rest}
       />
       {profileField && (
-        <button className={'form-input-profile-toggle'} 
-          type={'button'}
-          onClick={() => onProfileSharingChange?.()}
-        >
+        <button className={'form-input-profile-toggle'} type={'button'} onClick={() => onProfileSharingChange?.()}>
           {privacy ? 'Public' : 'Private'}
         </button>
-      )
-      }
+      )}
       {errorMessage && <div className={'form-input-error-message'}>{errorMessage}</div>}
     </div>
   );

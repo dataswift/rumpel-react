@@ -1,14 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { createMemoryHistory } from "history";
-import { render, screen } from "@testing-library/react";
-import { Route, Router } from "react-router-dom";
-import { Provider } from "react-redux";
-import React from "react";
-import profileSlice from "./profileSlice";
-import TEST_PROFILE from "../../testData/Profile";
-import authenticationSlice from "../authentication/authenticationSlice";
-import TEST_AUTH from "../../testData/Auth";
-import ProfileDetails from "./ProfileDetails";
+import { configureStore } from '@reduxjs/toolkit';
+import { createMemoryHistory } from 'history';
+import { render, screen } from '@testing-library/react';
+import { Route, Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import React from 'react';
+import profileSlice from './profileSlice';
+import TEST_PROFILE from '../../testData/Profile';
+import authenticationSlice from '../authentication/authenticationSlice';
+import TEST_AUTH from '../../testData/Auth';
+import ProfileDetails from './ProfileDetails';
 
 export const store = configureStore({
   reducer: {
@@ -18,9 +18,9 @@ export const store = configureStore({
   preloadedState: {
     profile: {
       profile: TEST_PROFILE,
-      profileFetched: true
+      profileFetched: true,
     },
-    authentication: TEST_AUTH
+    authentication: TEST_AUTH,
   },
 });
 

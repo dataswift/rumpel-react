@@ -5,11 +5,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createMemoryHistory } from 'history';
 import { Router, Route } from 'react-router-dom';
 
-import DataDebitDetails from "./DataDebitDetails";
-import dataDebitSlice from "./dataDebitSlice";
-import messagesSlice from "../messages/messagesSlice";
-import TEST_DATA_DEBIT  from "../../testData/DataDebit";
-import messages from "../../translations/en.json";
+import DataDebitDetails from './DataDebitDetails';
+import dataDebitSlice from './dataDebitSlice';
+import messagesSlice from '../messages/messagesSlice';
+import TEST_DATA_DEBIT from '../../testData/DataDebit';
+import messages from '../../translations/en.json';
 
 export const store = configureStore({
   reducer: {

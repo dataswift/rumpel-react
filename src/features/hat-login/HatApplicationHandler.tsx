@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectApplications } from "../applications/applicationsSlice";
-import { selectErrorMessage, setRedirectError } from "./hatLoginSlice";
-import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from "../hmi/hmiSlice";
-import { getTools, selectTools } from "../tools/toolsSlice";
-import * as queryString from "query-string";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectApplications } from '../applications/applicationsSlice';
+import { selectErrorMessage, setRedirectError } from './hatLoginSlice';
+import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from '../hmi/hmiSlice';
+import { getTools, selectTools } from '../tools/toolsSlice';
+import * as queryString from 'query-string';
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 type Query = {
   application_id?: string;
@@ -17,9 +17,9 @@ type Query = {
   redirect?: string;
   fallback?: string;
   internal?: string;
-}
+};
 
-const HatLoginApplicationHandler: React.FC<Props> = props => {
+const HatLoginApplicationHandler: React.FC<Props> = (props) => {
   const errorMessage = useSelector(selectErrorMessage);
   const applications = useSelector(selectApplications);
   const parentApp = useSelector(selectParentApp);
@@ -32,9 +32,9 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
 
       const applicationId = application_id || name;
       const applicationIdSafe = applicationId?.toLowerCase();
-      const parentApp = applications.find(app => app.application.id === applicationIdSafe);
+      const parentApp = applications.find((app) => app.application.id === applicationIdSafe);
 
-      if (!parentApp || (['App', 'DataPlug'].indexOf(parentApp.application.kind.kind) === -1)) {
+      if (!parentApp || ['App', 'DataPlug'].indexOf(parentApp.application.kind.kind) === -1) {
         dispatch(setRedirectError('application_misconfigured', 'application_id_not_found '));
         return;
       }
@@ -43,13 +43,14 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
       const parentToolDependencies = parentApp.application.dependencies?.tools || [];
 
       dispatch(setParentApp(parentApp));
-      dispatch(setDependencyApps(applications.filter(app => parentPlugDependencies.indexOf(app.application.id) > -1)));
+      dispatch(
+        setDependencyApps(applications.filter((app) => parentPlugDependencies.indexOf(app.application.id) > -1)),
+      );
 
       if (parentToolDependencies.length > 0) {
         dispatch(getTools());
       }
     }
-
   }, [applications, dispatch]);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
 
       const parentToolDependencies = parentApp.application.dependencies?.tools || [];
 
-      dispatch(setDependencyTools(tools.filter(tool => parentToolDependencies.indexOf(tool.id) !== -1)));
+      dispatch(setDependencyTools(tools.filter((tool) => parentToolDependencies.indexOf(tool.id) !== -1)));
     }
   }, [parentApp, tools, dispatch]);
 
@@ -72,8 +73,7 @@ const HatLoginApplicationHandler: React.FC<Props> = props => {
         <div className="app-error">
           <h3 className="app-error-header">Looks like something went wrong</h3>
           <p className="app-error-text">{errorMessage}</p>
-          <button className={'btn btn-accent'}
-            onClick={() => redirectBack()}>
+          <button className={'btn btn-accent'} onClick={() => redirectBack()}>
             Back
           </button>
         </div>

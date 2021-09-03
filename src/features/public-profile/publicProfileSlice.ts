@@ -38,9 +38,11 @@ export const slice = createSlice({
 
 export const { publicProfile, getPublicProfileError } = slice.actions;
 
-export const setPublicProfile = (profile: BundleValues): AppThunk => (dispatch) => {
-  dispatch(publicProfile(profile));
-};
+export const setPublicProfile =
+  (profile: BundleValues): AppThunk =>
+    (dispatch) => {
+      dispatch(publicProfile(profile));
+    };
 
 export const selectPublicProfileResponse = (state: RootState) => state.publicProfile.publicProfile;
 export const selectPublicProfile = (state: RootState) => state.publicProfile.profile;

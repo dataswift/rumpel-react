@@ -1,11 +1,5 @@
-import reducer, {
-  initialState,
-  selectParentApp,
-  selectDependencyApps,
-  parentApp,
-  dependencyApps
-} from '../hmiSlice';
-import TEST_HAT_APPLICATION from "../../../testData/HatApplications";
+import reducer, { initialState, selectParentApp, selectDependencyApps, parentApp, dependencyApps } from '../hmiSlice';
+import TEST_HAT_APPLICATION from '../../../testData/HatApplications';
 
 describe('HMI slice', () => {
   describe('reducer, actions and selectors', () => {
@@ -29,7 +23,7 @@ describe('HMI slice', () => {
 
       // Assert
       const rootState = {
-        hmi: nextState
+        hmi: nextState,
       };
 
       // @ts-ignore
@@ -45,7 +39,7 @@ describe('HMI slice', () => {
 
       // Assert
       const rootState = {
-        hmi: nextState
+        hmi: nextState,
       };
 
       // @ts-ignore

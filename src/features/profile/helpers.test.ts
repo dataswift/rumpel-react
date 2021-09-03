@@ -1,8 +1,8 @@
-import { generatePhataBundle, generateProfileShare } from "./helpers";
-import TEST_PROFILE_SHARING_CONFIG from "../../testData/ProfileSharingConfig";
-import { DEFAULT_PHATA_BUNDLE } from "./profileSlice";
-import TEST_PROFILE from "../../testData/Profile";
-import TEST_PROFILE_BUNDLE_STRUCTURE from "../../testData/ProfileBundleStructure";
+import { generatePhataBundle, generateProfileShare } from './helpers';
+import TEST_PROFILE_SHARING_CONFIG from '../../testData/ProfileSharingConfig';
+import { DEFAULT_PHATA_BUNDLE } from './profileSlice';
+import TEST_PROFILE from '../../testData/Profile';
+import TEST_PROFILE_BUNDLE_STRUCTURE from '../../testData/ProfileBundleStructure';
 
 describe('Profile Helpers', () => {
   test('Generate Phata Bundle returns the correct bundle', () => {

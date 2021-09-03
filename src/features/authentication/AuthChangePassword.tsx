@@ -58,13 +58,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
     ),
   ).current;
 
-  const validatePasswordScoreDebounce = useRef(
-    debounce(
-      (password: string) =>
-        validatePassword(password),
-      400,
-    ),
-  ).current;
+  const validatePasswordScoreDebounce = useRef(debounce((password: string) => validatePassword(password), 400)).current;
 
   const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
     if (score > 2) {
@@ -241,7 +235,7 @@ const AuthChangePasswordContainer: React.FC = () => {
 
   if (!zxcvbnReady) return null;
 
-  return <AuthChangePassword passwordStrength={zxcvbn}/>;
+  return <AuthChangePassword passwordStrength={zxcvbn} />;
 };
 
 export default AuthChangePasswordContainer;

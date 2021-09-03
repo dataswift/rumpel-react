@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaimUrl: React.FC<Props> = props => {
+const HatClaimUrl: React.FC<Props> = (props) => {
   if (props.currentStep !== 1) {
     return null;
   }
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     {
       editHatClaim,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaimUrl);

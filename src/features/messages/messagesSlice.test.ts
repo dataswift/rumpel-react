@@ -1,7 +1,4 @@
-import reducer, {
-  initialState,
-  messages, selectMessages
-} from './messagesSlice';
+import reducer, { initialState, messages, selectMessages } from './messagesSlice';
 
 describe('messages slice', () => {
   describe('reducer, actions and selectors', () => {
@@ -18,14 +15,14 @@ describe('messages slice', () => {
 
     it('should properly set the state when initialise the messages', () => {
       // Arrange
-      const messageInit = { "message.id": "test message" };
+      const messageInit = { 'message.id': 'test message' };
 
       // Act
       const nextState = reducer(initialState, messages(messageInit));
 
       // Assert
       const rootState = {
-        messages: nextState
+        messages: nextState,
       };
 
       // @ts-ignore

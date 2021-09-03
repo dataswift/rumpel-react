@@ -42,7 +42,7 @@ const TEST_PROFILE_SHARING_CONFIG = {
     linkedin: false,
     google: false,
     youtube: false,
-  }
+  },
 };
 
 export default TEST_PROFILE_SHARING_CONFIG;

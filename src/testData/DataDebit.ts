@@ -40,16 +40,16 @@ export const ACTIVE_DATA_DEBIT: DataDebit = {
               endpoint: 'test/profile',
               mapping: {
                 name: 'test.name',
-                photo: 'test.photo'
-              }
-            }
+                photo: 'test.photo',
+              },
+            },
           ],
-          orderBy:"dateCreated",
-          ordering:"descending",
-          limit:1
-        }
-      }
-    }
+          orderBy: 'dateCreated',
+          ordering: 'descending',
+          limit: 1,
+        },
+      },
+    },
   },
   active: true,
   accepted: true,

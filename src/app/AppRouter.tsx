@@ -11,13 +11,13 @@ import DataPlugs from '../features/dataplugs/DataPlugs';
 import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
-import Profile from "../features/profile/Profile";
+import Profile from '../features/profile/Profile';
 import { HatTools, HatToolDetails } from '../features/tools';
 import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
 import DataDebits from '../features/data-debit';
-import DataDebitDetails from "../features/data-debit/DataDebitDetails";
-import { LandingLoginPage } from "../pages";
+import DataDebitDetails from '../features/data-debit/DataDebitDetails';
+import { LandingLoginPage } from '../pages';
 
 const HatClaim = React.lazy(
   () =>
@@ -180,7 +180,6 @@ const AppRouter = () => (
         <LayoutRoute path="/login" footerBackgroundColor="#fff">
           <LandingLoginPage />
         </LayoutRoute>
-
 
         <LayoutRoute path="/hat/claim/:claimToken">
           <HatClaim />

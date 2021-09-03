@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import ActionMenu from '../../components/Menus/ActionMenu';
 import FormatMessage from '../messages/FormatMessage';
-import { disableDataDebit } from "./dataDebitSlice";
+import { disableDataDebit } from './dataDebitSlice';
 
 const DataDebitDetailsActions: React.FC<{ active: boolean; dataDebitId: string }> = ({ active, dataDebitId }) => {
   const dispatch = useDispatch();

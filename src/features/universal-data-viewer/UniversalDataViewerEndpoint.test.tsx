@@ -5,9 +5,9 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
 import { configureStore } from '@reduxjs/toolkit';
-import universalDataViewerSlice from "./universalDataViewerSlice";
-import UniversalDataViewerEndpoint from "./UniversalDataViewerEndpoint";
-import TEST_ENDPOINT_DATA_PREVIEW from "../../testData/EndpointDataPreview";
+import universalDataViewerSlice from './universalDataViewerSlice';
+import UniversalDataViewerEndpoint from './UniversalDataViewerEndpoint';
+import TEST_ENDPOINT_DATA_PREVIEW from '../../testData/EndpointDataPreview';
 
 export const store = configureStore({
   reducer: {
@@ -21,11 +21,12 @@ export const store = configureStore({
 });
 
 describe('Universal Data Viewer Endpoint page tests', () => {
-  test('renders a list of endpoint\'s data', () => {
+  test("renders a list of endpoint's data", () => {
     const history = createMemoryHistory();
-    history.push('/universal-data-viewer/testNamespace/testEndpoint',
-      { namespace: 'testNamespace', endpoint: 'testEndpoint' }
-    );
+    history.push('/universal-data-viewer/testNamespace/testEndpoint', {
+      namespace: 'testNamespace',
+      endpoint: 'testEndpoint',
+    });
 
     render(
       <Router history={history}>

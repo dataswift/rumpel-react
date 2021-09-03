@@ -5,13 +5,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createMemoryHistory } from 'history';
 import { Router, Route } from 'react-router-dom';
 import applicationsSlice from './applicationsSlice';
-import toolsSlice from "../tools/toolsSlice";
-import hmiSlice from "../hmi/hmiSlice";
-import languageSlice from "../language/languageSlice";
-import messagesSlice from "../messages/messagesSlice";
+import toolsSlice from '../tools/toolsSlice';
+import hmiSlice from '../hmi/hmiSlice';
+import languageSlice from '../language/languageSlice';
+import messagesSlice from '../messages/messagesSlice';
 import TEST_HAT_APPLICATION from '../../testData/HatApplications';
-import HatApplicationPermissions from "./ApplicationPermissions";
-import { LanguageParamHandler } from "../../app/LanguageParamHandler";
+import HatApplicationPermissions from './ApplicationPermissions';
+import { LanguageParamHandler } from '../../app/LanguageParamHandler';
 
 export const store = configureStore({
   reducer: {
@@ -27,11 +27,11 @@ export const store = configureStore({
     },
     hmi: {
       dependencyApps: [],
-      dependencyTools: []
+      dependencyTools: [],
     },
     tools: {
       tools: [],
-    }
+    },
   },
 });
 

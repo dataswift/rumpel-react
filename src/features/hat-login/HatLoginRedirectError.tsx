@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectRedirectError } from "./hatLoginSlice";
-import { environment } from "../../environment";
-import * as queryString from "query-string";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectRedirectError } from './hatLoginSlice';
+import { environment } from '../../environment';
+import * as queryString from 'query-string';
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 type Query = {
   redirect_uri?: string;
   redirect?: string;
   fallback?: string;
   internal?: string;
-}
+};
 
-const HatLoginRedirectError: React.FC<Props> = props => {
+const HatLoginRedirectError: React.FC<Props> = (props) => {
   const [redirectNotProvided, setRedirectNotProvided] = useState(false);
   const redirectError = useSelector(selectRedirectError);
 
@@ -30,7 +30,7 @@ const HatLoginRedirectError: React.FC<Props> = props => {
       }
 
       if (redirectParam) {
-        const url = `${ redirectParam }?error=${ error }%26error_reason=${ errorReason }`;
+        const url = `${redirectParam}?error=${error}%26error_reason=${errorReason}`;
 
         return url.replace('#', '%23');
       } else {
@@ -58,29 +58,33 @@ const HatLoginRedirectError: React.FC<Props> = props => {
 
   const RedirectError = () => {
     if (environment.sandbox) {
-      return (<div>
-        <div className="app-error">
-          <h3 className="app-error-header">Ooops... Looks like something went wrong.</h3>
-          <p className="app-error-text">
-                ERROR: App details incorrect. "redirect_uri" query parameter is missing. <br />
-            <a href={'https://docs.dataswift.io/guides/hat-login/02-send-hat-login'}
-              target="_blank"
-              rel="noopener noreferrer">
-                  Learn more
-            </a>
-          </p>
+      return (
+        <div>
+          <div className="app-error">
+            <h3 className="app-error-header">Ooops... Looks like something went wrong.</h3>
+            <p className="app-error-text">
+              ERROR: App details incorrect. "redirect_uri" query parameter is missing. <br />
+              <a
+                href={'https://docs.dataswift.io/guides/hat-login/02-send-hat-login'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
       );
     } else {
-      return (<div>
-        <div className="app-error">
-          <h3 className="app-error-header">Ooops... Looks like something went wrong.</h3>
-          <p className="app-error-text">
-            ERROR: App details incorrect. Please contact the app developer and let them know.
-          </p>
+      return (
+        <div>
+          <div className="app-error">
+            <h3 className="app-error-header">Ooops... Looks like something went wrong.</h3>
+            <p className="app-error-text">
+              ERROR: App details incorrect. Please contact the app developer and let them know.
+            </p>
+          </div>
         </div>
-      </div>
       );
     }
   };

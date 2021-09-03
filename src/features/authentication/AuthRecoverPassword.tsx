@@ -81,8 +81,9 @@ const AuthRecoverPassword: React.FC = () => {
               errorSuggestion={errorSuggestion}
               onChange={(e) => setEmail(e.target.value)}
             />
-            
-            <button className={'auth-recover-password-btn ds-hmi-btn ds-hmi-btn-primary'}
+
+            <button
+              className={'auth-recover-password-btn ds-hmi-btn ds-hmi-btn-primary'}
               disabled={email.length < 3}
               onClick={() => validateAndReset()}
             >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './PasswordRecover.scss';
 import { recoverPassword } from '../../../api/hatAPI';
-import { InfoHeader } from "../../headers/InfoHeader/InfoHeader";
+import { InfoHeader } from '../../headers/InfoHeader/InfoHeader';
 
 const PasswordRecover: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const PasswordRecover: React.FC = () => {
       if (res) {
         setSuccessMsg(
           'If the email address you have entered is correct, you will shortly receive an email' +
-            ' with your password reset instructions.'
+            ' with your password reset instructions.',
         );
       }
     } catch (error) {
@@ -51,7 +51,7 @@ const PasswordRecover: React.FC = () => {
         className="hat-rumpel-input"
         name="hat-pass-input"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter HAT-registered email address"
         onFocus={() => setErrorMsg('')}
       />

@@ -38,18 +38,20 @@ export const getDataDebits = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const disableDataDebit = (dataDebitId: string): AppThunk => async (dispatch, getState) => {
-  try {
-    const app = await HatClientService.getInstance().disableDataDebit(dataDebitId, false);
-    if (app?.parsedBody) {
-      let currentDataDebits = getState().dataDebits.dataDebits;
-      currentDataDebits = currentDataDebits.filter((a) => a.dataDebitKey !== dataDebitId);
-      currentDataDebits.push(app.parsedBody);
-      dispatch(setDataDebits([...currentDataDebits]));
-    }
-  } catch (e) {
-    // TODO error handling
-  }
-};
+export const disableDataDebit =
+  (dataDebitId: string): AppThunk =>
+    async (dispatch, getState) => {
+      try {
+        const app = await HatClientService.getInstance().disableDataDebit(dataDebitId, false);
+        if (app?.parsedBody) {
+          let currentDataDebits = getState().dataDebits.dataDebits;
+          currentDataDebits = currentDataDebits.filter((a) => a.dataDebitKey !== dataDebitId);
+          currentDataDebits.push(app.parsedBody);
+          dispatch(setDataDebits([...currentDataDebits]));
+        }
+      } catch (e) {
+      // TODO error handling
+      }
+    };
 
 export default slice.reducer;

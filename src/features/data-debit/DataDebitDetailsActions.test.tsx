@@ -7,9 +7,9 @@ import { Router, Route } from 'react-router-dom';
 
 import messagesSlice from '../messages/messagesSlice';
 import messages from '../../translations/en.json';
-import dataDebitSlice from "./dataDebitSlice";
-import TEST_DATA_DEBIT from "../../testData/DataDebit";
-import DataDebitDetailsActions from "./DataDebitDetailsActions";
+import dataDebitSlice from './dataDebitSlice';
+import TEST_DATA_DEBIT from '../../testData/DataDebit';
+import DataDebitDetailsActions from './DataDebitDetailsActions';
 
 export const store = configureStore({
   reducer: {

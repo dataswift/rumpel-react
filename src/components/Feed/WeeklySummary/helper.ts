@@ -1,7 +1,8 @@
-import { SheNestedStructure } from "../../../features/feed/she-feed.interface";
+import { SheNestedStructure } from '../../../features/feed/she-feed.interface';
 
-export const transformWeeklySummary = (structure?: { [key: string]: SheNestedStructure[] } )
-    : { source: string; content: string; badge: string; }[] | null => {
+export const transformWeeklySummary = (structure?: {
+  [key: string]: SheNestedStructure[];
+}): { source: string; content: string; badge: string }[] | null => {
   const weeklySummaryArray = [];
   let hasSentiment = false;
   let hasFitbit = false;
@@ -12,7 +13,7 @@ export const transformWeeklySummary = (structure?: { [key: string]: SheNestedStr
 
   if (!structure) return null;
 
-  Object.keys(structure).map( key => {
+  Object.keys(structure).map((key) => {
     if (key.includes('sentiment')) {
       contentSentiment += structure[key][0].content + '\n';
       badgeSentiment += structure[key][0].badge + '\n';

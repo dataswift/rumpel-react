@@ -7,9 +7,9 @@ import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader'
 import FormatMessage from '../messages/FormatMessage';
 import '../applications/HatApplication.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
-import { getApplicationById, selectApplicationById } from "../applications/applicationsSlice";
-import AppDetailsToolbarActions from "../applications/ApplicationDetailsActions";
-import { getAppStatus, getStatusButtonText, getStatusIcon } from "../applications/helper";
+import { getApplicationById, selectApplicationById } from '../applications/applicationsSlice';
+import AppDetailsToolbarActions from '../applications/ApplicationDetailsActions';
+import { getAppStatus, getStatusButtonText, getStatusIcon } from '../applications/helper';
 
 const DataPlugDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const DataPlugDetails: React.FC = () => {
 
     history.push(
       `/auth/oauth?` +
-            `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectUrl}%3Fredirect=${redirectRumpel}`,
+        `application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectUrl}%3Fredirect=${redirectRumpel}`,
     );
   };
 

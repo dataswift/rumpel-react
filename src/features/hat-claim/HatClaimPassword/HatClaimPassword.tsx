@@ -5,13 +5,13 @@ import { AppState } from '../../../redux/reducer/rootReducer';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { editHatClaim, editHatClaimErrorMessage, editHatClaimPassword } from '../redux/actions/hatClaimActions';
 import { connect } from 'react-redux';
-import { PasswordStrengthMeter } from "../../../components/PasswordStrengthMeter/PasswordStrengthMeter";
+import { PasswordStrengthMeter } from '../../../components/PasswordStrengthMeter/PasswordStrengthMeter';
 const debounce = require('lodash.debounce');
 declare const zxcvbn: any;
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaimPassword: React.FC<Props> = props => {
+const HatClaimPassword: React.FC<Props> = (props) => {
   const [hide1, setHide1] = useState(true);
   const [hide2, setHide2] = useState(true);
 
@@ -19,7 +19,7 @@ const HatClaimPassword: React.FC<Props> = props => {
 
   const passwordMatchDebounce = debounce(
     () => passwordIsValid(props.password.password, props.password.passwordConfirm),
-    400
+    400,
   );
 
   function validatePassword(password: string) {
@@ -85,7 +85,7 @@ const HatClaimPassword: React.FC<Props> = props => {
             name="password"
             autoComplete={'new-password'}
             value={props.hatClaim.password}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             placeholder="Password"
           />
           <button type="button" tabIndex={-1} onClick={() => setHide1(!hide1)}>
@@ -98,7 +98,7 @@ const HatClaimPassword: React.FC<Props> = props => {
             name="passwordConfirm"
             autoComplete={'new-password'}
             value={props.password.passwordConfirm}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             placeholder="Confirm Password"
           />
           <button type="button" tabIndex={-1} onClick={() => setHide2(!hide2)}>
@@ -126,7 +126,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
       editHatClaimPassword,
       editHatClaimErrorMessage,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaimPassword);

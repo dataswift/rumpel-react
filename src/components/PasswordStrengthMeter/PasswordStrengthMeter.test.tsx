@@ -1,9 +1,9 @@
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
-import React from "react";
-import Root from "../../app/Root";
-import { PasswordStrengthMeter } from "./PasswordStrengthMeter";
-import { render, screen } from "@testing-library/react";
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
+import React from 'react';
+import Root from '../../app/Root';
+import { PasswordStrengthMeter } from './PasswordStrengthMeter';
+import { render, screen } from '@testing-library/react';
 
 describe('PasswordStrengthMeter', () => {
   const history = createMemoryHistory();
@@ -14,7 +14,7 @@ describe('PasswordStrengthMeter', () => {
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 0 }} />
         </Root>
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('Too weak')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('PasswordStrengthMeter', () => {
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 1 }} />
         </Root>
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('Too weak')).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe('PasswordStrengthMeter', () => {
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 2 }} />
         </Root>
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('So-so')).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('PasswordStrengthMeter', () => {
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 3 }} />
         </Root>
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('Strong')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('PasswordStrengthMeter', () => {
         <Root>
           <PasswordStrengthMeter passwordStrength={{ score: 4 }} />
         </Root>
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('Very Strong')).toBeInTheDocument();
