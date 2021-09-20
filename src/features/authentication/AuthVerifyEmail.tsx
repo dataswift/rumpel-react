@@ -145,7 +145,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
       const path = `/auth/oauth?application_id=${application_id}&redirect_uri=${redirect_uri}&email=${email}&lang=${lang}`;
       history.replace(path);
     } else {
-      history.replace('/auth/login');
+      history.replace('/auth/login', { query: { email, lang } });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);

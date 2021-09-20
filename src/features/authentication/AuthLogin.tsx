@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import * as queryString from 'query-string';
 import { HatClientService } from '../../services/HatClientService';
 import { loginWithToken } from './authenticationSlice';
-import { userAccessToken } from '../../api/hatAPI';
+import { newUserAccessToken } from '../../api/hatAPI';
 import { AuthApplicationLogo, Input } from 'hmi';
 import {
   getApplicationHmi,
@@ -17,6 +17,8 @@ import {
 import { config } from '../../app.config';
 import FormatMessage from '../messages/FormatMessage';
 import { selectMessages } from '../messages/messagesSlice';
+import { pdaLookupWithEmail } from "../../services/HattersService";
+import { PdaLookupResponse } from "../../types/Hatters";
 
 type Query = {
   target?: string;
@@ -33,8 +35,8 @@ const AuthLogin: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const messages = useSelector(selectMessages);
+  const [lookupResponse, setLookupResponse] = useState<PdaLookupResponse | null>(null);
   const [password, setPassword] = useState('');
-  const [hatName, setHatName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   let history = useHistory();
   let location = useLocation<{ from?: string; query: QueryLocationState }>();
@@ -58,12 +60,23 @@ const AuthLogin: React.FC = () => {
     }
   };
 
+  const getPdaDetails = async () => {
+    try {
+      if (!email) return;
+
+      const res = await pdaLookupWithEmail(email);
+
+      if (res.parsedBody) {
+        setLookupResponse(res.parsedBody);
+      }
+    } catch (e) {
+      setErrorMessage(messages['ds.auth.error.oops']);
+    }
+  };
+
   useEffect(() => {
-    const host = window.location.hostname;
+    getPdaDetails();
     const hatSvc = HatClientService.getInstance();
-
-    setHatName(host.substring(0, host.indexOf('.')));
-
     const token = Cookies.get('token');
 
     if (token && !hatSvc.isTokenExpired(token)) {
@@ -76,10 +89,15 @@ const AuthLogin: React.FC = () => {
   }, []);
 
   const login = async () => {
+    if (!lookupResponse) return;
     setErrorMessage('');
 
     try {
-      const res = await userAccessToken(hatName, password);
+      const res = await newUserAccessToken(
+        lookupResponse?.hatName + '.' + lookupResponse?.hatCluster,
+        lookupResponse?.hatName,
+        password
+      );
 
       if (res.parsedBody) {
         dispatch(loginWithToken(res.parsedBody.accessToken));
@@ -89,6 +107,7 @@ const AuthLogin: React.FC = () => {
 
         // TODO ensure that this is fine to do
         Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
+        localStorage.setItem('session_email', email || '');
 
         loginSuccessful();
       }
@@ -115,6 +134,10 @@ const AuthLogin: React.FC = () => {
       dispatch(setAppsHmiState('completed'));
     }
   }, [dispatch, parentApp, applicationId]);
+
+  if (!lookupResponse) {
+    return null;
+  }
 
   return (
     <div>
