@@ -82,6 +82,7 @@ export const logoutUser = (): AppThunk => (dispatch) => {
   const secure = window.location.protocol === 'https:';
 
   window.sessionStorage.removeItem('token');
+  window.sessionStorage.removeItem('session_email');
   Cookies.remove('token', { secure: secure, sameSite: 'strict' });
   hatSvc.logout();
 
