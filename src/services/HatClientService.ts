@@ -65,8 +65,8 @@ export class HatClientService {
     return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
-  public async getApplicationHmi(applicationId: string) {
-    const path = `${this.pathPrefix}/applications/${applicationId}/hmi`;
+  public async getApplicationHmi(applicationId: string, pda: string) {
+    const path = `https://${pda}${this.pathPrefix}/applications/${applicationId}/hmi`;
 
     return get<HatApplicationContent>(path);
   }

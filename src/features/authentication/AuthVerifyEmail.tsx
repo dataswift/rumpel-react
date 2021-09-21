@@ -165,18 +165,18 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
 
   useEffect(() => {
     const { email, application_id } = queryString.parse(location.search) as Query;
-    if (email && isEmail(email)) {
+    if (email && isEmail(email) && !lookupResponse) {
       setEmail(email);
       getPdaDetails(email);
     }
 
-    if (!parentApp && application_id) {
-      dispatch(getApplicationHmi(application_id));
+    if (!parentApp && application_id && lookupResponse) {
+      dispatch(getApplicationHmi(application_id, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, parentApp]);
+  }, [dispatch, parentApp, lookupResponse]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);

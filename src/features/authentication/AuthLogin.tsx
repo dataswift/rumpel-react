@@ -62,7 +62,7 @@ const AuthLogin: React.FC = () => {
 
   const getPdaDetails = async () => {
     try {
-      if (!email) return;
+      if (!email) return history.replace('/');
 
       const res = await pdaLookupWithEmail(email);
 
@@ -128,12 +128,12 @@ const AuthLogin: React.FC = () => {
   };
 
   useEffect(() => {
-    if (applicationId && !parentApp) {
-      dispatch(getApplicationHmi(applicationId));
+    if (applicationId && lookupResponse && !parentApp) {
+      dispatch(getApplicationHmi(applicationId, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
-  }, [dispatch, parentApp, applicationId]);
+  }, [dispatch, parentApp, applicationId, lookupResponse]);
 
   if (!lookupResponse) {
     return null;

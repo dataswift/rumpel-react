@@ -97,11 +97,11 @@ export const getApplications = (): AppThunk => async (dispatch, getState) => {
 };
 
 export const getApplicationHmi =
-  (applicationId: string): AppThunk =>
+  (applicationId: string, pda: string): AppThunk =>
     async (dispatch) => {
       try {
         dispatch(setAppsHmiState('pending'));
-        const apps = await HatClientService.getInstance().getApplicationHmi(applicationId);
+        const apps = await HatClientService.getInstance().getApplicationHmi(applicationId, pda);
 
         if (apps?.parsedBody) {
           dispatch(setAppsHmi(apps.parsedBody));

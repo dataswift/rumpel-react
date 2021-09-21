@@ -37,8 +37,8 @@ export const getPublicProfile = (path: string) => {
   return get<BundleValues>(path, { method: 'get', headers });
 };
 
-export const resetPassword = (resetToken: string, body: { newPassword: string }) => {
-  const path = `/control/v2/auth/passwordreset/confirm/${resetToken}`;
+export const resetPassword = (pda: string, resetToken: string, body: { newPassword: string }) => {
+  const path = `https://${pda}/control/v2/auth/passwordreset/confirm/${resetToken}`;
   const headers = { 'Content-Type': 'application/json' };
 
   return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });

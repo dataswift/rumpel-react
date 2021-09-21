@@ -17,6 +17,9 @@ import {
 import FormatMessage from '../messages/FormatMessage';
 import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
+import { isEmail } from "../../utils/validations";
+import { pdaLookupWithEmail } from "../../services/HattersService";
+import { PdaLookupResponse } from "../../types/Hatters";
 
 type Query = {
   email?: string;
@@ -45,6 +48,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
+  const [lookupResponse, setLookupResponse] = useState<PdaLookupResponse | null>(null);
   const dispatch = useDispatch();
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
@@ -78,7 +82,11 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
 
   const resetPasswordRequest = async () => {
     try {
-      const res = await resetPassword(resetToken, { newPassword: password });
+      const res = await resetPassword(
+        lookupResponse?.hatName + '.' + lookupResponse?.hatCluster,
+        resetToken,
+        { newPassword: password }
+      );
 
       if (res) {
         setSuccessfulResponse(new Date());
@@ -128,16 +136,33 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
     }
   };
 
-  useEffect(() => {
-    const { email, application_id } = queryString.parse(window.location.search) as Query;
-    setEmail(email || '');
+  const getPdaDetails = async (emailAddress?: string) => {
+    try {
+      if (!emailAddress) return;
 
-    if (!parentApp && application_id) {
-      dispatch(getApplicationHmi(application_id));
+      const res = await pdaLookupWithEmail(emailAddress);
+      if (res.parsedBody) {
+        setLookupResponse(res.parsedBody);
+      }
+    } catch (e) {
+      setErrorMessage(messages['ds.auth.error.oops']);
+    }
+  };
+
+  useEffect(() => {
+    const { email, application_id } = queryString.parse(location.search) as Query;
+    if (email && isEmail(email) && !lookupResponse) {
+      setEmail(email);
+      getPdaDetails(email);
+    }
+
+    if (!parentApp && application_id && lookupResponse) {
+      dispatch(getApplicationHmi(application_id, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
-  }, [dispatch, parentApp]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, parentApp, lookupResponse]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
