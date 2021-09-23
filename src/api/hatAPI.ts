@@ -23,11 +23,10 @@ export const newUserAccessToken = (pda: string, username: string, password: stri
   return get<{ accessToken: string }>(path, { headers: headers });
 };
 
-export const recoverPassword = (body: { email: string }) => {
-  const path = `/control/v2/auth/passwordReset`;
+export const recoverPassword = (pda: string, body: { email: string }) => {
+  const path = `https://${pda}/control/v2/auth/passwordReset`;
   const headers = { 'Content-Type': 'application/json' };
 
-  //todo create new post function to accept headers, body
   return post(path, {}, { method: 'post', headers: headers, body: JSON.stringify(body) });
 };
 

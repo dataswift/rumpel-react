@@ -18,8 +18,7 @@ import FormatMessage from '../messages/FormatMessage';
 import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
 import { isEmail } from "../../utils/validations";
-import { pdaLookupWithEmail } from "../../services/HattersService";
-import { PdaLookupResponse } from "../../types/Hatters";
+import { getPdaLookupDetails, selectUserPdaLookupDetails } from "./authenticationSlice";
 
 type Query = {
   email?: string;
@@ -48,7 +47,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
-  const [lookupResponse, setLookupResponse] = useState<PdaLookupResponse | null>(null);
+  const pdaDetails = useSelector(selectUserPdaLookupDetails);
   const dispatch = useDispatch();
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
@@ -82,8 +81,10 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
 
   const resetPasswordRequest = async () => {
     try {
+      if (!pdaDetails) return;
+
       const res = await resetPassword(
-        lookupResponse?.hatName + '.' + lookupResponse?.hatCluster,
+        pdaDetails.hatName + '.' + pdaDetails.hatCluster,
         resetToken,
         { newPassword: password }
       );
@@ -137,32 +138,26 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   };
 
   const getPdaDetails = async (emailAddress?: string) => {
-    try {
-      if (!emailAddress) return;
+    const maybeEmail = emailAddress || window.localStorage.getItem('session_email');
+    if (!maybeEmail) return;
 
-      const res = await pdaLookupWithEmail(emailAddress);
-      if (res.parsedBody) {
-        setLookupResponse(res.parsedBody);
-      }
-    } catch (e) {
-      setErrorMessage(messages['ds.auth.error.oops']);
-    }
+    dispatch(getPdaLookupDetails(maybeEmail));
   };
 
   useEffect(() => {
     const { email, application_id } = queryString.parse(location.search) as Query;
-    if (email && isEmail(email) && !lookupResponse) {
+    if (email && isEmail(email) && !pdaDetails) {
       setEmail(email);
       getPdaDetails(email);
     }
 
-    if (!parentApp && application_id && lookupResponse) {
-      dispatch(getApplicationHmi(application_id, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
+    if (!parentApp && application_id && pdaDetails) {
+      dispatch(getApplicationHmi(application_id, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, parentApp, lookupResponse]);
+  }, [dispatch, parentApp, pdaDetails]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);

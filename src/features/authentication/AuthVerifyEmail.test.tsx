@@ -14,6 +14,7 @@ import { Router } from 'react-router';
 import { verifyEmail } from '../../api/hatAPI';
 import { AuthVerifyEmail } from './AuthVerifyEmail';
 import { pdaLookupWithEmail } from "../../services/HattersService";
+import authenticationSlice from "./authenticationSlice";
 
 jest.mock('../../api/hatAPI');
 jest.mock('../../services/HattersService');
@@ -26,6 +27,7 @@ export const defaultStore = configureStore({
     messages: messagesSlice,
     applications: applicationsSlice,
     language: languageSlice,
+    authentication: authenticationSlice,
   },
   preloadedState: {
     messages,
@@ -35,6 +37,13 @@ export const defaultStore = configureStore({
     language: {
       language: 'en',
     },
+    authentication: {
+      pdaLookupResponse: {
+        verified: true,
+        hatCluster: 'testHatCluster',
+        hatName: 'testHatName'
+      }
+    }
   },
 });
 

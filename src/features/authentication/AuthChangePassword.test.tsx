@@ -13,6 +13,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
 import { resetPassword } from '../../api/hatAPI';
+import authenticationSlice from "./authenticationSlice";
 jest.mock('../../api/hatAPI');
 
 const mockResetPassword: jest.Mocked<any> = resetPassword;
@@ -22,6 +23,7 @@ export const store = configureStore({
     messages: messagesSlice,
     applications: applicationsSlice,
     language: languageSlice,
+    authentication: authenticationSlice,
   },
   preloadedState: {
     messages,
@@ -31,6 +33,13 @@ export const store = configureStore({
     language: {
       language: 'en',
     },
+    authentication: {
+      pdaLookupResponse: {
+        verified: true,
+        hatCluster: 'testHatCluster',
+        hatName: 'testHatName'
+      }
+    }
   },
 });
 

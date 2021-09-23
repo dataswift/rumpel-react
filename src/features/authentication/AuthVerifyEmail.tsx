@@ -19,10 +19,9 @@ import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
 import FormatMessage from '../messages/FormatMessage';
 import { verifyEmail } from '../../api/hatAPI';
-import { pdaLookupWithEmail } from '../../services/HattersService';
-import { PdaLookupResponse } from '../../types/Hatters';
 import { isEmail } from '../../utils/validations';
 import { useLocation } from "react-router-dom";
+import { getPdaLookupDetails, selectUserPdaLookupDetails } from "./authenticationSlice";
 
 type Query = {
   email?: string;
@@ -52,7 +51,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
-  const [lookupResponse, setLookupResponse] = useState<PdaLookupResponse | null>(null);
+  const pdaDetails = useSelector(selectUserPdaLookupDetails);
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
@@ -87,10 +86,10 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
 
   const validateEmailAddress = async () => {
     try {
-      if (!lookupResponse) return;
+      if (!pdaDetails) return;
 
-      const hatName = lookupResponse.hatName;
-      const hatCluster = lookupResponse.hatCluster;
+      const hatName = pdaDetails.hatName;
+      const hatCluster = pdaDetails.hatCluster;
 
       const hatClaim: HatClaim = {
         email: email,
@@ -151,42 +150,34 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   }, [history]);
 
   const getPdaDetails = async (emailAddress?: string) => {
-    try {
-      if (!emailAddress) return;
-
-      const res = await pdaLookupWithEmail(emailAddress);
-      if (res.parsedBody) {
-        setLookupResponse(res.parsedBody);
-      }
-    } catch (e) {
-      setErrorMessage(messages['ds.auth.error.oops']);
-    }
+    if (!emailAddress) return;
+    dispatch(getPdaLookupDetails(emailAddress));
   };
 
   useEffect(() => {
     const { email, application_id } = queryString.parse(location.search) as Query;
-    if (email && isEmail(email) && !lookupResponse) {
+    if (email && isEmail(email) && !pdaDetails) {
       setEmail(email);
       getPdaDetails(email);
     }
 
-    if (!parentApp && application_id && lookupResponse) {
-      dispatch(getApplicationHmi(application_id, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
+    if (!parentApp && application_id && pdaDetails) {
+      dispatch(getApplicationHmi(application_id, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, parentApp, lookupResponse]);
+  }, [dispatch, parentApp, pdaDetails]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
 
   useEffect(() => {
-    if (lookupResponse?.verified) {
+    if (pdaDetails?.verified) {
       login();
     }
-  }, [lookupResponse, login]);
+  }, [pdaDetails, login]);
 
   return (
     <div>

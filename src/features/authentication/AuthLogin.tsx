@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import * as queryString from 'query-string';
 import { HatClientService } from '../../services/HatClientService';
-import { loginWithToken } from './authenticationSlice';
+import { getPdaLookupDetails, loginWithToken, selectUserPdaLookupDetails } from './authenticationSlice';
 import { newUserAccessToken } from '../../api/hatAPI';
 import { AuthApplicationLogo, Input } from 'hmi';
 import {
@@ -17,8 +17,6 @@ import {
 import { config } from '../../app.config';
 import FormatMessage from '../messages/FormatMessage';
 import { selectMessages } from '../messages/messagesSlice';
-import { pdaLookupWithEmail } from "../../services/HattersService";
-import { PdaLookupResponse } from "../../types/Hatters";
 
 type Query = {
   target?: string;
@@ -35,14 +33,14 @@ const AuthLogin: React.FC = () => {
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const messages = useSelector(selectMessages);
-  const [lookupResponse, setLookupResponse] = useState<PdaLookupResponse | null>(null);
+  const pdaDetails = useSelector(selectUserPdaLookupDetails);
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   let history = useHistory();
   let location = useLocation<{ from?: string; query: QueryLocationState }>();
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
-  const targetParam = target || '/feed';
+  const targetParam = target || 'feed';
 
   const { from, query } = location?.state || {};
   const { repeat, email, applicationId, redirectUri } = query || {};
@@ -56,22 +54,15 @@ const AuthLogin: React.FC = () => {
     if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {
-      window.location.href = window.location.origin + '/#' + targetParam;
+      window.location.href = window.location.origin + '/' + targetParam;
     }
   };
 
   const getPdaDetails = async () => {
-    try {
-      if (!email) return history.replace('/');
+    const maybeEmail = email || window.localStorage.getItem('session_email');
+    if (!maybeEmail) return history.replace('/');
 
-      const res = await pdaLookupWithEmail(email);
-
-      if (res.parsedBody) {
-        setLookupResponse(res.parsedBody);
-      }
-    } catch (e) {
-      setErrorMessage(messages['ds.auth.error.oops']);
-    }
+    dispatch(getPdaLookupDetails(maybeEmail));
   };
 
   useEffect(() => {
@@ -89,13 +80,13 @@ const AuthLogin: React.FC = () => {
   }, []);
 
   const login = async () => {
-    if (!lookupResponse) return;
+    if (!pdaDetails) return;
     setErrorMessage('');
 
     try {
       const res = await newUserAccessToken(
-        lookupResponse?.hatName + '.' + lookupResponse?.hatCluster,
-        lookupResponse?.hatName,
+        pdaDetails.hatName + '.' + pdaDetails.hatCluster,
+        pdaDetails.hatName,
         password
       );
 
@@ -128,14 +119,14 @@ const AuthLogin: React.FC = () => {
   };
 
   useEffect(() => {
-    if (applicationId && lookupResponse && !parentApp) {
-      dispatch(getApplicationHmi(applicationId, lookupResponse?.hatName + '.' + lookupResponse?.hatCluster));
+    if (applicationId && pdaDetails && !parentApp) {
+      dispatch(getApplicationHmi(applicationId, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
-  }, [dispatch, parentApp, applicationId, lookupResponse]);
+  }, [dispatch, parentApp, applicationId, pdaDetails]);
 
-  if (!lookupResponse) {
+  if (!pdaDetails) {
     return null;
   }
 
