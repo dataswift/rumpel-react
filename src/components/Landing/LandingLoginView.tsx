@@ -4,12 +4,13 @@ import { Input } from 'hmi';
 import { pdaLookupWithEmail } from '../../services/HattersService';
 import { PdaLookupResponse } from '../../types/Hatters';
 import { config } from '../../app.config';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { newUserAccessToken } from '../../api/hatAPI';
 import { loginWithToken } from '../../features/authentication/authenticationSlice';
 import { HatClientService } from '../../services/HatClientService';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
+import FormatMessage from "../../features/messages/FormatMessage";
 
 const LandingLoginView: React.FC = () => {
   const history = useHistory();
@@ -101,6 +102,10 @@ const LandingLoginView: React.FC = () => {
           <button className="ds-hmi-btn ds-hmi-btn-primary" onClick={onLogin}>
             Login
           </button>
+
+          <Link className={'auth-login-btn-link'} to={'/auth/recover-password'}>
+            <FormatMessage id={'ds.auth.login.forgotPassword'} />
+          </Link>
         </>
       )}
 

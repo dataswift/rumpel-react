@@ -5,6 +5,8 @@ import { config } from '../../app.config';
 import { isFuture, toDate, addDays } from 'date-fns';
 import Cookies from 'js-cookie';
 import { HatClientService } from '../../services/HatClientService';
+import { PdaLookupResponse } from "../../types/Hatters";
+import { pdaLookupWithEmail } from "../../services/HattersService";
 
 export enum AuthState {
   LOGIN_REQUEST = 'login_request',
@@ -16,6 +18,7 @@ export type AuthenticationState = {
   authState: AuthState;
   rememberMe: boolean;
   hatName: string;
+  pdaLookupResponse?: PdaLookupResponse | null;
   hatDomain: string;
   token?: string | null;
 };
@@ -40,6 +43,9 @@ export const slice = createSlice({
       state.hatName = action.payload.hatName;
       state.hatDomain = action.payload.hatDomain;
     },
+    setPdaLookupResponse: (state, action: PayloadAction<PdaLookupResponse | null>) => {
+      state.pdaLookupResponse = action.payload;
+    },
     loginAuthState: (state, actions: PayloadAction<AuthState>) => {
       state.authState = actions.payload;
     },
@@ -53,7 +59,7 @@ export const slice = createSlice({
   },
 });
 
-export const { authenticateWithToken, updateHatName, loginAuthState, logout } = slice.actions;
+export const { authenticateWithToken, updateHatName, loginAuthState, setPdaLookupResponse, logout } = slice.actions;
 
 export const loginWithToken =
   (token: string): AppThunk =>
@@ -82,7 +88,7 @@ export const logoutUser = (): AppThunk => (dispatch) => {
   const secure = window.location.protocol === 'https:';
 
   window.sessionStorage.removeItem('token');
-  window.sessionStorage.removeItem('session_email');
+  window.localStorage.removeItem('session_email');
   Cookies.remove('token', { secure: secure, sameSite: 'strict' });
   hatSvc.logout();
 
@@ -102,9 +108,24 @@ const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
   return scopeIsValid && (domainIsValid || portIsValid) && notExpired;
 };
 
+export const getPdaLookupDetails =
+  (email: string): AppThunk =>
+    async (dispatch) => {
+      try {
+        const res = await pdaLookupWithEmail(email);
+
+        if (res.parsedBody) {
+          dispatch(setPdaLookupResponse(res.parsedBody));
+        }
+      } catch (e) {
+        dispatch(setPdaLookupResponse(null));
+      }
+    };
+
 export const selectIsAuthenticated = (state: RootState) => state.authentication.isAuthenticated;
 export const selectAuthToken = (state: RootState) => state.authentication.token;
 export const selectUserHatName = (state: RootState) => state.authentication.hatName;
 export const selectUserHatDomain = (state: RootState) => state.authentication.hatDomain;
+export const selectUserPdaLookupDetails = (state: RootState) => state.authentication.pdaLookupResponse;
 
 export default slice.reducer;

@@ -13,6 +13,7 @@ import { Router } from 'react-router';
 
 import { recoverPassword } from '../../api/hatAPI';
 import AuthRecoverPassword from './AuthRecoverPassword';
+import authenticationSlice from "./authenticationSlice";
 jest.mock('../../api/hatAPI');
 
 const mockRecoverPassword: jest.Mocked<any> = recoverPassword;
@@ -22,6 +23,7 @@ export const store = configureStore({
     messages: messagesSlice,
     applications: applicationsSlice,
     language: languageSlice,
+    authentication: authenticationSlice,
   },
   preloadedState: {
     messages,
@@ -31,6 +33,13 @@ export const store = configureStore({
     language: {
       language: 'en',
     },
+    authentication: {
+      pdaLookupResponse: {
+        verified: true,
+        hatCluster: 'testHatCluster',
+        hatName: 'testHatName'
+      }
+    }
   },
 });
 
@@ -72,8 +81,7 @@ describe('AuthRecoverPassword tests', () => {
     expect(screen.getByText('Reset Password')).toBeEnabled();
     fireEvent.click(screen.getByText('Reset Password'));
 
-    expect(mockRecoverPassword).toHaveBeenCalledTimes(1);
-    expect(mockRecoverPassword).toHaveBeenCalledWith({ email: 'test@email.com' });
+    expect(mockRecoverPassword).toHaveBeenCalledWith("testHatName.testHatCluster", { email: 'test@email.com' });
 
     await waitFor(() =>
       expect(

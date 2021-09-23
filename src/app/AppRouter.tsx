@@ -27,14 +27,6 @@ const HatClaim = React.lazy(
     ),
 );
 
-const Login = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "user_login" */
-      '../components/user/Login'
-    ),
-);
-
 const Feed = React.lazy(
   () =>
     import(
@@ -48,14 +40,6 @@ const HatLogin = React.lazy(
     import(
       /* webpackChunkName: "hat_setup_login" */
       '../features/hat-login/HatLogin'
-    ),
-);
-
-const PasswordRecover = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "password_recover" */
-      '../components/user/PasswordRecover'
     ),
 );
 
@@ -181,18 +165,6 @@ const AppRouter = () => (
           <LandingLoginPage />
         </LayoutRoute>
 
-        <LayoutRoute path="/hat/claim/:claimToken">
-          <HatClaim />
-        </LayoutRoute>
-
-        <LayoutRoute path="/user/login/">
-          <Login />
-        </LayoutRoute>
-
-        <LayoutRoute path="/user/password/recover">
-          <PasswordRecover />
-        </LayoutRoute>
-
         <LayoutRoute path="/auth/login" issuedByFooter footerBackgroundColor="#fff">
           <AuthLogin />
         </LayoutRoute>
@@ -209,12 +181,28 @@ const AppRouter = () => (
           <AuthVerifyEmail />
         </LayoutRoute>
 
-        <PrivateLayoutRoute path={'/hatlogin'}>
-          <HatLogin />
-        </PrivateLayoutRoute>
-
         <PrivateLayoutRoute path={'/auth/oauth'} newAuth issuedByFooter footerBackgroundColor="#fff">
           <Oauth />
+        </PrivateLayoutRoute>
+
+
+        {/*
+          The following routes are deprecated.
+        */}
+        <LayoutRoute path="/hat/claim/:claimToken">
+          <HatClaim />
+        </LayoutRoute>
+
+        <LayoutRoute path="/user/login/">
+          <AuthLogin />
+        </LayoutRoute>
+
+        <LayoutRoute path="/user/password/recover">
+          <AuthRecoverPassword />
+        </LayoutRoute>
+
+        <PrivateLayoutRoute path={'/hatlogin'}>
+          <HatLogin />
         </PrivateLayoutRoute>
 
         <PrivateLayoutRoute path={'/hat-setup-login'}>
