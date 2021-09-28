@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { AuthApplicationLogo } from 'hmi';
+import React, { useContext, useState } from 'react';
+import { AnalyticsContext, AuthApplicationLogo } from 'hmi';
 
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import FormatMessage from "../../../features/messages/FormatMessage";
 import { resendVerificationEmail } from "../../../services/HattersService";
+import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
 
 type Props = {
   email: string;
@@ -13,12 +14,12 @@ type Props = {
 };
 
 const RegistrationConfirmYourIdentity: React.FC<Props> = ({ parentApp, email, redirectUri, skipEmailVerification }) => {
-  // const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
+  const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const [resendEmailState, setResendEmailState] = useState('idle');
 
   const resendEmail = async () => {
     try {
-      // onClickEvent?.(AnalyticsClickEvents.resendEmailActivationButton);
+      onClickEvent?.(AnalyticsClickEvents.resendEmailActivationButton);
 
       if (!parentApp || !redirectUri) {
         setResendEmailState('error');

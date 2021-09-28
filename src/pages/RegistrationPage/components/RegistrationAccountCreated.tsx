@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { AuthApplicationLogo } from 'hmi';
+import React, { useContext, useState } from 'react';
+import { AnalyticsContext, AuthApplicationLogo } from 'hmi';
 
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import FormatMessage from "../../../features/messages/FormatMessage";
 import { resendVerificationEmail } from "../../../services/HattersService";
+import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
 
 type Props = {
   parentApp: HatApplicationContent;
@@ -12,22 +13,24 @@ type Props = {
 }
 
 const RegistrationAccountCreated: React.FC<Props> = ({ parentApp, email, redirectUri }) => {
-  // const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
+  const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const [resendEmailState, setResendEmailState] = useState('idle');
 
   const resendEmail = async () => {
     try {
-      // onClickEvent?.(AnalyticsClickEvents.resendEmailActivationButton);
+      onClickEvent?.(AnalyticsClickEvents.resendEmailActivationButton);
 
       if (!parentApp || !redirectUri) {
         setResendEmailState('error');
         return;
       }
-
       setResendEmailState('pending');
 
       const res = await resendVerificationEmail(email, redirectUri, !parentApp.info.published);
-      if (res.parsedBody) setResendEmailState('success');
+
+      if (res.parsedBody) {
+        setResendEmailState('success');
+      }
     } catch (e) {
       setResendEmailState('error');
     }

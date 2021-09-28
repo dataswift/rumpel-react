@@ -7,8 +7,9 @@ import {
   getPdaAuthParentApplicationToolDependency,
   selectDependencyApp,
   selectDependencyContracts,
-  selectDependencyTools, selectHmiSetupError,
-  selectParentApp
+  selectDependencyTools,
+  selectHmiSetupError,
+  selectParentApp,
 } from "../redux/pdaAuth/hmiPdaAuthSlice";
 
 export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en') {

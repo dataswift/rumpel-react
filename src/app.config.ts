@@ -28,6 +28,8 @@ export const config = {
   defaultLanguage: 'en',
   native: environment.native,
   protocol: environment.protocol,
+  matomoUrl: 'https://dataswift.matomo.cloud/',
+  matomoSiteId: 2,
   links: {
     bestPractices: externalLinks.bestPractices,
     termsOfService: externalLinks.termsOfService,

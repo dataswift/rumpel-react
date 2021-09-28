@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AuthApplicationLogo } from "hmi";
+import { AnalyticsContext, AuthApplicationLogo } from "hmi";
 import RegistrationAccountCreated from "./RegistrationAccountCreated";
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import FormatMessage from "../../../features/messages/FormatMessage";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
+import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
 
 type Props = {
   done: boolean;
@@ -21,7 +22,7 @@ let maxProgress = 60;
 const WAITING_TIME_UNTIL_CONTINUE_BTN = 2000; // in ms
 
 const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done, nextStep, isHatApp, email }) => {
-  // const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
+  const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState('hatters.signup.creatingPersonalDataServer');
@@ -49,7 +50,7 @@ const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done
   );
 
   const continueToNextStepClick = () => {
-    // onClickEvent?.(AnalyticsClickEvents.continueToApplicationButton);
+    onClickEvent?.(AnalyticsClickEvents.continueToApplicationButton);
     redirectToNextStep();
   };
 

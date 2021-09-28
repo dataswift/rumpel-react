@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { AgreementsModal, AuthApplicationLogo, Input } from "hmi";
+import React, { useContext, useEffect, useState } from "react";
+import { AgreementsModal, AnalyticsContext, AuthApplicationLogo, Input } from "hmi";
 import { parse } from "query-string";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
@@ -10,6 +10,7 @@ import { pdaLookupWithEmail } from "../../../services/HattersService";
 import { isEmail } from "../../../utils/validations";
 import { buildRequestURL, getParameterByName } from "../../../utils/utils";
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
+import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
 
 type Props = {
   parentApp: HatApplicationContent;
@@ -31,6 +32,7 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
     application_id: applicationId,
     lang,
   } = parse(location.search) as Query;
+  const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
   // const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
@@ -107,11 +109,11 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
 
   const onClickNext = () => {
     // Track if user clicks to go to the next stage of PDA setup.
-    // onClickEvent?.(AnalyticsClickEvents.signupNextButton);
+    onClickEvent?.(AnalyticsClickEvents.signupNextButton);
 
     // Track if user optin-in to receiving data news.
     if (newsletterOptin) {
-      // onClickEvent?.(AnalyticsClickEvents.newsletterOptin);
+      onClickEvent?.(AnalyticsClickEvents.newsletterOptin);
     }
 
     if (isEmail(email)) {

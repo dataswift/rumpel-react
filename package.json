@@ -3,6 +3,7 @@
   "version": "4.2.11",
   "private": true,
   "dependencies": {
+    "@datapunt/matomo-tracker-react": "^0.5.1",
     "@dataswift/hat-js": "^0.5.0",
     "@dataswift/shared": "0.0.4-cad706a",
     "@material-ui/core": "^4.11.4",
