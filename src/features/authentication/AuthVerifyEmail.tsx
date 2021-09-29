@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import './AuthLogin.scss';
 import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';

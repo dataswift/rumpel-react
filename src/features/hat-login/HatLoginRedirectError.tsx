@@ -49,7 +49,7 @@ const HatLoginRedirectError: React.FC<Props> = (props) => {
       }
 
       if (isInternal) {
-        window.location.href = fallback || redirectWithError;
+        window.location.href = window.location.origin + '/feed';
       } else {
         window.location.href = redirectWithError;
       }

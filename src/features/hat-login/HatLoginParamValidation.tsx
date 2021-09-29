@@ -15,6 +15,7 @@ type Query = {
   redirect_uri?: string;
   redirect?: string;
   email?: string;
+  internal?: string;
 };
 
 const HatLoginParamValidation: React.FC<Props> = (props) => {
@@ -22,7 +23,14 @@ const HatLoginParamValidation: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const emailStored = localStorage.getItem('session_email');
-    const { application_id, name, email, redirect_uri, redirect } = queryString.parse(window.location.search) as Query;
+    const {
+      application_id,
+      name,
+      email,
+      redirect_uri,
+      redirect,
+      internal
+    } = queryString.parse(window.location.search) as Query;
     const applicationId = application_id || name;
     const applicationIdSafe = applicationId?.toLowerCase();
     const redirectParam = redirect_uri || redirect;
@@ -32,7 +40,7 @@ const HatLoginParamValidation: React.FC<Props> = (props) => {
       return;
     }
 
-    if (!redirectParam) {
+    if (!redirectParam && !internal) {
       dispatch(setRedirectError('application_misconfigured', 'redirect_is_required'));
       return;
     }

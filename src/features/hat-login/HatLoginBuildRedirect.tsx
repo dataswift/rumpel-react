@@ -39,7 +39,7 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
       const redirectParamDecoded = decodeURIComponent(redirectParam || '');
 
       if (isInternal) {
-        window.location.href = redirectParam || '';
+        window.location.href = redirectParam || '/feed';
       } else {
         const hatSvc = HatClientService.getInstance();
 

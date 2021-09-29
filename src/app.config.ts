@@ -1,6 +1,6 @@
 import { environment } from './environment';
 
-const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
+export const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
 
 const externalLinks = {
   bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
