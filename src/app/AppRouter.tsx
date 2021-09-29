@@ -17,7 +17,7 @@ import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
 import DataDebits from '../features/data-debit';
 import DataDebitDetails from '../features/data-debit/DataDebitDetails';
-import { LandingLoginPage } from '../pages';
+import { LandingLoginPage, RegistrationPage } from '../pages';
 
 const HatClaim = React.lazy(
   () =>
@@ -163,6 +163,14 @@ const AppRouter = () => (
 
         <LayoutRoute path="/login" footerBackgroundColor="#fff">
           <LandingLoginPage />
+        </LayoutRoute>
+
+        <LayoutRoute path="/register" footerBackgroundColor="#fff">
+          <RegistrationPage />
+        </LayoutRoute>
+
+        <LayoutRoute path="/services/signup" footerBackgroundColor="#fff">
+          <RegistrationPage />
         </LayoutRoute>
 
         <LayoutRoute path="/auth/login" issuedByFooter footerBackgroundColor="#fff">
