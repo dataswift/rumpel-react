@@ -63,10 +63,9 @@ const RegistrationPage: React.FC = () => {
     try {
       const res = await createPdaAuthUser(signupPayload, lang, skipDeps);
       if (res.parsedBody) {
-        const signupEndTime = performance.now();
         const analyticsEvent = Object.assign({}, AnalyticsClickEvents.registrationTimePerformance);
 
-        analyticsEvent.value = Math.round(signupEndTime - signupStartTime);
+        analyticsEvent.value = Math.round(performance.now() - signupStartTime);
         onClickEvent?.(analyticsEvent);
 
         setSignupDone(true);

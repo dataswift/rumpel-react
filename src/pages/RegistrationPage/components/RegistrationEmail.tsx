@@ -35,7 +35,6 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
   const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const language = useSelector(selectLanguage);
   const messages = useSelector(selectMessages);
-  // const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const [email, setEmail] = useState('');
   const [predefinedEmailAddress, setPredefinedEmailAddress] = useState(false);
   const [isValid, setIsValid] = useState(false);
