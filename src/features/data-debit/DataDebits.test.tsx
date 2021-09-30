@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
+import { configureStore } from '@reduxjs/toolkit';
 import DataDebits from './DataDebits';
 import dataDebitSlice from './dataDebitSlice';
 import messagesSlice from '../messages/messagesSlice';
 import messages from '../../translations/en.json';
 
-import { configureStore } from '@reduxjs/toolkit';
 import TEST_DATA_DEBIT from '../../testData/DataDebit';
 import { getDataDebits } from '../../api/hatAPI';
 

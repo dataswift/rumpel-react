@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import './DateRangePickerRumpel.scss';
 // @ts-ignore
 import { DateRange, Range } from 'react-date-range';
-import { endOfDay, getUnixTime, startOfDay } from "date-fns";
+import { endOfDay, getUnixTime, startOfDay } from 'date-fns';
 
 type Props = {
-    selectedDates: (since: number, until: number) => void;
-}
+  selectedDates: (since: number, until: number) => void;
+};
 
 export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
   const [state, setState] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection'
-    }
+      key: 'selection',
+    },
   ]);
 
   const onChange = (range: Range) => {
@@ -30,19 +30,18 @@ export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
   };
 
   return (
-    <div className={'date-range-picker-rumpel'}>
+    <div className="date-range-picker-rumpel">
       <DateRange
         onChange={onChange}
         showSelectionPreview={false}
         moveRangeOnFirstSelection={false}
         ranges={state}
-        showMonthArrow={true}
-        direction={'horizontal'}
+        showMonthArrow
+        direction="horizontal"
         months={1}
       />
-      <button className={'btn btn-accent date-range-picker-rumpel-done'}
-        onClick={() => onDone()}>
-          Done
+      <button className="btn btn-accent date-range-picker-rumpel-done" onClick={() => onDone()}>
+        Done
       </button>
     </div>
   );

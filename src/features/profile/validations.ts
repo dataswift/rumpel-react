@@ -9,7 +9,7 @@ export const profileContactValidations = {
   primaryEmail: 'optional|email',
   alternativeEmail: 'optional|email',
   mobile: 'optional|number',
-  landline: 'optional|number'
+  landline: 'optional|number',
 };
 
 export const profileOnlineValidations = {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
 import { BundleValues } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { AppThunk, RootState } from '../../app/store';
 import { Profile } from './profile.interface';
 import { HatClientService } from '../../services/HatClientService';
 
@@ -38,9 +38,11 @@ export const slice = createSlice({
 
 export const { publicProfile, getPublicProfileError } = slice.actions;
 
-export const setPublicProfile = (profile: BundleValues): AppThunk => (dispatch) => {
-  dispatch(publicProfile(profile));
-};
+export const setPublicProfile =
+  (profile: BundleValues): AppThunk =>
+  (dispatch) => {
+    dispatch(publicProfile(profile));
+  };
 
 export const selectPublicProfileResponse = (state: RootState) => state.publicProfile.publicProfile;
 export const selectPublicProfile = (state: RootState) => state.publicProfile.profile;

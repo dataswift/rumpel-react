@@ -1,4 +1,4 @@
-import { BundleStructure } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
+import { BundleStructure } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
 
 const TEST_PROFILE_BUNDLE_STRUCTURE: BundleStructure = {
   name: 'phata',
@@ -12,12 +12,12 @@ const TEST_PROFILE_BUNDLE_STRUCTURE: BundleStructure = {
             'online.website': 'online.website',
             'personal.firstName': 'personal.firstName',
             'online.facebook': 'online.facebook',
-          }
-        }
+          },
+        },
       ],
       orderBy: 'dateCreated',
       ordering: 'descending',
-      limit: 1
+      limit: 1,
     },
     notables: {
       endpoints: [
@@ -34,30 +34,30 @@ const TEST_PROFILE_BUNDLE_STRUCTURE: BundleStructure = {
             created_time: 'created_time',
             public_until: 'public_until',
             updated_time: 'updated_time',
-            currently_shared: 'currently_shared'
+            currently_shared: 'currently_shared',
           },
           filters: [
             {
               field: 'shared',
               operator: {
                 value: true,
-                operator: 'contains'
-              }
+                operator: 'contains',
+              },
             },
             {
               field: 'shared_on',
               operator: {
                 value: 'phata',
-                operator: 'contains'
-              }
-            }
-          ]
-        }
+                operator: 'contains',
+              },
+            },
+          ],
+        },
       ],
       orderBy: 'updated_time',
-      ordering: 'descending'
-    }
-  }
+      ordering: 'descending',
+    },
+  },
 };
 
 export default TEST_PROFILE_BUNDLE_STRUCTURE;

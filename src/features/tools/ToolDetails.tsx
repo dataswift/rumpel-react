@@ -15,10 +15,16 @@ enum HatToolStatus {
   UNTOUCHED = 'untouched',
 }
 
-const getToolStatus = (toolEnabled: boolean) => (toolEnabled ? HatToolStatus.RUNNING : HatToolStatus.UNTOUCHED);
-const getToolStatusIcon = (toolEnabled: boolean): string => (toolEnabled ? 'check_circle' : 'add_circle_outline');
+const getToolStatus = (toolEnabled: boolean) =>
+  toolEnabled ? HatToolStatus.RUNNING : HatToolStatus.UNTOUCHED;
+const getToolStatusIcon = (toolEnabled: boolean): string =>
+  toolEnabled ? 'check_circle' : 'add_circle_outline';
 const getToolStatusText = (toolEnabled: boolean) =>
-  toolEnabled ? <FormatMessage id="ds.hat.tool.actions.active" /> : <FormatMessage id="ds.hat.tool.actions.connect" />;
+  toolEnabled ? (
+    <FormatMessage id="ds.hat.tool.actions.active" />
+  ) : (
+    <FormatMessage id="ds.hat.tool.actions.connect" />
+  );
 
 const getToolDetails = (tool: HatTool): Array<{ [key: string]: string }> => {
   const { name, url, country } = tool.developer;
@@ -27,8 +33,8 @@ const getToolDetails = (tool: HatTool): Array<{ [key: string]: string }> => {
   return [
     { provider: name },
     { website: url },
-    { country: country },
-    { version: version },
+    { country },
+    { version },
     { 'last updated': format(new Date(tool.info.versionReleaseDate || ''), 'dd/MM/yyyy') },
     { 'terms and conditions': termsUrl },
     { 'support email': supportContact },
@@ -62,13 +68,15 @@ const ToolDetails: React.FC = () => {
           onClick={onConnectClick}
           className={`app-details-status ${getToolStatus(tool.status.enabled)} link-button`}
         >
-          <i className="material-icons details-button-icon">{getToolStatusIcon(tool.status.enabled)}</i>
+          <i className="material-icons details-button-icon">
+            {getToolStatusIcon(tool.status.enabled)}
+          </i>
           {getToolStatusText(tool.status.enabled)}
         </div>
       </DetailsHeader>
 
       <InformationDetails
-        header={'Tool Info'}
+        header="Tool Info"
         description={tool.info.description.text}
         screenshots={tool.info.graphics.screenshots.map((screenshot) => screenshot.normal)}
         informationListData={getToolDetails(tool)}

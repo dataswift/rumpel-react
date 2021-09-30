@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import React from "react";
-import { FeedRollup } from "./FeedRollup";
-import { SheFeedItemTextOnly } from "../../testData/SheFeed";
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { FeedRollup } from './FeedRollup';
+import { SheFeedItemTextOnly } from '../../testData/SheFeed';
 
 describe('FeedRollup', () => {
   // Mock data with the same source to trigger the rollup.
@@ -10,15 +10,11 @@ describe('FeedRollup', () => {
     SheFeedItemTextOnly,
     SheFeedItemTextOnly,
     SheFeedItemTextOnly,
-    SheFeedItemTextOnly
+    SheFeedItemTextOnly,
   ];
 
   test('renders the FeedRollup component without error', () => {
-    render(
-      <FeedRollup
-        sheFeed={SheFeedItems}
-      />
-    );
+    render(<FeedRollup sheFeed={SheFeedItems} />);
 
     expect(screen.getByAltText('testsource')).toBeInTheDocument();
     expect(screen.getByText('Test Text Title')).toBeInTheDocument();
@@ -35,6 +31,5 @@ describe('FeedRollup', () => {
     expect(screen.queryAllByAltText('testsource')).toHaveLength(5);
     expect(screen.queryAllByText('Test Text Title')).toHaveLength(5);
     expect(screen.queryAllByText('Test content text')).toHaveLength(5);
-
   });
 });

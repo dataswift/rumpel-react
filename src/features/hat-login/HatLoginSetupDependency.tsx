@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
-import { HatClientService } from "../../services/HatClientService";
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import * as queryString from 'query-string';
+import { addMinutes, isFuture, parseISO } from 'date-fns';
+import { HatClientService } from '../../services/HatClientService';
 import {
   selectDependencyApps,
   selectDependencyPlugsAreActive,
-  selectParentApp
-} from "../hmi/hmiSlice";
-import * as queryString from "query-string";
-import { addMinutes, isFuture, parseISO } from "date-fns";
+  selectParentApp,
+} from '../hmi/hmiSlice';
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 type Query = {
   application_id?: string;
@@ -20,19 +20,20 @@ type Query = {
   redirect_uri?: string;
   redirect?: string;
   dependencies?: string;
-}
+};
 
-const HatLoginSetupDependency: React.FC<Props> = props => {
+const HatLoginSetupDependency: React.FC<Props> = (props) => {
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApps);
   const plugsAreActive = useSelector(selectDependencyPlugsAreActive);
 
   useEffect(() => {
-    const { application_id, name, redirect_uri, redirect, dependencies } =
-        queryString.parse(window.location.search) as Query;
+    const { application_id, name, redirect_uri, redirect, dependencies } = queryString.parse(
+      window.location.search,
+    ) as Query;
 
     const setupAppDependencies = async (dependencies: HatApplication[]) => {
-      const app = dependencies.filter(d => !d.active)[0];
+      const app = dependencies.filter((d) => !d.active)[0];
       const callback = intermediateCallBackUrl(app.application.id);
 
       try {
@@ -44,13 +45,13 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
           if (resAppLogin?.parsedBody?.accessToken) {
             const attemptedSetup = {
               applicationId: parentApp?.application.id,
-              date: addMinutes(new Date(), 10)
+              date: addMinutes(new Date(), 10),
             };
 
             sessionStorage.setItem('attempted_setup', JSON.stringify(attemptedSetup));
 
             // eslint-disable-next-line max-len
-            window.location.href = `${ app.application.setup.url }?token=${ resAppLogin.parsedBody.accessToken }&redirect=${ callback }`;
+            window.location.href = `${app.application.setup.url}?token=${resAppLogin.parsedBody.accessToken}&redirect=${callback}`;
           }
         }
       } catch (e) {
@@ -65,22 +66,20 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
       const redirectParam = redirect_uri || redirect;
       const dependenciesParam = dependencies;
 
-      url += `?application_id=${ applicationIdSafe }%26redirect_uri=${ redirectParam }`;
+      url += `?application_id=${applicationIdSafe}%26redirect_uri=${redirectParam}`;
 
       if (dependenciesParam) {
         // removes the application id from the dependency parameter
-        const dependencyArray = dependenciesParam.split(',').filter(item => item !== appId);
+        const dependencyArray = dependenciesParam.split(',').filter((item) => item !== appId);
         if (dependencyArray && dependencyArray.length > 0) {
-          url += `%26dependencies=${ dependencyArray.join() }`;
+          url += `%26dependencies=${dependencyArray.join()}`;
         }
-      } else {
-        if (dependencyApps) {
-          const dependencyArray = dependencyApps
-            .filter(app => app.application.id !== appId)
-            .map(app => app.application.id);
-          if (dependencyArray && dependencyArray.length > 0) {
-            url += `%26dependencies=${ dependencyArray.join() }`;
-          }
+      } else if (dependencyApps) {
+        const dependencyArray = dependencyApps
+          .filter((app) => app.application.id !== appId)
+          .map((app) => app.application.id);
+        if (dependencyArray && dependencyArray.length > 0) {
+          url += `%26dependencies=${dependencyArray.join()}`;
         }
       }
 
@@ -90,9 +89,9 @@ const HatLoginSetupDependency: React.FC<Props> = props => {
     const attemptedSetup = sessionStorage.getItem('attempted_setup');
 
     if (parentApp && dependencyApps && dependencyApps.length > 0 && attemptedSetup) {
-      const session = JSON.parse(attemptedSetup) as {applicationId: string, date: string};
+      const session = JSON.parse(attemptedSetup) as { applicationId: string; date: string };
 
-      if ((session.applicationId === parentApp.application.id) && isFuture(parseISO(session.date))) {
+      if (session.applicationId === parentApp.application.id && isFuture(parseISO(session.date))) {
         return;
       }
     }

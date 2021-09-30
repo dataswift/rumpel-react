@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
+import { configureStore } from '@reduxjs/toolkit';
 import applicationsSlice from '../applications/applicationsSlice';
 
-import { configureStore } from '@reduxjs/toolkit';
-import TEST_DATA_PLUG from "../../testData/DataPlug";
-import DataPlugs from "./DataPlugs";
+import TEST_DATA_PLUG from '../../testData/DataPlug';
+import DataPlugs from './DataPlugs';
 
 export const store = configureStore({
   reducer: {

@@ -6,8 +6,8 @@ import { createMemoryHistory } from 'history';
 import { Router, Route } from 'react-router-dom';
 
 import applicationsSlice from '../applications/applicationsSlice';
-import DataPlugDetails from "./DataPlugDetails";
-import TEST_DATA_PLUG from "../../testData/DataPlug";
+import DataPlugDetails from './DataPlugDetails';
+import TEST_DATA_PLUG from '../../testData/DataPlug';
 
 export const store = configureStore({
   reducer: {

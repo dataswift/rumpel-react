@@ -1,22 +1,22 @@
-import React from "react";
-import facebookIcon from "../../../assets/icons/she-facebook.svg";
-import twitterIcon from "../../../assets/icons/she-twitter.svg";
-import fitbitIcon from "../../../assets/icons/she-fitbit.svg";
-import instagramIcon from "../../../assets/icons/she-instagram.svg";
-import googleIcon from "../../../assets/icons/she-google.svg";
-import spotifyIcon from "../../../assets/icons/she-spotify.svg";
-import sheIcon from "../../../assets/icons/she-she.svg";
-import wordCloudIcon from "../../../assets/icons/she-wordcloud.svg";
-import sentimentIcon from "../../../assets/icons/she-sentiment.svg";
-import placeholderIcon from "../../../assets/icons/app-logo-placeholder.svg";
+import React from 'react';
+import facebookIcon from '../../../assets/icons/she-facebook.svg';
+import twitterIcon from '../../../assets/icons/she-twitter.svg';
+import fitbitIcon from '../../../assets/icons/she-fitbit.svg';
+import instagramIcon from '../../../assets/icons/she-instagram.svg';
+import googleIcon from '../../../assets/icons/she-google.svg';
+import spotifyIcon from '../../../assets/icons/she-spotify.svg';
+import sheIcon from '../../../assets/icons/she-she.svg';
+import wordCloudIcon from '../../../assets/icons/she-wordcloud.svg';
+import sentimentIcon from '../../../assets/icons/she-sentiment.svg';
+import placeholderIcon from '../../../assets/icons/app-logo-placeholder.svg';
 
 type Props = {
-    source: string;
-    height?: string;
-    width?: string;
-    types?: string[];
-    className?: string;
-}
+  source: string;
+  height?: string;
+  width?: string;
+  types?: string[];
+  className?: string;
+};
 
 const imgSrc: Record<string, any> = {
   facebook: facebookIcon,
@@ -29,7 +29,7 @@ const imgSrc: Record<string, any> = {
   sentiment: sentimentIcon,
   wordCloud: wordCloudIcon,
   drops: sheIcon,
-  placeholder: placeholderIcon
+  placeholder: placeholderIcon,
 };
 
 export const FeedSourceImg: React.FC<Props> = ({ source, types, height, width, className }) => {
@@ -37,27 +37,23 @@ export const FeedSourceImg: React.FC<Props> = ({ source, types, height, width, c
     if (source === 'she') {
       if (types && types.indexOf('sentiment') !== -1) {
         return 'sentiment';
-      } else {
-        return 'she';
       }
-    } else if (source === 'drops') {
+      return 'she';
+    }
+    if (source === 'drops') {
       if (types && types.indexOf('wordcloud') !== -1) {
         return 'wordcloud';
-      } else {
-        return 'she';
       }
-    } else {
-      return imageAsset(source);
+      return 'she';
     }
+    return imageAsset(source);
   };
 
-  const imageAsset = (source: string): string => {
-    return source.split('-')[0] || 'she';
-  };
+  const imageAsset = (source: string): string => source.split('-')[0] || 'she';
 
   return (
-    <img 
-      src={imgSrc[imageSource(source, types)] || imgSrc['placeholder']}
+    <img
+      src={imgSrc[imageSource(source, types)] || imgSrc.placeholder}
       height={height}
       width={width}
       className={className}

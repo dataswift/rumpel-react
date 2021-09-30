@@ -7,9 +7,9 @@ import { Router, Route } from 'react-router-dom';
 
 import messagesSlice from '../messages/messagesSlice';
 import messages from '../../translations/en.json';
-import dataDebitSlice from "./dataDebitSlice";
-import TEST_DATA_DEBIT from "../../testData/DataDebit";
-import DataDebitDetailsActions from "./DataDebitDetailsActions";
+import dataDebitSlice from './dataDebitSlice';
+import TEST_DATA_DEBIT from '../../testData/DataDebit';
+import DataDebitDetailsActions from './DataDebitDetailsActions';
 
 export const store = configureStore({
   reducer: {
@@ -33,7 +33,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active={false} dataDebitId={'TestExpiredDataDebit'} />
+            <DataDebitDetailsActions active={false} dataDebitId="TestExpiredDataDebit" />
           </Provider>
         </Route>
       </Router>,
@@ -50,7 +50,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active dataDebitId={'TestActiveDataDebit'} />
+            <DataDebitDetailsActions active dataDebitId="TestActiveDataDebit" />
           </Provider>
         </Route>
       </Router>,
@@ -66,7 +66,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active dataDebitId={'TestActiveDataDebit'} />
+            <DataDebitDetailsActions active dataDebitId="TestActiveDataDebit" />
           </Provider>
         </Route>
       </Router>,

@@ -33,7 +33,7 @@ describe('Tool Details Actions', () => {
       <Router history={history}>
         <Route path="/tools/:toolId">
           <Provider store={store}>
-            <ToolDetailsActions setup={false} toolId={'test-feed-counter'} />
+            <ToolDetailsActions setup={false} toolId="test-feed-counter" />
           </Provider>
         </Route>
       </Router>,
@@ -50,7 +50,7 @@ describe('Tool Details Actions', () => {
       <Router history={history}>
         <Route path="/tools/:toolId">
           <Provider store={store}>
-            <ToolDetailsActions setup toolId={'test-feed-counter'} />
+            <ToolDetailsActions setup toolId="test-feed-counter" />
           </Provider>
         </Route>
       </Router>,

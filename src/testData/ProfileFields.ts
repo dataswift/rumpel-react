@@ -16,42 +16,38 @@ const TEST_PROFILE_FIELDS = [
     id: 'gender',
     placeholder: 'Gender',
     type: 'menu',
-    options: [
-      'male',
-      'female',
-      'Decline to state'
-    ]
+    options: ['male', 'female', 'Decline to state'],
   },
   {
     name: 'birthDate',
     id: 'birthDate',
     placeholder: 'Birthday',
-    type: 'DatePicker'
+    type: 'DatePicker',
   },
   {
     name: 'primaryEmail',
     id: 'primaryEmail',
     placeholder: 'Primary email',
-    type: 'email'
+    type: 'email',
   },
   {
     name: 'alternativeEmail',
     id: 'alternativeEmail',
     placeholder: 'Alternative email',
-    type: 'email'
+    type: 'email',
   },
   {
     name: 'mobile',
     id: 'mobile',
     placeholder: 'Mobile phone number',
-    type: 'text'
+    type: 'text',
   },
   {
     name: 'landline',
     id: 'landline',
     placeholder: 'Home phone number',
-    type: 'text'
-  }
+    type: 'text',
+  },
 ];
 
 export default TEST_PROFILE_FIELDS;

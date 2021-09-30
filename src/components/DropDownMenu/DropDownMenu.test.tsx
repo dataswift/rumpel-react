@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import React from "react";
-import DropDownMenu from "./DropDownMenu";
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import DropDownMenu from './DropDownMenu';
 
 describe('DropDown menu', () => {
   const options = ['option1', 'option2', 'option3'];
@@ -9,12 +9,7 @@ describe('DropDown menu', () => {
   test('renders the dropdown menu without error', () => {
     const mockOnChange = jest.fn();
 
-    render(
-      <DropDownMenu
-        placeholder={placeholder}
-        onChange={mockOnChange}
-        options={options}/>,
-    );
+    render(<DropDownMenu placeholder={placeholder} onChange={mockOnChange} options={options} />);
 
     // Clicks on the placeholder and the menu appears
     fireEvent.click(screen.getByText('testPlaceholder'));

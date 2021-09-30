@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { FeedList } from "../../features/feed/FeedList";
-import { FeedLoading } from "../Feed/FeedLoading/FeedLoading";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FeedList } from '../../features/feed/FeedList';
+import { FeedLoading } from '../Feed/FeedLoading/FeedLoading';
 import {
   getInitSheFeed,
   getMoreSheFeedData,
   selectSheFeedDisplayData,
-  selectSheFeedFetching
-} from "../../features/feed/feedSlice";
+  selectSheFeedFetching,
+} from '../../features/feed/feedSlice';
 
 export const InfiniteScrolling: React.FC = () => {
   const feed = useSelector(selectSheFeedDisplayData);
@@ -26,8 +26,12 @@ export const InfiniteScrolling: React.FC = () => {
 
   return (
     <>
-      <FeedList dayGroupedFeed={feed} loading={fetching} lastFeedElementIntersecting={() => lastElementIntersecting()}/>
-      {feed.length === 0 && <FeedLoading fetchingData={fetching}/>}
+      <FeedList
+        dayGroupedFeed={feed}
+        loading={fetching}
+        lastFeedElementIntersecting={() => lastElementIntersecting()}
+      />
+      {feed.length === 0 && <FeedLoading fetchingData={fetching} />}
     </>
   );
 };

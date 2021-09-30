@@ -6,14 +6,13 @@ import FormatMessage from '../messages/FormatMessage';
 
 export interface SettingsListProps {}
 
-const isExternalLink = (link: string): boolean => {
-  if ((!link.includes('.md') && link.includes('http')) || link.includes('mailto')) return true;
-
-  return false;
-};
+const isExternalLink = (link: string): boolean =>
+  (!link.includes('.md') && link.includes('http')) || link.includes('mailto');
 
 const SettingsList: React.FC<SettingsListProps> = () => {
-  const onExternalClick = (link: string) => (window.location.href = link);
+  const onExternalClick = (link: string) => {
+    window.location.href = link;
+  };
 
   return (
     <div className="settings-list-wrapper">
@@ -22,22 +21,24 @@ const SettingsList: React.FC<SettingsListProps> = () => {
           <FormatMessage id="ds.hat.settings.list.header.privateData" />
         </h3>
 
-        {config.settingsPrivateDataMenu.map((item) => {
-          return (
-            <Link to={item.link} className="settings-list-item link" key={item.display}>
-              <h3 className="settings-list-row-text">{item.display}</h3>
-              <i className="material-icons">{item.icon}</i>
-            </Link>
-          );
-        })}
+        {config.settingsPrivateDataMenu.map((item) => (
+          <Link to={item.link} className="settings-list-item link" key={item.display}>
+            <h3 className="settings-list-row-text">{item.display}</h3>
+            <i className="material-icons">{item.icon}</i>
+          </Link>
+        ))}
 
         <h3 className="settings-list-title">
           <FormatMessage id="ds.hat.settings.list.header.settings" />
         </h3>
 
-        {config.settingsMenu.map((item) => {
-          return isExternalLink(item.link) ? (
-            <div className="settings-list-item link" onClick={() => onExternalClick(item.link)} key={item.display}>
+        {config.settingsMenu.map((item) =>
+          isExternalLink(item.link) ? (
+            <div
+              className="settings-list-item link"
+              onClick={() => onExternalClick(item.link)}
+              key={item.display}
+            >
               <h3 className="settings-list-row-text">{item.display}</h3>
               <i className="material-icons">{item.icon}</i>
             </div>
@@ -46,8 +47,8 @@ const SettingsList: React.FC<SettingsListProps> = () => {
               <h3 className="settings-list-row-text">{item.display}</h3>
               <i className="material-icons">{item.icon}</i>
             </Link>
-          );
-        })}
+          ),
+        )}
 
         <h3 className="settings-list-title">
           <FormatMessage id="ds.hat.settings.list.header.version" />

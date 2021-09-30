@@ -13,13 +13,15 @@ const initHatClaim: HatClaim = {
 
 type UserReducerActionsType = ReduxEditHatClaimAction;
 
-export default function(state: HatClaim = initHatClaim, action: UserReducerActionsType) {
+export default function hatClaimReducer(
+  state: HatClaim = initHatClaim,
+  action: UserReducerActionsType,
+) {
   if (action.type === ReduxActionTypes.EDIT_HAT_CLAIM) {
     return {
       ...state,
       [action.name]: action.value,
     };
-  } else {
-    return state;
   }
+  return state;
 }

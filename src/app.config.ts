@@ -1,7 +1,10 @@
 import { environment } from './environment';
 
+export const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
+
 const externalLinks = {
-  bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
+  bestPractices:
+    'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
   termsOfService: 'https://www.dataswift.io/legal/pda-owner-agreement-en',
   privacyPolicy: 'https://www.dataswift.io/legal/privacy-policy-en',
 };
@@ -12,24 +15,29 @@ export const config = {
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
   supportedDomains: [
-    '.hubofallthings.net', 
-    '.hubat.net', 
-    '.hat.direct', 
-    '.dataswift.me', 
+    '.hubofallthings.net',
+    '.hubat.net',
+    '.hat.direct',
+    '.dataswift.me',
     '.dataswift.dev',
     '.dataswift.us',
-    '.dataswift.ca'
+    '.dataswift.ca',
+    '.dataswift.net',
   ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
   defaultLanguage: 'en',
   native: environment.native,
   protocol: environment.protocol,
+  matomoUrl: 'https://dataswift.matomo.cloud/',
+  matomoSiteId: 2,
   links: {
     bestPractices: externalLinks.bestPractices,
     termsOfService: externalLinks.termsOfService,
     privacyPolicy: externalLinks.privacyPolicy,
-    hatters: environment.hattersUrl,
+    hattersBackend: environment.hattersBackendUrl,
+    hattersFrontend: environment.hattersFrontendUrl,
+    pdaSignup: `${environment.hattersFrontendUrl}/services/signup?application_id=${APPLICATION_ID}&redirect_uri=https://www.dataswift.io/sign-up-login`,
   },
   mainMenu: [
     {
@@ -39,14 +47,14 @@ export const config = {
       external: false,
       description: 'My Digital Life',
     },
-    { 
-      display: 'My public profile', 
-      icon: 'security', 
-      link: '/profile', 
-      external: false, 
+    {
+      display: 'My public profile',
+      icon: 'security',
+      link: '/profile',
+      external: false,
       description:
-          'View and edit the details of your profile and decide' +
-          ' what information is private and what is to be shared.' ,
+        'View and edit the details of your profile and decide' +
+        ' what information is private and what is to be shared.',
     },
     {
       display: 'Tools & insights',
@@ -89,19 +97,40 @@ export const config = {
     },
   ],
   settingsMenu: [
-    { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change', description: '' },
-
-    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io', description: '' },
-
-    { display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
-      icon: 'exit_to_app',
-      link: externalLinks.termsOfService,
-      description: ''
+    {
+      display: 'Change password',
+      icon: 'keyboard_arrow_right',
+      link: '/user/password/change',
+      description: '',
     },
 
-    { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },
+    {
+      display: 'Tech support',
+      icon: 'exit_to_app',
+      link: 'mailto:contact@dataswift.io',
+      description: '',
+    },
 
-    { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org', description: '' },
+    {
+      display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
+      icon: 'exit_to_app',
+      link: externalLinks.termsOfService,
+      description: '',
+    },
+
+    {
+      display: 'Privacy policy',
+      icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '',
+    },
+
+    {
+      display: 'Join the HAT Community',
+      icon: 'exit_to_app',
+      link: 'https://www.hatcommunity.org',
+      description: '',
+    },
   ],
   settingsPrivateDataMenu: [
     { display: 'Profile', icon: 'keyboard_arrow_right', link: '/profile', description: '' },

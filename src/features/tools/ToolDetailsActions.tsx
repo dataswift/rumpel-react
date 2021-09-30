@@ -12,7 +12,8 @@ const ToolDetailsActions: React.FC<{ setup: boolean; toolId: string }> = ({ setu
   return (
     <ActionMenu showOptions={setup}>
       <button onClick={onDisconnect} className="actions-menu-item">
-        <i className="material-icons">link_off</i> <FormatMessage id="ds.hat.tool.actions.disconnect" />
+        <i className="material-icons">link_off</i>{' '}
+        <FormatMessage id="ds.hat.tool.actions.disconnect" />
       </button>
     </ActionMenu>
   );

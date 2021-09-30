@@ -32,7 +32,12 @@ const ActionMenu: React.FC<{ showOptions: boolean }> = ({ showOptions, children 
         more_horiz
       </i>
 
-      <div ref={menuRef} aria-label="Action Menu" className="actions-menu" style={showMenu ? { display: 'flex' } : {}}>
+      <div
+        ref={menuRef}
+        aria-label="Action Menu"
+        className="actions-menu"
+        style={showMenu ? { display: 'flex' } : {}}
+      >
         <div className="actions-menu-content">
           {children}
 

@@ -1,0 +1,85 @@
+.landing-login-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  h2 {
+    color: #713BDB;
+  }
+
+  @media (max-width: 900px) {
+    padding-left: 48px;
+    padding-right: 48px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 1.5fr;
+  }
+
+  .landing-illustration {
+    padding: 50px;
+
+    .landing-illustration-image {
+      width: 678px;
+      max-height: 291px;
+
+      @media (max-width: 1200px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .landing-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 50px;
+    box-shadow: 0px 5px 26px rgba(0, 0, 0, 0.06);
+    border-radius: 16px 0px 0px 16px;
+
+    .landing-dataswift-tm {
+      height: 42px;
+      width: 255px;
+
+      @media (max-width: 500px) {
+        height: 32px;
+        width: 192px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      border-radius: 16px;
+    }
+
+    .landing-login-email-text {
+      font-size: 14px;
+      line-height: 24px;
+      color: #713BDB;
+      font-weight: bold;
+    }
+
+    hr {
+      border-top: 1px solid #e5e6e3;
+      width: 100%;
+      max-width: 380px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+
+    .landing-dont-have-account {
+      font-size: 14px;
+      line-height: 24px;
+      color: #15112D;
+    }
+
+    .landing-btn-secondary {
+      font-family: "Mulish", sans-serif;
+      height: 46px;
+      margin-top: 10px;
+      text-align: center;
+      text-decoration: none;
+      background-color: transparent;
+      color: #20154e;
+      border: 1px solid #20154e;
+    }
+  }
+}

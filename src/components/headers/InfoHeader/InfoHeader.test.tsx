@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { screen, render, fireEvent } from '@testing-library/react';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
 import { InfoHeader } from './InfoHeader';
-import Root from "../../../app/Root";
-import { Router } from "react-router";
-import { createMemoryHistory } from "history";
-import { environment } from "../../../environment";
+import Root from '../../../app/Root';
+import { environment } from '../../../environment';
 
 describe('InfoHeader', () => {
   const history = createMemoryHistory();
@@ -18,7 +18,8 @@ describe('InfoHeader', () => {
         <Router history={history}>
           <InfoHeader />
         </Router>
-      </Root>);
+      </Root>,
+    );
 
     expect(screen.getByText('Sign In')).toBeInTheDocument();
     expect(screen.getByText('Get a hat')).toBeInTheDocument();
@@ -33,7 +34,8 @@ describe('InfoHeader', () => {
         <Router history={history}>
           <InfoHeader />
         </Router>
-      </Root>);
+      </Root>,
+    );
 
     fireEvent.click(screen.getByText('Sign In'));
 
@@ -48,8 +50,11 @@ describe('InfoHeader', () => {
         <Router history={history}>
           <InfoHeader />
         </Router>
-      </Root>);
+      </Root>,
+    );
 
-    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(environment.hattersUrl + '/hat/signup');
+    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(
+      `${environment.hattersFrontendUrl}/hat/signup`,
+    );
   });
 });

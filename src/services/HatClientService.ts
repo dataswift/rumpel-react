@@ -1,29 +1,32 @@
 import { HatClient } from '@dataswift/hat-js';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import { DataSourcesInterface } from '../features/universal-data-viewer/DataSources.interface';
 import { HatHttpParameters } from '@dataswift/hat-js/lib/interfaces/http.interface';
-import { get, post } from './BackendService';
 import { HatTokenValidation } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
+import { BundleStructure, PropertyQuery } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { FileMetadataReq } from '@dataswift/hat-js/lib/interfaces/file.interface';
+import { DataDebit } from '@dataswift/hat-js/lib/interfaces/data-debit.interface';
+import { DataSourcesInterface } from '../features/universal-data-viewer/DataSources.interface';
+import { get, post } from './BackendService';
 import { HatTool } from '../features/tools/hat-tool.interface';
 import { SystemStatusInterface } from '../features/system-status/system-status.interface';
 import { Profile } from '../features/profile/profile.interface';
-import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { SheFeed } from '../features/feed/she-feed.interface';
-import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
-import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 import { getPublicProfile, getDataDebits } from '../api/hatAPI';
-import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
+
   private static instance: HatClientService;
+
   private hat: HatClient;
+
   private secure = false;
 
   private constructor(token?: string) {
     if (token) {
       const decodedToken = HatTokenValidation.decodeToken(token);
-      this.secure = window.location.protocol === 'https:' || decodedToken['iss']?.indexOf(':') === -1;
+      this.secure = window.location.protocol === 'https:' || decodedToken.iss?.indexOf(':') === -1;
       this.hat = new HatClient({ token: token || '', secure: this.secure, apiVersion: 'v2.6' });
     } else {
       this.hat = new HatClient({ apiVersion: 'v2.6' });
@@ -47,11 +50,11 @@ export class HatClientService {
   }
 
   public async getApplications() {
-    return await this.hat.applications().getAllDefault();
+    return this.hat.applications().getAllDefault();
   }
 
   public async getApplicationById(appId: string) {
-    return await this.hat.applications().getById(appId);
+    return this.hat.applications().getById(appId);
   }
 
   public async setupApplication(applicationId: string) {
@@ -65,8 +68,8 @@ export class HatClientService {
     return get<HatApplication>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
-  public async getApplicationHmi(applicationId: string) {
-    const path = `${this.pathPrefix}/applications/${applicationId}/hmi`;
+  public async getApplicationHmi(applicationId: string, pda: string) {
+    const path = `https://${pda}${this.pathPrefix}/applications/${applicationId}/hmi`;
 
     return get<HatApplicationContent>(path);
   }
@@ -97,7 +100,7 @@ export class HatClientService {
     if (!token) return;
 
     const path = `${hatdomain}${this.pathPrefix}/report-frontend-action`;
-    const body = { actionCode: actionCode, message: message };
+    const body = { actionCode, message };
 
     return post<HatApplication[]>(
       path,
@@ -118,7 +121,10 @@ export class HatClientService {
 
     const path = `${hatdomain}${this.pathPrefix}/applications/${applicationId}/access-token`;
 
-    return get<{ accessToken: string }>(path, { method: 'get', headers: { 'x-auth-token': token } });
+    return get<{ accessToken: string }>(path, {
+      method: 'get',
+      headers: { 'x-auth-token': token },
+    });
   }
 
   public async getTools() {
@@ -127,7 +133,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    let path = `${hatdomain}${this.pathPrefix}/she/function`;
+    const path = `${hatdomain}${this.pathPrefix}/she/function`;
 
     return get<HatTool[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -138,7 +144,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    let path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}`;
+    const path = `${hatdomain}${this.pathPrefix}/she/function/${toolId}`;
 
     return get<HatTool>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
@@ -185,8 +191,9 @@ export class HatClientService {
   }
 
   public async getData<T>(namespace: string, endpoint: string, options: HatHttpParameters) {
-    return await this.hat.hatData().getAll<T>(namespace, endpoint, options);
+    return this.hat.hatData().getAll<T>(namespace, endpoint, options);
   }
+
   public async getSystemStatusRecords() {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
@@ -195,7 +202,10 @@ export class HatClientService {
 
     const path = `${hatdomain}${this.pathPrefix}/system/status`;
 
-    return get<SystemStatusInterface[]>(path, { method: 'get', headers: { 'x-auth-token': token } });
+    return get<SystemStatusInterface[]>(path, {
+      method: 'get',
+      headers: { 'x-auth-token': token },
+    });
   }
 
   public async getProfileData() {
@@ -241,11 +251,12 @@ export class HatClientService {
   public async getPublicProfile() {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
-    
-    let path = (token && hatdomain) 
-      ? `${hatdomain}${this.pathPrefix}/phata/profile`
-      : `${this.pathPrefix}/phata/profile`;
-    
+
+    const path =
+      token && hatdomain
+        ? `${hatdomain}${this.pathPrefix}/phata/profile`
+        : `${this.pathPrefix}/phata/profile`;
+
     return getPublicProfile(path);
   }
 
@@ -260,7 +271,10 @@ export class HatClientService {
     return get<BundleStructure>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }
 
-  public async postDataBundleStructure(bundleId: string, bundle: { [bundleVersion: string]: PropertyQuery }) {
+  public async postDataBundleStructure(
+    bundleId: string,
+    bundle: { [bundleVersion: string]: PropertyQuery },
+  ) {
     const token = this.hat.auth().getToken();
     const hatdomain = this.hat.auth().getHatDomain();
 
@@ -269,12 +283,13 @@ export class HatClientService {
     const path = `${hatdomain}${this.pathPrefix}/data-bundle/${bundleId}`;
 
     return post<BundleStructure>(
-      path, 
-      {},  
+      path,
+      {},
       {
         method: 'post',
         body: JSON.stringify(bundle),
-        headers: { 'x-auth-token': token, 'content-type': 'application/json' } }
+        headers: { 'x-auth-token': token, 'content-type': 'application/json' },
+      },
     );
   }
 
@@ -289,6 +304,7 @@ export class HatClientService {
   public generateFileContentUrl(fileId: string) {
     return this.hat.files().generateFileContentUrl(fileId);
   }
+
   public async getDataDebits() {
     return getDataDebits(this.hat);
   }
@@ -299,7 +315,7 @@ export class HatClientService {
 
     if (!token) return;
 
-    let path = `${hatdomain}${this.pathPrefix}/data-debit/${dataDebitId}/disable?atPeriodEnd=${atPeriodEnd}`;
+    const path = `${hatdomain}${this.pathPrefix}/data-debit/${dataDebitId}/disable?atPeriodEnd=${atPeriodEnd}`;
 
     return get<DataDebit>(path, { method: 'get', headers: { 'x-auth-token': token } });
   }

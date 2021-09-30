@@ -1,9 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import React from "react";
-import { FeedUserActions } from "./FeedUserActions";
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { FeedUserActions } from './FeedUserActions';
 
 describe('FeedUserActions', () => {
-
   test('renders the FeedUserActions component without error', () => {
     const mockOnSelectedDates = jest.fn();
     const mockOnRefresh = jest.fn();
@@ -14,7 +13,7 @@ describe('FeedUserActions', () => {
         onSelectedDates={mockOnSelectedDates}
         onGoToToday={mockOnGoToToday}
         onRefresh={mockOnRefresh}
-      />
+      />,
     );
 
     const filter = screen.getByText('Filter');

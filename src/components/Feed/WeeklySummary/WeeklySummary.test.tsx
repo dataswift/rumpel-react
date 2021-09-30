@@ -1,14 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import React from "react";
-import { WeeklySummary } from "./WeeklySummary";
-import { SheFeedItemWeeklySummary } from "../../../testData/SheFeed";
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { WeeklySummary } from './WeeklySummary';
+import { SheFeedItemWeeklySummary } from '../../../testData/SheFeed';
 
 describe('WeeklySummary', () => {
-
   test('renders the Weekly Summary component without error', () => {
-    render(
-      <WeeklySummary feedItem={SheFeedItemWeeklySummary} />
-    );
+    render(<WeeklySummary feedItem={SheFeedItemWeeklySummary} />);
 
     expect(screen.getByAltText('facebook')).toBeInTheDocument();
     expect(screen.getByAltText('twitter')).toBeInTheDocument();

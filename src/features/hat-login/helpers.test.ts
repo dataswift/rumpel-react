@@ -1,11 +1,11 @@
-import { isHmiLoading } from "./helpers";
-import TEST_HAT_APPLICATION from "../../testData/HatApplications";
-import { HatApplication } from "@dataswift/hat-js/lib/interfaces/hat-application.interface";
-import TEST_DATA_PLUG from "../../testData/DataPlug";
-import TEST_HAT_TOOL from "../../testData/Tool";
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import { isHmiLoading } from './helpers';
+import TEST_HAT_APPLICATION from '../../testData/HatApplications';
+import TEST_DATA_PLUG from '../../testData/DataPlug';
+import TEST_HAT_TOOL from '../../testData/Tool';
 
 describe('HmiLogin Helper', () => {
-  it('is loading when the app is active and doesn\'t need updating', () => {
+  it("is loading when the app is active and doesn't need updating", () => {
     const testApp = JSON.parse(JSON.stringify(TEST_HAT_APPLICATION)) as HatApplication;
     testApp.active = true;
     testApp.needsUpdating = false;
@@ -21,7 +21,7 @@ describe('HmiLogin Helper', () => {
     testApp.needsUpdating = true;
     testApp.enabled = true;
     testApp.setup = true;
-      
+
     expect(isHmiLoading(testApp)).toEqual(false);
   });
 
@@ -45,7 +45,7 @@ describe('HmiLogin Helper', () => {
     expect(isHmiLoading(testApp)).toEqual(false);
   });
 
-  it('is loading when all the app\'s dependencies are ready and app is active', () => {
+  it("is loading when all the app's dependencies are ready and app is active", () => {
     const testApp = JSON.parse(JSON.stringify(TEST_HAT_APPLICATION)) as HatApplication;
     testApp.active = true;
     testApp.needsUpdating = false;
@@ -56,7 +56,7 @@ describe('HmiLogin Helper', () => {
     expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION])).toEqual(true);
   });
 
-  it('doesn\'t loading when all the app\'s dependencies are empty arrays', () => {
+  it("doesn't loading when all the app's dependencies are empty arrays", () => {
     const testApp = JSON.parse(JSON.stringify(TEST_HAT_APPLICATION)) as HatApplication;
     testApp.active = false;
     testApp.needsUpdating = false;
@@ -67,7 +67,7 @@ describe('HmiLogin Helper', () => {
     expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION])).toEqual(false);
   });
 
-  it('is not loading when all the app\'s dependencies are ready (tools)', () => {
+  it("is not loading when all the app's dependencies are ready (tools)", () => {
     const testApp = JSON.parse(JSON.stringify(TEST_HAT_APPLICATION)) as HatApplication;
     testApp.active = false;
     testApp.needsUpdating = false;
@@ -75,10 +75,12 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['test-feed-counter'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(false);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      false,
+    );
   });
 
-  it('is loading when all the app\'s tool dependencies are not ready', () => {
+  it("is loading when all the app's tool dependencies are not ready", () => {
     const testApp = JSON.parse(JSON.stringify(TEST_HAT_APPLICATION)) as HatApplication;
     testApp.active = false;
     testApp.needsUpdating = false;
@@ -86,7 +88,9 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['different-tool-id'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(true);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      true,
+    );
   });
 
   it('is not loading when an app has dependencies and needs updating', () => {
@@ -97,6 +101,8 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['test-feed-counter'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(false);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      false,
+    );
   });
 });

@@ -26,9 +26,11 @@ export const slice = createSlice({
 
 export const { tools } = slice.actions;
 
-export const setTools = (tool: Array<HatTool>): AppThunk => (dispatch) => {
-  dispatch(tools(tool));
-};
+export const setTools =
+  (tool: Array<HatTool>): AppThunk =>
+  (dispatch) => {
+    dispatch(tools(tool));
+  };
 
 export const selectTools = (state: RootState) => state.tools.tools;
 
@@ -40,51 +42,55 @@ export const getTools = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const getToolById = (toolId: string): AppThunk => async (dispatch, getState) => {
-  const currentTools = getState().tools.tools;
-  if (currentTools.find((tool) => tool.id === toolId)) return;
+export const getToolById =
+  (toolId: string): AppThunk =>
+  async (dispatch, getState) => {
+    const currentTools = getState().tools.tools;
+    if (currentTools.find((tool) => tool.id === toolId)) return;
 
-  try {
-    const tool = await HatClientService.getInstance().getTool(toolId);
-    if (tool?.parsedBody) dispatch(setTools([...currentTools, tool.parsedBody]));
-  } catch (e) {
-    // TODO error handling
-  }
-};
+    try {
+      const tool = await HatClientService.getInstance().getTool(toolId);
+      if (tool?.parsedBody) dispatch(setTools([...currentTools, tool.parsedBody]));
+    } catch (e) {
+      // TODO error handling
+    }
+  };
 
 export const selectToolById = (id: string) =>
-  createSelector(selectTools, (tools) => {
-    return tools.find((tool) => tool.id === id);
-  });
+  createSelector(selectTools, (tools) => tools.find((tool) => tool.id === id));
 
-export const connectTool = (toolId: string): AppThunk => async (dispatch, getState) => {
-  try {
-    const tool = await HatClientService.getInstance().enableTool(toolId);
+export const connectTool =
+  (toolId: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const tool = await HatClientService.getInstance().enableTool(toolId);
 
-    if (tool?.parsedBody) {
-      let currentApps = getState().tools.tools;
-      currentApps = currentApps.filter((t) => t.id !== toolId);
-      currentApps.push(tool.parsedBody);
-      dispatch(setTools([...currentApps]));
+      if (tool?.parsedBody) {
+        let currentApps = getState().tools.tools;
+        currentApps = currentApps.filter((t) => t.id !== toolId);
+        currentApps.push(tool.parsedBody);
+        dispatch(setTools([...currentApps]));
+      }
+    } catch (e) {
+      // TODO error handling
     }
-  } catch (e) {
-    // TODO error handling
-  }
-};
+  };
 
-export const disconnectTool = (toolId: string): AppThunk => async (dispatch, getState) => {
-  try {
-    const tool = await HatClientService.getInstance().disableTool(toolId);
+export const disconnectTool =
+  (toolId: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const tool = await HatClientService.getInstance().disableTool(toolId);
 
-    if (tool?.parsedBody) {
-      let currentTools = getState().tools.tools;
-      currentTools = currentTools.filter((t) => t.id !== toolId);
-      currentTools.push(tool.parsedBody);
-      dispatch(setTools([...currentTools]));
+      if (tool?.parsedBody) {
+        let currentTools = getState().tools.tools;
+        currentTools = currentTools.filter((t) => t.id !== toolId);
+        currentTools.push(tool.parsedBody);
+        dispatch(setTools([...currentTools]));
+      }
+    } catch (e) {
+      // TODO error handling
     }
-  } catch (e) {
-    // TODO error handling
-  }
-};
+  };
 
 export default slice.reducer;

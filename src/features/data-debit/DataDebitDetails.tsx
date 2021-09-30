@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
+
+import './DataDebitDetails.scss';
 
 import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader';
-import './DataDebitDetails.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
-import { getDataDebits, selectDataDebitById } from "./dataDebitSlice";
-import { unbundle } from "../../utils/unbundle";
-import Card from "../../components/Card/Card";
-import { format } from "date-fns";
-import DataDebitDetailsActions from "./DataDebitDetailsActions";
+import { getDataDebits, selectDataDebitById } from './dataDebitSlice';
+import { unbundle } from '../../utils/unbundle';
+import Card from '../../components/Card/Card';
+import DataDebitDetailsActions from './DataDebitDetailsActions';
 
 const DataDebitDetails: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { dataDebitParam } = useParams<{ dataDebitParam: string }>();
   const dataDebit = useSelector(selectDataDebitById(dataDebitParam));
-  const [requirements, setRequirements] = useState<{ title: string; fields: string[]; expanded?: boolean }[]>([]);
+  const [requirements, setRequirements] = useState<
+    { title: string; fields: string[]; expanded?: boolean }[]
+  >([]);
 
   useEffect(() => {
     if (!dataDebit) dispatch(getDataDebits());
@@ -26,7 +29,6 @@ const DataDebitDetails: React.FC = () => {
     }
   }, [dispatch, dataDebit]);
 
-
   if (!dataDebit) return null;
 
   return (
@@ -34,15 +36,19 @@ const DataDebitDetails: React.FC = () => {
       <DetailsHeader
         logoSrc={dataDebit.requestClientLogoUrl}
         logoAltText="Data Debit Logo"
-        toolbarActions={<DataDebitDetailsActions active={dataDebit.active} dataDebitId={dataDebit.dataDebitKey} />}
+        toolbarActions={
+          <DataDebitDetailsActions active={dataDebit.active} dataDebitId={dataDebit.dataDebitKey} />
+        }
       >
         <h3 className="app-details-header-title">{dataDebit.dataDebitKey}</h3>
 
         <div className="app-details-header-headline">
-            Details of your data debit agreement with the provider
+          Details of your data debit agreement with the provider
         </div>
-          
-        <div className={`app-details-status ${dataDebit.active ? 'running' : 'in-active'} link-button`}>
+
+        <div
+          className={`app-details-status ${dataDebit.active ? 'running' : 'in-active'} link-button`}
+        >
           <i className="material-icons details-button-icon">
             {dataDebit.active ? 'fiber_manual_record' : 'radio_button_unchecked'}
           </i>
@@ -50,37 +56,41 @@ const DataDebitDetails: React.FC = () => {
         </div>
       </DetailsHeader>
 
-      <div className={'debit-valitity-interval'}>
+      <div className="debit-valitity-interval">
         <span>{format(new Date(dataDebit.start || ''), 'dd MMM yyyy')}</span>
-        <i className={'material-icons'}>arrow_forward</i>
-        <span>{dataDebit.end ? format(new Date(dataDebit.end || ''), 'dd MMM yyyy') : 'until cancelled'}</span>
+        <i className="material-icons">arrow_forward</i>
+        <span>
+          {dataDebit.end ? format(new Date(dataDebit.end || ''), 'dd MMM yyyy') : 'until cancelled'}
+        </span>
       </div>
 
       <InformationDetails
-        header={'Data Debit Info'}
+        header="Data Debit Info"
         description={dataDebit.requestDescription}
         purpose={dataDebit.permissionsLatest?.purpose}
         requirements={requirements}
       />
 
-      <div className={'data-debit-origin'}>
+      <div className="data-debit-origin">
         <Card
           imgSrc={dataDebit.requestClientLogoUrl}
-          imgAltText={'data debit'}
+          imgAltText="data debit"
           name={dataDebit.requestClientName}
-          description={'Created the data debit'}
-          onClick={() => history.push(`/explore/App/${dataDebit.requestApplicationId}`)} />
+          description="Created the data debit"
+          onClick={() => history.push(`/explore/App/${dataDebit.requestApplicationId}`)}
+        />
       </div>
-        
-      {dataDebit.permissionsLatest?.termsUrl &&
+
+      {dataDebit.permissionsLatest?.termsUrl && (
         <a
-          className={'data-debit-privacy-policy'}
+          className="data-debit-privacy-policy"
           href={dataDebit.permissionsLatest?.termsUrl}
           rel="noopener noreferrer"
-          target="_blank">
+          target="_blank"
+        >
           Privacy policy
         </a>
-      }
+      )}
     </>
   );
 };

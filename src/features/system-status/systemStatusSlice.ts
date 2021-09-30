@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-import { HatClientService } from "../../services/HatClientService";
-import { SystemStatusInterface } from "./system-status.interface";
+import { HatClientService } from '../../services/HatClientService';
+import { SystemStatusInterface } from './system-status.interface';
 
 type SystemStatusState = {
-    systemStatus: SystemStatusInterface[];
-    updatedAt?: string;
-    expirationTime: number;
+  systemStatus: SystemStatusInterface[];
+  updatedAt?: string;
+  expirationTime: number;
 };
 
 export const initialState: SystemStatusState = {
@@ -26,21 +26,21 @@ export const slice = createSlice({
 
 export const { systemStatus } = slice.actions;
 
-export const setSystemStatus = (systemStatusRecords: Array<SystemStatusInterface>): AppThunk => dispatch => {
-  dispatch(systemStatus(systemStatusRecords));
-};
+export const setSystemStatus =
+  (systemStatusRecords: Array<SystemStatusInterface>): AppThunk =>
+  (dispatch) => {
+    dispatch(systemStatus(systemStatusRecords));
+  };
 
 export const selectSystemStatusRecords = (state: RootState) => state.systemStatus.systemStatus;
 export const selectSystemStatusDatabaseStorage = (state: RootState) =>
-  state.systemStatus.systemStatus.find(record => record.title === 'Database Storage');
+  state.systemStatus.systemStatus.find((record) => record.title === 'Database Storage');
 export const selectSystemStatusUsedPercentage = (state: RootState) =>
-  state.systemStatus.systemStatus.find(record => record.title === 'Database Storage Used Share');
+  state.systemStatus.systemStatus.find((record) => record.title === 'Database Storage Used Share');
 export const selectSystemStatusPreviousLogin = (state: RootState) =>
-  state.systemStatus.systemStatus.find(record => record.title === 'Previous Login');
+  state.systemStatus.systemStatus.find((record) => record.title === 'Previous Login');
 
-
-
-export const getSystemStatus = (): AppThunk => async dispatch => {
+export const getSystemStatus = (): AppThunk => async (dispatch) => {
   try {
     const res = await HatClientService.getInstance().getSystemStatusRecords();
 

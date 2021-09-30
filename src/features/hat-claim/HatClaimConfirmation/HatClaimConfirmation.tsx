@@ -5,7 +5,7 @@ interface Props {
   currentStep: number;
 }
 
-const HatClaimUrlConfirmation: React.FC<Props> = props => {
+const HatClaimUrlConfirmation: React.FC<Props> = (props) => {
   if (props.currentStep !== 3) {
     return null;
   }
@@ -13,7 +13,7 @@ const HatClaimUrlConfirmation: React.FC<Props> = props => {
   return (
     <div className="hat-claim-url flex-column-wrapper flex-content-center flex-align-items-center">
       <h2>{hatClaimMessages.yourHatMicroserver}</h2>
-      <div className={'text-medium'}>{hatClaimMessages.claiming100mbStorage}</div>
+      <div className="text-medium">{hatClaimMessages.claiming100mbStorage}</div>
     </div>
   );
 };

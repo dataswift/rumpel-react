@@ -13,6 +13,7 @@ import systemStatusSlice from '../features/system-status/systemStatusSlice';
 import profileSlice from '../features/profile/profileSlice';
 import dataDebitsSlice from '../features/data-debit/dataDebitSlice';
 import feedSlice from '../features/feed/feedSlice';
+import hmiPdaAuthSlice from '../redux/pdaAuth/hmiPdaAuthSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     language: languageSlice,
     messages: messagesSlice,
     hmi: hmiSlice,
+    hmiPdaAuth: hmiPdaAuthSlice,
     hatLogin: hatLoginSlice,
     tools: toolsSlice,
     universalDataViewer: universalDataViewerSlice,
@@ -34,4 +36,9 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
