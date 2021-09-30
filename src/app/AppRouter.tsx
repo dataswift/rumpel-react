@@ -151,10 +151,6 @@ const AppRouter = () => (
           <PublicProfile />
         </LayoutRoute>
 
-        <LayoutRoute path="/login" footerBackgroundColor="#fff">
-          <Oauth />
-        </LayoutRoute>
-
         <LayoutRoute path="/register" footerBackgroundColor="#fff">
           <RegistrationPage />
         </LayoutRoute>
@@ -186,6 +182,10 @@ const AppRouter = () => (
         >
           <AuthVerifyEmail />
         </LayoutRoute>
+
+        <PrivateLayoutRoute path="/login" newAuth issuedByFooter footerBackgroundColor="#fff">
+          <Oauth />
+        </PrivateLayoutRoute>
 
         <PrivateLayoutRoute path="/auth/oauth" newAuth issuedByFooter footerBackgroundColor="#fff">
           <Oauth />
