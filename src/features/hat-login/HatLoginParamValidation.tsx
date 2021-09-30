@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { getApplicationsHmi } from '../applications/applicationsSlice';
 import { useDispatch } from 'react-redux';
-import { setRedirectError } from './hatLoginSlice';
 import * as queryString from 'query-string';
-import { logoutUser } from "../authentication/authenticationSlice";
+import { getApplicationsHmi } from '../applications/applicationsSlice';
+import { setRedirectError } from './hatLoginSlice';
+import { logoutUser } from '../authentication/authenticationSlice';
 
 type Props = {
   children: React.ReactNode;
@@ -23,19 +23,14 @@ const HatLoginParamValidation: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const emailStored = localStorage.getItem('session_email');
-    const {
-      application_id,
-      name,
-      email,
-      redirect_uri,
-      redirect,
-      internal
-    } = queryString.parse(window.location.search) as Query;
+    const { application_id, name, email, redirect_uri, redirect, internal } = queryString.parse(
+      window.location.search,
+    ) as Query;
     const applicationId = application_id || name;
     const applicationIdSafe = applicationId?.toLowerCase();
     const redirectParam = redirect_uri || redirect;
 
-    if (email && (emailStored !== email)) {
+    if (email && emailStored !== email) {
       dispatch(logoutUser());
       return;
     }

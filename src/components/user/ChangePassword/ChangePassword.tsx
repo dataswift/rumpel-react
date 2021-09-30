@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { changePassword } from '../../../api/hatAPI';
-import { selectUserHatName, selectUserHatDomain } from '../../../features/authentication/authenticationSlice';
+import {
+  selectUserHatName,
+  selectUserHatDomain,
+} from '../../../features/authentication/authenticationSlice';
 
 import FormatMessage from '../../../features/messages/FormatMessage';
 import { selectMessages } from '../../../features/messages/messagesSlice';
 import { loadDynamicZxcvbn } from '../../../utils/load-dynamic-zxcvbn';
 import { PasswordStrengthMeter } from '../../PasswordStrengthMeter/PasswordStrengthMeter';
 import './ChangePassword.scss';
+
 declare const zxcvbn: (pass: string) => { score: number };
 
 const MIN_PASSWORD_STRENGTH = 3;
@@ -125,7 +129,9 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ passwordStrength
 
         {newPassword.length > 0 && <PasswordStrengthMeter passwordStrength={{ score }} />}
 
-        {localMessages.success && <div className="notification notification-success">{localMessages.success}</div>}
+        {localMessages.success && (
+          <div className="notification notification-success">{localMessages.success}</div>
+        )}
 
         <div className="change-password-recommend">
           <FormatMessage id="ds.auth.changePassword.recommend" asHtml />

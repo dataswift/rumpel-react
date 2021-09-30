@@ -43,26 +43,26 @@ export const { errorMessage, redirectError } = slice.actions;
 
 export const setErrorMessage =
   (msg: string): AppThunk =>
-    (dispatch) => {
-      dispatch(errorMessage(msg));
-    };
+  (dispatch) => {
+    dispatch(errorMessage(msg));
+  };
 
 export const setRedirectError =
   (error: string, errorReason: string): AppThunk =>
-    (dispatch) => {
-      dispatch(redirectError({ error, errorReason }));
-    };
+  (dispatch) => {
+    dispatch(redirectError({ error, errorReason }));
+  };
 
 export const selectErrorMessage = (state: RootState) => state.hatLogin.errorMessage;
 export const selectRedirectError = (state: RootState) => state.hatLogin.redirectError;
 
 export const onTermsAgreed =
   (parentAppId: string): AppThunk =>
-    async (dispatch) => {
-      dispatch(setErrorMessage(''));
+  async (dispatch) => {
+    dispatch(setErrorMessage(''));
 
-      return dispatch(setupApplication(parentAppId));
-    };
+    return dispatch(setupApplication(parentAppId));
+  };
 
 export const onTermsDeclined = (): AppThunk => async (dispatch) => {
   const hatSvc = HatClientService.getInstance();
@@ -79,22 +79,22 @@ export const onTermsDeclined = (): AppThunk => async (dispatch) => {
 
 export const setupApplication =
   (parentAppId: string): AppThunk =>
-    async (dispatch) => {
-      try {
-        const app = await HatClientService.getInstance().setupApplication(parentAppId);
+  async (dispatch) => {
+    try {
+      const app = await HatClientService.getInstance().setupApplication(parentAppId);
 
-        if (app?.parsedBody) {
-          app.parsedBody.active = true;
-          return dispatch(setParentApp(app.parsedBody));
-        }
-      } catch (e) {
-        dispatch(
-          setErrorMessage(
-            'An error has occurred, please use the button below to return to the previous page, ' +
-            'and try confirming again. If this error persists please contact:',
-          ),
-        );
+      if (app?.parsedBody) {
+        app.parsedBody.active = true;
+        return dispatch(setParentApp(app.parsedBody));
       }
-    };
+    } catch (e) {
+      dispatch(
+        setErrorMessage(
+          'An error has occurred, please use the button below to return to the previous page, ' +
+            'and try confirming again. If this error persists please contact:',
+        ),
+      );
+    }
+  };
 
 export default slice.reducer;

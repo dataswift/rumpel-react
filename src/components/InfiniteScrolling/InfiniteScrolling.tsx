@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FeedList } from '../../features/feed/FeedList';
 import { FeedLoading } from '../Feed/FeedLoading/FeedLoading';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getInitSheFeed,
   getMoreSheFeedData,

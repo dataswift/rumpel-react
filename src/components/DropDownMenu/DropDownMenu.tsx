@@ -34,11 +34,11 @@ const DropDownMenu: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={'dropdown-container'}>
+    <div className="dropdown-container">
       <Input
         label={placeholder}
-        id={'gender'}
-        type={'text'}
+        id="gender"
+        type="text"
         value={selectedOption || value}
         onClick={() => setIsOpen(!isOpen)}
         profileField={profileField}
@@ -49,15 +49,13 @@ const DropDownMenu: React.FC<Props> = (props) => {
       />
 
       {isOpen && (
-        <div className={'dropdown-list-container'}>
-          <ul className={'dropdown-list'}>
-            {options.map((option) => {
-              return (
-                <li onClick={onOptionClicked(option)} key={Math.random()}>
-                  {option}
-                </li>
-              );
-            })}
+        <div className="dropdown-list-container">
+          <ul className="dropdown-list">
+            {options.map((option) => (
+              <li onClick={onOptionClicked(option)} key={Math.random()}>
+                {option}
+              </li>
+            ))}
           </ul>
         </div>
       )}

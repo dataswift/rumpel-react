@@ -14,8 +14,8 @@ describe('Information Details', () => {
     render(
       <Root>
         <InformationDetails
-          header={'Test header Info'}
-          description={'text description'}
+          header="Test header Info"
+          description="text description"
           screenshots={['screenshot1', 'screenshot2']}
           informationListData={testData}
         />
@@ -41,8 +41,8 @@ describe('Information Details', () => {
     render(
       <Root>
         <InformationDetails
-          header={'Test header Info'}
-          description={'text description'}
+          header="Test header Info"
+          description="text description"
           informationListData={testData}
         />
       </Root>,

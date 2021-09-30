@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import './ProfileDropDown.scss';
+
 import userLogo from '../../assets/icons/user-account-icon.svg';
 import userLogoBlue from '../../assets/icons/user-account-icon-blue.svg';
-import './ProfileDropDown.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   selectSystemStatusDatabaseStorage,
   selectSystemStatusPreviousLogin,
@@ -10,9 +13,12 @@ import {
   selectSystemStatusUsedPercentage,
 } from '../system-status/systemStatusSlice';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import { logoutUser, selectUserHatDomain, selectUserHatName } from '../authentication/authenticationSlice';
+import {
+  logoutUser,
+  selectUserHatDomain,
+  selectUserHatName,
+} from '../authentication/authenticationSlice';
 import { selectProfile } from './profileSlice';
-import { Link } from 'react-router-dom';
 
 export const ProfileDropDown: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,16 +33,15 @@ export const ProfileDropDown: React.FC = () => {
 
   const getStoragePercentage = () => {
     if (databaseUsedPercentage?.kind.metric) {
-      const parsed = parseInt(databaseUsedPercentage.kind.metric);
+      const parsed = parseInt(databaseUsedPercentage.kind.metric, 10);
 
-      if (isNaN(parsed)) return 0;
+      if (Number.isNaN(parsed)) return 0;
 
       if (parsed >= 100) return 100;
 
       return parsed;
-    } else {
-      return 0;
     }
+    return 0;
   };
 
   const logout = () => {
@@ -44,7 +49,7 @@ export const ProfileDropDown: React.FC = () => {
   };
   return (
     <>
-      <div className={'profile-dropdown'}>
+      <div className="profile-dropdown">
         <button
           className="profile-dropdown-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -52,7 +57,7 @@ export const ProfileDropDown: React.FC = () => {
           aria-expanded="false"
         >
           <span className="user-photo">
-            <img src={profile?.photo?.avatar || userLogo} alt={'Profile'} />
+            <img src={profile?.photo?.avatar || userLogo} alt="Profile" />
           </span>
 
           <span className="welcome">
@@ -61,15 +66,15 @@ export const ProfileDropDown: React.FC = () => {
             {previousLogin && <span>Last login: {previousLogin.kind.metric}</span>}
           </span>
 
-          <i className={'material-icons profile-dropdown-arrow'}>
+          <i className="material-icons profile-dropdown-arrow">
             {menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
           </i>
         </button>
       </div>
       {menuOpen && (
-        <div className={'profile-dropdown-overlay'}>
+        <div className="profile-dropdown-overlay">
           <div className="accountDetails user-photo">
-            <img src={profile?.photo?.avatar || userLogoBlue} alt={'Profile'} />
+            <img src={profile?.photo?.avatar || userLogoBlue} alt="Profile" />
             <h6 className="welcome">
               {userHatName}
               <br />
@@ -87,15 +92,19 @@ export const ProfileDropDown: React.FC = () => {
             </div>
           )}
           <div className="dropdown-divider" />
-          <Link className="dropdown-item" to={'/public/profile'}>
+          <Link className="dropdown-item" to="/public/profile">
             Public profile
           </Link>
-          <a className="dropdown-item" href={window.location.origin + '/#/user/password/change'}>
+          <a className="dropdown-item" href={`${window.location.origin}/#/user/password/change`}>
             Change password
           </a>
           <div className="dropdown-divider" />
 
-          <button className="dropdown-item" style={{ display: 'flex', alignItems: 'center' }} onClick={() => logout()}>
+          <button
+            className="dropdown-item"
+            style={{ display: 'flex', alignItems: 'center' }}
+            onClick={() => logout()}
+          >
             Logout <i className="material-icons">exit_to_app</i>
           </button>
         </div>

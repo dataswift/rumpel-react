@@ -9,7 +9,11 @@ describe('FeedUserActions', () => {
     const mockOnGoToToday = jest.fn();
 
     render(
-      <FeedUserActions onSelectedDates={mockOnSelectedDates} onGoToToday={mockOnGoToToday} onRefresh={mockOnRefresh} />,
+      <FeedUserActions
+        onSelectedDates={mockOnSelectedDates}
+        onGoToToday={mockOnGoToToday}
+        onRefresh={mockOnRefresh}
+      />,
     );
 
     const filter = screen.getByText('Filter');

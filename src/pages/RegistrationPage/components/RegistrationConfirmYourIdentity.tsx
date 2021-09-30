@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { AnalyticsContext, AuthApplicationLogo } from 'hmi';
 
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import FormatMessage from "../../../features/messages/FormatMessage";
-import { resendVerificationEmail } from "../../../services/HattersService";
-import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
+import FormatMessage from '../../../features/messages/FormatMessage';
+import { resendVerificationEmail } from '../../../services/HattersService';
+import { AnalyticsClickEvents } from '../../../utils/AnalyticsEvents';
 
 type Props = {
   email: string;
@@ -13,7 +13,12 @@ type Props = {
   parentApp: HatApplicationContent;
 };
 
-const RegistrationConfirmYourIdentity: React.FC<Props> = ({ parentApp, email, redirectUri, skipEmailVerification }) => {
+const RegistrationConfirmYourIdentity: React.FC<Props> = ({
+  parentApp,
+  email,
+  redirectUri,
+  skipEmailVerification,
+}) => {
   const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const [resendEmailState, setResendEmailState] = useState('idle');
 
@@ -40,12 +45,15 @@ const RegistrationConfirmYourIdentity: React.FC<Props> = ({ parentApp, email, re
 
   return (
     <>
-      <div className={'flex-column-wrapper signup'}>
-        <AuthApplicationLogo src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name} />
+      <div className="flex-column-wrapper signup">
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+        />
 
-        <h2 className={'ds-hmi-email signup-email-title'}>{email}</h2>
+        <h2 className="ds-hmi-email signup-email-title">{email}</h2>
 
-        <h2 className={'signup-title'}>
+        <h2 className="signup-title">
           <FormatMessage
             id={
               skipEmailVerification
@@ -56,22 +64,22 @@ const RegistrationConfirmYourIdentity: React.FC<Props> = ({ parentApp, email, re
         </h2>
 
         {!skipEmailVerification && (
-          <button className={'signup-btn-secondary'} onClick={() => resendEmail()}>
-            <FormatMessage id={'hatters.auth.confirmYourIdentity.resendActivationEmail'} />
+          <button className="signup-btn-secondary" onClick={() => resendEmail()}>
+            <FormatMessage id="hatters.auth.confirmYourIdentity.resendActivationEmail" />
             {resendEmailState === 'error' && (
-              <i className={'material-icons'} style={{ color: '#e50d42' }}>
+              <i className="material-icons" style={{ color: '#e50d42' }}>
                 error_outline
               </i>
             )}
             {resendEmailState === 'success' && (
-              <i className={'material-icons'} style={{ color: '#a8c62b' }}>
+              <i className="material-icons" style={{ color: '#a8c62b' }}>
                 done
               </i>
             )}
           </button>
         )}
-        <div className={'signup-help-text'} onClick={() => {}}>
-          <FormatMessage id={'hatters.auth.confirmYourIdentity.needHelp'} asHtml />
+        <div className="signup-help-text" onClick={() => {}}>
+          <FormatMessage id="hatters.auth.confirmYourIdentity.needHelp" asHtml />
         </div>
       </div>
     </>

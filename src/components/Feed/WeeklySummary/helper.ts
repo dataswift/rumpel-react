@@ -15,23 +15,35 @@ export const transformWeeklySummary = (structure?: {
 
   Object.keys(structure).forEach((key) => {
     if (key.includes('sentiment')) {
-      contentSentiment += structure[key][0].content + '\n';
-      badgeSentiment += structure[key][0].badge + '\n';
+      contentSentiment += `${structure[key][0].content}\n`;
+      badgeSentiment += `${structure[key][0].badge}\n`;
       hasSentiment = true;
     } else if (key.includes('fitbit')) {
-      contentFitbit += structure[key][0].content + '\n';
-      badgeFitbit += structure[key][0].badge + '\n';
+      contentFitbit += `${structure[key][0].content}\n`;
+      badgeFitbit += `${structure[key][0].badge}\n`;
       hasFitbit = true;
     } else {
-      weeklySummaryArray.push({ source: key, content: structure[key][0].content, badge: structure[key][0].badge });
+      weeklySummaryArray.push({
+        source: key,
+        content: structure[key][0].content,
+        badge: structure[key][0].badge,
+      });
     }
   });
 
   if (hasSentiment) {
-    weeklySummaryArray.push({ source: 'sentiment', content: contentSentiment.trim(), badge: badgeSentiment });
+    weeklySummaryArray.push({
+      source: 'sentiment',
+      content: contentSentiment.trim(),
+      badge: badgeSentiment,
+    });
   }
   if (hasFitbit) {
-    weeklySummaryArray.push({ source: 'fitbit', content: contentFitbit.trim(), badge: badgeFitbit });
+    weeklySummaryArray.push({
+      source: 'fitbit',
+      content: contentFitbit.trim(),
+      badge: badgeFitbit,
+    });
   }
 
   return weeklySummaryArray;

@@ -1,4 +1,10 @@
-import reducer, { initialState, selectParentApp, selectDependencyApps, parentApp, dependencyApps } from '../hmiSlice';
+import reducer, {
+  initialState,
+  selectParentApp,
+  selectDependencyApps,
+  parentApp,
+  dependencyApps,
+} from '../hmiSlice';
 import TEST_HAT_APPLICATION from '../../../testData/HatApplications';
 
 describe('HMI slice', () => {

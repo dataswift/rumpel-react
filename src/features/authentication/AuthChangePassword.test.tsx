@@ -1,19 +1,20 @@
 import React from 'react';
-import { AuthChangePassword } from './AuthChangePassword';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-
 import { configureStore } from '@reduxjs/toolkit';
-import messages from '../../translations/en.json';
-
-import messagesSlice from '../../features/messages/messagesSlice';
-import applicationsSlice from '../../features/applications/applicationsSlice';
-import languageSlice from '../../features/language/languageSlice';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
+import { AuthChangePassword } from './AuthChangePassword';
+
+import messages from '../../translations/en.json';
+
+import messagesSlice from '../messages/messagesSlice';
+import applicationsSlice from '../applications/applicationsSlice';
+import languageSlice from '../language/languageSlice';
 
 import { resetPassword } from '../../api/hatAPI';
-import authenticationSlice from "./authenticationSlice";
+import authenticationSlice from './authenticationSlice';
+
 jest.mock('../../api/hatAPI');
 
 const mockResetPassword: jest.Mocked<any> = resetPassword;
@@ -37,9 +38,9 @@ export const store = configureStore({
       pdaLookupResponse: {
         verified: true,
         hatCluster: 'testHatCluster',
-        hatName: 'testHatName'
-      }
-    }
+        hatName: 'testHatName',
+      },
+    },
   },
 });
 
@@ -79,7 +80,9 @@ describe('AuthChangePassword tests', () => {
 
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'testPass' } });
 
-    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument(),
+    );
     await waitFor(() => expect(screen.getByText(/Any combination of/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Next')).toBeDisabled());
   });
@@ -129,7 +132,9 @@ describe('AuthChangePassword tests', () => {
 
     expect(mockResetPassword).toHaveBeenCalledTimes(1);
     await waitFor(() =>
-      expect(screen.queryByText(/The password to your Personal Data Account has been reset./)).toBeInTheDocument(),
+      expect(
+        screen.queryByText(/The password to your Personal Data Account has been reset./),
+      ).toBeInTheDocument(),
     );
   });
 });

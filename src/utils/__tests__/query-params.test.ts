@@ -15,7 +15,7 @@ describe.only('query parameters', () => {
     const search = '?application_id=testapp';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
@@ -31,7 +31,7 @@ describe.only('query parameters', () => {
     const search = '?application_id=testapp&redirect_uri=https://docs.dataswift.io';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
@@ -48,7 +48,7 @@ describe.only('query parameters', () => {
     const search = '?application_id=&redirect_uri=https://docs.dataswift.io';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
@@ -65,7 +65,7 @@ describe.only('query parameters', () => {
     const search = '?redirect_uri=https://docs.dataswift.io';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
@@ -79,15 +79,18 @@ describe.only('query parameters', () => {
   it('should return the correct value when one parameter contain commas', () => {
     // @ts-ignore
     global.window = Object.create(window);
-    const search = '?application_id=testapp&dependencies=facebook,twitter&redirect_uri=https://docs.dataswift.io';
+    const search =
+      '?application_id=testapp&dependencies=facebook,twitter&redirect_uri=https://docs.dataswift.io';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
 
-    const { application_id, redirect_uri, dependencies } = queryString.parse(window.location.search) as Query;
+    const { application_id, redirect_uri, dependencies } = queryString.parse(
+      window.location.search,
+    ) as Query;
 
     expect(application_id).toEqual('testapp');
     expect(redirect_uri).toEqual('https://docs.dataswift.io');
@@ -101,12 +104,14 @@ describe.only('query parameters', () => {
       '?application_id=testapp&fallback=https://fallback.com&redirect_uri=https://docs.dataswift.io%3Fredirect=https://nested-redirect.com';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
 
-    const { application_id, fallback, redirect_uri } = queryString.parse(window.location.search) as Query;
+    const { application_id, fallback, redirect_uri } = queryString.parse(
+      window.location.search,
+    ) as Query;
 
     expect(application_id).toEqual('testapp');
     expect(fallback).toEqual('https://fallback.com');
@@ -120,16 +125,20 @@ describe.only('query parameters', () => {
       '?application_id=testapp&fallback=https://testing.hubat.net/#/feed&redirect_uri=https://docs.dataswift.io%3Fredirect=https://testing.hubat.net/#/feed';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
 
-    const { application_id, fallback, redirect_uri } = queryString.parse(window.location.search) as Query;
+    const { application_id, fallback, redirect_uri } = queryString.parse(
+      window.location.search,
+    ) as Query;
 
     expect(application_id).toEqual('testapp');
     expect(fallback).toEqual('https://testing.hubat.net/#/feed');
-    expect(redirect_uri).toEqual('https://docs.dataswift.io?redirect=https://testing.hubat.net/#/feed');
+    expect(redirect_uri).toEqual(
+      'https://docs.dataswift.io?redirect=https://testing.hubat.net/#/feed',
+    );
   });
 
   it('should return the correct value when url hashes are encoded', () => {
@@ -139,15 +148,19 @@ describe.only('query parameters', () => {
       '?application_id=testapp&fallback=https://testing.hubat.net/%23/feed&redirect_uri=https://docs.dataswift.io%3Fredirect=https://testing.hubat.net/%23/feed';
     Object.defineProperty(window, 'location', {
       value: {
-        search: search,
+        search,
       },
       writable: true,
     });
 
-    const { application_id, fallback, redirect_uri } = queryString.parse(window.location.search) as Query;
+    const { application_id, fallback, redirect_uri } = queryString.parse(
+      window.location.search,
+    ) as Query;
 
     expect(application_id).toEqual('testapp');
     expect(fallback).toEqual('https://testing.hubat.net/#/feed');
-    expect(redirect_uri).toEqual('https://docs.dataswift.io?redirect=https://testing.hubat.net/#/feed');
+    expect(redirect_uri).toEqual(
+      'https://docs.dataswift.io?redirect=https://testing.hubat.net/#/feed',
+    );
   });
 });

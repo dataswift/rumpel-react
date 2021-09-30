@@ -8,7 +8,11 @@ type Props = {
   lastFeedElementIntersecting?: () => void | null;
 };
 
-export const FeedList: React.FC<Props> = ({ dayGroupedFeed, loading, lastFeedElementIntersecting }) => {
+export const FeedList: React.FC<Props> = ({
+  dayGroupedFeed,
+  loading,
+  lastFeedElementIntersecting,
+}) => {
   const observer = useRef<IntersectionObserver>();
 
   const lastFeedElementRef = useCallback(
@@ -33,7 +37,7 @@ export const FeedList: React.FC<Props> = ({ dayGroupedFeed, loading, lastFeedEle
   );
 
   return (
-    <div className={'she-feed'} id={'she-feed'}>
+    <div className="she-feed" id="she-feed">
       {dayGroupedFeed.map((day, index) => {
         if (dayGroupedFeed.length === index + 1) {
           return (

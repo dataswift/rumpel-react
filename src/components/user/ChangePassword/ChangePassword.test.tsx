@@ -71,7 +71,9 @@ describe('Change Password', () => {
 
     fireEvent.change(screen.getByPlaceholderText('Current password'), { target: { value: 'a' } });
     fireEvent.change(screen.getByPlaceholderText('New HAT password'), { target: { value: 'b' } });
-    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), { target: { value: 'c' } });
+    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), {
+      target: { value: 'c' },
+    });
 
     fireEvent.click(screen.getByText('Change Password'));
     expect(screen.getByText('Passwords do not match.')).toBeInTheDocument();
@@ -87,13 +89,21 @@ describe('Change Password', () => {
       </Provider>,
     );
 
-    fireEvent.change(screen.getByPlaceholderText('Current password'), { target: { value: 'test' } });
-    fireEvent.change(screen.getByPlaceholderText('New HAT password'), { target: { value: 'T3stPassword' } });
-    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), { target: { value: 'T3stPassword' } });
+    fireEvent.change(screen.getByPlaceholderText('Current password'), {
+      target: { value: 'test' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('New HAT password'), {
+      target: { value: 'T3stPassword' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), {
+      target: { value: 'T3stPassword' },
+    });
 
     fireEvent.click(screen.getByText('Change Password'));
     expect(mockChangePassword).toHaveBeenCalledTimes(1);
-    await waitFor(() => expect(screen.queryByText(/Password changed. You can now log /)).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText(/Password changed. You can now log /)).toBeInTheDocument(),
+    );
   });
 
   test('display an e message if the Change Password API call failed.', async () => {
@@ -106,12 +116,20 @@ describe('Change Password', () => {
       </Provider>,
     );
 
-    fireEvent.change(screen.getByPlaceholderText('Current password'), { target: { value: 'test' } });
-    fireEvent.change(screen.getByPlaceholderText('New HAT password'), { target: { value: 'T3stPassword' } });
-    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), { target: { value: 'T3stPassword' } });
+    fireEvent.change(screen.getByPlaceholderText('Current password'), {
+      target: { value: 'test' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('New HAT password'), {
+      target: { value: 'T3stPassword' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Confirm new password'), {
+      target: { value: 'T3stPassword' },
+    });
 
     fireEvent.click(screen.getByText('Change Password'));
     expect(mockChangePassword).toHaveBeenCalledTimes(1);
-    await waitFor(() => expect(screen.queryByText(/It seems there was a glitch in the matrix./)).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText(/It seems there was a glitch in the matrix./)).toBeInTheDocument(),
+    );
   });
 });

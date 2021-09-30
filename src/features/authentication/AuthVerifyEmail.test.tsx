@@ -2,19 +2,19 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { configureStore } from '@reduxjs/toolkit';
-import messages from '../../translations/en.json';
-
-import messagesSlice from '../../features/messages/messagesSlice';
-import applicationsSlice from '../../features/applications/applicationsSlice';
-import languageSlice from '../../features/language/languageSlice';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
+import messages from '../../translations/en.json';
+
+import messagesSlice from '../messages/messagesSlice';
+import applicationsSlice from '../applications/applicationsSlice';
+import languageSlice from '../language/languageSlice';
 
 import { verifyEmail } from '../../api/hatAPI';
 import { AuthVerifyEmail } from './AuthVerifyEmail';
-import { pdaLookupWithEmail } from "../../services/HattersService";
-import authenticationSlice from "./authenticationSlice";
+import { pdaLookupWithEmail } from '../../services/HattersService';
+import authenticationSlice from './authenticationSlice';
 
 jest.mock('../../api/hatAPI');
 jest.mock('../../services/HattersService');
@@ -41,9 +41,9 @@ export const defaultStore = configureStore({
       pdaLookupResponse: {
         verified: true,
         hatCluster: 'testHatCluster',
-        hatName: 'testHatName'
-      }
-    }
+        hatName: 'testHatName',
+      },
+    },
   },
 });
 
@@ -82,7 +82,9 @@ describe('AuthVerifyEmail tests', () => {
 
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'testPass' } });
 
-    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument(),
+    );
     await waitFor(() => expect(screen.getByText(/Any combination of/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Next')).toBeDisabled());
   });
@@ -108,18 +110,15 @@ describe('AuthVerifyEmail tests', () => {
       parsedBody: {
         verified: false,
         hatCluster: 'testHatCluster',
-        hatName: 'testHatName'
-      }
+        hatName: 'testHatName',
+      },
     });
     mockVerifyEmail.mockResolvedValueOnce(true);
 
-    renderWithProviders(
-      <AuthVerifyEmail
-        passwordStrength={mockPasswordStrength}
-      />,
-      {
-        route: '/auth/verify-email/testVerifyToken?email=test@email.com&redirect_uri=https://test.com',
-      });
+    renderWithProviders(<AuthVerifyEmail passwordStrength={mockPasswordStrength} />, {
+      route:
+        '/auth/verify-email/testVerifyToken?email=test@email.com&redirect_uri=https://test.com',
+    });
 
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'testPass' } });
     await waitFor(() => expect(screen.getByText('This password is strong.')).toBeInTheDocument());
@@ -134,7 +133,9 @@ describe('AuthVerifyEmail tests', () => {
 
     expect(mockVerifyEmail).toHaveBeenCalledTimes(1);
     await waitFor(() =>
-      expect(screen.queryByText(/The password to your Personal Data Account has been created./)).toBeInTheDocument(),
+      expect(
+        screen.queryByText(/The password to your Personal Data Account has been created./),
+      ).toBeInTheDocument(),
     );
   });
 
@@ -144,17 +145,17 @@ describe('AuthVerifyEmail tests', () => {
       parsedBody: {
         verified: true,
         hatCluster: 'testHatCluster',
-        hatName: 'testHatName'
-      }
+        hatName: 'testHatName',
+      },
     });
 
     const { history } = renderWithProviders(
-      <AuthVerifyEmail
-        passwordStrength={mockPasswordStrength}
-      />,
+      <AuthVerifyEmail passwordStrength={mockPasswordStrength} />,
       {
-        route: '/auth/verify-email/testVerifyToken?email=test@email.com&redirect_uri=https://test.com',
-      });
+        route:
+          '/auth/verify-email/testVerifyToken?email=test@email.com&redirect_uri=https://test.com',
+      },
+    );
 
     await waitFor(() => expect(history.location.pathname).toEqual('/auth/login'));
   });

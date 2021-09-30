@@ -1,10 +1,13 @@
 import { Redirect, RedirectProps, Route, RouteProps } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginWithToken, selectIsAuthenticated } from '../features/authentication/authenticationSlice';
 import Cookies from 'js-cookie';
-import { HatClientService } from '../services/HatClientService';
 import * as queryString from 'query-string';
+import {
+  loginWithToken,
+  selectIsAuthenticated,
+} from '../features/authentication/authenticationSlice';
+import { HatClientService } from '../services/HatClientService';
 
 interface OwnProps extends RouteProps {
   newAuth?: boolean;
@@ -26,10 +29,12 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
 
   useEffect(() => {
     const tokenStored = Cookies.get('token') || sessionStorage.getItem('token');
-    const { token, repeat, email, application_id, redirect_uri } = queryString.parse(window.location.search) as Query;
+    const { token, repeat, email, application_id, redirect_uri } = queryString.parse(
+      window.location.search,
+    ) as Query;
     setQuery({
       repeat: repeat === 'true',
-      email: email,
+      email,
       applicationId: application_id,
       redirectUri: redirect_uri,
     });
@@ -55,7 +60,7 @@ export function PrivateRoute({ children, ...rest }: OwnProps) {
           <DelayedRedirect
             to={{
               pathname: '/auth/login',
-              state: { from: location, query: query },
+              state: { from: location, query },
             }}
             delay={100}
           />
@@ -76,6 +81,7 @@ interface DelayedState {
 class DelayedRedirect extends React.Component<RedirectProps & DelayedProps, DelayedState> {
   timeout: any = null;
 
+  // eslint-disable-next-line react/state-in-constructor
   state: DelayedState = {
     timeToRedirect: false,
   };

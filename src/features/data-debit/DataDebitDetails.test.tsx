@@ -39,7 +39,9 @@ describe('Data Debit Details', () => {
     );
 
     expect(screen.getByText('TestActiveDataDebit')).toBeInTheDocument();
-    expect(screen.getByText('Details of your data debit agreement with the provider')).toBeInTheDocument();
+    expect(
+      screen.getByText('Details of your data debit agreement with the provider'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Active')).toBeInTheDocument();
     expect(screen.getByText('12 Apr 2019')).toBeInTheDocument();
     expect(screen.getByText('arrow_forward')).toBeInTheDocument();

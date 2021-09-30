@@ -24,7 +24,12 @@ const RumpelModal: React.FC<Props> = ({ open, onClose, children }) => {
   }, [onClose]);
 
   return (
-    <div id="RumpelModal" ref={content} style={open ? { display: 'block' } : {}} className="rum-modal">
+    <div
+      id="RumpelModal"
+      ref={content}
+      style={open ? { display: 'block' } : {}}
+      className="rum-modal"
+    >
       <div className="rum-modal-content">{children}</div>
     </div>
   );

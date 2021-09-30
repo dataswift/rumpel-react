@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HatRecord } from '@dataswift/hat-js/lib/interfaces/hat-record.interface';
 import { AppThunk, RootState } from '../../app/store';
 import { HatClientService } from '../../services/HatClientService';
 import { DataSourcesInterface } from './DataSources.interface';
-import { HatRecord } from '@dataswift/hat-js/lib/interfaces/hat-record.interface';
 
 type UniversalDataViewerState = {
   dataSources?: DataSourcesInterface;
@@ -36,18 +36,19 @@ export const { dataSources, endpointData } = slice.actions;
 
 export const setDataSources =
   (data: DataSourcesInterface): AppThunk =>
-    (dispatch) => {
-      dispatch(dataSources(data));
-    };
+  (dispatch) => {
+    dispatch(dataSources(data));
+  };
 
 export const setEndpointData =
   (data: Array<HatRecord<any>>): AppThunk =>
-    (dispatch) => {
-      dispatch(endpointData(data));
-    };
+  (dispatch) => {
+    dispatch(endpointData(data));
+  };
 
 export const selectDataSources = (state: RootState) => state.universalDataViewer.dataSources;
-export const selectEndpointDataPreview = (state: RootState) => state.universalDataViewer.endpointDataPreview;
+export const selectEndpointDataPreview = (state: RootState) =>
+  state.universalDataViewer.endpointDataPreview;
 
 export const getDataSources = (): AppThunk => async (dispatch) => {
   try {
@@ -56,26 +57,30 @@ export const getDataSources = (): AppThunk => async (dispatch) => {
     if (apps?.parsedBody) {
       dispatch(setDataSources(apps.parsedBody));
     }
-  } catch (e) {}
+  } catch (e) {
+    // TODO: Error handling
+  }
 };
 
 export const getDataRecords =
   (namespace: string, endpoint: string, take: number, skip: number): AppThunk =>
-    async (dispatch) => {
-      try {
-        const options = {
-          ordering: 'descending',
-          orderBy: 'dataCreated',
-          take: `${take}`,
-          skip: `${skip}`,
-        };
+  async (dispatch) => {
+    try {
+      const options = {
+        ordering: 'descending',
+        orderBy: 'dataCreated',
+        take: `${take}`,
+        skip: `${skip}`,
+      };
 
-        const res = await HatClientService.getInstance().getData(namespace, endpoint, options);
+      const res = await HatClientService.getInstance().getData(namespace, endpoint, options);
 
-        if (res?.parsedBody && res.parsedBody.length > 0) {
-          dispatch(setEndpointData(res.parsedBody));
-        }
-      } catch (e) {}
-    };
+      if (res?.parsedBody && res.parsedBody.length > 0) {
+        dispatch(setEndpointData(res.parsedBody));
+      }
+    } catch (e) {
+      // TODO: Error handling
+    }
+  };
 
 export default slice.reducer;

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
 import { HatTokenValidation, JWTDecoded } from '@dataswift/hat-js/lib/utils/HatTokenValidation';
-import { config } from '../../app.config';
 import { isFuture, toDate, addDays } from 'date-fns';
 import Cookies from 'js-cookie';
+import { config } from '../../app.config';
+import { AppThunk, RootState } from '../../app/store';
 import { HatClientService } from '../../services/HatClientService';
-import { PdaLookupResponse } from "../../types/Hatters";
-import { pdaLookupWithEmail } from "../../services/HattersService";
+import { PdaLookupResponse } from '../../types/Hatters';
+import { pdaLookupWithEmail } from '../../services/HattersService';
 
 export enum AuthState {
   LOGIN_REQUEST = 'login_request',
@@ -71,30 +71,30 @@ export const {
   loginAuthState,
   setPdaLookupResponse,
   setPdaLookupResponseError,
-  logout
+  logout,
 } = slice.actions;
 
 export const loginWithToken =
   (token: string): AppThunk =>
-    (dispatch) => {
-      try {
-        const decodedToken = HatTokenValidation.decodeToken(token);
+  (dispatch) => {
+    try {
+      const decodedToken = HatTokenValidation.decodeToken(token);
 
-        if (tokenIsValid(decodedToken)) {
-          dispatch(authenticateWithToken(token));
-          window.sessionStorage.setItem('token', token);
-          if (decodedToken.iss) {
-            const hatName = decodedToken.iss.substring(0, decodedToken.iss.indexOf('.'));
-            const hatDomain = decodedToken.iss.substring(decodedToken.iss.indexOf('.'));
-            dispatch(updateHatName({ hatName: hatName, hatDomain: hatDomain }));
-          }
-        } else {
-          dispatch(loginAuthState(AuthState.LOGIN_FAILED));
+      if (tokenIsValid(decodedToken)) {
+        dispatch(authenticateWithToken(token));
+        window.sessionStorage.setItem('token', token);
+        if (decodedToken.iss) {
+          const hatName = decodedToken.iss.substring(0, decodedToken.iss.indexOf('.'));
+          const hatDomain = decodedToken.iss.substring(decodedToken.iss.indexOf('.'));
+          dispatch(updateHatName({ hatName, hatDomain }));
         }
-      } catch (e) {
+      } else {
         dispatch(loginAuthState(AuthState.LOGIN_FAILED));
       }
-    };
+    } catch (e) {
+      dispatch(loginAuthState(AuthState.LOGIN_FAILED));
+    }
+  };
 
 export const logoutUser = (): AppThunk => (dispatch) => {
   const hatSvc = HatClientService.getInstance();
@@ -102,20 +102,23 @@ export const logoutUser = (): AppThunk => (dispatch) => {
 
   window.sessionStorage.removeItem('token');
   window.localStorage.removeItem('session_email');
-  Cookies.remove('token', { secure: secure, sameSite: 'strict' });
+  Cookies.remove('token', { secure, sameSite: 'strict' });
   hatSvc.logout();
 
   dispatch(logout());
 };
 
 const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
-  const expiryDate = toDate(decodedToken['exp'] * 1000);
-  const issuedDate = toDate(decodedToken['iat'] * 1000);
+  const expiryDate = toDate(decodedToken.exp * 1000);
+  const issuedDate = toDate(decodedToken.iat * 1000);
 
-  const scopeIsValid = decodedToken['application'] === config.tokenApp || decodedToken['accessScope'] === 'owner';
-  const tokenDomain = decodedToken['iss']?.slice(decodedToken['iss'].indexOf('.')) || '';
+  const scopeIsValid =
+    decodedToken.application === config.tokenApp || decodedToken.accessScope === 'owner';
+  const tokenDomain = decodedToken.iss?.slice(decodedToken.iss.indexOf('.')) || '';
   const domainIsValid = config.supportedDomains.indexOf(tokenDomain) > -1;
-  const portIsValid = new RegExp('^[w.]+:' + config.supportedPorts.join('|') + '$', 'gi').test(tokenDomain);
+  const portIsValid = new RegExp(`^[w.]+:${config.supportedPorts.join('|')}$`, 'gi').test(
+    tokenDomain,
+  );
   const notExpired = isFuture(expiryDate) && isFuture(addDays(issuedDate, config.tokenExpiryTime));
 
   return scopeIsValid && (domainIsValid || portIsValid) && notExpired;
@@ -123,24 +126,26 @@ const tokenIsValid = (decodedToken: JWTDecoded): boolean => {
 
 export const getPdaLookupDetails =
   (email: string): AppThunk =>
-    async (dispatch) => {
-      try {
-        const res = await pdaLookupWithEmail(email);
+  async (dispatch) => {
+    try {
+      const res = await pdaLookupWithEmail(email);
 
-        if (res.parsedBody) {
-          dispatch(setPdaLookupResponse(res.parsedBody));
-        }
-      } catch (e) {
-        dispatch(setPdaLookupResponse(null));
-        dispatch(setPdaLookupResponseError(true));
+      if (res.parsedBody) {
+        dispatch(setPdaLookupResponse(res.parsedBody));
       }
-    };
+    } catch (e) {
+      dispatch(setPdaLookupResponse(null));
+      dispatch(setPdaLookupResponseError(true));
+    }
+  };
 
 export const selectIsAuthenticated = (state: RootState) => state.authentication.isAuthenticated;
 export const selectAuthToken = (state: RootState) => state.authentication.token;
 export const selectUserHatName = (state: RootState) => state.authentication.hatName;
 export const selectUserHatDomain = (state: RootState) => state.authentication.hatDomain;
-export const selectUserPdaLookupDetails = (state: RootState) => state.authentication.pdaLookupResponse;
-export const selectUserPdaLookupResponseError = (state: RootState) => state.authentication.pdaLookupResponseError;
+export const selectUserPdaLookupDetails = (state: RootState) =>
+  state.authentication.pdaLookupResponse;
+export const selectUserPdaLookupResponseError = (state: RootState) =>
+  state.authentication.pdaLookupResponseError;
 
 export default slice.reducer;

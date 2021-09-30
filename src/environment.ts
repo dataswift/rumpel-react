@@ -11,7 +11,11 @@ export const environment = {
   appName: process.env.REACT_APP_APP_NAME,
   tokenName: process.env.REACT_APP_TOKEN_NAME,
   hattersFrontendUrl:
-    process.env.REACT_APP_HATTERS_ENV === 'staging' ? 'https://auth.dataswift.net' : 'https://hatters.dataswift.io',
+    process.env.REACT_APP_HATTERS_ENV === 'staging'
+      ? 'https://auth.dataswift.net'
+      : 'https://hatters.dataswift.io',
   hattersBackendUrl:
-    process.env.REACT_APP_HATTERS_ENV === 'staging' ? 'https://one.dataswift.net/auth' : 'https://hatters.dataswift.io',
+    process.env.REACT_APP_HATTERS_ENV === 'staging'
+      ? 'https://one.dataswift.net/auth'
+      : 'https://hatters.dataswift.io',
 };

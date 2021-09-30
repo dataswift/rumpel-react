@@ -4,7 +4,7 @@ import Input from './Input';
 
 describe('Input Rumpel', () => {
   test('renders the input component without error', () => {
-    render(<Input label={'Test Input'} id={'Test Input'} type={'text'} />);
+    render(<Input label="Test Input" id="Test Input" type="text" />);
 
     expect(screen.getByText('Test Input')).toBeInTheDocument();
   });
@@ -13,10 +13,10 @@ describe('Input Rumpel', () => {
     const mockOnChange = jest.fn();
     render(
       <Input
-        label={'Test Input'}
-        id={'Test Input'}
-        type={'text'}
-        profileField={true}
+        label="Test Input"
+        id="Test Input"
+        type="text"
+        profileField
         profilePrivacyToggle={false}
         onProfileSharingChange={mockOnChange}
       />,
@@ -32,7 +32,7 @@ describe('Input Rumpel', () => {
   test('use attempt a value change', () => {
     const mockOnChange = jest.fn();
 
-    render(<Input label={'test label'} id={'test input'} type={'text'} onChange={mockOnChange} />);
+    render(<Input label="test label" id="test input" type="text" onChange={mockOnChange} />);
 
     const input = screen.getByLabelText('test label');
 

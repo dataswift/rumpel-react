@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Feed.scss';
+import { useDispatch } from 'react-redux';
 import { FeedUserActions } from './FeedUserActions';
 import { FeedFilteredData } from './FeedFilteredDataList';
 import { InfiniteScrolling } from '../../components/InfiniteScrolling/InfiniteScrolling';
 import { resetSheFeedValues } from './feedSlice';
-import { useDispatch } from 'react-redux';
 
 const Feed: React.FC = () => {
   const [feedState, setFeedState] = useState('infinite-scrolling');
@@ -31,12 +31,12 @@ const Feed: React.FC = () => {
   };
 
   return (
-    <div className={'feed-wrapper'}>
+    <div className="feed-wrapper">
       {feedState === 'filtering' && <FeedFilteredData selectedDates={selectedDates} />}
 
       {feedState === 'infinite-scrolling' && <InfiniteScrolling />}
       <FeedUserActions
-        onSelectedDates={(since, until) => setSelectedDates({ since: since, until: until })}
+        onSelectedDates={(since, until) => setSelectedDates({ since, until })}
         onRefresh={onRefreshClick}
         onGoToToday={scrollToTheTop}
       />

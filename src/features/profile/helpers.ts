@@ -1,5 +1,5 @@
-import { Profile, ProfileSharingConfig } from './profile.interface';
 import { BundleStructure, PropertyQuery } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { Profile, ProfileSharingConfig } from './profile.interface';
 import { DEFAULT_PHATA_BUNDLE } from './profileSlice';
 
 export const generatePhataBundle = (
@@ -8,8 +8,12 @@ export const generatePhataBundle = (
 ): { [bundleVersion: string]: PropertyQuery } => {
   const mapping = Object.keys(profile).reduce((acc: Record<string, string>, grouping) => {
     if (profile.hasOwnProperty(grouping) && typeof profile[grouping] === 'object') {
-      const sharedFields = Object.keys(profile[grouping]).filter((field) => profile[grouping][field] === true);
-      sharedFields.forEach((field) => (acc[`${grouping}.${field}`] = `${grouping}.${field}`));
+      const sharedFields = Object.keys(profile[grouping]).filter(
+        (field) => profile[grouping][field] === true,
+      );
+      sharedFields.forEach((field) => {
+        acc[`${grouping}.${field}`] = `${grouping}.${field}`;
+      });
     }
 
     return acc;
@@ -32,12 +36,14 @@ export const generatePhataBundle = (
         limit: 1,
       },
     };
-  } else {
-    return { notables: previousBundle.bundle.notables };
   }
+  return { notables: previousBundle.bundle.notables };
 };
 
-export const generateProfileShare = (profile: Profile, phataBundle: BundleStructure): ProfileSharingConfig => {
+export const generateProfileShare = (
+  profile: Profile,
+  phataBundle: BundleStructure,
+): ProfileSharingConfig => {
   let bundleMapping: Array<any>;
 
   if (phataBundle.bundle?.profile?.endpoints[0].mapping) {
@@ -48,13 +54,16 @@ export const generateProfileShare = (profile: Profile, phataBundle: BundleStruct
 
   return Object.keys(profile).reduce((acc1: Record<string, object>, grouping) => {
     if (profile.hasOwnProperty(grouping) && typeof profile[grouping] === 'object') {
-      acc1[grouping] = Object.keys(profile[grouping]).reduce((acc2: Record<string, boolean>, field) => {
-        if (profile[grouping].hasOwnProperty(field)) {
-          acc2[field] = bundleMapping.includes(`${grouping}.${field}`);
-        }
+      acc1[grouping] = Object.keys(profile[grouping]).reduce(
+        (acc2: Record<string, boolean>, field) => {
+          if (profile[grouping].hasOwnProperty(field)) {
+            acc2[field] = bundleMapping.includes(`${grouping}.${field}`);
+          }
 
-        return acc2;
-      }, {});
+          return acc2;
+        },
+        {},
+      );
     }
 
     return acc1;

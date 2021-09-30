@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import ProfileDefaultAvatar from '../../components/Svgs/ProfileDefaultAvatar';
 import { FileMetadataReq } from '@dataswift/hat-js/lib/interfaces/file.interface';
+import ProfileDefaultAvatar from '../../components/Svgs/ProfileDefaultAvatar';
 import { HatClientService } from '../../services/HatClientService';
 import { fileReader } from '../../utils/fileReader';
 
@@ -57,7 +57,9 @@ export const ProfilePicUpload: React.FC<Props> = ({ currentImageSrc, enabled, on
           if (resUpload.parsedBody?.fileId) {
             await HatClientService.getInstance().markFilesAsPublic(resUpload.parsedBody.fileId);
 
-            const contentUrl = HatClientService.getInstance().generateFileContentUrl(resUpload.parsedBody.fileId);
+            const contentUrl = HatClientService.getInstance().generateFileContentUrl(
+              resUpload.parsedBody.fileId,
+            );
 
             setUploading(false);
 
@@ -86,13 +88,15 @@ export const ProfilePicUpload: React.FC<Props> = ({ currentImageSrc, enabled, on
   });
 
   const logo = files.map((file: IFile) => (
-    <div key={file.name} className={'upload-logo-placeholder'}>
-      <div className={'upload-logo-state'}>
-        {uploading && <i className={'material-icons logo-uploading'}>cloud_upload</i>}
-        {!uploading && uploadFailed && <i className={'material-icons upload-failed'}>error_outline</i>}
-        {!uploading && !uploadFailed && <i className={'material-icons upload-success'}>done</i>}
+    <div key={file.name} className="upload-logo-placeholder">
+      <div className="upload-logo-state">
+        {uploading && <i className="material-icons logo-uploading">cloud_upload</i>}
+        {!uploading && uploadFailed && (
+          <i className="material-icons upload-failed">error_outline</i>
+        )}
+        {!uploading && !uploadFailed && <i className="material-icons upload-success">done</i>}
       </div>
-      <img className={'upload-logo-image-preview'} alt={'Screenshot preview'} src={file.preview} />
+      <img className="upload-logo-image-preview" alt="Screenshot preview" src={file.preview} />
     </div>
   ));
 
@@ -108,8 +112,8 @@ export const ProfilePicUpload: React.FC<Props> = ({ currentImageSrc, enabled, on
         {files && files.length > 0 ? (
           <div>{logo}</div>
         ) : currentImageSrc ? (
-          <div className={'upload-logo-placeholder'}>
-            <img className={'upload-logo-image-preview'} alt={'Profile avatar'} src={currentImageSrc} />
+          <div className="upload-logo-placeholder">
+            <img className="upload-logo-image-preview" alt="Profile avatar" src={currentImageSrc} />
           </div>
         ) : (
           <ProfileDefaultAvatar />

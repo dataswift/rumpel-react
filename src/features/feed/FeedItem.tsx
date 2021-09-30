@@ -10,9 +10,9 @@ type Props = {
 export const FeedItem: React.FC<Props> = ({ feedItem }) => {
   if (feedItem.types.includes('insight') && feedItem.types.includes('activity')) {
     return <WeeklySummary feedItem={feedItem} />;
-  } else if (!(feedItem.types.includes('insight') && feedItem.types.includes('activity'))) {
-    return <FeedDefaultItem feedItem={feedItem} />;
-  } else {
-    return null;
   }
+  if (!(feedItem.types.includes('insight') && feedItem.types.includes('activity'))) {
+    return <FeedDefaultItem feedItem={feedItem} />;
+  }
+  return null;
 };

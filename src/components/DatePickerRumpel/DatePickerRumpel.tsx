@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 // @ts-ignore
 import { Calendar } from 'react-date-range';
-import Input from '../form/Input';
 import { format } from 'date-fns';
+import Input from '../form/Input';
 
 type Props = {
   label: string;
@@ -15,7 +15,15 @@ type Props = {
 };
 
 const DatePickerRumpel: React.FC<Props> = (props) => {
-  const { label, profileField, onChange, errorMessage, value, profilePrivacyToggle, onProfileSharingChange } = props;
+  const {
+    label,
+    profileField,
+    onChange,
+    errorMessage,
+    value,
+    profilePrivacyToggle,
+    onProfileSharingChange,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [displayValue, setDisplayValue] = useState<string>(value || '');
@@ -30,10 +38,10 @@ const DatePickerRumpel: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={'date-range-picker-rumpel'}>
+    <div className="date-range-picker-rumpel">
       <Input
-        type={'text'}
-        id={'calendar'}
+        type="text"
+        id="calendar"
         label={label}
         value={displayValue}
         onClick={() => setIsOpen(!isOpen)}

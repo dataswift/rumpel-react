@@ -41,9 +41,14 @@ const DataPlugDetails: React.FC = () => {
     return [
       { provider: name },
       { website: url },
-      { country: country },
-      { version: version },
-      { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
+      { country },
+      { version },
+      {
+        'last updated': format(
+          new Date(app.application.status.versionReleaseDate || ''),
+          'dd/MM/yyyy',
+        ),
+      },
       { 'terms and conditions': termsUrl },
       { 'support email': supportContact },
     ];
@@ -65,22 +70,31 @@ const DataPlugDetails: React.FC = () => {
 
         <h3 className="app-details-header-title">{app.application.info.name}</h3>
         <div className="app-details-header-headline">
-          <FormatMessage id="ds.hat.application.details.rated" /> {app.application.info.rating.score}
+          <FormatMessage id="ds.hat.application.details.rated" />{' '}
+          {app.application.info.rating.score}
         </div>
 
-        <a href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291" className="app-link">
+        <a
+          href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291"
+          className="app-link"
+        >
           <FormatMessage id="ds.hat.application.details.learn" />
         </a>
 
-        <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
+        <div
+          onClick={onAppStatusClick}
+          className={`app-details-status ${getAppStatus(app)} link-button`}
+        >
           <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
           {getStatusButtonText(app)}
         </div>
       </DetailsHeader>
       <InformationDetails
-        header={'Data Plug Info'}
+        header="Data Plug Info"
         description={app.application.info.description.text}
-        screenshots={app.application.info.graphics.screenshots.map((screenshot) => screenshot.normal)}
+        screenshots={app.application.info.graphics.screenshots.map(
+          (screenshot) => screenshot.normal,
+        )}
         informationListData={getApplicationDetails()}
       />
     </>

@@ -33,7 +33,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active={false} dataDebitId={'TestExpiredDataDebit'} />
+            <DataDebitDetailsActions active={false} dataDebitId="TestExpiredDataDebit" />
           </Provider>
         </Route>
       </Router>,
@@ -50,7 +50,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active dataDebitId={'TestActiveDataDebit'} />
+            <DataDebitDetailsActions active dataDebitId="TestActiveDataDebit" />
           </Provider>
         </Route>
       </Router>,
@@ -66,7 +66,7 @@ describe('Data Debit Details Actions', () => {
       <Router history={history}>
         <Route path="/data-debit/:dataDebitParam">
           <Provider store={store}>
-            <DataDebitDetailsActions active dataDebitId={'TestActiveDataDebit'} />
+            <DataDebitDetailsActions active dataDebitId="TestActiveDataDebit" />
           </Provider>
         </Route>
       </Router>,

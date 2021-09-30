@@ -10,25 +10,25 @@ type Props = {
   feedItem: SheFeed;
 };
 
-export const WeeklySummary: React.FC<Props> = ({ feedItem }) => {
-  return (
-    <div className="feed-item">
-      <div className="weekly-summary-row">
-        <div
-          className="weekly-summary-header-container"
-          style={{ backgroundImage: `url(${weeklySummaryHeaderImage})` }}
-        >
-          <div className="title-container">
-            <div className="weekly-summary-title">{feedItem.title?.text}</div>
-            <div className="weekly-summary-subtitle">{feedItem.title?.subtitle}</div>
-          </div>
-
-          <div className="weekly-summary-icon-container">
-            <img src={toolsIcon} alt="Tool icon" width="26" height="26" />
-          </div>
+export const WeeklySummary: React.FC<Props> = ({ feedItem }) => (
+  <div className="feed-item">
+    <div className="weekly-summary-row">
+      <div
+        className="weekly-summary-header-container"
+        style={{ backgroundImage: `url(${weeklySummaryHeaderImage})` }}
+      >
+        <div className="title-container">
+          <div className="weekly-summary-title">{feedItem.title?.text}</div>
+          <div className="weekly-summary-subtitle">{feedItem.title?.subtitle}</div>
         </div>
-        <WeeklySummaryList nestedStructure={transformWeeklySummary(feedItem.content?.nestedStructure)} />
+
+        <div className="weekly-summary-icon-container">
+          <img src={toolsIcon} alt="Tool icon" width="26" height="26" />
+        </div>
       </div>
+      <WeeklySummaryList
+        nestedStructure={transformWeeklySummary(feedItem.content?.nestedStructure)}
+      />
     </div>
-  );
-};
+  </div>
+);

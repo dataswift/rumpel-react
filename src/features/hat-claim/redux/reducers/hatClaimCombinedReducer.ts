@@ -1,5 +1,5 @@
-import hatClaimReducer from './hatClaimReducer';
 import { combineReducers } from 'redux';
+import hatClaimReducer from './hatClaimReducer';
 import hatClaimPasswordReducer, { ReduxHatClaimPasswordState } from './hatClaimPasswordReducer';
 import hatClaimCurrentStepReducer from './hatClaimCurrentStepReducer';
 import { HatClaim } from '../../hat-claim.interface';

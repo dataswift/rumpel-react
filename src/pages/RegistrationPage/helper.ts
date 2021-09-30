@@ -1,5 +1,5 @@
-import { PdaSignup, RegistrationRedirectError } from "../../types/Hatters";
-import { PdaSignupQuery } from "./RegistrationPage";
+import { PdaSignup, RegistrationRedirectError } from '../../types/Hatters';
+import { PdaSignupQuery } from './RegistrationPage';
 
 export const validatePdaSignupQueryParams = ({ application_id, redirect_uri }: PdaSignupQuery) => {
   let errorMsg = '';
@@ -13,17 +13,19 @@ export const validatePdaSignupQueryParams = ({ application_id, redirect_uri }: P
   return errorMsg;
 };
 
-export const queryParamsToSignupModel = ({ application_id, redirect_uri, tags }: PdaSignupQuery): PdaSignup => {
-  return {
-    email: '',
-    applicationId: application_id,
-    redirectUri: redirect_uri,
-    tags: tags?.split(','),
-  };
-};
+export const queryParamsToSignupModel = ({
+  application_id,
+  redirect_uri,
+  tags,
+}: PdaSignupQuery): PdaSignup => ({
+  email: '',
+  applicationId: application_id,
+  redirectUri: redirect_uri,
+  tags: tags?.split(','),
+});
 
 export const redirectWithErrorParams = (redirectUri: string, error: RegistrationRedirectError) => {
   if (redirectUri) {
-    window.location.href = redirectUri + '?error=' + error.error + '&error_reason=' + error.reason;
+    window.location.href = `${redirectUri}?error=${error.error}&error_reason=${error.reason}`;
   }
 };

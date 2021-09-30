@@ -37,27 +37,23 @@ export const FeedSourceImg: React.FC<Props> = ({ source, types, height, width, c
     if (source === 'she') {
       if (types && types.indexOf('sentiment') !== -1) {
         return 'sentiment';
-      } else {
-        return 'she';
       }
-    } else if (source === 'drops') {
+      return 'she';
+    }
+    if (source === 'drops') {
       if (types && types.indexOf('wordcloud') !== -1) {
         return 'wordcloud';
-      } else {
-        return 'she';
       }
-    } else {
-      return imageAsset(source);
+      return 'she';
     }
+    return imageAsset(source);
   };
 
-  const imageAsset = (source: string): string => {
-    return source.split('-')[0] || 'she';
-  };
+  const imageAsset = (source: string): string => source.split('-')[0] || 'she';
 
   return (
     <img
-      src={imgSrc[imageSource(source, types)] || imgSrc['placeholder']}
+      src={imgSrc[imageSource(source, types)] || imgSrc.placeholder}
       height={height}
       width={width}
       className={className}

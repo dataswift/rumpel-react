@@ -7,18 +7,19 @@ import * as queryString from 'query-string';
 import { HatClientService } from '../../services/HatClientService';
 import { newUserAccessToken } from '../../api/hatAPI';
 
-import usePdaAuthHmi from "../../hooks/usePdaAuth";
-import LoginPassword from "./components/LoginPassword";
-import { selectMessages } from "../../features/messages/messagesSlice";
+import usePdaAuthHmi from '../../hooks/usePdaAuth';
+import LoginPassword from './components/LoginPassword';
+import { selectMessages } from '../../features/messages/messagesSlice';
 import {
   getPdaLookupDetails,
   loginWithToken,
-  selectUserPdaLookupDetails, selectUserPdaLookupResponseError
-} from "../../features/authentication/authenticationSlice";
-import LoginEmail from "./components/LoginEmail";
-import { isEmail } from "../../utils/validations";
-import RegistrationConfirmYourIdentity from "../RegistrationPage/components/RegistrationConfirmYourIdentity";
-import { APPLICATION_ID } from "../../app.config";
+  selectUserPdaLookupDetails,
+  selectUserPdaLookupResponseError,
+} from '../../features/authentication/authenticationSlice';
+import LoginEmail from './components/LoginEmail';
+import { isEmail } from '../../utils/validations';
+import RegistrationConfirmYourIdentity from '../RegistrationPage/components/RegistrationConfirmYourIdentity';
+import { APPLICATION_ID } from '../../app.config';
 
 type Query = {
   target?: string;
@@ -41,8 +42,8 @@ const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
 
-  let history = useHistory();
-  let location = useLocation<{ from?: string; query: QueryLocationState }>();
+  const history = useHistory();
+  const location = useLocation<{ from?: string; query: QueryLocationState }>();
   const dispatch = useDispatch();
   const { target } = queryString.parse(window.location.search) as Query;
   const targetParam = target || 'feed';
@@ -51,7 +52,6 @@ const LoginPage: React.FC = () => {
   const { repeat, email: emailParam, applicationId, redirectUri, lang } = query || {};
 
   const { parentApp } = usePdaAuthHmi(applicationId || APPLICATION_ID, lang, true);
-
 
   const loginSuccessful = () => {
     // This is a hack and ideally should be removed. This is what allows the log in via dataswift.io webpage,
@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
     if (from && !isDataswiftWebsite) {
       history.replace(from);
     } else {
-      window.location.href = window.location.origin + '/' + targetParam;
+      window.location.href = `${window.location.origin}/${targetParam}`;
     }
   };
 
@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
 
   const onNext = (email: string) => {
     console.log('next');
-    if(isEmail(email)) {
+    if (isEmail(email)) {
       setEmail(email);
       return;
     }
@@ -90,9 +90,9 @@ const LoginPage: React.FC = () => {
 
     try {
       const res = await newUserAccessToken(
-        pdaDetails.hatName + '.' + pdaDetails.hatCluster,
+        `${pdaDetails.hatName}.${pdaDetails.hatCluster}`,
         pdaDetails.hatName,
-        password
+        password,
       );
 
       if (res.parsedBody) {
@@ -102,7 +102,11 @@ const LoginPage: React.FC = () => {
         const secure = window.location.protocol === 'https:';
 
         // TODO ensure that this is fine to do
-        Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
+        Cookies.set('token', res.parsedBody.accessToken, {
+          expires: 3,
+          secure,
+          sameSite: 'strict',
+        });
         localStorage.setItem('session_email', email || '');
 
         loginSuccessful();
@@ -117,7 +121,9 @@ const LoginPage: React.FC = () => {
   const navigateToSignup = () => {
     if (applicationId && redirectUri) {
       // eslint-disable-next-line max-len
-      history.push(`/register?application_id=${applicationId}&redirect_uri=${redirectUri}&lang=${lang}`);
+      history.push(
+        `/register?application_id=${applicationId}&redirect_uri=${redirectUri}&lang=${lang}`,
+      );
     }
   };
 

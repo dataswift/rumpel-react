@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import ProfileHeader from './ProfileHeader';
-import './Profile.scss';
-import ProfileDetails from './ProfileDetails';
 import { useDispatch, useSelector } from 'react-redux';
+
+import './Profile.scss';
+
+import ProfileHeader from './ProfileHeader';
+import ProfileDetails from './ProfileDetails';
 import { getProfilePrivacyDataBundle, selectProfileBundleFetched } from './profileSlice';
 
 const Profile: React.FC = () => {
@@ -16,7 +18,7 @@ const Profile: React.FC = () => {
   }, [dispatch, profileBundleFetched]);
 
   return (
-    <div className={'profile'}>
+    <div className="profile">
       <ProfileHeader />
       <ProfileDetails />
     </div>

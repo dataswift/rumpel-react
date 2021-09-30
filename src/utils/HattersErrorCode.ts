@@ -1,11 +1,11 @@
 export type HattersError = {
-    errorCode: number,
-    cause: string,
-}
+  errorCode: number;
+  cause: string;
+};
 
-export type HattersErrorCode = Record<number, HattersError>
+export type HattersErrorCodeType = Record<number, HattersError>;
 
-export const HattersErrorCode: HattersErrorCode = {
+export const HattersErrorCode: HattersErrorCodeType = {
   1: { errorCode: 1, cause: 'unexpected_exception' },
   2: { errorCode: 2, cause: 'hatters_exception' },
   3: { errorCode: 3, cause: 'duplicate_hat_exception' },

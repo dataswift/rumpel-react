@@ -22,7 +22,9 @@ export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T)
       const newValue = value instanceof Function ? value(storedValue) : value;
       window.localStorage.setItem(key, JSON.stringify(newValue));
       setStoredValue(newValue);
-    } catch (error) {}
+    } catch (error) {
+      // TODO: Error handling
+    }
   };
 
   useEffect(() => {
@@ -58,7 +60,9 @@ export const useDataswiftNotification = (manual: boolean = false) => {
           },
           manual,
         });
-      } catch (err) {}
+      } catch (error) {
+        // TODO: Error handling
+      }
     };
 
     checkNotifications();

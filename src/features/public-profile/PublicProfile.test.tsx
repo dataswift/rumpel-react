@@ -3,10 +3,10 @@ import { screen, render, waitFor, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter as Router } from 'react-router-dom';
 
-import { fetchNotification } from '../../services/NotificationService';
 import { RibbonProvider } from '@dataswift/shared';
-import { PublicProfile } from './PublicProfile';
 import { configureStore } from '@reduxjs/toolkit';
+import { fetchNotification } from '../../services/NotificationService';
+import { PublicProfile } from './PublicProfile';
 import publicProfileSlice from './publicProfileSlice';
 import authenticationSlice from '../authentication/authenticationSlice';
 
@@ -33,17 +33,15 @@ const store = configureStore({
   },
 });
 
-const renderWithProviders = (ui: any) => {
-  return {
-    ...render(
-      <Provider store={store}>
-        <RibbonProvider>
-          <Router>{ui}</Router>
-        </RibbonProvider>
-      </Provider>,
-    ),
-  };
-};
+const renderWithProviders = (ui: any) => ({
+  ...render(
+    <Provider store={store}>
+      <RibbonProvider>
+        <Router>{ui}</Router>
+      </RibbonProvider>
+    </Provider>,
+  ),
+});
 
 beforeEach(() => {
   jest.resetAllMocks();

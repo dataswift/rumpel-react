@@ -1,13 +1,14 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
+import { useHistory, useParams } from 'react-router';
+import * as queryString from 'query-string';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
-import { useHistory, useParams } from 'react-router';
 
-import * as queryString from 'query-string';
 import { buildClaimRequest } from '../hat-claim/hat-claim.service';
 import { HatClaim } from '../hat-claim/hat-claim.interface';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getApplicationHmi,
   selectApplicationHmi,
@@ -19,8 +20,7 @@ import { selectMessages } from '../messages/messagesSlice';
 import FormatMessage from '../messages/FormatMessage';
 import { verifyEmail } from '../../api/hatAPI';
 import { isEmail } from '../../utils/validations';
-import { useLocation } from "react-router-dom";
-import { getPdaLookupDetails, selectUserPdaLookupDetails } from "./authenticationSlice";
+import { getPdaLookupDetails, selectUserPdaLookupDetails } from './authenticationSlice';
 
 type Query = {
   email?: string;
@@ -54,7 +54,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
-  let { verifyToken } = useParams<{ verifyToken: string }>();
+  const { verifyToken } = useParams<{ verifyToken: string }>();
 
   const dispatch = useDispatch();
   const passwordMatchDebounce = useRef(
@@ -65,18 +65,18 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
     ),
   ).current;
 
-  const validatePasswordScoreDebounce = useRef(debounce((password: string) => validatePassword(password), 400)).current;
+  const validatePasswordScoreDebounce = useRef(
+    debounce((password: string) => validatePassword(password), 400),
+  ).current;
 
   const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
     if (score > 2) {
       if (password === passwordConfirm) {
         setPasswordMatch(true);
+      } else if (passwordConfirm.length > 0 || passwordMatch) {
+        setPasswordMatch(false);
       } else {
-        if (passwordConfirm.length > 0 || passwordMatch) {
-          setPasswordMatch(false);
-        } else {
-          setPasswordMatch(undefined);
-        }
+        setPasswordMatch(undefined);
       }
     } else {
       setPasswordMatch(undefined);
@@ -87,15 +87,15 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
     try {
       if (!pdaDetails) return;
 
-      const hatName = pdaDetails.hatName;
-      const hatCluster = pdaDetails.hatCluster;
+      const { hatName } = pdaDetails;
+      const { hatCluster } = pdaDetails;
 
       const hatClaim: HatClaim = {
-        email: email,
-        hatName: hatName,
-        hatCluster: hatCluster,
+        email,
+        hatName,
+        hatCluster,
         optins: false,
-        password: password,
+        password,
         termsAgreed: true,
       };
 
@@ -115,7 +115,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const validatePassword = (password: string) => {
     if (!passwordStrength) return;
 
-    const score = passwordStrength(password).score;
+    const { score } = passwordStrength(password);
     setScore(score);
   };
 
@@ -136,7 +136,9 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   };
 
   const login = useCallback(async () => {
-    const { application_id, redirect_uri, email, lang } = queryString.parse(location.search) as Query;
+    const { application_id, redirect_uri, email, lang } = queryString.parse(
+      location.search,
+    ) as Query;
 
     if (redirect_uri && application_id) {
       // eslint-disable-next-line max-len
@@ -161,7 +163,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
     }
 
     if (!parentApp && application_id && pdaDetails) {
-      dispatch(getApplicationHmi(application_id, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
+      dispatch(getApplicationHmi(application_id, `${pdaDetails.hatName}.${pdaDetails.hatCluster}`));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
@@ -180,52 +182,57 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
 
   return (
     <div>
-      <div className={'flex-column-wrapper auth-login auth-change-password'}>
+      <div className="flex-column-wrapper auth-login auth-change-password">
         <AuthApplicationLogo
           src={parentApp?.info.graphics.logo.normal}
           alt={parentApp?.info.name}
           state={parentAppState}
         />
 
-        <h2 className={'ds-hmi-email auth-login-email-title'}>{email}</h2>
+        <h2 className="ds-hmi-email auth-login-email-title">{email}</h2>
 
         {successfulResponse && (
           <>
-            <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.verifyEmail.success.title'} asHtml />
+            <h2 className="auth-login-title">
+              <FormatMessage id="ds.auth.verifyEmail.success.title" asHtml />
             </h2>
 
-            <button className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'} onClick={() => login()}>
-              <FormatMessage id={'ds.auth.continueBtn'} />
+            <button
+              className="auth-login-btn ds-hmi-btn ds-hmi-btn-primary"
+              onClick={() => login()}
+            >
+              <FormatMessage id="ds.auth.continueBtn" />
             </button>
           </>
         )}
 
         {!successfulResponse && (
           <>
-            <h2 className={'auth-login-title'}>
-              <FormatMessage id={'ds.auth.verifyEmail.title'} asHtml />
+            <h2 className="auth-login-title">
+              <FormatMessage id="ds.auth.verifyEmail.title" asHtml />
             </h2>
             <Input
-              type={'password'}
+              type="password"
               placeholder={messages['ds.auth.input.password']}
-              autoComplete={'new-password'}
-              name={'password-1'}
-              id={'password-1'}
+              autoComplete="new-password"
+              name="password-1"
+              id="password-1"
               value={password}
               hasError={!!errorMessage}
               passwordMatch={passwordMatch}
               onChange={(e) => onPasswordChange(e)}
             />
 
-            {score > 0 && <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />}
+            {score > 0 && (
+              <PasswordStrengthIndicator strong={score > 2} passwordMatch={passwordMatch} />
+            )}
 
             <Input
-              type={'password'}
+              type="password"
               placeholder={messages['ds.auth.input.confirmPassword']}
-              autoComplete={'new-password'}
-              name={'password-2'}
-              id={'password-2'}
+              autoComplete="new-password"
+              name="password-2"
+              id="password-2"
               hidden={score < 3 && passwordConfirm.length === 0}
               value={passwordConfirm}
               hasError={!!errorMessage}
@@ -236,21 +243,25 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
             />
 
             {passwordMatch && (
-              <div className={'auth-login-text'} onClick={() => setOpenPopup(!openPopup)}>
-                <FormatMessage id={'ds.auth.changePassword.byProceeding'} asHtml />
+              <div className="auth-login-text" onClick={() => setOpenPopup(!openPopup)}>
+                <FormatMessage id="ds.auth.changePassword.byProceeding" asHtml />
               </div>
             )}
 
             <button
-              className={'auth-login-btn ds-hmi-btn ds-hmi-btn-primary'}
+              className="auth-login-btn ds-hmi-btn ds-hmi-btn-primary"
               disabled={score < 3 || !passwordMatch}
               onClick={() => validatePasswordAndRequest()}
             >
-              <FormatMessage id={'ds.auth.nextBtn'} />
+              <FormatMessage id="ds.auth.nextBtn" />
             </button>
           </>
         )}
-        <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
+        <AgreementsModal
+          language={language}
+          open={openPopup}
+          onClose={() => setOpenPopup(!openPopup)}
+        />
       </div>
     </div>
   );

@@ -28,9 +28,9 @@ export const { systemStatus } = slice.actions;
 
 export const setSystemStatus =
   (systemStatusRecords: Array<SystemStatusInterface>): AppThunk =>
-    (dispatch) => {
-      dispatch(systemStatus(systemStatusRecords));
-    };
+  (dispatch) => {
+    dispatch(systemStatus(systemStatusRecords));
+  };
 
 export const selectSystemStatusRecords = (state: RootState) => state.systemStatus.systemStatus;
 export const selectSystemStatusDatabaseStorage = (state: RootState) =>

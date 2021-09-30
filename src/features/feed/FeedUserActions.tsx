@@ -23,16 +23,19 @@ export const FeedUserActions: React.FC<Props> = ({ onSelectedDates, onRefresh, o
         </div>
       )}
       <div className="feed-user-actions-content">
-        <button className="filter-button" onClick={() => setHideDateRangePicker(!hideDateRangePicker)}>
-          <i className={'material-icons'}>filter_list</i>
+        <button
+          className="filter-button"
+          onClick={() => setHideDateRangePicker(!hideDateRangePicker)}
+        >
+          <i className="material-icons">filter_list</i>
           Filter
         </button>
         <button className="today-button" onClick={() => onGoToToday()}>
-          <i className={'material-icons'}>fullscreen_exit</i>
+          <i className="material-icons">fullscreen_exit</i>
           Today
         </button>
         <button className="today-button" onClick={() => onRefresh()}>
-          <i className={'material-icons'}>refresh</i>
+          <i className="material-icons">refresh</i>
           Refresh
         </button>
       </div>

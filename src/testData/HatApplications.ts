@@ -32,7 +32,8 @@ const TEST_HAT_APPLICATION: HatApplication = {
       supportContact: '',
       termsUrl: '',
       updateNotes: {
-        header: 'We’ve made clear your legal rights over your data …eX+privacy+policy+2.1.pdf) to continue using HAT.',
+        header:
+          'We’ve made clear your legal rights over your data …eX+privacy+policy+2.1.pdf) to continue using HAT.',
         notes: Array(9),
       },
       version: '1.2.6',

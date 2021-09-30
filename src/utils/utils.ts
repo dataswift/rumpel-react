@@ -1,14 +1,14 @@
-export const buildRequestURL = (url: string, params?: {[key: string]: string}) => {
+export const buildRequestURL = (url: string, params?: { [key: string]: string }) => {
   if (!params) return url;
 
   const esc = encodeURIComponent;
   const query = Object.keys(params)
-    .map(k => esc(k) + '=' + esc(params[k]))
+    .map((k) => `${esc(k)}=${esc(params[k])}`)
     .join('&');
 
   if (!query) return url;
 
-  return url + ((url.indexOf('?') !== -1) ? '&' + query : '?' + query);
+  return url + (url.indexOf('?') !== -1 ? `&${query}` : `?${query}`);
 };
 
 export const getMobileOperatingSystem = () => {

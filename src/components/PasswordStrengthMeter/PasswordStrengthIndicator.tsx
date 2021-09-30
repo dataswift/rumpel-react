@@ -31,14 +31,14 @@ export const PasswordStrengthIndicator: React.FC<Props> = ({ strong, passwordMat
   }, [strong, passwordMatch]);
 
   return (
-    <div className={'password-strength'}>
+    <div className="password-strength">
       <PasswordMeter strong={strong} />
-      <div className={'password-strength-message'} style={{ color: textColor }}>
+      <div className="password-strength-message" style={{ color: textColor }}>
         <FormatMessage id={message} />
       </div>
       {!strong && (
-        <div className={'password-strength-text'}>
-          <FormatMessage id={'ds.auth.passwordIndicator.passwordMustBeStrongerSuggestion'} asHtml={true} />
+        <div className="password-strength-text">
+          <FormatMessage id="ds.auth.passwordIndicator.passwordMustBeStrongerSuggestion" asHtml />
         </div>
       )}
     </div>

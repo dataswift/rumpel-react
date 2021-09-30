@@ -38,6 +38,8 @@ describe('Universal Data Viewer Data Sources page tests', () => {
 
     fireEvent.click(endpoint);
 
-    expect(history.location.pathname).toEqual('/universal-data-viewer/testhatapp/starter-app-js-notes');
+    expect(history.location.pathname).toEqual(
+      '/universal-data-viewer/testhatapp/starter-app-js-notes',
+    );
   });
 });

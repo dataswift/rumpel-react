@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import { AppThunk, RootState } from '../../app/store';
 import { HatTool } from '../tools/hat-tool.interface';
 
 type ApplicationsState = {
@@ -35,21 +35,21 @@ export const { parentApp, dependencyApps, dependencyTools } = slice.actions;
 
 export const setParentApp =
   (app: HatApplication): AppThunk =>
-    (dispatch) => {
-      dispatch(parentApp(app));
-    };
+  (dispatch) => {
+    dispatch(parentApp(app));
+  };
 
 export const setDependencyApps =
   (app: HatApplication[]): AppThunk =>
-    (dispatch) => {
-      dispatch(dependencyApps(app));
-    };
+  (dispatch) => {
+    dispatch(dependencyApps(app));
+  };
 
 export const setDependencyTools =
   (tool: HatTool[]): AppThunk =>
-    (dispatch) => {
-      dispatch(dependencyTools(tool));
-    };
+  (dispatch) => {
+    dispatch(dependencyTools(tool));
+  };
 
 export const selectParentApp = (state: RootState) => state.hmi.parentApp;
 export const selectDependencyApps = (state: RootState) => state.hmi.dependencyApps;

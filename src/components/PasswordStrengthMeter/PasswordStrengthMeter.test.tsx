@@ -1,9 +1,9 @@
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
 import Root from '../../app/Root';
 import { PasswordStrengthMeter } from './PasswordStrengthMeter';
-import { render, screen } from '@testing-library/react';
 
 describe('PasswordStrengthMeter', () => {
   const history = createMemoryHistory();

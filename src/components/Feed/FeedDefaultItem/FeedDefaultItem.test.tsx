@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { FeedDefaultItem } from './FeedDefaultItem';
-import { SheFeedItemTextAndImage, SheFeedItemTextAndLocation, SheFeedItemTextOnly } from '../../../testData/SheFeed';
+import {
+  SheFeedItemTextAndImage,
+  SheFeedItemTextAndLocation,
+  SheFeedItemTextOnly,
+} from '../../../testData/SheFeed';
 
 describe('FeedDefaultItem', () => {
   test('renders the FeedDefaultItem component without error: text only', () => {

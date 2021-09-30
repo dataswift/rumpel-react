@@ -1,58 +1,55 @@
+const prettierConfig = require('./.prettierrc');
+
 module.exports = {
-  plugins: ['standard', 'react', 'react-hooks', '@typescript-eslint'],
-  rules: {
-    'no-var': 'error',
-    'arrow-spacing': ['error', { before: true, after: true }],
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    indent: ['error', 2, { SwitchCase: 1 }],
-    'comma-dangle': [
-      'error',
-      {
-        objects: 'only-multiline',
-        arrays: 'only-multiline',
-        imports: 'only-multiline',
-        exports: 'never',
-        functions: 'only-multiline',
-      },
-    ],
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        args: 'after-used',
-      },
-    ],
-
-    // options to emulate prettier setup
-    semi: ['error', 'always'],
-    'max-len': ['warn', { code: 120, tabWidth: 2, ignoreUrls: true, ignoreRegExpLiterals: true }],
-    'object-curly-spacing': [2, 'always'],
-
-    // standard.js
-    'space-before-function-paren': [
-      'error',
-      {
-        named: 'never',
-        anonymous: 'never',
-        asyncArrow: 'always',
-      },
-    ],
-
-    // standard plugin - options
-    'standard/object-curly-even-spacing': ['error', 'either'],
-    'standard/array-bracket-even-spacing': ['error', 'either'],
-    'standard/computed-property-even-spacing': ['error', 'even'],
-    'standard/no-callback-literal': ['error', ['cb', 'callback']],
-
-    // react plugin - options
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error',
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true,
+    jest: true,
   },
-  parser: '@typescript-eslint/parser',
+  extends: ['airbnb-typescript', 'prettier'],
+  plugins: ['react', 'react-hooks', 'prettier'],
   parserOptions: {
-    ecmaVersion: 8,
-    sourceType: 'module',
     project: './tsconfig.json',
   },
+  rules:{
+    'prettier/prettier': [2, prettierConfig],
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+
+    // We should enforce the rules below:
+    "import/no-cycle": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-plusplus": 0,
+    "no-continue": 0,
+    "no-useless-escape": 0,
+    "no-nested-ternary": 0,
+    "no-param-reassign": 0,
+    "no-console": 0,
+    "default-case": 0,
+    "consistent-return": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-shadow": 0,
+    "@typescript-eslint/naming-convention": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/interactive-supports-focus": 0,
+    "prefer-promise-reject-errors": 0,
+    "react/require-default-props": 0,
+    "react/forbid-prop-types": 0,
+    "react/destructuring-assignment": 0,
+    "react/button-has-type": 0,
+    "react/no-array-index-key": 0,
+    "react/no-danger": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "class-methods-use-this": 0,
+    "no-prototype-builtins": 0,
+    "no-restricted-syntax": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "import/no-named-as-default": 0,
+  }
 };
