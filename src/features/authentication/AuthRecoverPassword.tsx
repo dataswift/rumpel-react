@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './AuthLogin.scss';
 import { recoverPassword } from '../../api/hatAPI';
 import { AuthApplicationLogo, Input } from 'hmi';
 import { isEmail } from '../../utils/validations';

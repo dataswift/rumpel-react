@@ -17,7 +17,7 @@ import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
 import DataDebits from '../features/data-debit';
 import DataDebitDetails from '../features/data-debit/DataDebitDetails';
-import { LandingLoginPage, RegistrationPage } from '../pages';
+import { LandingLoginPage, LoginPage, RegistrationPage } from '../pages';
 
 const HatClaim = React.lazy(
   () =>
@@ -40,14 +40,6 @@ const HatLogin = React.lazy(
     import(
       /* webpackChunkName: "hat_setup_login" */
       '../features/hat-login/HatLogin'
-    ),
-);
-
-const AuthLogin = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "auth_login" */
-      '../features/authentication/AuthLogin'
     ),
 );
 
@@ -162,7 +154,7 @@ const AppRouter = () => (
         </LayoutRoute>
 
         <LayoutRoute path="/login" footerBackgroundColor="#fff">
-          <LandingLoginPage />
+          <Oauth />
         </LayoutRoute>
 
         <LayoutRoute path="/register" footerBackgroundColor="#fff">
@@ -174,7 +166,7 @@ const AppRouter = () => (
         </LayoutRoute>
 
         <LayoutRoute path="/auth/login" issuedByFooter footerBackgroundColor="#fff">
-          <AuthLogin />
+          <LoginPage />
         </LayoutRoute>
 
         <LayoutRoute path="/auth/recover-password" issuedByFooter footerBackgroundColor="#fff">
@@ -202,7 +194,7 @@ const AppRouter = () => (
         </LayoutRoute>
 
         <LayoutRoute path="/user/login/">
-          <AuthLogin />
+          <LoginPage />
         </LayoutRoute>
 
         <LayoutRoute path="/user/password/recover">
@@ -221,9 +213,15 @@ const AppRouter = () => (
           exact
           path="/"
           render={({ location }) => {
-            const redirectTo = location.hash ? location.hash.replace('#', '') : '/login';
-
-            return <Redirect to={redirectTo} />;
+            if (location.hash) {
+              return <Redirect to={location.hash.replace('#', '')} />;
+            } else {
+              return (
+                <LayoutRoute path="/" footerBackgroundColor="#fff">
+                  <LandingLoginPage />
+                </LayoutRoute>
+              );
+            }
           }}
         />
 

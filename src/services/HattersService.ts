@@ -4,10 +4,12 @@ import { config } from '../app.config';
 import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
 import { HatTool } from "../features/tools/hat-tool.interface";
 import { buildRequestURL } from "../utils/utils";
+import { environment } from "../environment";
 
 export const pdaLookupWithEmail = (email: string) => {
   return get<PdaLookupResponse>(
-    `${config.links.hattersBackend}/api/hat/lookup?email=${encodeURIComponent(email)}&sandbox=true`,
+    // eslint-disable-next-line max-len
+    `${config.links.hattersBackend}/api/hat/lookup?email=${encodeURIComponent(email)}&sandbox=${environment.sandbox ? 'true' : 'false'}`,
   );
 };
 

@@ -5,7 +5,7 @@ import { queryParamsToSignupModel, redirectWithErrorParams, validatePdaSignupQue
 import { PdaSignup, RegistrationRedirectError } from "../../types/Hatters";
 import usePdaAuthHmi from "../../hooks/usePdaAuth";
 import RegistrationEmail from "./components/RegistrationEmail";
-import { AnalyticsContext, HmiV2 } from "hmi";
+import { AnalyticsContext, Hmi } from "hmi";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "../../features/language/languageSlice";
 import { createPdaAuthUser } from "../../services/HattersService";
@@ -16,6 +16,7 @@ import { signupTranslateErrorCode } from "../../utils/HattersErrorHandling";
 import RegistrationBackButton from "./components/RegistrationBackButton";
 import { updateError } from "../../redux/pdaAuth/hmiPdaAuthSlice";
 import { AnalyticsClickEvents } from "../../utils/AnalyticsEvents";
+import { APPLICATION_ID } from "../../app.config";
 
 export type PdaSignupQuery = {
   application_id: string;
@@ -41,7 +42,7 @@ const RegistrationPage: React.FC = () => {
     dependencyApps,
     dependencyTools,
     hmiSetupError
-  } = usePdaAuthHmi(signup?.applicationId, query.lang);
+  } = usePdaAuthHmi(signup?.applicationId || APPLICATION_ID, query.lang);
 
   const setSignupEmail = (email: string, newsletterOptin: boolean) => {
     const updatedSignup = JSON.parse(JSON.stringify(signup));
@@ -147,7 +148,7 @@ const RegistrationPage: React.FC = () => {
       )}
 
       {step === 1 && (
-        <HmiV2
+        <Hmi
           email={signup?.email as string}
           parentApp={parentApp}
           onApproved={() => setStep(2)}
@@ -161,7 +162,6 @@ const RegistrationPage: React.FC = () => {
           dependencyTools={dependencyTools.map(tool => tool.info.name)}
           dependencyApps={dependencyApps}
           applicationId={signup?.applicationId as string}
-          hmiType="daas"
         />
       )}
 

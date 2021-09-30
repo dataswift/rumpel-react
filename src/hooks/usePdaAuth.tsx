@@ -12,7 +12,7 @@ import {
   selectParentApp,
 } from "../redux/pdaAuth/hmiPdaAuthSlice";
 
-export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en') {
+export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en', skipDeps = false) {
   const dispatch = useDispatch();
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApp);
@@ -27,7 +27,7 @@ export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en
   }, [applicationId, dispatch, lang, parentApp?.id]);
 
   useEffect(() => {
-    if (!parentApp?.dependencies) return;
+    if (!parentApp?.dependencies || skipDeps) return;
 
     if (parentApp.dependencies.plugs.length > 0) {
       parentApp.dependencies.plugs.forEach(appId => {
@@ -46,7 +46,7 @@ export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en
         dispatch(getPdaAuthParentApplicationContractDependency(contractId));
       });
     }
-  }, [dispatch, parentApp]);
+  }, [dispatch, parentApp, skipDeps]);
 
   return {
     parentApp,

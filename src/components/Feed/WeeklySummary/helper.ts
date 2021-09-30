@@ -13,7 +13,7 @@ export const transformWeeklySummary = (structure?: {
 
   if (!structure) return null;
 
-  Object.keys(structure).map((key) => {
+  Object.keys(structure).forEach((key) => {
     if (key.includes('sentiment')) {
       contentSentiment += structure[key][0].content + '\n';
       badgeSentiment += structure[key][0].badge + '\n';
@@ -25,8 +25,6 @@ export const transformWeeklySummary = (structure?: {
     } else {
       weeklySummaryArray.push({ source: key, content: structure[key][0].content, badge: structure[key][0].badge });
     }
-
-    return key;
   });
 
   if (hasSentiment) {

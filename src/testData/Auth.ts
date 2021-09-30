@@ -6,6 +6,7 @@ const TEST_AUTH: AuthenticationState = {
   hatName: 'TestName',
   rememberMe: false,
   authState: AuthState.LOGIN_REQUEST,
+  pdaLookupResponseError: false,
 };
 
 export default TEST_AUTH;

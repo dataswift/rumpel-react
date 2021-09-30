@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import DataswiftTm from '../../assets/icons/dataswift_tm.svg';
 import { Input } from 'hmi';
-import { pdaLookupWithEmail } from '../../services/HattersService';
+import { pdaLookupWithEmail, resendVerificationEmail } from '../../services/HattersService';
 import { PdaLookupResponse } from '../../types/Hatters';
-import { config } from '../../app.config';
 import { Link, useHistory } from 'react-router-dom';
 import { newUserAccessToken } from '../../api/hatAPI';
 import { loginWithToken } from '../../features/authentication/authenticationSlice';
@@ -11,6 +10,8 @@ import { HatClientService } from '../../services/HatClientService';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import FormatMessage from "../../features/messages/FormatMessage";
+import { APPLICATION_ID } from "../../app.config";
+import { environment } from "../../environment";
 
 const LandingLoginView: React.FC = () => {
   const history = useHistory();
@@ -18,6 +19,7 @@ const LandingLoginView: React.FC = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  const [resendEmailState, setResendEmailState] = useState('idle');
   const [response, setResponse] = useState<PdaLookupResponse | null>(null);
   const [password, setPassword] = useState('');
 
@@ -55,8 +57,22 @@ const LandingLoginView: React.FC = () => {
     }
   };
 
+
+  const resendEmail = async () => {
+    try {
+      setResendEmailState('pending');
+      const res = await resendVerificationEmail(email, window.location.origin, environment.sandbox);
+
+      if (res.parsedBody) {
+        setResendEmailState('success');
+      }
+    } catch (e) {
+      setResendEmailState('error');
+    }
+  };
+
   const onSignup = async () => {
-    window.location.assign(`${config.links.pdaSignup}&email=${email}`);
+    history.push(`/register?email=${email}&application_id=${APPLICATION_ID}&redirect_uri=${window.location.origin}`);
   };
 
   return (
@@ -86,7 +102,7 @@ const LandingLoginView: React.FC = () => {
         </>
       )}
 
-      {currentStep === 2 && (
+      {currentStep === 2 && response?.verified && (
         <>
           <div className="landing-login-email-text">{email}</div>
           <Input
@@ -106,6 +122,34 @@ const LandingLoginView: React.FC = () => {
           <Link className={'auth-login-btn-link'} to={'/auth/recover-password'}>
             <FormatMessage id={'ds.auth.login.forgotPassword'} />
           </Link>
+        </>
+      )}
+
+      {currentStep === 2 && !response?.verified && (
+        <>
+          <h2 className={'ds-hmi-email signup-email-title'}>{email}</h2>
+
+          <h2 className={'signup-title'}>
+            <FormatMessage id="'hatters.auth.confirmYourIdentity.title'" />
+          </h2>
+
+          <button className={'signup-btn-secondary'} onClick={() => resendEmail()}>
+            <FormatMessage id={'hatters.auth.confirmYourIdentity.resendActivationEmail'} />
+            {resendEmailState === 'error' && (
+              <i className={'material-icons'} style={{ color: '#e50d42' }}>
+                error_outline
+              </i>
+            )}
+            {resendEmailState === 'success' && (
+              <i className={'material-icons'} style={{ color: '#a8c62b' }}>
+                done
+              </i>
+            )}
+          </button>
+
+          <div className={'signup-help-text'} onClick={() => {}}>
+            <FormatMessage id={'hatters.auth.confirmYourIdentity.needHelp'} asHtml />
+          </div>
         </>
       )}
 

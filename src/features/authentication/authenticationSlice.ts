@@ -19,6 +19,7 @@ export type AuthenticationState = {
   rememberMe: boolean;
   hatName: string;
   pdaLookupResponse?: PdaLookupResponse | null;
+  pdaLookupResponseError: boolean;
   hatDomain: string;
   token?: string | null;
 };
@@ -27,6 +28,7 @@ export const initialState: AuthenticationState = {
   isAuthenticated: false,
   authState: AuthState.LOGIN_REQUEST,
   rememberMe: false,
+  pdaLookupResponseError: false,
   hatName: '',
   hatDomain: '',
 };
@@ -44,7 +46,11 @@ export const slice = createSlice({
       state.hatDomain = action.payload.hatDomain;
     },
     setPdaLookupResponse: (state, action: PayloadAction<PdaLookupResponse | null>) => {
+      state.pdaLookupResponseError = false;
       state.pdaLookupResponse = action.payload;
+    },
+    setPdaLookupResponseError: (state, action: PayloadAction<boolean>) => {
+      state.pdaLookupResponseError = action.payload;
     },
     loginAuthState: (state, actions: PayloadAction<AuthState>) => {
       state.authState = actions.payload;
@@ -59,7 +65,14 @@ export const slice = createSlice({
   },
 });
 
-export const { authenticateWithToken, updateHatName, loginAuthState, setPdaLookupResponse, logout } = slice.actions;
+export const {
+  authenticateWithToken,
+  updateHatName,
+  loginAuthState,
+  setPdaLookupResponse,
+  setPdaLookupResponseError,
+  logout
+} = slice.actions;
 
 export const loginWithToken =
   (token: string): AppThunk =>
@@ -119,6 +132,7 @@ export const getPdaLookupDetails =
         }
       } catch (e) {
         dispatch(setPdaLookupResponse(null));
+        dispatch(setPdaLookupResponseError(true));
       }
     };
 
@@ -127,5 +141,6 @@ export const selectAuthToken = (state: RootState) => state.authentication.token;
 export const selectUserHatName = (state: RootState) => state.authentication.hatName;
 export const selectUserHatDomain = (state: RootState) => state.authentication.hatDomain;
 export const selectUserPdaLookupDetails = (state: RootState) => state.authentication.pdaLookupResponse;
+export const selectUserPdaLookupResponseError = (state: RootState) => state.authentication.pdaLookupResponseError;
 
 export default slice.reducer;
