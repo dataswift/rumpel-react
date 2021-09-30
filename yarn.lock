@@ -6006,9 +6006,9 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-"hmi@git+ssh://git@github.com:dataswift/hmi-react.git#v0.5.0-RC-1":
+"hmi@git+ssh://git@github.com:dataswift/hmi-react.git#v0.5.0":
   version "0.5.0"
-  resolved "git+ssh://git@github.com:dataswift/hmi-react.git#ad38d065b9edf6ca9b45f5c403d9208931a056f9"
+  resolved "git+ssh://git@github.com:dataswift/hmi-react.git#700f402d2745246e37d654123f0fd20a04986094"
   dependencies:
     lodash "^4.17.21"
     lodash-es "^4.17.21"
