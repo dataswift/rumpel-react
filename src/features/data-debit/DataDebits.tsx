@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 
-import { getDataDebits } from './dataDebitSlice';
-import TileHeader from '../../components/headers/TileHeader/TileHeader';
-import { selectDataDebits } from './dataDebitSlice';
 import { useHistory } from 'react-router';
+import { getDataDebits, selectDataDebits } from './dataDebitSlice';
+import TileHeader from '../../components/headers/TileHeader/TileHeader';
 import Card from '../../components/Card/Card';
 
 const getStatusText = (active: boolean, endDate?: string) => {
   if (active) return 'active';
   if (!endDate) return '';
 
-  return 'expired ' + format(new Date(endDate), 'dd MMM yyyy h:mma');
+  return `expired ${format(new Date(endDate), 'dd MMM yyyy h:mma')}`;
 };
 
 const DataDebits: React.FC = () => {
@@ -41,7 +40,9 @@ const DataDebits: React.FC = () => {
           const descriptionText = (
             <>
               <div className="card-headline">by {dataDebit.requestClientName}</div>
-              <div className="card-headline-italicized">{getStatusText(dataDebit.active, dataDebit.end)}</div>
+              <div className="card-headline-italicized">
+                {getStatusText(dataDebit.active, dataDebit.end)}
+              </div>
             </>
           );
 

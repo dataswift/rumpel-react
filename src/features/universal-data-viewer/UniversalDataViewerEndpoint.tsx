@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { getDataRecords, selectEndpointDataPreview } from './universalDataViewerSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getDataRecords, selectEndpointDataPreview } from './universalDataViewerSlice';
 import { flattenObject } from './helper';
 
 const ITEMS_PER_PAGE = 20;
@@ -54,28 +54,24 @@ const UniversalDataViewerEndpoint: React.FC = () => {
   };
 
   return (
-    <div className={'universal-data-viewer-endpoint'}>
-      <h2 className={'universal-data-viewer-endpoint-title'}>{namespace + '/' + endpoint}</h2>
+    <div className="universal-data-viewer-endpoint">
+      <h2 className="universal-data-viewer-endpoint-title">{`${namespace}/${endpoint}`}</h2>
       {dataPreview &&
         dataPreview[`${namespace}/${endpoint}`] &&
-        dataPreviewFlat.map((obj, index) => {
-          return (
-            <div className={'universal-data-viewer-endpoint-data-preview'} key={'data-preview' + index}>
-              <div className={'universal-data-viewer-endpoint-data-preview-index'}>#{index + 1}</div>
-              {Object.entries(obj).map(([key, value], index) => {
-                return (
-                  <div key={key + index} className={'universal-data-viewer-endpoint-data-preview-item'}>
-                    <h3>{key}</h3>
-                    <p aria-label={value as string}>{value as string}</p>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+        dataPreviewFlat.map((obj, index) => (
+          <div className="universal-data-viewer-endpoint-data-preview" key={`data-preview${index}`}>
+            <div className="universal-data-viewer-endpoint-data-preview-index">#{index + 1}</div>
+            {Object.entries(obj).map(([key, value], index) => (
+              <div key={key + index} className="universal-data-viewer-endpoint-data-preview-item">
+                <h3>{key}</h3>
+                <p aria-label={value as string}>{value as string}</p>
+              </div>
+            ))}
+          </div>
+        ))}
 
       {!loading && (
-        <button className={'btn btn-accent'} onClick={() => onLoadMore()}>
+        <button className="btn btn-accent" onClick={() => onLoadMore()}>
           Load more
         </button>
       )}

@@ -75,79 +75,77 @@ const Oauth = React.lazy(
     ),
 );
 
-const PrivateSpaceRoutes = () => {
-  return (
-    <Switch>
-      <PrivateSpaceRoute path={'/feed'}>
-        <Feed />
-      </PrivateSpaceRoute>
+const PrivateSpaceRoutes = () => (
+  <Switch>
+    <PrivateSpaceRoute path="/feed">
+      <Feed />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App'}>
-        <HatApplications />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App">
+      <HatApplications />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App/:appId'}>
-        <HatApplicationDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App/:appId">
+      <HatApplicationDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App/:appId/permissions'}>
-        <HatApplicationPermissions />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App/:appId/permissions">
+      <HatApplicationPermissions />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug'}>
-        <DataPlugs />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug">
+      <DataPlugs />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId'}>
-        <DataPlugDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug/:appId">
+      <DataPlugDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId/permissions'}>
-        <HatApplicationPermissions />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug/:appId/permissions">
+      <HatApplicationPermissions />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/universal-data-viewer'}>
-        <UniversalDataViewerDataSources />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/universal-data-viewer">
+      <UniversalDataViewerDataSources />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
-        <UniversalDataViewerEndpoint />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/universal-data-viewer/:namespace/:endpoint">
+      <UniversalDataViewerEndpoint />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/profile'}>
-        <Profile />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/profile">
+      <Profile />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/tools'}>
-        <HatTools />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/tools">
+      <HatTools />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/tools/:toolId'}>
-        <HatToolDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/tools/:toolId">
+      <HatToolDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/settings'}>
-        <Settings />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/settings">
+      <Settings />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/user/password/change'}>
-        <ChangePassword />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/user/password/change">
+      <ChangePassword />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/data-debit'}>
-        <DataDebits />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/data-debit">
+      <DataDebits />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/data-debit/:dataDebitParam'}>
-        <DataDebitDetails />
-      </PrivateSpaceRoute>
-    </Switch>
-  );
-};
+    <PrivateSpaceRoute path="/data-debit/:dataDebitParam">
+      <DataDebitDetails />
+    </PrivateSpaceRoute>
+  </Switch>
+);
 
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<LoadingSpinner loadingText={'Loading...'} />}>
+    <Suspense fallback={<LoadingSpinner loadingText="Loading..." />}>
       <Switch>
         <LayoutRoute path="/public/profile">
           <PublicProfile />
@@ -173,18 +171,25 @@ const AppRouter = () => (
           <AuthRecoverPassword />
         </LayoutRoute>
 
-        <LayoutRoute path="/auth/change-password/:resetToken" issuedByFooter footerBackgroundColor="#fff">
+        <LayoutRoute
+          path="/auth/change-password/:resetToken"
+          issuedByFooter
+          footerBackgroundColor="#fff"
+        >
           <AuthChangePassword />
         </LayoutRoute>
 
-        <LayoutRoute path="/auth/verify-email/:verifyToken" issuedByFooter footerBackgroundColor="#fff">
+        <LayoutRoute
+          path="/auth/verify-email/:verifyToken"
+          issuedByFooter
+          footerBackgroundColor="#fff"
+        >
           <AuthVerifyEmail />
         </LayoutRoute>
 
-        <PrivateLayoutRoute path={'/auth/oauth'} newAuth issuedByFooter footerBackgroundColor="#fff">
+        <PrivateLayoutRoute path="/auth/oauth" newAuth issuedByFooter footerBackgroundColor="#fff">
           <Oauth />
         </PrivateLayoutRoute>
-
 
         {/*
           The following routes are deprecated.
@@ -201,11 +206,11 @@ const AppRouter = () => (
           <AuthRecoverPassword />
         </LayoutRoute>
 
-        <PrivateLayoutRoute path={'/hatlogin'}>
+        <PrivateLayoutRoute path="/hatlogin">
           <HatLogin />
         </PrivateLayoutRoute>
 
-        <PrivateLayoutRoute path={'/hat-setup-login'}>
+        <PrivateLayoutRoute path="/hat-setup-login">
           <HatLogin />
         </PrivateLayoutRoute>
 
@@ -215,13 +220,12 @@ const AppRouter = () => (
           render={({ location }) => {
             if (location.hash) {
               return <Redirect to={location.hash.replace('#', '')} />;
-            } else {
-              return (
-                <LayoutRoute path="/" footerBackgroundColor="#fff">
-                  <LandingLoginPage />
-                </LayoutRoute>
-              );
             }
+            return (
+              <LayoutRoute path="/" footerBackgroundColor="#fff">
+                <LandingLoginPage />
+              </LayoutRoute>
+            );
           }}
         />
 

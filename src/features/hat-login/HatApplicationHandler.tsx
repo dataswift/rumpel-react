@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as queryString from 'query-string';
 import { selectApplications } from '../applications/applicationsSlice';
 import { selectErrorMessage, setRedirectError } from './hatLoginSlice';
-import { selectParentApp, setDependencyApps, setDependencyTools, setParentApp } from '../hmi/hmiSlice';
+import {
+  selectParentApp,
+  setDependencyApps,
+  setDependencyTools,
+  setParentApp,
+} from '../hmi/hmiSlice';
 import { getTools, selectTools } from '../tools/toolsSlice';
-import * as queryString from 'query-string';
 
 type Props = {
   children: React.ReactNode;
@@ -44,7 +49,9 @@ const HatLoginApplicationHandler: React.FC<Props> = (props) => {
 
       dispatch(setParentApp(parentApp));
       dispatch(
-        setDependencyApps(applications.filter((app) => parentPlugDependencies.indexOf(app.application.id) > -1)),
+        setDependencyApps(
+          applications.filter((app) => parentPlugDependencies.indexOf(app.application.id) > -1),
+        ),
       );
 
       if (parentToolDependencies.length > 0) {
@@ -59,7 +66,9 @@ const HatLoginApplicationHandler: React.FC<Props> = (props) => {
 
       const parentToolDependencies = parentApp.application.dependencies?.tools || [];
 
-      dispatch(setDependencyTools(tools.filter((tool) => parentToolDependencies.indexOf(tool.id) !== -1)));
+      dispatch(
+        setDependencyTools(tools.filter((tool) => parentToolDependencies.indexOf(tool.id) !== -1)),
+      );
     }
   }, [parentApp, tools, dispatch]);
 
@@ -73,7 +82,7 @@ const HatLoginApplicationHandler: React.FC<Props> = (props) => {
         <div className="app-error">
           <h3 className="app-error-header">Looks like something went wrong</h3>
           <p className="app-error-text">{errorMessage}</p>
-          <button className={'btn btn-accent'} onClick={() => redirectBack()}>
+          <button className="btn btn-accent" onClick={() => redirectBack()}>
             Back
           </button>
         </div>

@@ -3,7 +3,8 @@ import { environment } from './environment';
 export const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
 
 const externalLinks = {
-  bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
+  bestPractices:
+    'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
   termsOfService: 'https://www.dataswift.io/legal/pda-owner-agreement-en',
   privacyPolicy: 'https://www.dataswift.io/legal/privacy-policy-en',
 };
@@ -96,9 +97,19 @@ export const config = {
     },
   ],
   settingsMenu: [
-    { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change', description: '' },
+    {
+      display: 'Change password',
+      icon: 'keyboard_arrow_right',
+      link: '/user/password/change',
+      description: '',
+    },
 
-    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io', description: '' },
+    {
+      display: 'Tech support',
+      icon: 'exit_to_app',
+      link: 'mailto:contact@dataswift.io',
+      description: '',
+    },
 
     {
       display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
@@ -107,9 +118,19 @@ export const config = {
       description: '',
     },
 
-    { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },
+    {
+      display: 'Privacy policy',
+      icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '',
+    },
 
-    { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org', description: '' },
+    {
+      display: 'Join the HAT Community',
+      icon: 'exit_to_app',
+      link: 'https://www.hatcommunity.org',
+      description: '',
+    },
   ],
   settingsPrivateDataMenu: [
     { display: 'Profile', icon: 'keyboard_arrow_right', link: '/profile', description: '' },

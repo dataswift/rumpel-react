@@ -35,9 +35,8 @@ const FormatMessage: React.FC<Props> = (props) => {
 
   if (props.asHtml) {
     return <div dangerouslySetInnerHTML={{ __html: formattedMsg }} />;
-  } else {
-    return <>{formattedMsg}</>;
   }
+  return <>{formattedMsg}</>;
 };
 
 export default FormatMessage;

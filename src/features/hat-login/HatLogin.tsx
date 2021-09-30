@@ -7,20 +7,18 @@ import HatLoginBuildRedirect from './HatLoginBuildRedirect';
 import HatLoginSetupDependency from './HatLoginSetupDependency';
 import './HatLogin.scss';
 
-const HatLogin: React.FC = () => {
-  return (
-    <HatLoginParamValidation>
-      <HatLoginApplicationHandler>
-        <HatLoginBuildRedirect>
-          <HatLoginSetupDependency>
-            <HatLoginRedirectError>
-              <HatLoginHmi />
-            </HatLoginRedirectError>
-          </HatLoginSetupDependency>
-        </HatLoginBuildRedirect>
-      </HatLoginApplicationHandler>
-    </HatLoginParamValidation>
-  );
-};
+const HatLogin: React.FC = () => (
+  <HatLoginParamValidation>
+    <HatLoginApplicationHandler>
+      <HatLoginBuildRedirect>
+        <HatLoginSetupDependency>
+          <HatLoginRedirectError>
+            <HatLoginHmi />
+          </HatLoginRedirectError>
+        </HatLoginSetupDependency>
+      </HatLoginBuildRedirect>
+    </HatLoginApplicationHandler>
+  </HatLoginParamValidation>
+);
 
 export default HatLogin;

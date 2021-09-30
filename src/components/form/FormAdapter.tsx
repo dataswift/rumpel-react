@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FormFields } from './formFields.interface';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
 import DatePickerRumpel from '../DatePickerRumpel/DatePickerRumpel';
@@ -6,7 +7,7 @@ import Input from './Input';
 import { useFormValidations } from './useFormValidations';
 import { ProfileSharingConfig } from '../../features/profile/profile.interface';
 import { setProfileSharingConfigKey } from '../../features/profile/profileSlice';
-import { useDispatch } from 'react-redux';
+
 const debounce = require('lodash.debounce');
 
 type Props = {
@@ -20,7 +21,8 @@ type Props = {
 };
 
 const FormAdapter: React.FC<Props> = (props) => {
-  const { fields, profileField, formId, validations, values, onFormDataChange, profileSharing } = props;
+  const { fields, profileField, formId, validations, values, onFormDataChange, profileSharing } =
+    props;
   const dispatch = useDispatch();
 
   const [formState, setFormState] = useState<Record<string, string>>(values);

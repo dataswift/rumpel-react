@@ -30,17 +30,17 @@ export const DateRangePickerRumpel: React.FC<Props> = ({ selectedDates }) => {
   };
 
   return (
-    <div className={'date-range-picker-rumpel'}>
+    <div className="date-range-picker-rumpel">
       <DateRange
         onChange={onChange}
         showSelectionPreview={false}
         moveRangeOnFirstSelection={false}
         ranges={state}
-        showMonthArrow={true}
-        direction={'horizontal'}
+        showMonthArrow
+        direction="horizontal"
         months={1}
       />
-      <button className={'btn btn-accent date-range-picker-rumpel-done'} onClick={() => onDone()}>
+      <button className="btn btn-accent date-range-picker-rumpel-done" onClick={() => onDone()}>
         Done
       </button>
     </div>

@@ -7,7 +7,8 @@ import { getTools, selectTools } from './toolsSlice';
 import Card from '../../components/Card/Card';
 import { HatTool } from './hat-tool.interface';
 
-const getToolStatusIcon = (tool: HatTool): string => (tool.status.enabled ? 'check_circle' : 'add_circle_outline');
+const getToolStatusIcon = (tool: HatTool): string =>
+  tool.status.enabled ? 'check_circle' : 'add_circle_outline';
 
 const ToolsList: React.FC = () => {
   const dispatch = useDispatch();

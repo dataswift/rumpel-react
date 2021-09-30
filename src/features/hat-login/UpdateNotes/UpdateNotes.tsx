@@ -23,23 +23,23 @@ export const UpdateNotes: React.FC<Props> = ({ app, onApproved, onRejected }) =>
         <div className="sticky-action-panel-content">
           <div className="action-buttons">
             <button className="secondary-action" onClick={() => onRejected()}>
-              <FormatMessage id={'hmi.actions.cancel'} />
+              <FormatMessage id="hmi.actions.cancel" />
             </button>
             <button className="primary-action" onClick={() => onApproved()}>
-              <FormatMessage id={'hmi.actions.confirm'} />
+              <FormatMessage id="hmi.actions.confirm" />
             </button>
           </div>
 
           <p className="tos-text">
-            <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.part1'} />
+            <FormatMessage id="hmi.actions.agreeWithTermsAndPrivacy.part1" />
             <a href={hmiConfig.links.termsOfService} target="_blank" rel="noopener noreferrer">
-              <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.termsOfService'} />
+              <FormatMessage id="hmi.actions.agreeWithTermsAndPrivacy.termsOfService" />
             </a>
             ,{' '}
             <a href={hmiConfig.links.privacyPolicy} target="_blank" rel="noopener noreferrer">
-              <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy'} />
+              <FormatMessage id="hmi.actions.agreeWithTermsAndPrivacy.privacyPolicy" />
             </a>
-            <FormatMessage id={'hmi.actions.agreeWithTermsAndPrivacy.part2'} />
+            <FormatMessage id="hmi.actions.agreeWithTermsAndPrivacy.part2" />
           </p>
 
           <p className="hmi-id-text">
@@ -80,15 +80,13 @@ export const UpdateNotes: React.FC<Props> = ({ app, onApproved, onRejected }) =>
         <h4 className="section-header">Summary of updates</h4>
         {app.info.updateNotes.notes && (
           <ul className="app-update-notes">
-            {app.info.updateNotes.notes.map((note, index) => {
-              return (
-                <li className="app-update-notes-item" key={index}>
-                  <div className="app-update-notes-item-content">
-                    <Markdown>{note}</Markdown>
-                  </div>
-                </li>
-              );
-            })}
+            {app.info.updateNotes.notes.map((note, index) => (
+              <li className="app-update-notes-item" key={index}>
+                <div className="app-update-notes-item-content">
+                  <Markdown>{note}</Markdown>
+                </div>
+              </li>
+            ))}
           </ul>
         )}
       </section>

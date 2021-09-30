@@ -18,9 +18,9 @@ import Logout from './Logout';
 const getStoragePercentage = (databaseUsedPercentage?: SystemStatusInterface): number => {
   if (!databaseUsedPercentage?.kind.metric) return 0;
 
-  const parsed = parseInt(databaseUsedPercentage.kind.metric);
+  const parsed = parseInt(databaseUsedPercentage.kind.metric, 10);
 
-  if (isNaN(parsed)) return 0;
+  if (Number.isNaN(parsed)) return 0;
 
   if (parsed >= 100) return 100;
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getPdaAuthParentApplication,
   getPdaAuthParentApplicationContractDependency,
@@ -10,9 +10,13 @@ import {
   selectDependencyTools,
   selectHmiSetupError,
   selectParentApp,
-} from "../redux/pdaAuth/hmiPdaAuthSlice";
+} from '../redux/pdaAuth/hmiPdaAuthSlice';
 
-export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en', skipDeps = false) {
+export default function usePdaAuthHmi(
+  applicationId?: string,
+  lang: string = 'en',
+  skipDeps = false,
+) {
   const dispatch = useDispatch();
   const parentApp = useSelector(selectParentApp);
   const dependencyApps = useSelector(selectDependencyApp);
@@ -30,19 +34,19 @@ export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en
     if (!parentApp?.dependencies || skipDeps) return;
 
     if (parentApp.dependencies.plugs.length > 0) {
-      parentApp.dependencies.plugs.forEach(appId => {
+      parentApp.dependencies.plugs.forEach((appId) => {
         dispatch(getPdaAuthParentApplicationPlugDependency(appId));
       });
     }
 
     if (parentApp.dependencies.tools.length > 0) {
-      parentApp.dependencies.tools.forEach(toolId => {
+      parentApp.dependencies.tools.forEach((toolId) => {
         dispatch(getPdaAuthParentApplicationToolDependency(toolId));
       });
     }
 
     if (parentApp.dependencies.contracts.length > 0) {
-      parentApp.dependencies.contracts.forEach(contractId => {
+      parentApp.dependencies.contracts.forEach((contractId) => {
         dispatch(getPdaAuthParentApplicationContractDependency(contractId));
       });
     }
@@ -53,6 +57,6 @@ export default function usePdaAuthHmi(applicationId?: string, lang: string = 'en
     dependencyApps,
     dependencyTools,
     dependencyContracts,
-    hmiSetupError
+    hmiSetupError,
   };
 }

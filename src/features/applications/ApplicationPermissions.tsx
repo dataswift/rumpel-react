@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-
-import { getApplicationById, getApplications, selectApplicationById, selectApplications } from './applicationsSlice';
-import './HatApplication.scss';
 import { Hmi } from 'hmi';
+
+import {
+  getApplicationById,
+  getApplications,
+  selectApplicationById,
+  selectApplications,
+} from './applicationsSlice';
+import './HatApplication.scss';
 import {
   selectDependencyApps,
   selectDependencyTools,
@@ -37,26 +42,34 @@ const HatApplicationPermissions: React.FC = () => {
     if (parentPlugDependencies.length > 0 && apps.length < 2) {
       dispatch(getApplications());
     }
-    dispatch(setDependencyApps(apps.filter((app) => parentPlugDependencies.indexOf(app.application.id) > -1)));
+    dispatch(
+      setDependencyApps(
+        apps.filter((app) => parentPlugDependencies.indexOf(app.application.id) > -1),
+      ),
+    );
 
     if (parentToolDependencies.length > 0 && tools.length === 0) {
       dispatch(getTools());
     }
 
-    dispatch(setDependencyTools(tools.filter((tool) => parentToolDependencies.indexOf(tool.id) !== -1)));
+    dispatch(
+      setDependencyTools(tools.filter((tool) => parentToolDependencies.indexOf(tool.id) !== -1)),
+    );
   }, [dispatch, app, appId, apps, tools]);
 
   if (
     !app ||
-    (app.application.dependencies && app.application.dependencies.plugs?.length !== dependencyApps.length) ||
-    (app.application.dependencies && app.application.dependencies.tools?.length !== dependencyTools.length)
+    (app.application.dependencies &&
+      app.application.dependencies.plugs?.length !== dependencyApps.length) ||
+    (app.application.dependencies &&
+      app.application.dependencies.tools?.length !== dependencyTools.length)
   ) {
     return null;
   }
 
   return (
     <Hmi
-      email={''}
+      email=""
       parentApp={app.application}
       dependencyApps={dependencyApps.map((app) => app.application)}
       dependencyTools={dependencyTools.map((tool) => tool.info.name)}

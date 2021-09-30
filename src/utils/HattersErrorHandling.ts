@@ -1,9 +1,9 @@
-import { HattersErrorCode } from "./HattersErrorCode";
-import { RegistrationRedirectError } from "../types/Hatters";
+import { HattersErrorCode } from './HattersErrorCode';
+import { RegistrationRedirectError } from '../types/Hatters';
 
 export const signupTranslateErrorCode = (errorCode: number) => {
-  const hattersError =  HattersErrorCode[errorCode] ;
-  let error: RegistrationRedirectError = { error: '', reason: '' };
+  const hattersError = HattersErrorCode[errorCode];
+  const error: RegistrationRedirectError = { error: '', reason: '' };
 
   switch (hattersError?.errorCode || 0) {
     case 3:

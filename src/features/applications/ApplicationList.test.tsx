@@ -34,7 +34,9 @@ describe('HAT Application List', () => {
   });
 
   test('the correct icon text is displayed for each hat application status', () => {
-    const { rerender } = render(<ApplicationList hatApps={[TEST_HAT_APPLICATION]} onAppClick={jest.fn()} />);
+    const { rerender } = render(
+      <ApplicationList hatApps={[TEST_HAT_APPLICATION]} onAppClick={jest.fn()} />,
+    );
     expect(screen.getByText('exit_to_app')).toBeInTheDocument();
 
     const needsUpdatingApp = { ...TEST_HAT_APPLICATION, needsUpdating: true };

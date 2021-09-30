@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { screen, render, fireEvent } from '@testing-library/react';
-import { InfoHeader } from './InfoHeader';
-import Root from '../../../app/Root';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
+import { InfoHeader } from './InfoHeader';
+import Root from '../../../app/Root';
 import { environment } from '../../../environment';
 
 describe('InfoHeader', () => {
@@ -53,6 +53,8 @@ describe('InfoHeader', () => {
       </Root>,
     );
 
-    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(environment.hattersFrontendUrl + '/hat/signup');
+    expect(screen.getByText('Get a hat').getAttribute('href')).toEqual(
+      `${environment.hattersFrontendUrl}/hat/signup`,
+    );
   });
 });

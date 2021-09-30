@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BundleStructure } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { getUnixTime } from 'date-fns';
 import { AppThunk, RootState } from '../../app/store';
 import { HatClientService } from '../../services/HatClientService';
 import { Profile, ProfileSharingConfig } from './profile.interface';
-import { BundleStructure } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
 import { generatePhataBundle, generateProfileShare } from './helpers';
-import { getUnixTime } from 'date-fns';
 
 type ProfileState = {
   profile: Profile;
@@ -107,7 +107,15 @@ const defaultProfile: Profile = {
   emergencyContact: { firstName: '', lastName: '', mobile: '', relationship: '' },
   address: { city: '', county: '', country: '' },
   about: { title: '', body: '' },
-  online: { website: '', blog: '', facebook: '', twitter: '', linkedin: '', google: '', youtube: '' },
+  online: {
+    website: '',
+    blog: '',
+    facebook: '',
+    twitter: '',
+    linkedin: '',
+    google: '',
+    youtube: '',
+  },
 };
 
 export const initialState: ProfileState = {
@@ -141,41 +149,43 @@ export const { profile, profileBundle, profileSharingConfig } = slice.actions;
 
 export const setProfile =
   (profileData: Profile): AppThunk =>
-    (dispatch) => {
-      dispatch(profile(profileData));
-    };
+  (dispatch) => {
+    dispatch(profile(profileData));
+  };
 
 export const setProfileBundle =
   (bundle: BundleStructure): AppThunk =>
-    (dispatch) => {
-      dispatch(profileBundle(bundle));
-    };
+  (dispatch) => {
+    dispatch(profileBundle(bundle));
+  };
 
 export const setProfileSharingConfig =
   (config: ProfileSharingConfig): AppThunk =>
-    (dispatch) => {
-      dispatch(profileSharingConfig(config));
-    };
+  (dispatch) => {
+    dispatch(profileSharingConfig(config));
+  };
 
 export const setProfileKeyValue =
   (key: string, value: number | boolean | Record<string, string>): AppThunk =>
-    (dispatch, getState) => {
-      let current = JSON.parse(JSON.stringify(getState().profile.profile)) as Profile;
-      current[key] = value;
+  (dispatch, getState) => {
+    const current = JSON.parse(JSON.stringify(getState().profile.profile)) as Profile;
+    current[key] = value;
 
-      dispatch(profile(current));
-      dispatch(saveProfile());
-    };
+    dispatch(profile(current));
+    dispatch(saveProfile());
+  };
 
 export const setProfileSharingConfigKey =
   (id: string, key: string, overrideToPublic?: boolean): AppThunk =>
-    (dispatch, getState) => {
-      const newSharingConfig = JSON.parse(JSON.stringify(getState().profile.profileSharingConfig));
+  (dispatch, getState) => {
+    const newSharingConfig = JSON.parse(JSON.stringify(getState().profile.profileSharingConfig));
 
-      newSharingConfig[id][key] = overrideToPublic ? true : !getState().profile.profileSharingConfig[id][key];
-      dispatch(profileSharingConfig(newSharingConfig));
-      dispatch(saveProfileSharingDetails());
-    };
+    newSharingConfig[id][key] = overrideToPublic
+      ? true
+      : !getState().profile.profileSharingConfig[id][key];
+    dispatch(profileSharingConfig(newSharingConfig));
+    dispatch(saveProfileSharingDetails());
+  };
 
 export const selectProfile = (state: RootState) => state.profile.profile;
 export const selectProfileSharingConfig = (state: RootState) => state.profile.profileSharingConfig;
@@ -196,7 +206,7 @@ export const getProfile = (): AppThunk => async (dispatch) => {
 
 export const saveProfile = (): AppThunk => async (dispatch, getState) => {
   try {
-    let currentProfile = JSON.parse(JSON.stringify(getState().profile.profile)) as Profile;
+    const currentProfile = JSON.parse(JSON.stringify(getState().profile.profile)) as Profile;
     currentProfile.dateCreated = getUnixTime(new Date());
 
     const res = await HatClientService.getInstance().postProfileData(currentProfile);
@@ -228,7 +238,9 @@ export const getProfilePrivacyDataBundle = (): AppThunk => async (dispatch, getS
 
     if (res?.parsedBody) {
       dispatch(setProfileBundle(res.parsedBody));
-      dispatch(setProfileSharingConfig(generateProfileShare(getState().profile.profile, res.parsedBody)));
+      dispatch(
+        setProfileSharingConfig(generateProfileShare(getState().profile.profile, res.parsedBody)),
+      );
     }
   } catch (e) {
     // TODO Error Handling

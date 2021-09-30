@@ -33,7 +33,7 @@ describe('Hat Application Details Actions', () => {
       <Router history={history}>
         <Route path="/applications/:appId">
           <Provider store={store}>
-            <ApplicationDetailsActions setup={false} appId={'1'} />
+            <ApplicationDetailsActions setup={false} appId="1" />
           </Provider>
         </Route>
       </Router>,
@@ -50,7 +50,7 @@ describe('Hat Application Details Actions', () => {
       <Router history={history}>
         <Route path="/applications/:appId">
           <Provider store={store}>
-            <ApplicationDetailsActions setup appId={'1'} />
+            <ApplicationDetailsActions setup appId="1" />
           </Provider>
         </Route>
       </Router>,
@@ -67,7 +67,7 @@ describe('Hat Application Details Actions', () => {
       <Router history={history}>
         <Route path="/applications/:appId">
           <Provider store={store}>
-            <ApplicationDetailsActions setup appId={'1'} />
+            <ApplicationDetailsActions setup appId="1" />
           </Provider>
         </Route>
       </Router>,

@@ -9,10 +9,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -28,10 +28,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -47,10 +47,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[1].groupFields[0].fields}
           validations={ProfileSections[1].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -69,27 +69,29 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[2].groupFields[0].fields}
           validations={ProfileSections[2].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
     );
 
     expect(screen.getByText('Title')).toBeInTheDocument();
-    expect(screen.getByText('Say something nice about yourself for the world to see')).toBeInTheDocument();
+    expect(
+      screen.getByText('Say something nice about yourself for the world to see'),
+    ).toBeInTheDocument();
   });
 
   test('renders the correct error messages for the personal info', async () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -111,10 +113,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -134,11 +136,15 @@ describe('FormAdapter', () => {
     fireEvent.change(alternativeEmail, { target: { value: '' } });
 
     fireEvent.change(mobile, { target: { value: 'test-NaN' } });
-    await waitFor(() => expect(screen.getByText('This field must be a number')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('This field must be a number')).toBeInTheDocument(),
+    );
     fireEvent.change(mobile, { target: { value: '' } });
 
     fireEvent.change(landline, { target: { value: 'test-NaN' } });
-    await waitFor(() => expect(screen.getByText('This field must be a number')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('This field must be a number')).toBeInTheDocument(),
+    );
     fireEvent.change(landline, { target: { value: '' } });
   });
 
@@ -146,10 +152,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,
@@ -171,10 +177,10 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
       </Root>,

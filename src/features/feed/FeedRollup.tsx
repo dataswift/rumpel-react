@@ -24,21 +24,20 @@ const FeedRollupItem: React.FC<PropsItem> = ({ rolledUpItem }) => {
   if (rolledUpItem.rollup.length < MIN_ROLLUP_ITEMS || expanded) {
     return (
       <>
-        {rolledUpItem.rollup.map((feedItem, index) => {
-          return <FeedItem key={feedItem.source + index} feedItem={feedItem} />;
-        })}
+        {rolledUpItem.rollup.map((feedItem, index) => (
+          <FeedItem key={feedItem.source + index} feedItem={feedItem} />
+        ))}
       </>
     );
-  } else {
-    return (
-      <div>
-        <FeedItem feedItem={rolledUpItem.rollup[0]} />
-        <button className={'feed-item-rollup-control'} onClick={() => setExpanded(!expanded)}>
-          See {rolledUpItem.rollup.length - 1} more items
-        </button>
-      </div>
-    );
   }
+  return (
+    <div>
+      <FeedItem feedItem={rolledUpItem.rollup[0]} />
+      <button className="feed-item-rollup-control" onClick={() => setExpanded(!expanded)}>
+        See {rolledUpItem.rollup.length - 1} more items
+      </button>
+    </div>
+  );
 };
 
 export const FeedRollup: React.FC<Props> = ({ sheFeed }) => {
@@ -65,9 +64,9 @@ export const FeedRollup: React.FC<Props> = ({ sheFeed }) => {
 
   return (
     <div>
-      {rollupFeed.map((rolledUpItem, index) => {
-        return <FeedRollupItem rolledUpItem={rolledUpItem} key={'rollupindex' + index} />;
-      })}
+      {rollupFeed.map((rolledUpItem, index) => (
+        <FeedRollupItem rolledUpItem={rolledUpItem} key={`rollupindex${index}`} />
+      ))}
     </div>
   );
 };

@@ -1,22 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { parse } from "query-string";
+import { parse } from 'query-string';
 import './RegistrationPage.scss';
-import { queryParamsToSignupModel, redirectWithErrorParams, validatePdaSignupQueryParams } from "./helper";
-import { PdaSignup, RegistrationRedirectError } from "../../types/Hatters";
-import usePdaAuthHmi from "../../hooks/usePdaAuth";
-import RegistrationEmail from "./components/RegistrationEmail";
-import { AnalyticsContext, Hmi } from "hmi";
-import { useDispatch, useSelector } from "react-redux";
-import { selectLanguage } from "../../features/language/languageSlice";
-import { createPdaAuthUser } from "../../services/HattersService";
-import { getMobileOperatingSystem } from "../../utils/utils";
-import RegistrationCreatingPDA from "./components/RegistrationCreatingPDA";
-import RegistrationConfirmYourIdentity from "./components/RegistrationConfirmYourIdentity";
-import { signupTranslateErrorCode } from "../../utils/HattersErrorHandling";
-import RegistrationBackButton from "./components/RegistrationBackButton";
-import { updateError } from "../../redux/pdaAuth/hmiPdaAuthSlice";
-import { AnalyticsClickEvents } from "../../utils/AnalyticsEvents";
-import { APPLICATION_ID } from "../../app.config";
+import { AnalyticsContext, Hmi } from 'hmi';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import {
+  queryParamsToSignupModel,
+  redirectWithErrorParams,
+  validatePdaSignupQueryParams,
+} from './helper';
+import { PdaSignup, RegistrationRedirectError } from '../../types/Hatters';
+import usePdaAuthHmi from '../../hooks/usePdaAuth';
+import RegistrationEmail from './components/RegistrationEmail';
+import { selectLanguage } from '../../features/language/languageSlice';
+import { createPdaAuthUser } from '../../services/HattersService';
+import { getMobileOperatingSystem } from '../../utils/utils';
+import RegistrationCreatingPDA from './components/RegistrationCreatingPDA';
+import RegistrationConfirmYourIdentity from './components/RegistrationConfirmYourIdentity';
+import { signupTranslateErrorCode } from '../../utils/HattersErrorHandling';
+import RegistrationBackButton from './components/RegistrationBackButton';
+import { updateError } from '../../redux/pdaAuth/hmiPdaAuthSlice';
+import { AnalyticsClickEvents } from '../../utils/AnalyticsEvents';
+import { APPLICATION_ID } from '../../app.config';
 
 export type PdaSignupQuery = {
   application_id: string;
@@ -25,24 +30,23 @@ export type PdaSignupQuery = {
   lang: string;
   tags?: string;
   skipDeps?: string;
-}
+};
 
 const RegistrationPage: React.FC = () => {
   const [step, setStep] = useState(0);
   const dispatch = useDispatch();
   const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
+  const location = useLocation();
   const [signup, setSignup] = useState<PdaSignup>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [signupDone, setSignupDone] = useState(false);
   const [nextStep, setNextStep] = useState<string | undefined>('');
   const query = parse(location.search) as PdaSignupQuery;
   const language = useSelector(selectLanguage);
-  const {
-    parentApp,
-    dependencyApps,
-    dependencyTools,
-    hmiSetupError
-  } = usePdaAuthHmi(signup?.applicationId || APPLICATION_ID, query.lang);
+  const { parentApp, dependencyApps, dependencyTools, hmiSetupError } = usePdaAuthHmi(
+    signup?.applicationId || APPLICATION_ID,
+    query.lang,
+  );
 
   const setSignupEmail = (email: string, newsletterOptin: boolean) => {
     const updatedSignup = JSON.parse(JSON.stringify(signup));
@@ -57,14 +61,18 @@ const RegistrationPage: React.FC = () => {
     setStep(3);
   };
 
-  const sendPdaAuthSignup = async (signupPayload: PdaSignup, lang?: string | null, skipDeps?: string | null) => {
+  const sendPdaAuthSignup = async (
+    signupPayload: PdaSignup,
+    lang?: string | null,
+    skipDeps?: string | null,
+  ) => {
     const signupStartTime = performance.now();
     signupPayload.platform = getMobileOperatingSystem();
 
     try {
       const res = await createPdaAuthUser(signupPayload, lang, skipDeps);
       if (res.parsedBody) {
-        const analyticsEvent = Object.assign({}, AnalyticsClickEvents.registrationTimePerformance);
+        const analyticsEvent = { ...AnalyticsClickEvents.registrationTimePerformance };
 
         analyticsEvent.value = Math.round(performance.now() - signupStartTime);
         onClickEvent?.(analyticsEvent);
@@ -72,9 +80,9 @@ const RegistrationPage: React.FC = () => {
         setSignupDone(true);
         setNextStep(res.parsedBody.nextStep);
       }
-    } catch (error) {
+    } catch (error: any) {
       const signupEndTime = performance.now();
-      const analyticsEvent = Object.assign({}, AnalyticsClickEvents.registrationErrorTimePerformance);
+      const analyticsEvent = { ...AnalyticsClickEvents.registrationErrorTimePerformance };
 
       analyticsEvent.value = Math.round(signupEndTime - signupStartTime);
       onClickEvent?.(analyticsEvent);
@@ -102,10 +110,12 @@ const RegistrationPage: React.FC = () => {
       return;
     }
 
-    dispatch(updateError({
-      error: 'application_misconfigured',
-      reason: maybeQueryParamError
-    }));
+    dispatch(
+      updateError({
+        error: 'application_misconfigured',
+        reason: maybeQueryParamError,
+      }),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -113,7 +123,11 @@ const RegistrationPage: React.FC = () => {
     window.scrollTo(0, 0);
 
     if (step === 2 && !isSubmitting) {
-      sendPdaAuthSignup(Object.assign({}, signup), query.lang, query.skipDeps);
+      sendPdaAuthSignup(
+        { applicationId: '', email: '', redirectUri: '', ...signup },
+        query.lang,
+        query.skipDeps,
+      );
       setIsSubmitting(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,11 +140,7 @@ const RegistrationPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hmiSetupError]);
 
-  if (!query.redirect_uri) return (
-    <div>
-      redirect_uri query parameter is required.
-    </div>
-  );
+  if (!query.redirect_uri) return <div>redirect_uri query parameter is required.</div>;
 
   if (!parentApp) return null;
 
@@ -138,7 +148,11 @@ const RegistrationPage: React.FC = () => {
 
   return (
     <div>
-      <RegistrationBackButton step={step} onGoBack={() => setStep(step - 1)} setSignupError={setSignupError} />
+      <RegistrationBackButton
+        step={step}
+        onGoBack={() => setStep(step - 1)}
+        setSignupError={setSignupError}
+      />
       {step === 0 && (
         <RegistrationEmail
           parentApp={parentApp}
@@ -159,7 +173,7 @@ const RegistrationPage: React.FC = () => {
             });
           }}
           language={language}
-          dependencyTools={dependencyTools.map(tool => tool.info.name)}
+          dependencyTools={dependencyTools.map((tool) => tool.info.name)}
           dependencyApps={dependencyApps}
           applicationId={signup?.applicationId as string}
         />

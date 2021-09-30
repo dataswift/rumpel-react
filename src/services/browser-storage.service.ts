@@ -2,7 +2,9 @@ const TOKEN_NAME = 'token';
 
 export class BrowserStorageService {
   private remember = false;
+
   private sessionStoreAvailable = false;
+
   private localStoreAvailable = false;
 
   static testSessionStorage(): boolean {
@@ -30,8 +32,6 @@ export class BrowserStorageService {
   }
 
   constructor() {
-    // cookieSvc.delete('lastLoginPHATA'); // Some old cookie cleanup TODO: remove in the future
-
     this.sessionStoreAvailable = BrowserStorageService.testSessionStorage();
     this.localStoreAvailable = BrowserStorageService.testLocalStorage();
   }
@@ -52,18 +52,11 @@ export class BrowserStorageService {
     }
   }
 
-  removeAuthToken(): void {
-    // this.cookieSvc.delete(TOKEN_NAME, null, null, true, 'Strict');
-
-    window.sessionStorage.removeItem(TOKEN_NAME);
-  }
-
   getItem(key: string): string | null {
     if (this.localStoreAvailable) {
       return JSON.parse(localStorage.getItem(key) || '');
-    } else {
-      return null;
     }
+    return null;
   }
 
   setItem(key: string, data: any): boolean {
@@ -71,9 +64,8 @@ export class BrowserStorageService {
       localStorage.setItem(key, JSON.stringify(data));
 
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   removeItem(key: string): boolean {
@@ -81,8 +73,7 @@ export class BrowserStorageService {
       localStorage.removeItem(key);
 
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 }

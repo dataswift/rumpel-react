@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { AnalyticsEvent, AnalyticsProvider } from "hmi";
-import { config } from "../../app.config";
-import { useMatomo } from "@datapunt/matomo-tracker-react";
+import React, { useEffect } from 'react';
+import { AnalyticsEvent, AnalyticsProvider } from 'hmi';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { config } from '../../app.config';
 
 const MatomoAnalyticsPlugin: React.FC = ({ children }) => {
   const { trackEvent, trackPageView } = useMatomo();
@@ -25,9 +25,7 @@ const MatomoAnalyticsPlugin: React.FC = ({ children }) => {
   }, [trackPageView]);
 
   return (
-    <AnalyticsProvider onClickEvent={(event => onClickEvent(event))}>
-      {children}
-    </AnalyticsProvider>
+    <AnalyticsProvider onClickEvent={(event) => onClickEvent(event)}>{children}</AnalyticsProvider>
   );
 };
 

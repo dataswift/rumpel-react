@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import DataswiftTm from '../../assets/icons/dataswift_tm.svg';
 import { Input } from 'hmi';
+import { Link, useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import DataswiftTm from '../../assets/icons/dataswift_tm.svg';
 import { pdaLookupWithEmail, resendVerificationEmail } from '../../services/HattersService';
 import { PdaLookupResponse } from '../../types/Hatters';
-import { Link, useHistory } from 'react-router-dom';
 import { newUserAccessToken } from '../../api/hatAPI';
 import { loginWithToken } from '../../features/authentication/authenticationSlice';
 import { HatClientService } from '../../services/HatClientService';
-import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import FormatMessage from "../../features/messages/FormatMessage";
-import { APPLICATION_ID } from "../../app.config";
-import { environment } from "../../environment";
+import FormatMessage from '../../features/messages/FormatMessage';
+import { APPLICATION_ID } from '../../app.config';
+import { environment } from '../../environment';
 
 const LandingLoginView: React.FC = () => {
   const history = useHistory();
@@ -40,7 +40,11 @@ const LandingLoginView: React.FC = () => {
     try {
       if (!response?.hatName) return;
 
-      const res = await newUserAccessToken(response.hatName + '.' + response.hatCluster, response.hatName, password);
+      const res = await newUserAccessToken(
+        `${response.hatName}.${response.hatCluster}`,
+        response.hatName,
+        password,
+      );
 
       if (res.parsedBody) {
         dispatch(loginWithToken(res.parsedBody.accessToken));
@@ -48,7 +52,11 @@ const LandingLoginView: React.FC = () => {
 
         const secure = window.location.protocol === 'https:';
 
-        Cookies.set('token', res.parsedBody.accessToken, { expires: 3, secure: secure, sameSite: 'strict' });
+        Cookies.set('token', res.parsedBody.accessToken, {
+          expires: 3,
+          secure,
+          sameSite: 'strict',
+        });
 
         history.replace('/feed');
       }
@@ -56,7 +64,6 @@ const LandingLoginView: React.FC = () => {
       console.log(e);
     }
   };
-
 
   const resendEmail = async () => {
     try {
@@ -72,7 +79,9 @@ const LandingLoginView: React.FC = () => {
   };
 
   const onSignup = async () => {
-    history.push(`/register?email=${email}&application_id=${APPLICATION_ID}&redirect_uri=${window.location.origin}`);
+    history.push(
+      `/register?email=${email}&application_id=${APPLICATION_ID}&redirect_uri=${window.location.origin}`,
+    );
   };
 
   return (
@@ -119,42 +128,42 @@ const LandingLoginView: React.FC = () => {
             Login
           </button>
 
-          <Link className={'auth-login-btn-link'} to={'/auth/recover-password'}>
-            <FormatMessage id={'ds.auth.login.forgotPassword'} />
+          <Link className="auth-login-btn-link" to="/auth/recover-password">
+            <FormatMessage id="ds.auth.login.forgotPassword" />
           </Link>
         </>
       )}
 
       {currentStep === 2 && !response?.verified && (
         <>
-          <h2 className={'ds-hmi-email signup-email-title'}>{email}</h2>
+          <h2 className="ds-hmi-email signup-email-title">{email}</h2>
 
-          <h2 className={'signup-title'}>
+          <h2 className="signup-title">
             <FormatMessage id="'hatters.auth.confirmYourIdentity.title'" />
           </h2>
 
-          <button className={'signup-btn-secondary'} onClick={() => resendEmail()}>
-            <FormatMessage id={'hatters.auth.confirmYourIdentity.resendActivationEmail'} />
+          <button className="signup-btn-secondary" onClick={() => resendEmail()}>
+            <FormatMessage id="hatters.auth.confirmYourIdentity.resendActivationEmail" />
             {resendEmailState === 'error' && (
-              <i className={'material-icons'} style={{ color: '#e50d42' }}>
+              <i className="material-icons" style={{ color: '#e50d42' }}>
                 error_outline
               </i>
             )}
             {resendEmailState === 'success' && (
-              <i className={'material-icons'} style={{ color: '#a8c62b' }}>
+              <i className="material-icons" style={{ color: '#a8c62b' }}>
                 done
               </i>
             )}
           </button>
 
-          <div className={'signup-help-text'} onClick={() => {}}>
-            <FormatMessage id={'hatters.auth.confirmYourIdentity.needHelp'} asHtml />
+          <div className="signup-help-text" onClick={() => {}}>
+            <FormatMessage id="hatters.auth.confirmYourIdentity.needHelp" asHtml />
           </div>
         </>
       )}
 
       <hr />
-      <div className="landing-dont-have-account">Don't have an account?</div>
+      <div className="landing-dont-have-account">Don&apos;t have an account?</div>
       <button className="ds-hmi-btn ds-hmi-btn-primary landing-btn-secondary" onClick={onSignup}>
         Signup
       </button>

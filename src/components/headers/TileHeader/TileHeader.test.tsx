@@ -22,7 +22,7 @@ describe('TileHeader', () => {
   test('renders without error and displays the correct information.', () => {
     render(
       <Provider store={store}>
-        <TileHeader titleId="title" icon="test_icon" descriptionId={'description'} />
+        <TileHeader titleId="title" icon="test_icon" descriptionId="description" />
       </Provider>,
     );
 

@@ -4,7 +4,7 @@ import { FeedLoading } from './FeedLoading';
 
 describe('FeedLoading', () => {
   test('renders the Feed Loading component without error: loading', () => {
-    render(<FeedLoading fetchingData={true} />);
+    render(<FeedLoading fetchingData />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });

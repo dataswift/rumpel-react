@@ -1,4 +1,4 @@
-import { AnalyticsEvent } from "hmi";
+import { AnalyticsEvent } from 'hmi';
 
 export const AnalyticsClickEvents: { [key: string]: AnalyticsEvent } = {
   browserBackButton: {
@@ -55,5 +55,5 @@ export const AnalyticsClickEvents: { [key: string]: AnalyticsEvent } = {
     category: 'PDA account ready',
     action: 'Resend email activation',
     label: 'button',
-  }
+  },
 };

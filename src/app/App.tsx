@@ -1,9 +1,9 @@
 import React from 'react';
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import AppRouter from './AppRouter';
 import Root from './Root';
-import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import { config } from '../app.config';
-import MatomoAnalyticsPlugin from "../components/MatomoAnalyticsPlugin/MatomoAnalyticsPlugin";
+import MatomoAnalyticsPlugin from '../components/MatomoAnalyticsPlugin/MatomoAnalyticsPlugin';
 
 const instance = createInstance({
   urlBase: config.matomoUrl,

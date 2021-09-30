@@ -17,17 +17,11 @@ const ERROR_MESSAGES: { [key: string]: string } = {
   hatExistsError: 'A HAT with this username already exists.',
 };
 
-export const isEmail = (email: string): boolean => {
-  return EMAIL_REGEX.test(email);
-};
+export const isEmail = (email: string): boolean => EMAIL_REGEX.test(email);
 
-export const isHatName = (hatName: string): boolean => {
-  return HAT_URL_REGEX.test(hatName);
-};
+export const isHatName = (hatName: string): boolean => HAT_URL_REGEX.test(hatName);
 
-export const isNotEmptyString = (value: string): boolean => {
-  return !!value && value.length > 0;
-};
+export const isNotEmptyString = (value: string): boolean => !!value && value.length > 0;
 
 export const hatNameErrorMessage = (hatName: string): string => {
   let errorType = '';

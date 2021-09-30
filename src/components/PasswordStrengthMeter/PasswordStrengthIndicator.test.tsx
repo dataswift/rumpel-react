@@ -1,9 +1,9 @@
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import React from 'react';
+import { render, waitFor, screen } from '@testing-library/react';
 import Root from '../../app/Root';
 import { PasswordStrengthIndicator } from './PasswordStrengthIndicator';
-import { render, waitFor, screen } from '@testing-library/react';
 
 describe('PasswordStrengthIndicator tests', () => {
   it('has the correct message when password is strong and match', async () => {
@@ -12,7 +12,7 @@ describe('PasswordStrengthIndicator tests', () => {
     render(
       <Router history={history}>
         <Root>
-          <PasswordStrengthIndicator strong={true} passwordMatch={true} />
+          <PasswordStrengthIndicator strong passwordMatch />
         </Root>
       </Router>,
     );
@@ -26,7 +26,7 @@ describe('PasswordStrengthIndicator tests', () => {
     render(
       <Router history={history}>
         <Root>
-          <PasswordStrengthIndicator strong={true} passwordMatch={false} />
+          <PasswordStrengthIndicator strong passwordMatch={false} />
         </Root>
       </Router>,
     );
@@ -40,12 +40,14 @@ describe('PasswordStrengthIndicator tests', () => {
     render(
       <Router history={history}>
         <Root>
-          <PasswordStrengthIndicator strong={false} passwordMatch={true} />
+          <PasswordStrengthIndicator strong={false} passwordMatch />
         </Root>
       </Router>,
     );
 
-    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument(),
+    );
   });
 
   it("has the correct message when password is strong but don't match", async () => {
@@ -54,7 +56,7 @@ describe('PasswordStrengthIndicator tests', () => {
     render(
       <Router history={history}>
         <Root>
-          <PasswordStrengthIndicator strong={true} passwordMatch={false} />
+          <PasswordStrengthIndicator strong passwordMatch={false} />
         </Root>
       </Router>,
     );
@@ -73,6 +75,8 @@ describe('PasswordStrengthIndicator tests', () => {
       </Router>,
     );
 
-    await waitFor(() => expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Password must be stronger.*')).toBeInTheDocument(),
+    );
   });
 });

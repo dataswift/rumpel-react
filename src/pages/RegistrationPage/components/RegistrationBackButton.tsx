@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { RegistrationRedirectError } from "../../../types/Hatters";
-import FormatMessage from "../../../features/messages/FormatMessage";
-import { AnalyticsContext } from "hmi";
-import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
+import React, { useContext } from 'react';
+import { AnalyticsContext } from 'hmi';
+import { RegistrationRedirectError } from '../../../types/Hatters';
+import FormatMessage from '../../../features/messages/FormatMessage';
+import { AnalyticsClickEvents } from '../../../utils/AnalyticsEvents';
 
 type Props = {
-  step: number,
+  step: number;
   onGoBack: () => void;
   setSignupError: (error: RegistrationRedirectError) => void;
-}
+};
 
 const RegistrationBackButton: React.FC<Props> = ({ step, onGoBack, setSignupError }) => {
   const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
@@ -34,10 +34,10 @@ const RegistrationBackButton: React.FC<Props> = ({ step, onGoBack, setSignupErro
   if ([2].indexOf(step) !== -1) return null;
 
   return (
-    <div className={'signup-back-button-container'}>
+    <div className="signup-back-button-container">
       <button onClick={() => onBackClick()}>
-        <i className={'material-icons'}>navigate_before</i>
-        <FormatMessage id={'hatters.auth.backBtn'} />
+        <i className="material-icons">navigate_before</i>
+        <FormatMessage id="hatters.auth.backBtn" />
       </button>
     </div>
   );

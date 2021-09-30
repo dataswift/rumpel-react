@@ -1,10 +1,13 @@
 import React, { ReactNode } from 'react';
 import './SideMenu.scss';
-import { config } from '../../app.config';
-import hatLogo from '../../assets/icons/hat-logo.png';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUserHatDomain, selectUserHatName } from '../../features/authentication/authenticationSlice';
+import { config } from '../../app.config';
+import hatLogo from '../../assets/icons/hat-logo.png';
+import {
+  selectUserHatDomain,
+  selectUserHatName,
+} from '../../features/authentication/authenticationSlice';
 
 type LinkProps = {
   link: string;
@@ -26,17 +29,16 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu, onSideMenuClick }) => 
       const linkTo = `https://${hatName + hatDomain}#${link}`;
 
       return (
-        <a href={linkTo} className={'side-menu-item-wrapper'}>
+        <a href={linkTo} className="side-menu-item-wrapper">
           {children}
         </a>
       );
-    } else {
-      return (
-        <Link to={link} className={'side-menu-item-wrapper'} onClick={onSideMenuClick}>
-          {children}
-        </Link>
-      );
     }
+    return (
+      <Link to={link} className="side-menu-item-wrapper" onClick={onSideMenuClick}>
+        {children}
+      </Link>
+    );
   };
 
   const SideMenuOptions = config.mainMenu.map((item, index) => {
@@ -55,10 +57,10 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu, onSideMenuClick }) => 
             {item.description}
           </span>
           <SideMenuLink link={item.link} external={item.external}>
-            <div className={'side-menu-item-icon'}>
-              <i className={'material-icons'}>{item.icon}</i>
+            <div className="side-menu-item-icon">
+              <i className="material-icons">{item.icon}</i>
             </div>
-            <div className={'side-menu-item-name'}>{item.display}</div>
+            <div className="side-menu-item-name">{item.display}</div>
           </SideMenuLink>
         </div>
       </div>
@@ -66,12 +68,12 @@ export const SideMenu: React.FC<Props> = ({ hideSideMenu, onSideMenuClick }) => 
   });
 
   return (
-    <div className={'side-menu'} style={{ visibility: hideSideMenu ? 'hidden' : 'visible' }}>
-      <div className={'side-menu-scroll'}>
+    <div className="side-menu" style={{ visibility: hideSideMenu ? 'hidden' : 'visible' }}>
+      <div className="side-menu-scroll">
         <h6>Menu</h6>
         {SideMenuOptions}
-        <div className={'side-menu-powered-by'}>
-          <img src={hatLogo} className="img img-responsive" alt={'HAT Logo'} />
+        <div className="side-menu-powered-by">
+          <img src={hatLogo} className="img img-responsive" alt="HAT Logo" />
           <p>HAT Web app</p>
         </div>
       </div>

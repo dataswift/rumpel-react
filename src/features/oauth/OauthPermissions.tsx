@@ -1,9 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Hmi } from 'hmi';
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from '../hmi/hmiSlice';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
-import { Hmi } from 'hmi';
-import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from '../hat-login/hatLoginSlice';
+import {
+  onTermsAgreed,
+  onTermsDeclined,
+  selectErrorMessage,
+  setRedirectError,
+} from '../hat-login/hatLoginSlice';
 import { NotificationBanner } from '../../components/banners/NotificationBanner/NotificationBanner';
 import { selectLanguage } from '../language/languageSlice';
 import { isHmiLoading } from '../hat-login/helpers';
@@ -22,27 +27,27 @@ const OauthPermissions: React.FC = () => {
   };
 
   if (!parentApp || isHmiLoading(parentApp, dependencyApps, dependencyTools)) {
-    return <LoadingSpinner loadingText={'Loading permissions...'} />;
+    return <LoadingSpinner loadingText="Loading permissions..." />;
   }
 
   return (
     <div>
-      <NotificationBanner type={'error'} display={!!errorMessage} fixed>
-        <div className={'hat-login-notification'}>
+      <NotificationBanner type="error" display={!!errorMessage} fixed>
+        <div className="hat-login-notification">
           <p>
             An error has occurred, please use the back button to return to the previous page <br />
             and try confirming again. If this error persists please{' '}
-            <a href={'mailto:contact@dataswift.io'} className={'link-button'}>
+            <a href="mailto:contact@dataswift.io" className="link-button">
               contact us
             </a>
           </p>
-          <button className={'btn btn-accent'} onClick={() => redirectBack()}>
+          <button className="btn btn-accent" onClick={() => redirectBack()}>
             Back
           </button>
         </div>
       </NotificationBanner>
 
-      <span className={'flex-spacer-small'} />
+      <span className="flex-spacer-small" />
       {parentApp && (
         <Hmi
           parentApp={parentApp.application}

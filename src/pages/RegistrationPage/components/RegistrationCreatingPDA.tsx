@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AnalyticsContext, AuthApplicationLogo } from "hmi";
-import RegistrationAccountCreated from "./RegistrationAccountCreated";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import FormatMessage from "../../../features/messages/FormatMessage";
-import ProgressBar from "../../../components/ProgressBar/ProgressBar";
-import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
+import { AnalyticsContext, AuthApplicationLogo } from 'hmi';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
+import RegistrationAccountCreated from './RegistrationAccountCreated';
+import FormatMessage from '../../../features/messages/FormatMessage';
+import ProgressBar from '../../../components/ProgressBar/ProgressBar';
+import { AnalyticsClickEvents } from '../../../utils/AnalyticsEvents';
 
 type Props = {
   done: boolean;
@@ -17,11 +17,18 @@ type Props = {
 };
 
 let percent = 0;
-let ms = 10;
+const ms = 10;
 let maxProgress = 60;
 const WAITING_TIME_UNTIL_CONTINUE_BTN = 2000; // in ms
 
-const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done, nextStep, isHatApp, email }) => {
+const RegistrationCreatingPDA: React.FC<Props> = ({
+  parentApp,
+  redirectUri,
+  done,
+  nextStep,
+  isHatApp,
+  email,
+}) => {
   const onClickEvent = useContext(AnalyticsContext)?.onClickEvent;
   const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
@@ -29,25 +36,19 @@ const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done
   const [displayContinueBtn, setDisplayContinueBtn] = useState<boolean>(false);
   const [progressComplete, setProgressComplete] = useState(false);
 
-  const redirectToNextStep = useCallback(
-    () => {
-      if (!nextStep) return;
+  const redirectToNextStep = useCallback(() => {
+    if (!nextStep) return;
 
-      window.location.assign(nextStep);
-    },
-    [nextStep]
-  );
+    window.location.assign(nextStep);
+  }, [nextStep]);
 
-  const registrationDone = useCallback(
-    () => {
-      redirectToNextStep();
+  const registrationDone = useCallback(() => {
+    redirectToNextStep();
 
-      setTimeout(() => {
-        setDisplayContinueBtn(true);
-      }, WAITING_TIME_UNTIL_CONTINUE_BTN);
-    },
-    [redirectToNextStep]
-  );
+    setTimeout(() => {
+      setDisplayContinueBtn(true);
+    }, WAITING_TIME_UNTIL_CONTINUE_BTN);
+  }, [redirectToNextStep]);
 
   const continueToNextStepClick = () => {
     onClickEvent?.(AnalyticsClickEvents.continueToApplicationButton);
@@ -94,25 +95,30 @@ const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done
   }, []);
 
   if (progressComplete && isHatApp) {
-    return <RegistrationAccountCreated parentApp={parentApp} redirectUri={redirectUri} email={email} />;
+    return (
+      <RegistrationAccountCreated parentApp={parentApp} redirectUri={redirectUri} email={email} />
+    );
   }
 
   return (
     <>
-      <div className={'flex-column-wrapper signup'}>
-        <AuthApplicationLogo src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name} />
+      <div className="flex-column-wrapper signup">
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+        />
 
-        <h2 className={'signup-title'}>
-          <FormatMessage id={'hatters.auth.signup.creatingPda'} asHtml />
+        <h2 className="signup-title">
+          <FormatMessage id="hatters.auth.signup.creatingPda" asHtml />
         </h2>
 
         <ProgressBar progress={progress} />
 
-        <div className={'signup-progress-text'}>
+        <div className="signup-progress-text">
           <FormatMessage id={progressText} />
         </div>
 
-        <div className={'signup-keep-this-window-open'}>
+        <div className="signup-keep-this-window-open">
           <FormatMessage
             id={
               progressComplete
@@ -123,7 +129,7 @@ const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done
           />
         </div>
 
-        <div className={'signup-check-your-email'}>
+        <div className="signup-check-your-email">
           <FormatMessage
             id={
               displayContinueBtn
@@ -135,10 +141,10 @@ const RegistrationCreatingPDA: React.FC<Props> = ({ parentApp, redirectUri, done
 
         {displayContinueBtn && (
           <button
-            className={'signup-btn ds-hmi-btn ds-hmi-btn-primary'}
+            className="signup-btn ds-hmi-btn ds-hmi-btn-primary"
             onClick={continueToNextStepClick}
           >
-            <FormatMessage id={'hatters.auth.continueBtn'} />
+            <FormatMessage id="hatters.auth.continueBtn" />
           </button>
         )}
       </div>

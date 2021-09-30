@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import './LandingLoginPage.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { Redirect } from 'react-router-dom';
 import LandingIllustration from '../../components/Landing/LandingIllustration';
 import LandingLoginView from '../../components/Landing/LandingLoginView';
-import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { HatClientService } from "../../services/HatClientService";
-import { loginWithToken, selectIsAuthenticated } from "../../features/authentication/authenticationSlice";
-import { Redirect } from "react-router-dom";
+import { HatClientService } from '../../services/HatClientService';
+import {
+  loginWithToken,
+  selectIsAuthenticated,
+} from '../../features/authentication/authenticationSlice';
 
 const LandingLoginPage: React.FC = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);

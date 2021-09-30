@@ -15,21 +15,27 @@ enum HatApplicationKind {
   APP = 'App',
 }
 
-type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app';
+type HatAppStatusIcons =
+  | 'check_circle'
+  | 'sync'
+  | 'sync_problem'
+  | 'add_circle_outline'
+  | 'refresh'
+  | 'exit_to_app';
 
 export const getAppStatus = (app: HatApplication): HatApplicationStatus => {
   const { setup, enabled, active, needsUpdating, mostRecentData } = app;
-  const kind = app.application.kind.kind;
+  const { kind } = app.application.kind;
 
   if (setup && needsUpdating) return HatApplicationStatus.UPDATE;
-  else if (enabled && !active) return HatApplicationStatus.FAILING;
-  else if (enabled && active)
+  if (enabled && !active) return HatApplicationStatus.FAILING;
+  if (enabled && active)
     return !mostRecentData && kind === HatApplicationKind.DATAPLUG
       ? HatApplicationStatus.FETCHING
       : kind === HatApplicationKind.APP
-        ? HatApplicationStatus.GOTO
-        : HatApplicationStatus.RUNNING;
-  else return HatApplicationStatus.UNTOUCHED;
+      ? HatApplicationStatus.GOTO
+      : HatApplicationStatus.RUNNING;
+  return HatApplicationStatus.UNTOUCHED;
 };
 
 export const getStatusIcon = (app: HatApplication): HatAppStatusIcons => {
@@ -74,9 +80,14 @@ export const getApplicationDetails = (app: HatApplication): Array<{ [key: string
   return [
     { provider: name },
     { website: url },
-    { country: country },
-    { version: version },
-    { 'last updated': format(new Date(app.application.status.versionReleaseDate || ''), 'dd/MM/yyyy') },
+    { country },
+    { version },
+    {
+      'last updated': format(
+        new Date(app.application.status.versionReleaseDate || ''),
+        'dd/MM/yyyy',
+      ),
+    },
     { 'terms and conditions': termsUrl },
     { 'support email': supportContact },
   ];

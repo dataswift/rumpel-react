@@ -1,6 +1,6 @@
+import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import { isHmiLoading } from './helpers';
 import TEST_HAT_APPLICATION from '../../testData/HatApplications';
-import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import TEST_DATA_PLUG from '../../testData/DataPlug';
 import TEST_HAT_TOOL from '../../testData/Tool';
 
@@ -75,7 +75,9 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['test-feed-counter'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(false);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      false,
+    );
   });
 
   it("is loading when all the app's tool dependencies are not ready", () => {
@@ -86,7 +88,9 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['different-tool-id'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(true);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      true,
+    );
   });
 
   it('is not loading when an app has dependencies and needs updating', () => {
@@ -97,6 +101,8 @@ describe('HmiLogin Helper', () => {
     testApp.setup = false;
     testApp.application.dependencies = { plugs: [], tools: ['test-feed-counter'], contracts: [] };
 
-    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(false);
+    expect(isHmiLoading(testApp, [TEST_DATA_PLUG, TEST_HAT_APPLICATION], [TEST_HAT_TOOL])).toEqual(
+      false,
+    );
   });
 });

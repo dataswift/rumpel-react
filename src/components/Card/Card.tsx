@@ -14,7 +14,15 @@ type CardProps = {
   onClick: () => void;
 };
 
-const Card: React.FC<CardProps> = ({ imgSrc, name, description, icon, imgAltText, linkText, onClick }) => {
+const Card: React.FC<CardProps> = ({
+  imgSrc,
+  name,
+  description,
+  icon,
+  imgAltText,
+  linkText,
+  onClick,
+}) => {
   const [imageSrc, setImageSrc] = useState(imgSrc);
 
   return (
@@ -35,7 +43,7 @@ const Card: React.FC<CardProps> = ({ imgSrc, name, description, icon, imgAltText
 
         {linkText && <div className="card-link">{linkText}</div>}
 
-        <i className={'material-icons card-icon'}>{icon}</i>
+        <i className="material-icons card-icon">{icon}</i>
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ export const FeedDefaultItem: React.FC<Props> = ({ feedItem }) => {
         {feedItem.content && feedItem.content.media && feedItem.content.media.length > 0 && (
           <div
             className="feed-card-content single-image"
-            data-testid={'feed-card-content-image'}
+            data-testid="feed-card-content-image"
             style={{ backgroundImage: `url(${feedItem.content.media[0].url})` }}
           >
             <div className="feed-item-overlay">

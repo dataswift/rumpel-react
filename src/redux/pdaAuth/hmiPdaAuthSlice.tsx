@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
 import { AppThunk, RootState } from '../../app/store';
-import { getPdaAuthApplicationById, getPdaAuthFunctionById } from "../../services/HattersService";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import { HatTool } from "../../features/tools/hat-tool.interface";
-import { RegistrationRedirectError } from "../../types/Hatters";
+import { getPdaAuthApplicationById, getPdaAuthFunctionById } from '../../services/HattersService';
+import { HatTool } from '../../features/tools/hat-tool.interface';
+import { RegistrationRedirectError } from '../../types/Hatters';
 
 type ApplicationsState = {
   parentApp: HatApplicationContent | null;
@@ -48,32 +48,32 @@ export const {
   updateDependencyApps,
   updateDependencyContracts,
   updateDependencyTools,
-  updateError
+  updateError,
 } = slice.actions;
 
 export const setParentApp =
   (app: HatApplicationContent): AppThunk =>
-    (dispatch) => {
-      dispatch(updateParentApp(app));
-    };
+  (dispatch) => {
+    dispatch(updateParentApp(app));
+  };
 
 export const setDependencyApp =
   (app: HatApplicationContent): AppThunk =>
-    (dispatch) => {
-      dispatch(updateDependencyApps(app));
-    };
+  (dispatch) => {
+    dispatch(updateDependencyApps(app));
+  };
 
 export const setDependencyContract =
   (app: HatApplicationContent): AppThunk =>
-    (dispatch) => {
-      dispatch(updateDependencyContracts(app));
-    };
+  (dispatch) => {
+    dispatch(updateDependencyContracts(app));
+  };
 
 export const setDependencyTool =
   (tools: HatTool): AppThunk =>
-    (dispatch) => {
-      dispatch(updateDependencyTools(tools));
-    };
+  (dispatch) => {
+    dispatch(updateDependencyTools(tools));
+  };
 
 export const selectParentApp = (state: RootState) => state.hmiPdaAuth.parentApp;
 export const selectDependencyApp = (state: RootState) => state.hmiPdaAuth.dependencyApps;
@@ -81,96 +81,98 @@ export const selectDependencyTools = (state: RootState) => state.hmiPdaAuth.depe
 export const selectDependencyContracts = (state: RootState) => state.hmiPdaAuth.dependencyContracts;
 export const selectHmiSetupError = (state: RootState) => state.hmiPdaAuth.error;
 
-export const getPdaAuthParentApplication = (
-  applicationId: string, lang: string
-): AppThunk => async (dispatch, getState) => {
-  try {
-    const currentParentApp = getState().hmiPdaAuth.parentApp;
+export const getPdaAuthParentApplication =
+  (applicationId: string, lang: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const currentParentApp = getState().hmiPdaAuth.parentApp;
 
-    if (currentParentApp?.id === applicationId) return;
+      if (currentParentApp?.id === applicationId) return;
 
-    const app = await getPdaAuthApplicationById(applicationId, lang);
+      const app = await getPdaAuthApplicationById(applicationId, lang);
 
-    if (app.parsedBody) {
-      return dispatch(setParentApp(app.parsedBody));
+      if (app.parsedBody) {
+        return dispatch(setParentApp(app.parsedBody));
+      }
+    } catch (error) {
+      const err: RegistrationRedirectError = {
+        error: 'application_misconfigured',
+        reason: 'application_id_not_found',
+      };
+
+      return dispatch(updateError(err));
     }
-  } catch (error) {
-    const err: RegistrationRedirectError = {
-      error: 'application_misconfigured',
-      reason: 'application_id_not_found',
-    };
+  };
 
-    return dispatch(updateError(err));
-  }
-};
+export const getPdaAuthParentApplicationPlugDependency =
+  (applicationId: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const currentApplicationDependencies = getState().hmiPdaAuth.dependencyApps;
 
-export const getPdaAuthParentApplicationPlugDependency = (
-  applicationId: string
-): AppThunk => async (dispatch, getState) => {
-  try {
-    const currentApplicationDependencies = getState().hmiPdaAuth.dependencyApps;
+      if (currentApplicationDependencies.find((dependency) => dependency.id === applicationId))
+        return;
 
-    if (currentApplicationDependencies.find(dependency => dependency.id === applicationId)) return;
+      const app = await getPdaAuthApplicationById(applicationId);
 
-    const app = await getPdaAuthApplicationById(applicationId);
+      if (app.parsedBody) {
+        return dispatch(setDependencyApp(app.parsedBody));
+      }
+    } catch (e) {
+      const err: RegistrationRedirectError = {
+        error: 'application_misconfigured',
+        reason: 'application_dependency_not_found',
+      };
 
-    if (app.parsedBody) {
-      return dispatch(setDependencyApp(app.parsedBody));
+      return dispatch(updateError(err));
     }
-  } catch (e) {
-    const err: RegistrationRedirectError = {
-      error: 'application_misconfigured',
-      reason: 'application_dependency_not_found',
-    };
+  };
 
-    return dispatch(updateError(err));
-  }
-};
+export const getPdaAuthParentApplicationContractDependency =
+  (applicationId: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const currentApplicationDependencies = getState().hmiPdaAuth.dependencyContracts;
 
-export const getPdaAuthParentApplicationContractDependency = (
-  applicationId: string
-): AppThunk => async (dispatch, getState) => {
-  try {
-    const currentApplicationDependencies = getState().hmiPdaAuth.dependencyContracts;
+      if (currentApplicationDependencies.find((dependency) => dependency.id === applicationId))
+        return;
 
-    if (currentApplicationDependencies.find(dependency => dependency.id === applicationId)) return;
+      const app = await getPdaAuthApplicationById(applicationId);
 
-    const app = await getPdaAuthApplicationById(applicationId);
+      if (app.parsedBody) {
+        return dispatch(setDependencyContract(app.parsedBody));
+      }
+    } catch (e) {
+      const err: RegistrationRedirectError = {
+        error: 'application_misconfigured',
+        reason: 'contract_not_found',
+      };
 
-    if (app.parsedBody) {
-      return dispatch(setDependencyContract(app.parsedBody));
+      return dispatch(updateError(err));
     }
-  } catch (e) {
-    const err: RegistrationRedirectError = {
-      error: 'application_misconfigured',
-      reason: 'contract_not_found',
-    };
+  };
 
-    return dispatch(updateError(err));
-  }
-};
+export const getPdaAuthParentApplicationToolDependency =
+  (functionId: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const currentToolDependencies = getState().hmi.dependencyTools;
 
-export const getPdaAuthParentApplicationToolDependency = (
-  functionId: string
-): AppThunk => async (dispatch, getState) => {
-  try {
-    const currentToolDependencies = getState().hmi.dependencyTools;
+      if (currentToolDependencies.find((dependency) => dependency.id === functionId)) return;
 
-    if (currentToolDependencies.find(dependency => dependency.id === functionId)) return;
+      const tool = await getPdaAuthFunctionById(functionId);
 
-    const tool = await getPdaAuthFunctionById(functionId);
+      if (tool.parsedBody) {
+        return dispatch(setDependencyTool(tool.parsedBody));
+      }
+    } catch (e) {
+      const err: RegistrationRedirectError = {
+        error: 'application_misconfigured',
+        reason: 'function_not_found',
+      };
 
-    if (tool.parsedBody) {
-      return dispatch(setDependencyTool(tool.parsedBody));
+      return dispatch(updateError(err));
     }
-  } catch (e) {
-    const err: RegistrationRedirectError = {
-      error: 'application_misconfigured',
-      reason: 'function_not_found',
-    };
-
-    return dispatch(updateError(err));
-  }
-};
+  };
 
 export default slice.reducer;

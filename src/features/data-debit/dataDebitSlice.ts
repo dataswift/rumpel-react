@@ -26,9 +26,9 @@ export const { setDataDebits } = slice.actions;
 export const selectDataDebits = (state: RootState): DataDebit[] => state.dataDebits.dataDebits;
 
 export const selectDataDebitById = (id: string) =>
-  createSelector(selectDataDebits, (dataDebits) => {
-    return dataDebits.find((dataDebit) => dataDebit.dataDebitKey === id);
-  });
+  createSelector(selectDataDebits, (dataDebits) =>
+    dataDebits.find((dataDebit) => dataDebit.dataDebitKey === id),
+  );
 
 export const getDataDebits = (): AppThunk => async (dispatch) => {
   const dataDebits = await HatClientService.getInstance().getDataDebits();
@@ -40,18 +40,18 @@ export const getDataDebits = (): AppThunk => async (dispatch) => {
 
 export const disableDataDebit =
   (dataDebitId: string): AppThunk =>
-    async (dispatch, getState) => {
-      try {
-        const app = await HatClientService.getInstance().disableDataDebit(dataDebitId, false);
-        if (app?.parsedBody) {
-          let currentDataDebits = getState().dataDebits.dataDebits;
-          currentDataDebits = currentDataDebits.filter((a) => a.dataDebitKey !== dataDebitId);
-          currentDataDebits.push(app.parsedBody);
-          dispatch(setDataDebits([...currentDataDebits]));
-        }
-      } catch (e) {
-      // TODO error handling
+  async (dispatch, getState) => {
+    try {
+      const app = await HatClientService.getInstance().disableDataDebit(dataDebitId, false);
+      if (app?.parsedBody) {
+        let currentDataDebits = getState().dataDebits.dataDebits;
+        currentDataDebits = currentDataDebits.filter((a) => a.dataDebitKey !== dataDebitId);
+        currentDataDebits.push(app.parsedBody);
+        dispatch(setDataDebits([...currentDataDebits]));
       }
-    };
+    } catch (e) {
+      // TODO error handling
+    }
+  };
 
 export default slice.reducer;

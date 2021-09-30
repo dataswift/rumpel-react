@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
+import { configureStore } from '@reduxjs/toolkit';
 import HatApplications from './HatApplications';
 import applicationsSlice from './applicationsSlice';
 
-import { configureStore } from '@reduxjs/toolkit';
 import TEST_HAT_APPLICATION from '../../testData/HatApplications';
 
 const store = configureStore({

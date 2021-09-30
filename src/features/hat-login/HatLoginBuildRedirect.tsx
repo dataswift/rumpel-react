@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
+import * as queryString from 'query-string';
+import { addMinutes, isFuture, parseISO } from 'date-fns';
 import { HatClientService } from '../../services/HatClientService';
 import {
   selectDependencyApps,
@@ -8,8 +10,6 @@ import {
   selectDependencyToolsEnabled,
   selectParentApp,
 } from '../hmi/hmiSlice';
-import * as queryString from 'query-string';
-import { addMinutes, isFuture, parseISO } from 'date-fns';
 
 type Props = {
   children: React.ReactNode;
@@ -32,7 +32,9 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const buildRedirect = async (app: HatApplication) => {
-      const { redirect_uri, redirect, internal } = queryString.parse(window.location.search) as Query;
+      const { redirect_uri, redirect, internal } = queryString.parse(
+        window.location.search,
+      ) as Query;
 
       const isInternal = internal === 'true';
       const redirectParam = redirect_uri || redirect;
@@ -48,7 +50,7 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
 
           if (resAppLogin?.parsedBody?.accessToken) {
             const { accessToken } = resAppLogin.parsedBody;
-            const setup = app.application.setup;
+            const { setup } = app.application;
 
             const isRedirectUrlValid = setup.validRedirectUris.includes(redirectParamDecoded);
 
@@ -64,12 +66,14 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
             // The problem is that the dataswift.io page has no idea what to do with the token and
             // users are stuck there. With this hack users are being redirected
             // back to their PDA Dashboard which is the intended behaviour.
-            const isDataswiftWebsite = redirectParamDecoded?.includes('www.dataswift.io/sign-up-login');
+            const isDataswiftWebsite = redirectParamDecoded?.includes(
+              'www.dataswift.io/sign-up-login',
+            );
 
             const paramTokem = redirectParam?.includes('?') ? '&' : '?';
 
             const url = isDataswiftWebsite
-              ? window.location.origin + '/feed'
+              ? `${window.location.origin}/feed`
               : `${redirectParam?.replace('#', '%23')}${paramTokem}token=${accessToken}`;
 
             if (isRedirectUrlValid) {
@@ -88,7 +92,9 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
                 });
             }
           }
-        } catch (e) {}
+        } catch (e) {
+          // TODO: Error handling
+        }
       }
     };
 
@@ -110,7 +116,6 @@ const HatLoginBuildRedirect: React.FC<Props> = (props) => {
 
       if (session.applicationId === parentApp.application.id && isFuture(parseISO(session.date))) {
         buildRedirect(parentApp);
-        return;
       }
     }
   }, [parentApp, dependencyApps, dependencyPlugsAreActive, dependencyToolsAreEnabled]);

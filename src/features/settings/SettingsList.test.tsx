@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import messages from '../../translations/en.json';
 
-import messagesSlice from '../../features/messages/messagesSlice';
+import messagesSlice from '../messages/messagesSlice';
 import SettingsList from './SettingsList';
 
 export const store = configureStore({
@@ -26,8 +26,13 @@ describe('Settings List', () => {
     );
 
     expect(screen.getByText('Private data account')).toBeInTheDocument();
-    expect(screen.getByText('Change password').closest('a')).toHaveAttribute('href', '/user/password/change');
-    expect(screen.getByText('Dataswift Personal Data Account (PDA) Owner Agreement')).toBeInTheDocument();
+    expect(screen.getByText('Change password').closest('a')).toHaveAttribute(
+      'href',
+      '/user/password/change',
+    );
+    expect(
+      screen.getByText('Dataswift Personal Data Account (PDA) Owner Agreement'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Version')).toBeInTheDocument();
     expect(screen.getByText('Vendor (where you got your HAT)')).toBeInTheDocument();
   });

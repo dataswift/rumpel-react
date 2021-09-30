@@ -22,15 +22,15 @@ export class PasswordStrengthMeter extends Component<IPasswordStrengthProps> {
   getPasswordStrengthProgress = (progress: number) => {
     if (progress <= 1) {
       return 1;
-    } else if (progress === 2) {
-      return 2;
-    } else {
-      return 4;
     }
+    if (progress === 2) {
+      return 2;
+    }
+    return 4;
   };
 
   render(): ReactNode {
-    const passwordStrength = this.props.passwordStrength;
+    const { passwordStrength } = this.props;
     return (
       <div className="password-strength-meter">
         {passwordStrength && (
@@ -42,7 +42,9 @@ export class PasswordStrengthMeter extends Component<IPasswordStrengthProps> {
             />
             <br />
 
-            <div className={`password-strength-meter-label text-strength-${passwordStrength.score}`}>
+            <div
+              className={`password-strength-meter-label text-strength-${passwordStrength.score}`}
+            >
               {this.createPasswordLabel(passwordStrength.score)}
             </div>
           </>

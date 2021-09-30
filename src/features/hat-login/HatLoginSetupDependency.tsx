@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
-import { HatClientService } from '../../services/HatClientService';
-import { selectDependencyApps, selectDependencyPlugsAreActive, selectParentApp } from '../hmi/hmiSlice';
 import * as queryString from 'query-string';
 import { addMinutes, isFuture, parseISO } from 'date-fns';
+import { HatClientService } from '../../services/HatClientService';
+import {
+  selectDependencyApps,
+  selectDependencyPlugsAreActive,
+  selectParentApp,
+} from '../hmi/hmiSlice';
 
 type Props = {
   children: React.ReactNode;
@@ -70,14 +74,12 @@ const HatLoginSetupDependency: React.FC<Props> = (props) => {
         if (dependencyArray && dependencyArray.length > 0) {
           url += `%26dependencies=${dependencyArray.join()}`;
         }
-      } else {
-        if (dependencyApps) {
-          const dependencyArray = dependencyApps
-            .filter((app) => app.application.id !== appId)
-            .map((app) => app.application.id);
-          if (dependencyArray && dependencyArray.length > 0) {
-            url += `%26dependencies=${dependencyArray.join()}`;
-          }
+      } else if (dependencyApps) {
+        const dependencyArray = dependencyApps
+          .filter((app) => app.application.id !== appId)
+          .map((app) => app.application.id);
+        if (dependencyArray && dependencyArray.length > 0) {
+          url += `%26dependencies=${dependencyArray.join()}`;
         }
       }
 

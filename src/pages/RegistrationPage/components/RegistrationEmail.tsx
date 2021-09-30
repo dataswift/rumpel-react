@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AgreementsModal, AnalyticsContext, AuthApplicationLogo, Input } from "hmi";
-import { parse } from "query-string";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import FormatMessage from "../../../features/messages/FormatMessage";
-import { selectLanguage } from "../../../features/language/languageSlice";
-import { selectMessages } from "../../../features/messages/messagesSlice";
-import { pdaLookupWithEmail } from "../../../services/HattersService";
-import { isEmail } from "../../../utils/validations";
-import { buildRequestURL, getParameterByName } from "../../../utils/utils";
-import { HatApplicationContent } from "hmi/dist/interfaces/hat-application.interface";
-import { AnalyticsClickEvents } from "../../../utils/AnalyticsEvents";
+import React, { useContext, useEffect, useState } from 'react';
+import { AgreementsModal, AnalyticsContext, AuthApplicationLogo, Input } from 'hmi';
+import { parse } from 'query-string';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import { HatApplicationContent } from 'hmi/dist/interfaces/hat-application.interface';
+import FormatMessage from '../../../features/messages/FormatMessage';
+import { selectLanguage } from '../../../features/language/languageSlice';
+import { selectMessages } from '../../../features/messages/messagesSlice';
+import { pdaLookupWithEmail } from '../../../services/HattersService';
+import { isEmail } from '../../../utils/validations';
+import { buildRequestURL, getParameterByName } from '../../../utils/utils';
+import { AnalyticsClickEvents } from '../../../utils/AnalyticsEvents';
 
 type Props = {
   parentApp: HatApplicationContent;
@@ -23,7 +23,7 @@ type Query = {
   lang?: string;
   application_id?: string;
   email: string;
-}
+};
 
 const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, setSignupEmail }) => {
   const location = useLocation();
@@ -39,7 +39,7 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
   const [predefinedEmailAddress, setPredefinedEmailAddress] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [newsletterOptin, setNewsletterOptin] = useState(false);
 
   const lookUpEmail = async () => {
@@ -60,33 +60,31 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
           }
         }
       }
-    } catch (error) {
-      if (error?.value && error.value === 16) {
+    } catch (error: any) {
+      if (error?.value === 16) {
         setSignupEmail(email, newsletterOptin);
-      } else {
-        if (messages) {
-          setErrorMessage(messages['hatters.auth.signup.unexpectedError']);
-        }
+      } else if (messages) {
+        setErrorMessage(messages['hatters.auth.signup.unexpectedError']);
       }
     }
   };
 
   const buildURLQueryParams = (url: string) => {
-    let params: { [key: string]: string } = {};
+    const params: { [key: string]: string } = {};
 
-    params['repeat'] = 'true';
-    params['lang'] = lang || 'en';
+    params.repeat = 'true';
+    params.lang = lang || 'en';
 
     if (email) {
-      params['email'] = email;
+      params.email = email;
     }
 
     if (applicationId) {
-      params['application_id'] = applicationId;
+      params.application_id = applicationId;
     }
 
     if (redirectUri) {
-      params['redirect_uri'] = redirectUri;
+      params.redirect_uri = redirectUri;
     }
 
     return buildRequestURL(url, params);
@@ -124,61 +122,66 @@ const RegistrationEmail: React.FC<Props> = ({ parentApp, setUserNotVerified, set
 
   return (
     <>
-      <div className={'flex-column-wrapper signup'}>
-        <AuthApplicationLogo src={parentApp?.info.graphics.logo.normal} alt={parentApp?.info.name} />
-        <h2 className={'signup-title'}>
-          <FormatMessage id={'hatters.auth.signup.title'} asHtml />
+      <div className="flex-column-wrapper signup">
+        <AuthApplicationLogo
+          src={parentApp?.info.graphics.logo.normal}
+          alt={parentApp?.info.name}
+        />
+        <h2 className="signup-title">
+          <FormatMessage id="hatters.auth.signup.title" asHtml />
         </h2>
 
         {predefinedEmailAddress ? (
-          <h2 className={'signup-title'}>
-            {email}
-          </h2>
+          <h2 className="signup-title">{email}</h2>
         ) : (
           <Input
-            type={'email'}
-            placeholder={'Email'}
-            id={'email'}
-            autoComplete={'email'}
+            type="email"
+            placeholder="Email"
+            id="email"
+            autoComplete="email"
             value={email}
             hasError={!!errorMessage}
             errorMessage={errorMessage}
-            autoCapitalize={'none'}
-            onChange={e => setEmail(e.target.value)}
-            spellCheck='false'
-            autoCorrect='off'
+            autoCapitalize="none"
+            onChange={(e) => setEmail(e.target.value)}
+            spellCheck="false"
+            autoCorrect="off"
           />
         )}
 
-        <div className={'signup-text'} onClick={() => setOpenPopup(!openPopup)}>
-          <FormatMessage id={'hatters.auth.signup.byProceeding'} asHtml />
+        <div className="signup-text" onClick={() => setOpenPopup(!openPopup)}>
+          <FormatMessage id="hatters.auth.signup.byProceeding" asHtml />
         </div>
 
-        <div className={'ds-checkbox-container'}>
-          <label htmlFor={'dsNewsletter'}>
+        <div className="ds-checkbox-container">
+          <label htmlFor="dsNewsletter">
             <div>
-              <FormatMessage id={'hatters.auth.signup.stayUpToDate'} />
+              <FormatMessage id="hatters.auth.signup.stayUpToDate" />
             </div>
             <input
-              id={'dsNewsletter'}
-              name={'dsNewsletter'}
-              type={'checkbox'}
+              id="dsNewsletter"
+              name="dsNewsletter"
+              type="checkbox"
               checked={newsletterOptin}
-              onChange={e => setNewsletterOptin(e.target.checked)}
+              onChange={(e) => setNewsletterOptin(e.target.checked)}
             />
             <span className="ds-checkbox-checkmark" />
           </label>
         </div>
 
         <button
-          className={'signup-btn ds-hmi-btn ds-hmi-btn-primary'}
+          className="signup-btn ds-hmi-btn ds-hmi-btn-primary"
           disabled={!isValid || !!errorMessage}
           onClick={() => onClickNext()}
         >
-          <FormatMessage id={'hatters.auth.nextBtn'} />
+          <FormatMessage id="hatters.auth.nextBtn" />
         </button>
       </div>
-      <AgreementsModal language={language} open={openPopup} onClose={() => setOpenPopup(!openPopup)} />
+      <AgreementsModal
+        language={language}
+        open={openPopup}
+        onClose={() => setOpenPopup(!openPopup)}
+      />
     </>
   );
 };
