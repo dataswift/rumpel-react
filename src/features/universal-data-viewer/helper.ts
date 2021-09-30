@@ -4,7 +4,7 @@ export const flattenObject = (ob: any) => {
   for (let i in ob) {
     if (!ob.hasOwnProperty(i)) continue;
 
-    if ((typeof ob[i]) == 'object' && ob[i] !== null) {
+    if (typeof ob[i] == 'object' && ob[i] !== null) {
       let flatObject = flattenObject(ob[i]);
       for (let x in flatObject) {
         if (!flatObject.hasOwnProperty(x)) continue;

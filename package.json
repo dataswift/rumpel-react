@@ -3,6 +3,7 @@
   "version": "4.2.11",
   "private": true,
   "dependencies": {
+    "@datapunt/matomo-tracker-react": "^0.5.1",
     "@dataswift/hat-js": "^0.5.0",
     "@dataswift/shared": "0.0.4-cad706a",
     "@material-ui/core": "^4.11.4",
@@ -10,7 +11,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "date-fns": "^2.22.1",
-    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.4.3",
+    "hmi": "git+ssh://git@github.com:dataswift/hmi-react.git#v0.5.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",

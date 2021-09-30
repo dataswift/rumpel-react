@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import './AuthLogin.scss';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
 import { loadDynamicZxcvbn } from '../../utils/load-dynamic-zxcvbn';
@@ -18,7 +17,10 @@ import {
 import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
 import FormatMessage from '../messages/FormatMessage';
-import { verifyEmail } from "../../api/hatAPI";
+import { verifyEmail } from '../../api/hatAPI';
+import { isEmail } from '../../utils/validations';
+import { useLocation } from "react-router-dom";
+import { getPdaLookupDetails, selectUserPdaLookupDetails } from "./authenticationSlice";
 
 type Query = {
   email?: string;
@@ -37,6 +39,7 @@ type AuthVerifyEmailProps = {
 
 export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStrength }) => {
   const history = useHistory();
+  const location = useLocation();
   const parentApp = useSelector(selectApplicationHmi);
   const parentAppState = useSelector(selectApplicationHmiState);
   const language = useSelector(selectLanguage);
@@ -47,11 +50,12 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
+  const pdaDetails = useSelector(selectUserPdaLookupDetails);
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
   const [successfulResponse, setSuccessfulResponse] = useState<Date | null>(null);
   let { verifyToken } = useParams<{ verifyToken: string }>();
-  
+
   const dispatch = useDispatch();
   const passwordMatchDebounce = useRef(
     debounce(
@@ -61,13 +65,7 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
     ),
   ).current;
 
-  const validatePasswordScoreDebounce = useRef(
-    debounce(
-      (password: string) =>
-        validatePassword(password),
-      400,
-    ),
-  ).current;
+  const validatePasswordScoreDebounce = useRef(debounce((password: string) => validatePassword(password), 400)).current;
 
   const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
     if (score > 2) {
@@ -87,10 +85,10 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
 
   const validateEmailAddress = async () => {
     try {
-      const host = window.location.hostname;
+      if (!pdaDetails) return;
 
-      const hatName = host.substring(0, host.indexOf('.'));
-      const hatCluster = host.substring(host.indexOf('.') + 1);
+      const hatName = pdaDetails.hatName;
+      const hatCluster = pdaDetails.hatCluster;
 
       const hatClaim: HatClaim = {
         email: email,
@@ -137,34 +135,48 @@ export const AuthVerifyEmail: React.FC<AuthVerifyEmailProps> = ({ passwordStreng
     }
   };
 
-  const login = async () => {
-    if (successfulResponse) {
-      const { application_id, redirect_uri, email, lang } = queryString.parse(window.location.search) as Query;
+  const login = useCallback(async () => {
+    const { application_id, redirect_uri, email, lang } = queryString.parse(location.search) as Query;
 
-      if (redirect_uri && application_id) {
-        // eslint-disable-next-line max-len
-        const path = `/auth/oauth?application_id=${application_id}&redirect_uri=${redirect_uri}&email=${email}&lang=${lang}`;
-        history.replace(path);
-      } else {
-        history.replace('/auth/login');
-      }
+    if (redirect_uri && application_id) {
+      // eslint-disable-next-line max-len
+      const path = `/auth/oauth?application_id=${application_id}&redirect_uri=${redirect_uri}&email=${email}&lang=${lang}`;
+      history.replace(path);
+    } else {
+      history.replace('/auth/login', { query: { email, lang } });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history]);
+
+  const getPdaDetails = async (emailAddress?: string) => {
+    if (!emailAddress) return;
+    dispatch(getPdaLookupDetails(emailAddress));
   };
 
   useEffect(() => {
-    const { email, application_id } = queryString.parse(window.location.search) as Query;
-    setEmail(email || '');
+    const { email, application_id } = queryString.parse(location.search) as Query;
+    if (email && isEmail(email) && !pdaDetails) {
+      setEmail(email);
+      getPdaDetails(email);
+    }
 
-    if (!parentApp && application_id) {
-      dispatch(getApplicationHmi(application_id));
+    if (!parentApp && application_id && pdaDetails) {
+      dispatch(getApplicationHmi(application_id, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
-  }, [dispatch, parentApp]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, parentApp, pdaDetails]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
   }, [password, passwordConfirm, score, passwordMatchDebounce]);
+
+  useEffect(() => {
+    if (pdaDetails?.verified) {
+      login();
+    }
+  }, [pdaDetails, login]);
 
   return (
     <div>
@@ -256,7 +268,7 @@ const AuthVerificationEmailContainer: React.FC = () => {
 
   if (!zxcvbnReady) return null;
 
-  return <AuthVerifyEmail passwordStrength={zxcvbn}/>;
+  return <AuthVerifyEmail passwordStrength={zxcvbn} />;
 };
 
 export default AuthVerificationEmailContainer;

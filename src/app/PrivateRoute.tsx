@@ -18,7 +18,7 @@ type Query = {
   redirect_uri?: string;
 };
 
-export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
+export function PrivateRoute({ children, ...rest }: OwnProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   // TODO Add the type to the state useState<Query>
   const [query, setQuery] = useState({});
@@ -54,7 +54,7 @@ export function PrivateRoute({ children, newAuth, ...rest }: OwnProps) {
         ) : (
           <DelayedRedirect
             to={{
-              pathname: newAuth ? '/auth/login' : '/user/login',
+              pathname: '/auth/login',
               state: { from: location, query: query },
             }}
             delay={100}

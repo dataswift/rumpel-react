@@ -1,15 +1,15 @@
-import { Profile, ProfileSharingConfig } from "./profile.interface";
-import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces/bundle.interface";
-import { DEFAULT_PHATA_BUNDLE } from "./profileSlice";
+import { Profile, ProfileSharingConfig } from './profile.interface';
+import { BundleStructure, PropertyQuery } from '@dataswift/hat-js/lib/interfaces/bundle.interface';
+import { DEFAULT_PHATA_BUNDLE } from './profileSlice';
 
 export const generatePhataBundle = (
-  profile: ProfileSharingConfig, 
-  previousBundle: BundleStructure
+  profile: ProfileSharingConfig,
+  previousBundle: BundleStructure,
 ): { [bundleVersion: string]: PropertyQuery } => {
   const mapping = Object.keys(profile).reduce((acc: Record<string, string>, grouping) => {
     if (profile.hasOwnProperty(grouping) && typeof profile[grouping] === 'object') {
-      const sharedFields = Object.keys(profile[grouping]).filter(field => profile[grouping][field] === true);
-      sharedFields.forEach(field => acc[`${grouping}.${field}`] = `${grouping}.${field}`);
+      const sharedFields = Object.keys(profile[grouping]).filter((field) => profile[grouping][field] === true);
+      sharedFields.forEach((field) => (acc[`${grouping}.${field}`] = `${grouping}.${field}`));
     }
 
     return acc;
@@ -21,25 +21,23 @@ export const generatePhataBundle = (
     return {
       notables: DEFAULT_PHATA_BUNDLE.bundle.notables,
       profile: {
-        endpoints: [{
-          endpoint: 'rumpel/profile',
-          mapping: Object.keys(mapping).length > 0 ? mapping : undefined
-        }],
+        endpoints: [
+          {
+            endpoint: 'rumpel/profile',
+            mapping: Object.keys(mapping).length > 0 ? mapping : undefined,
+          },
+        ],
         orderBy: 'dateCreated',
         ordering: 'descending',
-        limit: 1
-      }
+        limit: 1,
+      },
     };
   } else {
     return { notables: previousBundle.bundle.notables };
   }
 };
 
-
-export const generateProfileShare = (
-  profile: Profile, 
-  phataBundle: BundleStructure
-): ProfileSharingConfig => {
+export const generateProfileShare = (profile: Profile, phataBundle: BundleStructure): ProfileSharingConfig => {
   let bundleMapping: Array<any>;
 
   if (phataBundle.bundle?.profile?.endpoints[0].mapping) {

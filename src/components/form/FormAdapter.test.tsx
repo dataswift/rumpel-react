@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import React from "react";
-import FormAdapter from "./FormAdapter";
-import Root from "../../app/Root";
-import ProfileSections from "../../features/profile/ProfileSections";
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
+import FormAdapter from './FormAdapter';
+import Root from '../../app/Root';
+import ProfileSections from '../../features/profile/ProfileSections';
 
 describe('FormAdapter', () => {
   test('renders the correct elements without error: personal', () => {
@@ -15,7 +15,7 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('First name')).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Primary email')).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Facebook profile')).toBeInTheDocument();
@@ -75,13 +75,12 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Say something nice about yourself for the world to see')).toBeInTheDocument();
   });
-
 
   test('renders the correct error messages for the personal info', async () => {
     render(
@@ -93,7 +92,7 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     const firstName = screen.getByLabelText('First name');
@@ -118,14 +117,14 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
-    
+
     const primaryEmail = screen.getByLabelText('Primary email');
     const alternativeEmail = screen.getByLabelText('Alternative email');
     const mobile = screen.getByLabelText('Mobile phone number');
     const landline = screen.getByLabelText('Home phone number');
-    
+
     fireEvent.change(primaryEmail, { target: { value: 'not-valid-email' } });
     await waitFor(() => expect(screen.getByText('This is not a valid email')).toBeInTheDocument());
     fireEvent.change(primaryEmail, { target: { value: '' } });
@@ -153,7 +152,7 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     const firstName = screen.getByLabelText('First name');
@@ -178,9 +177,9 @@ describe('FormAdapter', () => {
           formId={'form-id'}
           values={{}}
         />
-      </Root>
+      </Root>,
     );
-    
+
     const primaryEmail = screen.getByLabelText('Primary email');
     const alternativeEmail = screen.getByLabelText('Alternative email');
     const mobile = screen.getByLabelText('Mobile phone number');

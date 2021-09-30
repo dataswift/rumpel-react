@@ -1,5 +1,7 @@
 import { environment } from './environment';
 
+export const APPLICATION_ID = environment.sandbox ? 'hatappstaging' : 'hatapp';
+
 const externalLinks = {
   bestPractices: 'https://docs.dataswift.io/guides/security-requirement-best-practice#password-policy',
   termsOfService: 'https://www.dataswift.io/legal/pda-owner-agreement-en',
@@ -19,18 +21,22 @@ export const config = {
     '.dataswift.dev',
     '.dataswift.us',
     '.dataswift.ca',
-    '.dataswift.net'
+    '.dataswift.net',
   ],
   supportedPorts: [3000, 9000, 9001],
   acceptedLanguages: ['en', 'pl', 'pt'],
   defaultLanguage: 'en',
   native: environment.native,
   protocol: environment.protocol,
+  matomoUrl: 'https://dataswift.matomo.cloud/',
+  matomoSiteId: 2,
   links: {
     bestPractices: externalLinks.bestPractices,
     termsOfService: externalLinks.termsOfService,
     privacyPolicy: externalLinks.privacyPolicy,
-    hatters: environment.hattersUrl,
+    hattersBackend: environment.hattersBackendUrl,
+    hattersFrontend: environment.hattersFrontendUrl,
+    pdaSignup: `${environment.hattersFrontendUrl}/services/signup?application_id=${APPLICATION_ID}&redirect_uri=https://www.dataswift.io/sign-up-login`,
   },
   mainMenu: [
     {
@@ -98,7 +104,7 @@ export const config = {
       display: 'Dataswift Personal Data Account (PDA) Owner Agreement',
       icon: 'exit_to_app',
       link: externalLinks.termsOfService,
-      description: ''
+      description: '',
     },
 
     { display: 'Privacy policy', icon: 'exit_to_app', link: externalLinks.privacyPolicy, description: '' },

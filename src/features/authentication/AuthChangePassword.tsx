@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import './AuthLogin.scss';
 import { resetPassword } from '../../api/hatAPI';
 import { AgreementsModal, AuthApplicationLogo, Input } from 'hmi';
 import { PasswordStrengthIndicator } from '../../components/PasswordStrengthMeter/PasswordStrengthIndicator';
@@ -17,6 +16,8 @@ import {
 import FormatMessage from '../messages/FormatMessage';
 import { selectLanguage } from '../language/languageSlice';
 import { selectMessages } from '../messages/messagesSlice';
+import { isEmail } from "../../utils/validations";
+import { getPdaLookupDetails, selectUserPdaLookupDetails } from "./authenticationSlice";
 
 type Query = {
   email?: string;
@@ -45,6 +46,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
   const [score, setScore] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSuggestion, setErrorSuggestion] = useState('');
+  const pdaDetails = useSelector(selectUserPdaLookupDetails);
   const dispatch = useDispatch();
   const [openPopup, setOpenPopup] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean | undefined>(undefined);
@@ -58,13 +60,7 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
     ),
   ).current;
 
-  const validatePasswordScoreDebounce = useRef(
-    debounce(
-      (password: string) =>
-        validatePassword(password),
-      400,
-    ),
-  ).current;
+  const validatePasswordScoreDebounce = useRef(debounce((password: string) => validatePassword(password), 400)).current;
 
   const validatePasswordMatch = (password: string, passwordConfirm: string, score: number) => {
     if (score > 2) {
@@ -84,7 +80,13 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
 
   const resetPasswordRequest = async () => {
     try {
-      const res = await resetPassword(resetToken, { newPassword: password });
+      if (!pdaDetails) return;
+
+      const res = await resetPassword(
+        pdaDetails.hatName + '.' + pdaDetails.hatCluster,
+        resetToken,
+        { newPassword: password }
+      );
 
       if (res) {
         setSuccessfulResponse(new Date());
@@ -134,16 +136,27 @@ export const AuthChangePassword: React.FC<ChangePasswordProps> = ({ passwordStre
     }
   };
 
-  useEffect(() => {
-    const { email, application_id } = queryString.parse(window.location.search) as Query;
-    setEmail(email || '');
+  const getPdaDetails = async (emailAddress?: string) => {
+    const maybeEmail = emailAddress || window.localStorage.getItem('session_email');
+    if (!maybeEmail) return;
 
-    if (!parentApp && application_id) {
-      dispatch(getApplicationHmi(application_id));
+    dispatch(getPdaLookupDetails(maybeEmail));
+  };
+
+  useEffect(() => {
+    const { email, application_id } = queryString.parse(location.search) as Query;
+    if (email && isEmail(email) && !pdaDetails) {
+      setEmail(email);
+      getPdaDetails(email);
+    }
+
+    if (!parentApp && application_id && pdaDetails) {
+      dispatch(getApplicationHmi(application_id, pdaDetails.hatName + '.' + pdaDetails.hatCluster));
     } else {
       dispatch(setAppsHmiState('completed'));
     }
-  }, [dispatch, parentApp]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, parentApp, pdaDetails]);
 
   useEffect(() => {
     passwordMatchDebounce(password, passwordConfirm, score);
@@ -241,7 +254,7 @@ const AuthChangePasswordContainer: React.FC = () => {
 
   if (!zxcvbnReady) return null;
 
-  return <AuthChangePassword passwordStrength={zxcvbn}/>;
+  return <AuthChangePassword passwordStrength={zxcvbn} />;
 };
 
 export default AuthChangePasswordContainer;

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaimEmail: React.FC<Props> = props => {
+const HatClaimEmail: React.FC<Props> = (props) => {
   if (props.currentStep !== 0) {
     return null;
   }
@@ -30,7 +30,7 @@ const HatClaimEmail: React.FC<Props> = props => {
             name={'newsletterOptin'}
             type={'checkbox'}
             checked={props.hatClaim.optins}
-            onChange={event => props.editHatClaim('optins', event.target.checked)}
+            onChange={(event) => props.editHatClaim('optins', event.target.checked)}
           />
           <span className="checkbox-checkmark" />
         </label>
@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     {
       editHatClaim,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaimEmail);

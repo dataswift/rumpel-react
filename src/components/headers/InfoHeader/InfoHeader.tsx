@@ -38,8 +38,7 @@ export const InfoHeader: React.FC<Props> = ({ fixed, hideMobile }) => {
 
       <RumpelModal open={openDialog} onClose={() => setOpenDialog(false)}>
         <div className="rum-modal-header">
-          <div className={'rum-modal-text-title'}>What is a HAT Personal Data Account (PDA)?
-          </div>
+          <div className={'rum-modal-text-title'}>What is a HAT Personal Data Account (PDA)?</div>
         </div>
         <div className="rum-modal-body rum-modal-text-content">
           <div>
@@ -50,14 +49,14 @@ export const InfoHeader: React.FC<Props> = ({ fixed, hideMobile }) => {
             <div>
               A HAT Personal Data Account is the equivalent of a bank account, but for data.
               <br /> <br />
-              With the HAT PDA, a HAT owner can give the data they own to websites and mobile
-              applications in return for services and benefits, at the touch of a few buttons.
+              With the HAT PDA, a HAT owner can give the data they own to websites and mobile applications in return for
+              services and benefits, at the touch of a few buttons.
               <br /> <br />
-              The HAT PDA also replaces the need for user accounts on mobile apps and websites. It is already
-              referenced globally as a best in class solution on the Internet for individual data ownership and rights.
+              The HAT PDA also replaces the need for user accounts on mobile apps and websites. It is already referenced
+              globally as a best in class solution on the Internet for individual data ownership and rights.
               <br /> <br />
-              The HAT Personal Data Account technology is more than just a centralised bank account technology. It is
-              a decentralised private microserver for creating new data through machine learning and analytics.
+              The HAT Personal Data Account technology is more than just a centralised bank account technology. It is a
+              decentralised private microserver for creating new data through machine learning and analytics.
             </div>
           </div>
         </div>

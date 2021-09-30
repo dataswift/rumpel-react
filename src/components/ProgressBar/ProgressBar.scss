@@ -1,14 +1,16 @@
 .progress-bar {
   width: 100%;
-  height: 4px;
-  border-radius: 2px;
-  margin: 8px auto;
-  background-color: #e4e8eb;
+  height: 6px;
+  border-radius: 8px;
+  background-color: #E5E6E3;
   overflow: hidden;
+  max-width: 260px;
+  margin: 30px auto 17px;
 
   .progress-bar-blue {
-    height: 4px;
+    height: 6px;
     width: 100%;
-    background-color: #1e457c;
+    border-radius: 8px;
+    background-color: #20154e;
   }
 }

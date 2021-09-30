@@ -1,18 +1,19 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import messages from '../../translations/en.json';
 
 import messagesSlice from '../../features/messages/messagesSlice';
 import applicationsSlice from '../../features/applications/applicationsSlice';
 import languageSlice from '../../features/language/languageSlice';
-import { Provider } from "react-redux";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
+import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
 
 import { recoverPassword } from '../../api/hatAPI';
-import AuthRecoverPassword from "./AuthRecoverPassword";
+import AuthRecoverPassword from './AuthRecoverPassword';
+import authenticationSlice from "./authenticationSlice";
 jest.mock('../../api/hatAPI');
 
 const mockRecoverPassword: jest.Mocked<any> = recoverPassword;
@@ -21,15 +22,23 @@ export const store = configureStore({
   reducer: {
     messages: messagesSlice,
     applications: applicationsSlice,
-    language: languageSlice
+    language: languageSlice,
+    authentication: authenticationSlice,
   },
   preloadedState: {
     messages,
     applications: {
-      applications: []
+      applications: [],
     },
     language: {
-      language: 'en'
+      language: 'en',
+    },
+    authentication: {
+      pdaLookupResponse: {
+        verified: true,
+        hatCluster: 'testHatCluster',
+        hatName: 'testHatName'
+      }
     }
   },
 });
@@ -72,10 +81,15 @@ describe('AuthRecoverPassword tests', () => {
     expect(screen.getByText('Reset Password')).toBeEnabled();
     fireEvent.click(screen.getByText('Reset Password'));
 
-    expect(mockRecoverPassword).toHaveBeenCalledTimes(1);
-    expect(mockRecoverPassword).toHaveBeenCalledWith({ email: 'test@email.com' });
+    expect(mockRecoverPassword).toHaveBeenCalledWith("testHatName.testHatCluster", { email: 'test@email.com' });
 
-    await waitFor(() => expect(screen.queryByText(/If this email address is an active account, you will receive an email shortly./)).toBeInTheDocument());
-    await waitFor(() => expect(screen.queryByText(/if you do not receive a reset link, check your spam folder or/)).toBeInTheDocument());
+    await waitFor(() =>
+      expect(
+        screen.queryByText(/If this email address is an active account, you will receive an email shortly./),
+      ).toBeInTheDocument(),
+    );
+    await waitFor(() =>
+      expect(screen.queryByText(/if you do not receive a reset link, check your spam folder or/)).toBeInTheDocument(),
+    );
   });
 });

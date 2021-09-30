@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { screen, render } from '@testing-library/react';
-import InformationDetails from "./InformationDetails";
-import Root from "../../app/Root";
+import InformationDetails from './InformationDetails';
+import Root from '../../app/Root';
 
 describe('Information Details', () => {
   test('renders the information and ensures the correct data is present.', () => {
@@ -19,7 +19,7 @@ describe('Information Details', () => {
           screenshots={['screenshot1', 'screenshot2']}
           informationListData={testData}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Test header Info')).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Information Details', () => {
           description={'text description'}
           informationListData={testData}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Test header Info')).toBeInTheDocument();

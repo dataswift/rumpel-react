@@ -5,11 +5,11 @@ import { useHistory, useParams } from 'react-router-dom';
 import DetailsHeader from '../../components/headers/DetailsHeader/DetailsHeader';
 import './DataDebitDetails.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
-import { getDataDebits, selectDataDebitById } from "./dataDebitSlice";
-import { unbundle } from "../../utils/unbundle";
-import Card from "../../components/Card/Card";
-import { format } from "date-fns";
-import DataDebitDetailsActions from "./DataDebitDetailsActions";
+import { getDataDebits, selectDataDebitById } from './dataDebitSlice';
+import { unbundle } from '../../utils/unbundle';
+import Card from '../../components/Card/Card';
+import { format } from 'date-fns';
+import DataDebitDetailsActions from './DataDebitDetailsActions';
 
 const DataDebitDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ const DataDebitDetails: React.FC = () => {
     }
   }, [dispatch, dataDebit]);
 
-
   if (!dataDebit) return null;
 
   return (
@@ -38,10 +37,8 @@ const DataDebitDetails: React.FC = () => {
       >
         <h3 className="app-details-header-title">{dataDebit.dataDebitKey}</h3>
 
-        <div className="app-details-header-headline">
-            Details of your data debit agreement with the provider
-        </div>
-          
+        <div className="app-details-header-headline">Details of your data debit agreement with the provider</div>
+
         <div className={`app-details-status ${dataDebit.active ? 'running' : 'in-active'} link-button`}>
           <i className="material-icons details-button-icon">
             {dataDebit.active ? 'fiber_manual_record' : 'radio_button_unchecked'}
@@ -69,18 +66,20 @@ const DataDebitDetails: React.FC = () => {
           imgAltText={'data debit'}
           name={dataDebit.requestClientName}
           description={'Created the data debit'}
-          onClick={() => history.push(`/explore/App/${dataDebit.requestApplicationId}`)} />
+          onClick={() => history.push(`/explore/App/${dataDebit.requestApplicationId}`)}
+        />
       </div>
-        
-      {dataDebit.permissionsLatest?.termsUrl &&
+
+      {dataDebit.permissionsLatest?.termsUrl && (
         <a
           className={'data-debit-privacy-policy'}
           href={dataDebit.permissionsLatest?.termsUrl}
           rel="noopener noreferrer"
-          target="_blank">
+          target="_blank"
+        >
           Privacy policy
         </a>
-      }
+      )}
     </>
   );
 };

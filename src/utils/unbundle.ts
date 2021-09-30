@@ -12,8 +12,8 @@ export const unbundle = (bundle: {
     return {
       title: endpointQuery.endpoint.replace('/', ' '),
       fields: endpointQuery.mapping
-        ? uniqBy(Object.keys(endpointQuery.mapping), path => path.split('.')[0]).map(name =>
-          name.replace(/_/g, ' ')
+        ? uniqBy(Object.keys(endpointQuery.mapping), (path) => path.split('.')[0]).map((name) =>
+          name.replace(/_/g, ' '),
         )
         : ['NONE'],
     };
