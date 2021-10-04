@@ -1,5 +1,61 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Getting Started with the Project
+
+## Development environment
+
+For the best development experience ensure that the local environment has the latest node/npm pairing installed. Using 
+[Homebrew](https://brew.sh/) package manager on MacOS, it can be installed by running `brew install node` command. Once 
+the installation completes verify everything is in place: 
+
+```bash
+$ node -v
+> v16.9.1
+
+$ npm -v
+> 7.21.1
+```
+
+## GitHub credentials
+
+Project repository uses a few dependencies that are currently published as private GitHub packages. Don't worry, you have
+been given access to these packages, however, there is an extra step required to set up npm authentication with GitHub.
+The general outline of the authentication process can be found [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
+As specified in the documentation we need run the following command in order to authenticate npm with GitHub package service:
+
+```bash
+$ npm login --scope=dataswift --registry=https://npm.pkg.github.com
+
+> Username: USERNAME
+> Password: TOKEN
+> Email: PUBLIC-EMAIL-ADDRESS
+```
+
+You will be prompted to provide your GitHub username, personal access token (PAT), and public email address. PAT can be 
+generated in a straightforward manner using [GitHub's guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+One thing to watch out here is the permission scopes of the token - `repo` and `read:packages` are the two required 
+scopes in order for the token to work correctly.
+
+## Running the project
+
+Once local runtime is setup and we have logged in with GitHub packages, project can be run using the procedure standard
+to the ecosystem:
+
+- Install project dependencies (you really need a newer version of npm to use `npx` command)
+```bash
+npx yarn install
+```
+
+- Run the project in development mode
+```bash
+npx yarn start 
+```
+
+Using npx tool is optional here, we could've installed yarn as global binary `npm install -g yarn` and then used yarn 
+directly in the terminal with commands `yarn install` and `yarn start`.
+
+Now everything should be up and running, ready for development.
+
 ## Available Scripts
 
 In the project directory, you can run:
