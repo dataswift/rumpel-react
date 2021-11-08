@@ -7871,10 +7871,10 @@ markdown-to-jsx@*, markdown-to-jsx@^7.1.3:
   resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.3.tgz#f00bae66c0abe7dd2d274123f84cb6bd2a2c7c6a"
   integrity sha512-jtQ6VyT7rMT5tPV0g2EJakEnXLiPksnvlYtwQsVVZ611JsWGN8bQ1tVSDX4s6JllfEH6wmsYxNjTUAMrPmNA8w==
 
-material-icons@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-0.7.0.tgz#af3f2ef7b64cf4892944b3ae70809be2b8e22a32"
-  integrity sha512-MsgLevM5FOvbLCL2jgEtS1eXbdF8wHsaeMBSd4D/aOkg8T1HmvnU8OIrC/natSfLSJmxh3bYfN8XjO8upYJYrA==
+material-icons@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-1.10.1.tgz#6b22f706e961abcb9b32b7970919d5f3567d080a"
+  integrity sha512-1DRuTO/ijtDcnyfSk8n172DFeMq+4U/VlXoKS2zJGossGIvAKe8ryBXh2c6/lEiX6XO9LJF/ZeN347UIiaSNUA==
 
 md5.js@^1.3.4:
   version "1.3.5"
