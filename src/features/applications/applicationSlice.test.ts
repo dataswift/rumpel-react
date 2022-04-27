@@ -1,9 +1,5 @@
-import reducer, {
-  initialState,
-  selectApplications,
-  apps
-} from './applicationsSlice';
-import TEST_HAT_APPLICATION from "../../testData/HatApplications";
+import reducer, { initialState, selectApplications, apps } from './applicationsSlice';
+import TEST_HAT_APPLICATION from '../../testData/HatApplications';
 
 describe('application slice', () => {
   describe('reducer, actions and selectors', () => {
@@ -27,7 +23,7 @@ describe('application slice', () => {
 
       // Assert
       const rootState = {
-        applications: nextState
+        applications: nextState,
       };
 
       // @ts-ignore

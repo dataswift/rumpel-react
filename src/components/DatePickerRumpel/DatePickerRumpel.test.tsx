@@ -1,15 +1,10 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import React from "react";
-import DatePickerRumpel from "./DatePickerRumpel";
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import DatePickerRumpel from './DatePickerRumpel';
 
 describe('DatePickerRumpel', () => {
   test('renders the date picker without error', () => {
-    render(
-      <DatePickerRumpel 
-        profileField={true}
-        onChange={() => {}}
-        label={'DatePicker'}/>,
-    );
+    render(<DatePickerRumpel profileField onChange={() => {}} label="DatePicker" />);
 
     // Check if calendar is hidden by checking the dates
     expect(screen.queryByText('Mon')).toBeNull();

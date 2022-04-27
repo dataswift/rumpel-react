@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './HatClaimPassword.scss';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { hatClaimMessages } from '../messages-hat-claim';
 import { AppState } from '../../../redux/reducer/rootReducer';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import { editHatClaim, editHatClaimErrorMessage, editHatClaimPassword } from '../redux/actions/hatClaimActions';
-import { connect } from 'react-redux';
-import { PasswordStrengthMeter } from "../../../components/PasswordStrengthMeter/PasswordStrengthMeter";
+import {
+  editHatClaim,
+  editHatClaimErrorMessage,
+  editHatClaimPassword,
+} from '../redux/actions/hatClaimActions';
+import { PasswordStrengthMeter } from '../../../components/PasswordStrengthMeter/PasswordStrengthMeter';
+
 const debounce = require('lodash.debounce');
+
 declare const zxcvbn: any;
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const HatClaimPassword: React.FC<Props> = props => {
+const HatClaimPassword: React.FC<Props> = (props) => {
   const [hide1, setHide1] = useState(true);
   const [hide2, setHide2] = useState(true);
 
@@ -19,12 +25,12 @@ const HatClaimPassword: React.FC<Props> = props => {
 
   const passwordMatchDebounce = debounce(
     () => passwordIsValid(props.password.password, props.password.passwordConfirm),
-    400
+    400,
   );
 
   function validatePassword(password: string) {
-    const score = zxcvbn(password).score;
-    props.editHatClaimPassword('passwordStrength', { score: score });
+    const { score } = zxcvbn(password);
+    props.editHatClaimPassword('passwordStrength', { score });
   }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +52,12 @@ const HatClaimPassword: React.FC<Props> = props => {
       props.editHatClaimErrorMessage('');
 
       return true;
-    } else {
-      if (newPassword.length > 5) {
-        props.editHatClaimErrorMessage("Your passwords don't match!");
-      }
-
-      return false;
     }
+    if (newPassword.length > 5) {
+      props.editHatClaimErrorMessage("Your passwords don't match!");
+    }
+
+    return false;
   };
 
   useEffect(() => {
@@ -75,34 +80,34 @@ const HatClaimPassword: React.FC<Props> = props => {
           <h3>.{props.hatClaim.hatCluster}</h3>
         </div>
       </div>
-      <div className={'text-medium'}>{hatClaimMessages.dataPrecious}</div>
+      <div className="text-medium">{hatClaimMessages.dataPrecious}</div>
       <form>
-        <input name={'username'} autoComplete={'username'} type={'text'} hidden={true} />
+        <input name="username" autoComplete="username" type="text" hidden />
 
         <div className="input-password-container">
           <input
             type={hide1 ? 'password' : 'text'}
             name="password"
-            autoComplete={'new-password'}
+            autoComplete="new-password"
             value={props.hatClaim.password}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             placeholder="Password"
           />
           <button type="button" tabIndex={-1} onClick={() => setHide1(!hide1)}>
-            <i className={'material-icons'}>{hide1 ? ' visibility_off' : ' visibility'}</i>
+            <i className="material-icons">{hide1 ? ' visibility_off' : ' visibility'}</i>
           </button>
         </div>
         <div className="input-password-container">
           <input
             type={hide2 ? 'password' : 'text'}
             name="passwordConfirm"
-            autoComplete={'new-password'}
+            autoComplete="new-password"
             value={props.password.passwordConfirm}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             placeholder="Confirm Password"
           />
           <button type="button" tabIndex={-1} onClick={() => setHide2(!hide2)}>
-            <i className={'material-icons'}>{hide2 ? ' visibility_off' : ' visibility'}</i>
+            <i className="material-icons">{hide2 ? ' visibility_off' : ' visibility'}</i>
           </button>
         </div>
       </form>
@@ -126,7 +131,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
       editHatClaimPassword,
       editHatClaimErrorMessage,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(HatClaimPassword);

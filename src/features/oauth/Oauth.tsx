@@ -7,20 +7,18 @@ import HatLoginSetupDependency from '../hat-login/HatLoginSetupDependency';
 import HatLoginRedirectError from '../hat-login/HatLoginRedirectError';
 import OauthPermissions from './OauthPermissions';
 
-const Oauth: React.FC = () => {
-  return (
-    <HatLoginParamValidation>
-      <HatLoginApplicationHandler>
-        <HatLoginBuildRedirect>
-          <HatLoginSetupDependency>
-            <HatLoginRedirectError>
-              <OauthPermissions />
-            </HatLoginRedirectError>
-          </HatLoginSetupDependency>
-        </HatLoginBuildRedirect>
-      </HatLoginApplicationHandler>
-    </HatLoginParamValidation>
-  );
-};
+const Oauth: React.FC = () => (
+  <HatLoginParamValidation>
+    <HatLoginApplicationHandler>
+      <HatLoginBuildRedirect>
+        <HatLoginSetupDependency>
+          <HatLoginRedirectError>
+            <OauthPermissions />
+          </HatLoginRedirectError>
+        </HatLoginSetupDependency>
+      </HatLoginBuildRedirect>
+    </HatLoginApplicationHandler>
+  </HatLoginParamValidation>
+);
 
 export default Oauth;

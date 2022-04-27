@@ -1,7 +1,4 @@
-import reducer, {
-  initialState,
-  language, selectLanguage
-} from './languageSlice';
+import reducer, { initialState, language, selectLanguage } from './languageSlice';
 
 describe('language slice', () => {
   describe('reducer, actions and selectors', () => {
@@ -18,14 +15,14 @@ describe('language slice', () => {
 
     it('should properly set the state when initialise the language', () => {
       // Arrange
-      const langInit = "pl";
+      const langInit = 'pl';
 
       // Act
       const nextState = reducer(initialState, language(langInit));
 
       // Assert
       const rootState = {
-        language: nextState
+        language: nextState,
       };
 
       // @ts-ignore

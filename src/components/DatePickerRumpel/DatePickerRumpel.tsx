@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 // @ts-ignore
 import { Calendar } from 'react-date-range';
-import Input from "../form/Input";
-import { format } from "date-fns";
+import { format } from 'date-fns';
+import Input from '../form/Input';
 
 type Props = {
-    label: string;
-    value?: string;
-    profileField?: boolean;
-    errorMessage?: string;
-    onChange: (value: string) => void;
-    profilePrivacyToggle?: boolean;
-    onProfileSharingChange?: () => void;
-}
+  label: string;
+  value?: string;
+  profileField?: boolean;
+  errorMessage?: string;
+  onChange: (value: string) => void;
+  profilePrivacyToggle?: boolean;
+  onProfileSharingChange?: () => void;
+};
 
 const DatePickerRumpel: React.FC<Props> = (props) => {
-  const { 
-    label, 
-    profileField, 
-    onChange, 
-    errorMessage, 
-    value, 
-    profilePrivacyToggle, 
-    onProfileSharingChange 
+  const {
+    label,
+    profileField,
+    onChange,
+    errorMessage,
+    value,
+    profilePrivacyToggle,
+    onProfileSharingChange,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -38,9 +38,10 @@ const DatePickerRumpel: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={'date-range-picker-rumpel'}>
-      <Input type={'text'} 
-        id={'calendar'} 
+    <div className="date-range-picker-rumpel">
+      <Input
+        type="text"
+        id="calendar"
         label={label}
         value={displayValue}
         onClick={() => setIsOpen(!isOpen)}
@@ -50,12 +51,7 @@ const DatePickerRumpel: React.FC<Props> = (props) => {
         profilePrivacyToggle={profilePrivacyToggle}
         onProfileSharingChange={onProfileSharingChange}
       />
-      {isOpen && (
-        <Calendar
-          date={selectedDate || new Date()}
-          onChange={onDateChange}
-        />
-      )}
+      {isOpen && <Calendar date={selectedDate || new Date()} onChange={onDateChange} />}
     </div>
   );
 };

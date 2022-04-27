@@ -13,8 +13,8 @@ export const store = configureStore({
   preloadedState: {
     messages: {
       title: 'title',
-      description: 'description'
-    }
+      description: 'description',
+    },
   },
 });
 
@@ -22,8 +22,8 @@ describe('TileHeader', () => {
   test('renders without error and displays the correct information.', () => {
     render(
       <Provider store={store}>
-        <TileHeader titleId="title" icon="test_icon" descriptionId={'description'} />
-      </Provider>
+        <TileHeader titleId="title" icon="test_icon" descriptionId="description" />
+      </Provider>,
     );
 
     expect(screen.getByText('title')).toBeInTheDocument();

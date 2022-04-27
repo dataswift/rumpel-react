@@ -11,26 +11,19 @@ import DataPlugs from '../features/dataplugs/DataPlugs';
 import DataPlugDetails from '../features/dataplugs/DataPlugDetails';
 
 import { LayoutRoute, PrivateLayoutRoute, PrivateSpaceRoute } from './Layouts';
-import Profile from "../features/profile/Profile";
+import Profile from '../features/profile/Profile';
 import { HatTools, HatToolDetails } from '../features/tools';
 import { Settings } from '../features/settings';
 import ChangePassword from '../components/user/ChangePassword';
 import DataDebits from '../features/data-debit';
-import DataDebitDetails from "../features/data-debit/DataDebitDetails";
+import DataDebitDetails from '../features/data-debit/DataDebitDetails';
+import { LandingLoginPage, LoginPage, RegistrationPage } from '../pages';
 
 const HatClaim = React.lazy(
   () =>
     import(
       /* webpackChunkName: "hat_claim" */
       '../features/hat-claim/HatClaim'
-    ),
-);
-
-const Login = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "user_login" */
-      '../components/user/Login'
     ),
 );
 
@@ -47,22 +40,6 @@ const HatLogin = React.lazy(
     import(
       /* webpackChunkName: "hat_setup_login" */
       '../features/hat-login/HatLogin'
-    ),
-);
-
-const PasswordRecover = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "password_recover" */
-      '../components/user/PasswordRecover'
-    ),
-);
-
-const AuthLogin = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "auth_login" */
-      '../features/authentication/AuthLogin'
     ),
 );
 
@@ -98,121 +75,142 @@ const Oauth = React.lazy(
     ),
 );
 
-const PrivateSpaceRoutes = () => {
-  return (
-    <Switch>
-      <PrivateSpaceRoute path={'/feed'}>
-        <Feed />
-      </PrivateSpaceRoute>
+const PrivateSpaceRoutes = () => (
+  <Switch>
+    <PrivateSpaceRoute path="/feed">
+      <Feed />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App'}>
-        <HatApplications />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App">
+      <HatApplications />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App/:appId'}>
-        <HatApplicationDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App/:appId">
+      <HatApplicationDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/App/:appId/permissions'}>
-        <HatApplicationPermissions />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/App/:appId/permissions">
+      <HatApplicationPermissions />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug'}>
-        <DataPlugs />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug">
+      <DataPlugs />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId'}>
-        <DataPlugDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug/:appId">
+      <DataPlugDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/explore/DataPlug/:appId/permissions'}>
-        <HatApplicationPermissions />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/explore/DataPlug/:appId/permissions">
+      <HatApplicationPermissions />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/universal-data-viewer'}>
-        <UniversalDataViewerDataSources />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/universal-data-viewer">
+      <UniversalDataViewerDataSources />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/universal-data-viewer/:namespace/:endpoint'}>
-        <UniversalDataViewerEndpoint />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/universal-data-viewer/:namespace/:endpoint">
+      <UniversalDataViewerEndpoint />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/profile'}>
-        <Profile />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/profile">
+      <Profile />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/tools'}>
-        <HatTools />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/tools">
+      <HatTools />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/tools/:toolId'}>
-        <HatToolDetails />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/tools/:toolId">
+      <HatToolDetails />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/settings'}>
-        <Settings />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/settings">
+      <Settings />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/user/password/change'}>
-        <ChangePassword />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute path="/user/password/change">
+      <ChangePassword />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute exact path={'/data-debit'}>
-        <DataDebits />
-      </PrivateSpaceRoute>
+    <PrivateSpaceRoute exact path="/data-debit">
+      <DataDebits />
+    </PrivateSpaceRoute>
 
-      <PrivateSpaceRoute path={'/data-debit/:dataDebitParam'}>
-        <DataDebitDetails />
-      </PrivateSpaceRoute>
-    </Switch>
-  );
-};
+    <PrivateSpaceRoute path="/data-debit/:dataDebitParam">
+      <DataDebitDetails />
+    </PrivateSpaceRoute>
+  </Switch>
+);
 
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<LoadingSpinner loadingText={'Loading...'} />}>
+    <Suspense fallback={<LoadingSpinner loadingText="Loading..." />}>
       <Switch>
         <LayoutRoute path="/public/profile">
           <PublicProfile />
         </LayoutRoute>
 
-        <LayoutRoute path="/hat/claim/:claimToken">
-          <HatClaim />
+        <LayoutRoute path="/register" footerBackgroundColor="#fff">
+          <RegistrationPage />
         </LayoutRoute>
 
-        <LayoutRoute path="/user/login/">
-          <Login />
-        </LayoutRoute>
-
-        <LayoutRoute path="/user/password/recover">
-          <PasswordRecover />
+        <LayoutRoute path="/services/signup" footerBackgroundColor="#fff">
+          <RegistrationPage />
         </LayoutRoute>
 
         <LayoutRoute path="/auth/login" issuedByFooter footerBackgroundColor="#fff">
-          <AuthLogin />
+          <LoginPage />
         </LayoutRoute>
 
         <LayoutRoute path="/auth/recover-password" issuedByFooter footerBackgroundColor="#fff">
           <AuthRecoverPassword />
         </LayoutRoute>
 
-        <LayoutRoute path="/auth/change-password/:resetToken" issuedByFooter footerBackgroundColor="#fff">
+        <LayoutRoute
+          path="/auth/change-password/:resetToken"
+          issuedByFooter
+          footerBackgroundColor="#fff"
+        >
           <AuthChangePassword />
         </LayoutRoute>
 
-        <LayoutRoute path="/auth/verify-email/:verifyToken" issuedByFooter footerBackgroundColor="#fff">
+        <LayoutRoute
+          path="/auth/verify-email/:verifyToken"
+          issuedByFooter
+          footerBackgroundColor="#fff"
+        >
           <AuthVerifyEmail />
         </LayoutRoute>
 
-        <PrivateLayoutRoute path={'/hatlogin'}>
-          <HatLogin />
-        </PrivateLayoutRoute>
-
-        <PrivateLayoutRoute path={'/auth/oauth'} newAuth issuedByFooter footerBackgroundColor="#fff">
+        <PrivateLayoutRoute path="/login" newAuth issuedByFooter footerBackgroundColor="#fff">
           <Oauth />
         </PrivateLayoutRoute>
 
-        <PrivateLayoutRoute path={'/hat-setup-login'}>
+        <PrivateLayoutRoute path="/auth/oauth" newAuth issuedByFooter footerBackgroundColor="#fff">
+          <Oauth />
+        </PrivateLayoutRoute>
+
+        {/*
+          The following routes are deprecated.
+        */}
+        <LayoutRoute path="/hat/claim/:claimToken">
+          <HatClaim />
+        </LayoutRoute>
+
+        <LayoutRoute path="/user/login/">
+          <LoginPage />
+        </LayoutRoute>
+
+        <LayoutRoute path="/user/password/recover">
+          <AuthRecoverPassword />
+        </LayoutRoute>
+
+        <PrivateLayoutRoute path="/hatlogin">
+          <HatLogin />
+        </PrivateLayoutRoute>
+
+        <PrivateLayoutRoute path="/hat-setup-login">
           <HatLogin />
         </PrivateLayoutRoute>
 
@@ -220,9 +218,14 @@ const AppRouter = () => (
           exact
           path="/"
           render={({ location }) => {
-            const redirectTo = location.hash ? location.hash.replace('#', '') : '/public/profile';
-
-            return <Redirect to={redirectTo} />;
+            if (location.hash) {
+              return <Redirect to={location.hash.replace('#', '')} />;
+            }
+            return (
+              <LayoutRoute path="/" footerBackgroundColor="#fff">
+                <LandingLoginPage />
+              </LayoutRoute>
+            );
           }}
         />
 

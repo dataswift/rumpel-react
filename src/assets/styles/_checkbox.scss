@@ -1,3 +1,5 @@
+@import "./branding";
+
 /* The container */
 .checkbox-container {
   display: block;
@@ -79,6 +81,101 @@
   width: 4px;
   height: 8px;
   border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/*
+  This is the new checkbox design required in the new auth flow
+ */
+
+/* The container */
+.ds-checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 1.7rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  margin: 1.6rem 1rem 1.2rem;
+  letter-spacing: normal;
+  color: $ds-color-text;
+}
+
+/* Hide the browser's default checkbox */
+.ds-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.ds-checkbox-checkmark {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 12px;
+  width: 12px;
+  background-color: $app-background-color;
+  border: 1px solid $ds-color-text;
+}
+
+/* On mouse-over, add a grey background color */
+.ds-checkbox-container:hover input ~ .ds-checkbox-checkmark {
+  background-color: $app-background-color;
+}
+
+/* On disabled, add a grey background color */
+.ds-checkbox-container input:disabled ~ .ds-checkbox-checkmark {
+  background-color: $app-background-color;
+  cursor: default;
+}
+
+.ds-checkbox-container > label > div {
+  cursor: pointer;
+  font-family: $font-auth-standard;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: $ds-color-text;
+  max-width: 180px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.ds-checkbox-container input:checked ~ .ds-checkbox-checkmark {
+  background-color: white;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.ds-checkbox-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.ds-checkbox-container input:checked ~ .ds-checkbox-checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.ds-checkbox-container .ds-checkbox-checkmark:after {
+  left: 3px;
+  top: 0;
+  width: 4px;
+  height: 8px;
+  border: solid $ds-color-text;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);

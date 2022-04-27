@@ -5,11 +5,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createMemoryHistory } from 'history';
 import { Router, Route } from 'react-router-dom';
 
-import DataDebitDetails from "./DataDebitDetails";
-import dataDebitSlice from "./dataDebitSlice";
-import messagesSlice from "../messages/messagesSlice";
-import TEST_DATA_DEBIT  from "../../testData/DataDebit";
-import messages from "../../translations/en.json";
+import DataDebitDetails from './DataDebitDetails';
+import dataDebitSlice from './dataDebitSlice';
+import messagesSlice from '../messages/messagesSlice';
+import TEST_DATA_DEBIT from '../../testData/DataDebit';
+import messages from '../../translations/en.json';
 
 export const store = configureStore({
   reducer: {
@@ -39,7 +39,9 @@ describe('Data Debit Details', () => {
     );
 
     expect(screen.getByText('TestActiveDataDebit')).toBeInTheDocument();
-    expect(screen.getByText('Details of your data debit agreement with the provider')).toBeInTheDocument();
+    expect(
+      screen.getByText('Details of your data debit agreement with the provider'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Active')).toBeInTheDocument();
     expect(screen.getByText('12 Apr 2019')).toBeInTheDocument();
     expect(screen.getByText('arrow_forward')).toBeInTheDocument();

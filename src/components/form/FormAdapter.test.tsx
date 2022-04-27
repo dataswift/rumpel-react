@@ -1,21 +1,21 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import React from "react";
-import FormAdapter from "./FormAdapter";
-import Root from "../../app/Root";
-import ProfileSections from "../../features/profile/ProfileSections";
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
+import FormAdapter from './FormAdapter';
+import Root from '../../app/Root';
+import ProfileSections from '../../features/profile/ProfileSections';
 
 describe('FormAdapter', () => {
   test('renders the correct elements without error: personal', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('First name')).toBeInTheDocument();
@@ -28,13 +28,13 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Primary email')).toBeInTheDocument();
@@ -47,13 +47,13 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[1].groupFields[0].fields}
           validations={ProfileSections[1].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Facebook profile')).toBeInTheDocument();
@@ -69,31 +69,32 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[2].groupFields[0].fields}
           validations={ProfileSections[2].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     expect(screen.getByText('Title')).toBeInTheDocument();
-    expect(screen.getByText('Say something nice about yourself for the world to see')).toBeInTheDocument();
+    expect(
+      screen.getByText('Say something nice about yourself for the world to see'),
+    ).toBeInTheDocument();
   });
-
 
   test('renders the correct error messages for the personal info', async () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     const firstName = screen.getByLabelText('First name');
@@ -112,20 +113,20 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
-    
+
     const primaryEmail = screen.getByLabelText('Primary email');
     const alternativeEmail = screen.getByLabelText('Alternative email');
     const mobile = screen.getByLabelText('Mobile phone number');
     const landline = screen.getByLabelText('Home phone number');
-    
+
     fireEvent.change(primaryEmail, { target: { value: 'not-valid-email' } });
     await waitFor(() => expect(screen.getByText('This is not a valid email')).toBeInTheDocument());
     fireEvent.change(primaryEmail, { target: { value: '' } });
@@ -135,11 +136,15 @@ describe('FormAdapter', () => {
     fireEvent.change(alternativeEmail, { target: { value: '' } });
 
     fireEvent.change(mobile, { target: { value: 'test-NaN' } });
-    await waitFor(() => expect(screen.getByText('This field must be a number')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('This field must be a number')).toBeInTheDocument(),
+    );
     fireEvent.change(mobile, { target: { value: '' } });
 
     fireEvent.change(landline, { target: { value: 'test-NaN' } });
-    await waitFor(() => expect(screen.getByText('This field must be a number')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('This field must be a number')).toBeInTheDocument(),
+    );
     fireEvent.change(landline, { target: { value: '' } });
   });
 
@@ -147,13 +152,13 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[0].fields}
           validations={ProfileSections[0].groupFields[0].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
 
     const firstName = screen.getByLabelText('First name');
@@ -172,15 +177,15 @@ describe('FormAdapter', () => {
     render(
       <Root>
         <FormAdapter
-          profileField={true}
+          profileField
           fields={ProfileSections[0].groupFields[1].fields}
           validations={ProfileSections[0].groupFields[1].validations}
-          formId={'form-id'}
+          formId="form-id"
           values={{}}
         />
-      </Root>
+      </Root>,
     );
-    
+
     const primaryEmail = screen.getByLabelText('Primary email');
     const alternativeEmail = screen.getByLabelText('Alternative email');
     const mobile = screen.getByLabelText('Mobile phone number');

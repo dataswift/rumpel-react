@@ -33,7 +33,10 @@ export function setCurrentStep(step: number): ReduxEdiCurrentStepHatClaimAction 
   };
 }
 
-export function editHatClaimPassword(name: string, value: string | boolean | object): ReduxEditPasswordHatClaimAction {
+export function editHatClaimPassword(
+  name: string,
+  value: string | boolean | object,
+): ReduxEditPasswordHatClaimAction {
   return {
     type: ReduxActionTypes.EDIT_HAT_PASSWORD,
     name,

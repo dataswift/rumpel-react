@@ -17,7 +17,7 @@ describe('buildClaimRequest returns correct data', () => {
     hatName: 'testing',
     hatCluster: 'hubat.net',
     email: 'testing@testing.com',
-    optins: optins,
+    optins,
     termsAgreed: true,
     password: 'myPassw0rd',
   };

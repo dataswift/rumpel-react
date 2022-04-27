@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './PublicProfile.scss';
-import { InfoHeader } from '../../components/headers/InfoHeader/InfoHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPublicProfileReq, selectPublicProfile, selectPublicProfilePending } from './publicProfileSlice';
+import { InfoHeader } from '../../components/headers/InfoHeader/InfoHeader';
+import {
+  getPublicProfileReq,
+  selectPublicProfile,
+  selectPublicProfilePending,
+} from './publicProfileSlice';
 import blogIcon from '../../assets/icons/blog-icon.svg';
 import facebookIcon from '../../assets/icons/facebook-grey-icon.svg';
 import googleIcon from '../../assets/icons/google-icon.svg';
@@ -69,19 +73,19 @@ export const PublicProfile: React.FC = () => {
 
   return (
     <>
-      <div className={'public-profile'}>
+      <div className="public-profile">
         <InfoHeader />
         {ribbon}
 
-        <div className={'public-profile-box'}>
-          <div className={'public-profile-photo-container'}>
+        <div className="public-profile-box">
+          <div className="public-profile-photo-container">
             {profile?.photo?.avatar ? (
-              <img src={profile.photo.avatar} alt={'Profile avatar'} />
+              <img src={profile.photo.avatar} alt="Profile avatar" />
             ) : (
               <ProfileDefaultAvatar />
             )}
           </div>
-          <div className={'public-profile-of'}>Public profile of</div>
+          <div className="public-profile-of">Public profile of</div>
 
           <div className="public-profile-hat-domain-wrapper">
             <div className="hat-name">{hatName}</div>
@@ -91,25 +95,24 @@ export const PublicProfile: React.FC = () => {
 
           <p>
             {profile?.online && (
-              <span className={'public-profile-social-links'}>
-                {Object.entries(profile.online).map(([key, value], index) => {
-                  return (
-                    <a href={value} target={'_blank'} rel="noopener noreferrer" key={key + index}>
-                      <img src={icons[key]} alt={`${key} link to ${value}`} />
-                    </a>
-                  );
-                })}
+              <span className="public-profile-social-links">
+                {Object.entries(profile.online).map(([key, value], index) => (
+                  <a href={value} target="_blank" rel="noopener noreferrer" key={key + index}>
+                    <img src={icons[key]} alt={`${key} link to ${value}`} />
+                  </a>
+                ))}
               </span>
             )}
 
-            {(!profile || (!profile?.personal && !profile?.online && !profile.contact && !profile.about)) && (
+            {(!profile ||
+              (!profile?.personal && !profile?.online && !profile.contact && !profile.about)) && (
               <span>This user has no public information</span>
             )}
           </p>
           {profile?.personal && (
-            <div className={'public-profile-details'}>
-              <div className={'public-profile-details-header'}>Personal Details</div>
-              <div className={'public-profile-details-content'}>
+            <div className="public-profile-details">
+              <div className="public-profile-details-header">Personal Details</div>
+              <div className="public-profile-details-content">
                 {profile.personal.firstName && <div>{getPublicName()}</div>}
                 {profile.personal.gender && <div>{profile.personal.gender}</div>}
                 {profile.personal.ageGroup && <div>{profile.personal.ageGroup}</div>}
@@ -119,9 +122,9 @@ export const PublicProfile: React.FC = () => {
           )}
 
           {profile?.contact && (
-            <div className={'public-profile-details'}>
-              <div className={'public-profile-details-header'}>Contact Details</div>
-              <div className={'public-profile-details-content'}>
+            <div className="public-profile-details">
+              <div className="public-profile-details-header">Contact Details</div>
+              <div className="public-profile-details-content">
                 {profile.contact.primaryEmail && <div>{profile.contact.primaryEmail}</div>}
                 {profile.contact.alternativeEmail && <div>{profile.contact.alternativeEmail}</div>}
                 {profile.contact.mobile && <div>{profile.contact.mobile}</div>}
@@ -131,9 +134,9 @@ export const PublicProfile: React.FC = () => {
           )}
 
           {profile?.about && (
-            <div className={'public-profile-details'}>
-              <div className={'public-profile-details-header'}>About</div>
-              <div className={'public-profile-details-content'}>
+            <div className="public-profile-details">
+              <div className="public-profile-details-header">About</div>
+              <div className="public-profile-details-content">
                 {profile.about.title && <div>{profile.about.title}</div>}
                 {profile.about.body && <div>{profile.about.body}</div>}
               </div>
@@ -141,7 +144,7 @@ export const PublicProfile: React.FC = () => {
           )}
         </div>
 
-        <div className={'public-profile-footer'}>
+        <div className="public-profile-footer">
           <i className="material-icons">lock_outline</i>All data is secure and private
         </div>
       </div>

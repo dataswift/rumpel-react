@@ -1,9 +1,9 @@
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
-import Root from "../../../app/Root";
-import React from "react";
-import { NotificationBanner } from "./NotificationBanner";
-import { render, screen } from "@testing-library/react";
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import Root from '../../../app/Root';
+import { NotificationBanner } from './NotificationBanner';
 
 describe('NotificationBanner tests', () => {
   const history = createMemoryHistory();
@@ -11,9 +11,11 @@ describe('NotificationBanner tests', () => {
   render(
     <Router history={history}>
       <Root>
-        <NotificationBanner type={'error'} display={true}>An error message</NotificationBanner>
+        <NotificationBanner type="error" display>
+          An error message
+        </NotificationBanner>
       </Root>
-    </Router>
+    </Router>,
   );
 
   it('has the correct icon and title ', () => {

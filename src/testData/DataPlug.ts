@@ -19,7 +19,7 @@ const TEST_DATA_PLUG: HatApplication = {
     dependencies: {
       tools: [],
       plugs: [],
-      contracts: []
+      contracts: [],
     },
     info: {
       dataUsePurpose: 'Test data use purpose',
@@ -32,7 +32,8 @@ const TEST_DATA_PLUG: HatApplication = {
       supportContact: '',
       termsUrl: '',
       updateNotes: {
-        header: 'We’ve made clear your legal rights over your data …eX+privacy+policy+2.1.pdf) to continue using HAT.',
+        header:
+          'We’ve made clear your legal rights over your data …eX+privacy+policy+2.1.pdf) to continue using HAT.',
         notes: Array(9),
       },
       version: '1.2.6',
@@ -40,10 +41,10 @@ const TEST_DATA_PLUG: HatApplication = {
     permissions: {
       rolesGranted: [
         {
-          role: "namespacewrite",
-          detail: "testnamespace"
-        }
-      ]
+          role: 'namespacewrite',
+          detail: 'testnamespace',
+        },
+      ],
     },
     status: {
       expectedStatus: 0,
@@ -59,8 +60,8 @@ const TEST_DATA_PLUG: HatApplication = {
       kind: '',
       url: 'https://setup-url.dataswift.io',
       onboarding: [],
-      validRedirectUris: []
-    }
+      validRedirectUris: [],
+    },
   },
   enabled: true,
   needsUpdating: false,

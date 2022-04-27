@@ -1,10 +1,10 @@
 export interface SystemStatusInterface {
-    title: string;
-    kind: SystemStatusKindInterface;
+  title: string;
+  kind: SystemStatusKindInterface;
 }
 
 interface SystemStatusKindInterface {
-    metric: string;
-    kind: string;
-    units?: string;
+  metric: string;
+  kind: string;
+  units?: string;
 }

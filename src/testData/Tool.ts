@@ -2,7 +2,12 @@ import { HatTool } from '../features/tools/hat-tool.interface';
 
 const TEST_HAT_TOOL: HatTool = {
   dataBundle: { name: 'test-feed-counter', bundle: {} },
-  developer: { id: 'test dev', name: 'Test Developer', url: 'https://test.com', country: 'United Kingdom' },
+  developer: {
+    id: 'test dev',
+    name: 'Test Developer',
+    url: 'https://test.com',
+    country: 'United Kingdom',
+  },
   id: 'test-feed-counter',
   info: {
     version: '1.0.0',

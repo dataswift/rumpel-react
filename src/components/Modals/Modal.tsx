@@ -29,13 +29,13 @@ const Modal: React.FC<Props> = ({ open, onClose, titleMessageId, children }) => 
     <div ref={content} style={open ? { display: 'block' } : {}} className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <div className={'modal-text-title'}>
+          <div className="modal-text-title">
             <FormatMessage id={titleMessageId} />
           </div>
         </div>
         <div className="modal-body modal-text-content">{children}</div>
         <div className="modal-footer">
-          <button onClick={onClose} className={'modal-btn-accent'}>
+          <button onClick={onClose} className="modal-btn-accent">
             OK
           </button>
         </div>

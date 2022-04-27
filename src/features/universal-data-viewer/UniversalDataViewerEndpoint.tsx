@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
-import { getDataRecords, selectEndpointDataPreview } from "./universalDataViewerSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { flattenObject } from "./helper";
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDataRecords, selectEndpointDataPreview } from './universalDataViewerSlice';
+import { flattenObject } from './helper';
 
 const ITEMS_PER_PAGE = 20;
 
 const UniversalDataViewerEndpoint: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation<{endpoint ?: string, namespace ?: string}>();
+  const location = useLocation<{ endpoint?: string; namespace?: string }>();
   const [loading, setLoading] = useState(false);
   const [dataPreviewFlat, setDataPreviewFlat] = useState<Array<any>>([]);
   const dataPreview = useSelector(selectEndpointDataPreview);
@@ -22,7 +22,7 @@ const UniversalDataViewerEndpoint: React.FC = () => {
       history.push('/universal-data-viewer');
     }
 
-    if (namespace && endpoint && !dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
+    if (namespace && endpoint && !dataPreview.hasOwnProperty(`${namespace}/${endpoint}`)) {
       dispatch(getDataRecords(namespace, endpoint, 1, 0));
       setSkip(1);
       setTake(19);
@@ -32,8 +32,8 @@ const UniversalDataViewerEndpoint: React.FC = () => {
   useEffect(() => {
     const preview: Array<any> = [];
 
-    if (dataPreview.hasOwnProperty(`${ namespace }/${ endpoint }`)) {
-      dataPreview[`${ namespace }/${ endpoint }`].forEach(data => {
+    if (dataPreview.hasOwnProperty(`${namespace}/${endpoint}`)) {
+      dataPreview[`${namespace}/${endpoint}`].forEach((data) => {
         const flatObj = flattenObject(data.data);
         preview.push(flatObj);
       });
@@ -54,33 +54,27 @@ const UniversalDataViewerEndpoint: React.FC = () => {
   };
 
   return (
-    <div className={'universal-data-viewer-endpoint'}>
-      <h2 className={'universal-data-viewer-endpoint-title'}>
-        { namespace + "/" + endpoint }
-      </h2>
-      {dataPreview && dataPreview[`${ namespace }/${ endpoint }`] &&
-      (dataPreviewFlat.map((obj, index) => {
-        return (
-          <div className={'universal-data-viewer-endpoint-data-preview'} key={'data-preview' + index}>
-            <div className={'universal-data-viewer-endpoint-data-preview-index'}>#{ index + 1 }</div>
-            {
-              Object.entries(obj).map(([key, value], index) => {
-                return <div key={key + index} className={'universal-data-viewer-endpoint-data-preview-item'}>
-                  <h3>{key}</h3>
-                  <p aria-label={value as string}>{value as string}</p>
-                </div>;
-              })
-            }
+    <div className="universal-data-viewer-endpoint">
+      <h2 className="universal-data-viewer-endpoint-title">{`${namespace}/${endpoint}`}</h2>
+      {dataPreview &&
+        dataPreview[`${namespace}/${endpoint}`] &&
+        dataPreviewFlat.map((obj, index) => (
+          <div className="universal-data-viewer-endpoint-data-preview" key={`data-preview${index}`}>
+            <div className="universal-data-viewer-endpoint-data-preview-index">#{index + 1}</div>
+            {Object.entries(obj).map(([key, value], index) => (
+              <div key={key + index} className="universal-data-viewer-endpoint-data-preview-item">
+                <h3>{key}</h3>
+                <p aria-label={value as string}>{value as string}</p>
+              </div>
+            ))}
           </div>
-        );
-      })
-      )}
+        ))}
 
-      {!loading &&
-      <button className={'btn btn-accent'} onClick={() => onLoadMore()}>
-        Load more
-      </button>
-      }
+      {!loading && (
+        <button className="btn btn-accent" onClick={() => onLoadMore()}>
+          Load more
+        </button>
+      )}
     </div>
   );
 };

@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
-import { FeedList } from "./FeedList";
-import { FeedLoading } from "../../components/Feed/FeedLoading/FeedLoading";
-import { useDispatch, useSelector } from "react-redux";
-import { getSheFeedFilteredData, selectSheFeedDisplayData, selectSheFeedFetching } from "./feedSlice";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FeedList } from './FeedList';
+import { FeedLoading } from '../../components/Feed/FeedLoading/FeedLoading';
+import {
+  getSheFeedFilteredData,
+  selectSheFeedDisplayData,
+  selectSheFeedFetching,
+} from './feedSlice';
 
 type Props = {
-    selectedDates: {
-        since: number,
-        until: number
-    }
-}
+  selectedDates: {
+    since: number;
+    until: number;
+  };
+};
 
 export const FeedFilteredData: React.FC<Props> = ({ selectedDates }) => {
   const feed = useSelector(selectSheFeedDisplayData);
@@ -21,8 +25,8 @@ export const FeedFilteredData: React.FC<Props> = ({ selectedDates }) => {
   }, [selectedDates, dispatch]);
 
   return (
-    <div className={'feed-wrapper'}>
-      <FeedList dayGroupedFeed={feed}/>
+    <div className="feed-wrapper">
+      <FeedList dayGroupedFeed={feed} />
       {feed.length === 0 && <FeedLoading filteredData fetchingData={fetching} />}
     </div>
   );

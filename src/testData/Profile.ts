@@ -13,7 +13,7 @@ const TEST_PROFILE: Profile = {
     website: 'https://test-website.com',
     youtube: '',
     facebook: '',
-    linkedin: ''
+    linkedin: '',
   },
   personal: {
     title: 'Mr',

@@ -1,12 +1,17 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import Hmi, { HmiType } from "hmi";
-import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
-import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
-import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
-import { selectLanguage } from "../language/languageSlice";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Hmi } from 'hmi';
+import { selectDependencyApps, selectDependencyTools, selectParentApp } from '../hmi/hmiSlice';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import {
+  onTermsAgreed,
+  onTermsDeclined,
+  selectErrorMessage,
+  setRedirectError,
+} from './hatLoginSlice';
+import { UpdateNotes } from './UpdateNotes/UpdateNotes';
+import { NotificationBanner } from '../../components/banners/NotificationBanner/NotificationBanner';
+import { selectLanguage } from '../language/languageSlice';
 
 const HatLoginHmi: React.FC = () => {
   const hatName = window.location.host;
@@ -21,43 +26,52 @@ const HatLoginHmi: React.FC = () => {
     dispatch(setRedirectError('hat_exception', 'enabling_application_failed'));
   };
 
-  if ((!parentApp || parentApp.active) || (parentApp.application.dependencies &&
+  if (
+    !parentApp ||
+    parentApp.active ||
+    (parentApp.application.dependencies &&
       parentApp.application.dependencies.plugs?.length !== dependencyApps.length) ||
-      (parentApp.application.dependencies &&
-          parentApp.application.dependencies.tools?.length !== dependencyTools.length)) {
-    return <LoadingSpinner loadingText={'Loading permissions...'}/>;
+    (parentApp.application.dependencies &&
+      parentApp.application.dependencies.tools?.length !== dependencyTools.length)
+  ) {
+    return <LoadingSpinner loadingText="Loading permissions..." />;
   }
 
   return (
     <div>
-      <NotificationBanner type={'error'} display={!!errorMessage} fixed={true}>
-        <div className={'hat-login-notification'}>
+      <NotificationBanner type="error" display={!!errorMessage} fixed>
+        <div className="hat-login-notification">
           <p>
             An error has occurred, please use the back button to return to the previous page <br />
             and try confirming again. If this error persists please{' '}
-            <a href={'mailto:contact@dataswift.io'} className={'link-button'}>contact us</a>
+            <a href="mailto:contact@dataswift.io" className="link-button">
+              contact us
+            </a>
           </p>
-          <button className={'btn btn-accent'} onClick={() => redirectBack()}>Back</button>
+          <button className="btn btn-accent" onClick={() => redirectBack()}>
+            Back
+          </button>
         </div>
       </NotificationBanner>
 
-      <span className={'flex-spacer-small'} />
+      <span className="flex-spacer-small" />
       {parentApp && parentApp.needsUpdating && parentApp.application.info.updateNotes ? (
-        <UpdateNotes app={parentApp.application}
+        <UpdateNotes
+          app={parentApp.application}
           onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
           onRejected={() => dispatch(onTermsDeclined())}
         />
       ) : (
-        <Hmi hmiType={HmiType.login.daas}
+        <Hmi
           parentApp={parentApp.application}
-          hatName={hatName}
+          email={hatName}
           language={language}
-          dependencyTools={dependencyTools.map(tool => tool.info.name)}
-          dependencyApps={dependencyApps.map(app => app.application)}
+          dependencyTools={dependencyTools.map((tool) => tool.info.name)}
+          dependencyApps={dependencyApps.map((app) => app.application)}
           onApproved={() => dispatch(onTermsAgreed(parentApp?.application.id || ''))}
           onRejected={() => dispatch(onTermsDeclined())}
-        />)
-      }
+        />
+      )}
     </div>
   );
 };
