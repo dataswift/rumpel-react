@@ -22,7 +22,7 @@ export const PrivateLayoutRoute: React.FC<CustomRouteProps> = ({
 
   return (
     <PrivateRoute {...rest}>
-      <div>
+      <>
         {children}
         {issuedByFooter ? (
           <IssuedBy
@@ -35,7 +35,7 @@ export const PrivateLayoutRoute: React.FC<CustomRouteProps> = ({
             wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
           />
         )}
-      </div>
+      </>
     </PrivateRoute>
   );
 };
@@ -50,7 +50,7 @@ export const LayoutRoute: React.FC<CustomRouteProps> = ({
 
   return (
     <Route {...rest}>
-      <div>
+      <>
         {children}
         {issuedByFooter ? (
           <IssuedBy
@@ -63,7 +63,7 @@ export const LayoutRoute: React.FC<CustomRouteProps> = ({
             wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
           />
         )}
-      </div>
+      </>
     </Route>
   );
 };

@@ -11,7 +11,7 @@ type Props = {
 export const FeedList: React.FC<Props> = ({ dayGroupedFeed, loading, lastFeedElementIntersecting }) => {
   const observer = useRef<IntersectionObserver>();
 
-  const lastFeedElementRef = useCallback(node => {
+  const lastFeedElementRef = useCallback((node: any) => {
     if (loading) return;
     if (observer.current) {
       observer.current.disconnect();

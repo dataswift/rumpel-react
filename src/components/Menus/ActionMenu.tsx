@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import FormatMessage from '../../features/messages/FormatMessage';
 
-const ActionMenu: React.FC<{ showOptions: boolean }> = ({ showOptions, children }) => {
+const ActionMenu: React.FC<{ showOptions: boolean, children: React.ReactNode }> = ({ showOptions, children }) => {
   const history = useHistory();
   const menuRef = useRef<HTMLObjectElement>(null);
   const [showMenu, setShowMenu] = useState(false);
