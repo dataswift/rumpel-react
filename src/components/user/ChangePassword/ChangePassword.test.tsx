@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import messagesSlice from '../../../features/messages/messagesSlice';
-import authenticationSlice from '../../../features/authentication/authenticationSlice';
+import authenticationSlice, { AuthState } from '../../../features/authentication/authenticationSlice';
 import messages from '../../../translations/en.json';
 import { ChangePassword } from './ChangePassword';
 
@@ -22,6 +22,9 @@ export const store = configureStore({
   preloadedState: {
     messages,
     authentication: {
+      isAuthenticated: false,
+      rememberMe: false,
+      authState: AuthState.LOGIN_REQUEST,
       hatName: 'Test',
       hatDomain: '.test.com',
     },

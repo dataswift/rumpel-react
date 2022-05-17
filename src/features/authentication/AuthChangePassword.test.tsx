@@ -26,7 +26,10 @@ export const store = configureStore({
   preloadedState: {
     messages,
     applications: {
-      applications: []
+      applications: [],
+      applicationHmi: undefined,
+      applicationHmiState: 'idle',
+      expirationTime: 20,
     },
     language: {
       language: 'en'

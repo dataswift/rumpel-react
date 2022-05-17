@@ -16,7 +16,7 @@ type ProfileState = {
     profileBundleFetched: boolean;
 };
 
-const DEFAULT_PROFILE_SHARE_CONFIG: ProfileSharingConfig = {
+export const DEFAULT_PROFILE_SHARE_CONFIG: ProfileSharingConfig = {
   photo: { avatar: false },
   personal: {
     title: false, firstName: false, middleName: false, lastName: false,

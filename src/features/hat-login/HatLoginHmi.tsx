@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import Hmi, { HmiType } from "hmi";
+import { Hmi } from "hmi";
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "./hatLoginSlice";
 import { UpdateNotes } from "./UpdateNotes/UpdateNotes";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
@@ -48,9 +48,9 @@ const HatLoginHmi: React.FC = () => {
           onRejected={() => dispatch(onTermsDeclined())}
         />
       ) : (
-        <Hmi hmiType={HmiType.login.daas}
+        <Hmi
           parentApp={parentApp.application}
-          hatName={hatName}
+          email={hatName}
           language={language}
           dependencyTools={dependencyTools.map(tool => tool.info.name)}
           dependencyApps={dependencyApps.map(app => app.application)}

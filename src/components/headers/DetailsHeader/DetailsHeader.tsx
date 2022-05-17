@@ -7,6 +7,7 @@ type DetailsHeaderProps = {
   logoAltText: string;
   toolbarActions?: React.ReactNode;
   backgroundColor?: string;
+  children: React.ReactNode;
   isTool?: boolean;
 };
 

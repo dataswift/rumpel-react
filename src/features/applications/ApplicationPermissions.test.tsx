@@ -24,13 +24,18 @@ export const store = configureStore({
   preloadedState: {
     applications: {
       applications: [TEST_HAT_APPLICATION],
+      applicationHmi: undefined,
+      applicationHmiState: 'idle',
+      expirationTime: 20,
     },
     hmi: {
+      parentApp: null,
       dependencyApps: [],
       dependencyTools: []
     },
     tools: {
       tools: [],
+      expirationTime: 20,
     }
   },
 });

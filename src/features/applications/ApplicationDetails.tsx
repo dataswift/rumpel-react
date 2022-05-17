@@ -51,7 +51,7 @@ const HatApplicationDetails: React.FC = () => {
           <FormatMessage id="ds.hat.application.details.rated" /> {app.application.info.rating.score}
         </div>
 
-        <a href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291" className="app-link">
+        <a href="https://docs.dataswift.io/deploy/rating-assurance-and-certification" className="app-link">
           <FormatMessage id="ds.hat.application.details.learn" />
         </a>
 

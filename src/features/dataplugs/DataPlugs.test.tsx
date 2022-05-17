@@ -17,6 +17,9 @@ export const store = configureStore({
   preloadedState: {
     applications: {
       applications: [TEST_DATA_PLUG],
+      applicationHmi: undefined,
+      applicationHmiState: 'idle',
+      expirationTime: 20,
     },
   },
 });

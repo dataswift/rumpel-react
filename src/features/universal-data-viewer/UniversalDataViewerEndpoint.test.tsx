@@ -15,7 +15,10 @@ export const store = configureStore({
   },
   preloadedState: {
     universalDataViewer: {
+      dataSources: undefined,
       endpointDataPreview: TEST_ENDPOINT_DATA_PREVIEW,
+      flattenDataPreview: {},
+      expirationTime: 20,
     },
   },
 });

@@ -7,6 +7,7 @@ import { HatClientService } from '../services/HatClientService';
 import * as queryString from 'query-string';
 
 interface OwnProps extends RouteProps {
+  children?: React.ReactNode;
   newAuth?: boolean;
 }
 
