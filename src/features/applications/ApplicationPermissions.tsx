@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { getApplicationById, getApplications, selectApplicationById, selectApplications } from './applicationsSlice';
 import './HatApplication.scss';
-import { HmiV2 } from "hmi";
+import { Hmi } from "hmi";
 import {
   selectDependencyApps,
   selectDependencyTools,
@@ -54,9 +54,8 @@ const HatApplicationPermissions: React.FC = () => {
   }
 
   return (
-    <HmiV2 
+    <Hmi 
       email={''}
-      hmiType={''} 
       parentApp={app.application}
       dependencyApps={dependencyApps.map(app => app.application)}
       dependencyTools={dependencyTools.map(tool => tool.info.name)}

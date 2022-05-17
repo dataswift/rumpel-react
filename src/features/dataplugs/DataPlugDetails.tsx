@@ -9,7 +9,8 @@ import '../applications/HatApplication.scss';
 import InformationDetails from '../../components/InformationDetails/InformationDetails';
 import { getApplicationById, selectApplicationById } from "../applications/applicationsSlice";
 import AppDetailsToolbarActions from "../applications/ApplicationDetailsActions";
-import { getAppStatus, getStatusButtonText, getStatusIcon } from "../applications/helper";
+import { getAppStatus, getStatusButtonText, getStatusIcon, HatApplicationStatus } from "../applications/helper";
+import { Facebook } from 'react-feather';
 
 const DataPlugDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,8 @@ const DataPlugDetails: React.FC = () => {
     ];
   };
 
+  const getApplicationStatus = () => getAppStatus(app);
+
   return (
     <>
       <DetailsHeader
@@ -68,12 +71,17 @@ const DataPlugDetails: React.FC = () => {
           <FormatMessage id="ds.hat.application.details.rated" /> {app.application.info.rating.score}
         </div>
 
-        <a href="https://resources.dataswift.io/contents/4a9f5153-7d52-4b79-8eb1-e570aa331291" className="app-link">
+        <a href="https://docs.dataswift.io/deploy/rating-assurance-and-certification" className="app-link">
           <FormatMessage id="ds.hat.application.details.learn" />
         </a>
 
-        <div onClick={onAppStatusClick} className={`app-details-status ${getAppStatus(app)} link-button`}>
-          <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
+        <div onClick={onAppStatusClick} className={`app-details-status ${getApplicationStatus()} link-button`}>
+          {appId.includes("facebook") && getApplicationStatus() === HatApplicationStatus.UNTOUCHED &&
+            <Facebook className="details-button-icon" />
+          }
+          {!(appId.includes("facebook") && getApplicationStatus() === HatApplicationStatus.UNTOUCHED) &&
+            <i className="material-icons details-button-icon">{getStatusIcon(app)}</i>
+          }
           {getStatusButtonText(app)}
         </div>
       </DetailsHeader>

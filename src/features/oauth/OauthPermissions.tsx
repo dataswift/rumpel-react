@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDependencyApps, selectDependencyTools, selectParentApp } from "../hmi/hmiSlice";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { HmiType, HmiV2 } from "hmi";
+import { Hmi } from "hmi";
 import { onTermsAgreed, onTermsDeclined, selectErrorMessage, setRedirectError } from "../hat-login/hatLoginSlice";
 import { NotificationBanner } from "../../components/banners/NotificationBanner/NotificationBanner";
 import { selectLanguage } from "../language/languageSlice";
@@ -40,7 +40,7 @@ const OauthPermissions: React.FC = () => {
 
       <span className={'flex-spacer-small'} />
       {parentApp &&
-      <HmiV2 hmiType={HmiType.login.daas}
+      <Hmi
         parentApp={parentApp.application}
         email={hatName}
         language={language}

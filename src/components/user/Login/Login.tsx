@@ -89,7 +89,7 @@ const Login: React.FC = () => {
       <span className={'flex-spacer-small'} />
       <img
         className={'login-dataswift-logo'}
-        src={'https://cdn.dataswift.io/dataswift/logo/ds-full-dark.svg'}
+        src={'https://cdn.dataswift.io/dataswift/logo/dataswift_R_logomark.svg'}
         alt={'Dataswift logo'}
       />
       <hr />

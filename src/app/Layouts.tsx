@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectLanguage } from '../features/language/languageSlice';
 
 interface CustomRouteProps extends RouteProps {
+  children: React.ReactNode;
   newAuth?: boolean;
   issuedByFooter?: boolean;
   footerBackgroundColor?: string;
@@ -22,20 +23,18 @@ export const PrivateLayoutRoute: React.FC<CustomRouteProps> = ({
 
   return (
     <PrivateRoute {...rest}>
-      <>
-        {children}
-        {issuedByFooter ? (
-          <IssuedBy
-            language={language}
-            wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-          />
-        ) : (
-          <Footer
-            language={language}
-            wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-          />
-        )}
-      </>
+      {children}
+      {issuedByFooter ? (
+        <IssuedBy
+          language={language}
+          wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+        />
+      ) : (
+        <Footer
+          language={language}
+          wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+        />
+      )}
     </PrivateRoute>
   );
 };
@@ -47,10 +46,9 @@ export const LayoutRoute: React.FC<CustomRouteProps> = ({
   ...rest
 }) => {
   const language = useSelector(selectLanguage);
-
   return (
     <Route {...rest}>
-      <>
+      <div>
         {children}
         {issuedByFooter ? (
           <IssuedBy
@@ -63,7 +61,7 @@ export const LayoutRoute: React.FC<CustomRouteProps> = ({
             wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
           />
         )}
-      </>
+      </div>
     </Route>
   );
 };
@@ -80,20 +78,18 @@ export const PrivateSpaceRoute: React.FC<CustomRouteProps> = ({
     <PrivateRoute {...rest}>
       <div>
         <PrivateSpace>
-          <>
-            {children}
-            {issuedByFooter ? (
-              <IssuedBy
-                language={language}
-                wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-              />
-            ) : (
-              <Footer
-                language={language}
-                wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
-              />
-            )}
-          </>
+          {children}
+          {issuedByFooter ? (
+            <IssuedBy
+              language={language}
+              wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+            />
+          ) : (
+            <Footer
+              language={language}
+              wrapperStyles={footerBackgroundColor ? { backgroundColor: footerBackgroundColor } : {}}
+            />
+          )}
         </PrivateSpace>
       </div>
     </PrivateRoute>

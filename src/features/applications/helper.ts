@@ -1,7 +1,7 @@
 import { HatApplication } from '@dataswift/hat-js/lib/interfaces/hat-application.interface';
 import format from 'date-fns/format';
 
-enum HatApplicationStatus {
+export enum HatApplicationStatus {
   GOTO = 'goto',
   RUNNING = 'running',
   FETCHING = 'fetching',
@@ -15,7 +15,7 @@ enum HatApplicationKind {
   APP = 'App',
 }
 
-type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app';
+type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app' | 'facebook';
 
 export const getAppStatus = (app: HatApplication): HatApplicationStatus => {
   const { setup, enabled, active, needsUpdating, mostRecentData } = app;
@@ -63,7 +63,7 @@ export const getStatusButtonText = (app: HatApplication): string => {
     case HatApplicationStatus.UPDATE:
       return 'Update';
     default:
-      return 'Connect';
+      return app.application.id.includes("facebook") ? 'Connect with Facebook' : 'Connect';
   }
 };
 
