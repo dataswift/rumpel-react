@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import systemStatusSlice from '../system-status/systemStatusSlice';
-import profileSlice from '../profile/profileSlice';
+import profileSlice, { DEFAULT_PHATA_BUNDLE, DEFAULT_PROFILE_SHARE_CONFIG } from '../profile/profileSlice';
 import authenticationSlice from '../authentication/authenticationSlice';
 import messagesSlice from '../messages/messagesSlice';
 import messages from '../../translations/en.json';
@@ -26,9 +26,15 @@ export const store = configureStore({
   preloadedState: {
     systemStatus: {
       systemStatus: TEST_SYSTEM_STATUS,
+      expirationTime: 20,
     },
     profile: {
       profile: TEST_PROFILE,
+      expirationTime: 20,
+      profileBundle: DEFAULT_PHATA_BUNDLE,
+      profileSharingConfig: DEFAULT_PROFILE_SHARE_CONFIG,
+      profileFetched: false,
+      profileBundleFetched: false,
     },
     authentication: TEST_AUTH,
     messages,
