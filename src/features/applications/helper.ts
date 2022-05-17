@@ -15,7 +15,7 @@ enum HatApplicationKind {
   APP = 'App',
 }
 
-type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app' | 'facebook';
+type HatAppStatusIcons = 'check_circle' | 'sync' | 'sync_problem' | 'add_circle_outline' | 'refresh' | 'exit_to_app';
 
 export const getAppStatus = (app: HatApplication): HatApplicationStatus => {
   const { setup, enabled, active, needsUpdating, mostRecentData } = app;
