@@ -8,7 +8,7 @@ import { RibbonProvider } from '@dataswift/shared';
 import { PublicProfile } from './PublicProfile';
 import { configureStore } from '@reduxjs/toolkit';
 import publicProfileSlice from './publicProfileSlice';
-import authenticationSlice from '../authentication/authenticationSlice';
+import authenticationSlice, { AuthState } from '../authentication/authenticationSlice';
 
 import TEST_PROFILE from '../../testData/Profile';
 
@@ -26,9 +26,15 @@ const store = configureStore({
     publicProfile: {
       pending: false,
       profile: TEST_PROFILE,
+      publicProfile: null,
+      expirationTime: 20,
     },
     authentication: {
       isAuthenticated: true,
+      authState: AuthState.LOGIN_REQUEST,
+      rememberMe: false,
+      hatName: '',
+      hatDomain: '',
     },
   },
 });

@@ -15,7 +15,10 @@ const store = configureStore({
     tools: toolsSlice,
   },
   preloadedState: {
-    tools: { tools: [TEST_HAT_TOOL] },
+    tools: { 
+      tools: [TEST_HAT_TOOL],
+      expirationTime: 20,
+    },
   },
 });
 

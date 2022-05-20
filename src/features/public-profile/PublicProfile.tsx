@@ -68,8 +68,8 @@ export const PublicProfile: React.FC = () => {
   }
 
   return (
-    <>
-      <div className={'public-profile'}>
+    <div className={'public-profile'}>
+      <>
         <InfoHeader />
         {ribbon}
 
@@ -144,7 +144,7 @@ export const PublicProfile: React.FC = () => {
         <div className={'public-profile-footer'}>
           <i className="material-icons">lock_outline</i>All data is secure and private
         </div>
-      </div>
-    </>
+      </>
+    </div>
   );
 };

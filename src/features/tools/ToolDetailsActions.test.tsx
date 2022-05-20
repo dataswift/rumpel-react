@@ -19,6 +19,7 @@ export const store = configureStore({
   preloadedState: {
     tools: {
       tools: [TEST_HAT_TOOL],
+      expirationTime: 20,
     },
     messages,
   },

@@ -4,6 +4,7 @@ import './RumpelModal.scss';
 type Props = {
   open: boolean;
   onClose: () => void;
+  children?: React.ReactNode;
 };
 
 const RumpelModal: React.FC<Props> = ({ open, onClose, children }) => {

@@ -13,6 +13,7 @@ import { BundleStructure, PropertyQuery } from "@dataswift/hat-js/lib/interfaces
 import { FileMetadataReq } from "@dataswift/hat-js/lib/interfaces/file.interface";
 import { getPublicProfile, getDataDebits } from '../api/hatAPI';
 import { DataDebit } from "@dataswift/hat-js/lib/interfaces/data-debit.interface";
+import { unixTimeToEndOfDay } from "../utils/unixTime";
 
 export class HatClientService {
   private readonly pathPrefix = '/api/v2.6';
@@ -221,7 +222,7 @@ export class HatClientService {
     }
 
     if (until) {
-      path += `&until=${until.toString()}`;
+      path += `&until=${unixTimeToEndOfDay(until).toString()}`;
     }
 
     return get<SheFeed[]>(path, { method: 'get', headers: { 'x-auth-token': token } });

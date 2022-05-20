@@ -1,10 +1,10 @@
+import React from 'react';
 import { configureStore } from "@reduxjs/toolkit";
 import { createMemoryHistory } from "history";
 import { render, screen } from "@testing-library/react";
 import { Route, Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import React from "react";
-import profileSlice from "./profileSlice";
+import profileSlice, { DEFAULT_PHATA_BUNDLE, DEFAULT_PROFILE_SHARE_CONFIG } from "./profileSlice";
 import TEST_PROFILE from "../../testData/Profile";
 import authenticationSlice from "../authentication/authenticationSlice";
 import TEST_AUTH from "../../testData/Auth";
@@ -18,7 +18,11 @@ export const store = configureStore({
   preloadedState: {
     profile: {
       profile: TEST_PROFILE,
-      profileFetched: true
+      expirationTime: 20,
+      profileBundle: DEFAULT_PHATA_BUNDLE,
+      profileSharingConfig: DEFAULT_PROFILE_SHARE_CONFIG,
+      profileFetched: true,
+      profileBundleFetched: false,
     },
     authentication: TEST_AUTH
   },
